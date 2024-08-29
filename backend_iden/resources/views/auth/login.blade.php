@@ -20,7 +20,7 @@
             <input type="password" name="password" id="password" class="border border-gray-300 rounded w-full py-2 px-3 mt-2 focus:outline-none focus:border-blue-400" placeholder="Enter your password" required autocomplete="current-password">
           </div>
           <div class="flex justify-end items-center mb-4 mr-7">
-            <a href="#" class="text-blue-500 text-sm">Forget password?</a>
+            <a href="/forgot-password" class="text-blue-500 text-sm">Forget password?</a>
           </div>
           <button type="submit" class="w-5px mt-5 bg-blue-500 text-white font-bold py-2 px-4 hover:bg-yellow-400 focus:outline-none focus:bg-blue-700 transition-colors" style=" border-radius: 5px">Sign in</button>
         </form> 
