@@ -1,33 +1,5 @@
 <x-guest-layout>
-
-    <!-- <div class="min-h-screen flex items-center justify-center" style="background-color: #ECECEC;">
-        <div class="bg-white p-10 rounded-lg shadow-lg overflow-hidden flex bg-gray-#F9F9F9" style="width: 50pc;">
-            Right section with form
-            <div class=" p-5 flex flex-col justify-center bg-gray-#F9F9CE">
-                <h1 class="justify-center font-bold text-3xl mb-20 text-center"><B>Forgot Password</B></h1>
-                Session Status
-                <x-auth-session-status class="mb-4" :status="session('status')" />
-
-                Validation Errors
-                <x-auth-validation-errors class="mb-4" :errors="$errors" />
-
-                <form method="POST" action="{{ route('password.email') }}">
-                    @csrf
-
-                    Email Address
-                    <div>
-                        <x-label for="email" :value="__('Email')" />
-
-                        <x-input id="email" class="block mt-1" type="email" name="email" :value="old('email')" required autofocus />
-                    </div>
-                    <button type="text" class="w-5px mt-5 bg-blue-500 text-white font-bold py-2 px-4 hover:bg-red-400 focus:outline-none focus:bg-blue-700 transition-colors" style=" border-radius: 5px"><a href="/">Back</a></button>
-                    <button type="submit" class="w-5px mt-5 bg-blue-500 text-white font-bold py-2 px-4 hover:bg-yellow-400 focus:outline-none focus:bg-blue-700 transition-colors" style=" border-radius: 5px">Next</button>
-                </form>
-            </div>
-        </div>
-    </div> -->
-
-    <!DOCTYPE html>
+<!DOCTYPE html>
     <html lang="en">
 
     <head>
