@@ -29,7 +29,7 @@
             <div style=" width: 40%; box-shadow: rgb(0, 0, 0, 0.15) -3px 2.4px 2.4px 0px; display: flex; justify-content:center;">
                 <div class=" bg-yellow-400 mb-5" style=" width: 50%; display: flex; flex-direction: row;">
                     <img src="../images/Leave.png" style="margin-left: 25px; width: 75px; height:9vh; display: flex; align-self:center;">
-                    <div >
+                    <div>
                         <h1 class="font-bold mt-6 text-2xl "><b>Leaveds</b></h1>
                         <h3><b>This Week : </b></h3>
                     </div>
@@ -37,4 +37,64 @@
             </div>
         </div>
     </div>
+
+
+    <!-- Chart js for table of employees -->
+    <!DOCTYPE html>
+    <html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Chart Centered</title>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+        <style>
+            /* Center the chart on the page */
+            .chart-container {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 100vh;
+                /* Make the container full height */
+            }
+        </style>
+    </head>
+
+    <body>
+
+        <!-- Chart Container -->
+        <div class="chart-container">
+            <canvas id="employeeChart" style="width:100%;max-width:800px" class="mt-20"></canvas>
+        </div>
+
+        <!-- Chart Script -->
+        <script>
+            var xValues = ["IT", "Production", "Finance", "Creative"];
+            var yValues = [2, 10, 2, 4];
+            var barColors = [
+                "#b91d47",
+                "#00aba9",
+                "#2b5797",
+                "#e8c3b9"
+            ];
+
+            new Chart("employeeChart", {
+                type: "pie",
+                data: {
+                    labels: xValues,
+                    datasets: [{
+                        backgroundColor: barColors,
+                        data: yValues
+                    }]
+                },
+                options: {
+                    title: {
+                        display: true,
+                        text: "Employees by section"
+                    }
+                }
+            });
+        </script>
+    </body>
+    </html>
 </x-app-layout>
