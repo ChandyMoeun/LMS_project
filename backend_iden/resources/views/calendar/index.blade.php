@@ -1,12 +1,26 @@
 <x-app-layout>
     <main class="m-5 mt-20">
+        <div class="text-right pt-5">
+            @can('Calendar create')
+            <a href="{{ route('admin.calendar_workday.create') }}" class="bg-blue-500 text-white font-bold px-5 py-1 rounded focus:outline-none shadow hover:bg-blue-600 transition-colors">Add Work/time</a>
+            @endcan
+            
+        </div>
+
+        
+
+
+
+        <!-- Add your calendar HTML here -->
         <div class="card card-calendar">
             <div class="card-body p-3">
                 <div id="calendar"></div>
             </div>
         </div>
+         
 
-
+        
+        
     </main>
 </x-app-layout>
 
