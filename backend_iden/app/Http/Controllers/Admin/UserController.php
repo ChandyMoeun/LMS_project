@@ -45,6 +45,7 @@ class UserController extends Controller
     public function create()
     {
         $roles = Role::get();
+        
         return view('setting.user.new',['roles'=>$roles]);
     }
 
