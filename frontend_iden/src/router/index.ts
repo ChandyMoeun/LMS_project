@@ -36,12 +36,12 @@ const router = createRouter({
       }
     },
     {
-      path: '/supervisor_dashboard',
-      name: 'supervisor_dashboard',
+      path: '/approver_dashboard',
+      name: 'approver_dashboard',
       component: () => import('../views/Supervisor/SupervisorView.vue'),
       meta: {
         requiresAuth: true,
-        role: 'supervisor'
+        role: 'approver'
       }
     },
   ]
@@ -77,9 +77,9 @@ router.beforeEach(async (to, from, next) => {
       if (store.roles.includes('employee')) {
         return next('/employee_dashboard')
       }
-      if (store.roles.includes('supervisor')) {
+      if (store.roles.includes('approver')) {
         console.log(store.roles);
-        return next('/supervisor_dashboard')
+        return next('/approver_dashboard')
       }
     }
   } catch (error) {
