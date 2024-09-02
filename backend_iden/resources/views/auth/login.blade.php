@@ -1,36 +1,30 @@
 <x-guest-layout>
-    <div class="font-sans min-h-screen antialiased bg-gray-900 pt-24 pb-5">
-        <div class="flex flex-col justify-center sm:w-96 sm:m-auto mx-5 mb-5 space-y-8">
-          <h1 class="font-bold text-center text-4xl text-yellow-500">Users<span class="text-blue-500">Login</span></h1>
-            <!-- Session Status -->
-            <x-auth-session-status class="mb-4" :status="session('status')" />
-            <!-- Validation Errors -->
-            <x-auth-validation-errors class="mb-4" :errors="$errors" />
-          <form method="POST" action="{{ route('admin.login') }}">
-            @csrf
-            <div class="flex flex-col bg-white p-10 rounded-lg shadow space-y-6">
-              <h1 class="font-bold text-xl text-center">Sign in to your account</h1>
-
-              <div class="flex flex-col space-y-1">
-                <input type="email" name="email" id="email" class="border-2 rounded px-3 py-2 w-full focus:outline-none focus:border-blue-400 focus:shadow" placeholder="Email" :value="old('email')" required autofocus />
-              </div>
-
-              <div class="flex flex-col space-y-1">
-                <input type="password" name="password" id="password" class="border-2 rounded px-3 py-2 w-full focus:outline-none focus:border-blue-400 focus:shadow" placeholder="Password" required autocomplete="current-password"/>
-              </div>
-
-
-
-              <div class="flex flex-col-reverse sm:flex-row sm:justify-between items-center">
-
-                <button type="submit" class="bg-blue-500 text-white font-bold px-5 py-2 rounded focus:outline-none shadow hover:bg-blue-700 transition-colors m-auto">Log In</button>
-              </div>
-            </div>
-          </form>
-          <div class="flex justify-center text-gray-500 text-sm">
-            <p>Copyright <script>document.write(new Date().getFullYear());</script></p>
+  <div class="min-h-screen flex items-center justify-center" style="background-color: #ECECEC;">
+    <div class="bg-white rounded-lg shadow-lg overflow-hidden flex bg-gray-#F9F9F9">
+      <!-- Left section with image -->
+      <div class=" flex d-flex flex-col justify-center" style="width: 50%; ">
+        <img src="/images/login.png" alt="Login Illustration" class="object-cover" >
+        <p class=" flex mb-5 justify-center text-sm" style="color: #B7B7B7;">Sign in here to join iDEN leave management system.</p>
+      </div>
+      <!-- Right section with form -->
+      <div class="w-1/2 p-3 flex flex-col justify-center bg-gray-#F9F9F9">
+        <h1 class="font-bold text-4xl mr-5 mb-6 text-center"><B>SIGN IN</B></h1>
+        <form method="POST" action="{{ route('admin.login') }}" >
+          @csrf
+          <div class="mb-4 mr-3">
+            <label for="email" class="block text-gray-700">Email</label>
+            <input type="email" name="email" id="email" class="border border-gray-300 rounded w-full py-2 px-3 mt-2 focus:outline-none focus:border-blue-400" placeholder="Enter your email" required autofocus>
           </div>
-        </div>
+          <div class="mb-4 mr-3">
+            <label for="password" class="block text-gray-700">Password</label>
+            <input type="password" name="password" id="password" class="border border-gray-300 rounded w-full py-2 px-3 mt-2 focus:outline-none focus:border-blue-400" placeholder="Enter your password" required autocomplete="current-password">
+          </div>
+          <div class="flex justify-end items-center mb-4 mr-7">
+            <a href="/forgot-password" class="text-blue-500 text-sm">Forget password?</a>
+          </div>
+          <button type="submit" class="w-5px mt-5 bg-blue-500 text-white font-bold py-2 px-4 hover:bg-yellow-400 focus:outline-none focus:bg-blue-700 transition-colors" style=" border-radius: 5px">Sign in</button>
+        </form> 
+      </div>
     </div>
- 
+  </div>
 </x-guest-layout>
