@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\{
     EmployeeController,
     CalendarController,
     PositionController,
+    DepartmentController,
     AttendanceController,
     LeaveController,
     LeaveTypeController,
@@ -66,8 +67,14 @@ Route::namespace('App\Http\Controllers\Admin')->name('admin.')->prefix('admin')
         Route::resource('users', 'UserController');
         Route::resource('posts', 'PostController');
         Route::resource('employee', 'EmployeeController');
+
+        //=====>Calendar workday/time<=====
         Route::resource('calendar', 'CalendarController');
+        Route::resource('calendar_workday','CalendarWorkDayController');
+
+        //=====>Employee workday/time<=====
         Route::resource('position', 'PositionController');
+        Route::resource('department', 'DepartmentController');
         Route::resource('attendance', 'AttendanceController');
         Route::resource('leave', 'LeaveController');
         Route::resource('leavetype', 'LeaveTypeController');
@@ -77,10 +84,13 @@ Route::namespace('App\Http\Controllers\Admin')->name('admin.')->prefix('admin')
         Route::get('/mail', [MailSettingController::class, 'index'])->name('mail.index');
         Route::put('/mail-update/{mailsetting}', [MailSettingController::class, 'update'])->name('mail.update');
 
-        Route::get('/employee', [EmployeeController::class, 'index'])->name('employee.index');
-        Route::get('/calendar', [CalendarController::class, 'index'])->name('calendar.index');
+        // Route::get('/employee', [EmployeeController::class, 'index'])->name('employee.index');
+        // Route::get('/calendar', [CalendarController::class, 'index'])->name('calendar.index');
         Route::get('/position', [PositionController::class, 'index'])->name('position.index');
         Route::get('/attendance', [AttendanceController::class, 'index'])->name('attendance.index');
         Route::get('/leave', [LeaveController::class, 'index'])->name('leave.index');
         Route::get('/leavetype', [LeaveTypeController::class, 'index'])->name('leavetype.index');
+
+
+      
     });
