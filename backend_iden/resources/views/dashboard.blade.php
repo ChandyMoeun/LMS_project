@@ -3,9 +3,15 @@
     <div class="mt-20">
 
         <div class="container mx-auto px-6 py-8">
-            <!-- <div class="button" style="margin: 50px;">
-                <button onclick="ShowAlert(alertMsg)" style="background-color: #333; color:#fff; border:0; outline:0; width:120px; height:40px; margin:9px; cursor:pointer; ">alert</button>
-                <div id="taostBox" style="position: absolute; top:10%; right:2%; display:flex; align-items:flex-end; flex-direction:column; overflow:hidden; padding:20px"></div>
+            <div class="button" style="margin: 50px;">
+                <div id="taostBox" style="display: none; position: absolute; top:11%; right:2%; display:flex; align-items:flex-end; flex-direction:column; overflow:hidden; padding:20px">
+                    <div id="alert" role="alert" class="mb-4 relative flex w-full p-3 pr-5 text-sm text-white bg-yellow-400 rounded-md items-center">
+                        Welcom To Addmin Dashboard. How are you?
+                        <button onclick="HideAlert()" class="flex items-center justify-center transition-all w-8 h-8 rounded-md text-white hover:bg-white/10 active:bg-white/10 absolute" style="right: 10px;" type="button">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="h-5 w-5" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path></svg>
+                        </button>
+                    </div>
+                </div>
                 <style>
                     .taost {
                         background-color: #fff;
@@ -23,22 +29,22 @@
             </div>
             <script>
                 let taostBox = document.getElementById('taostBox');
-                let alertMsg = 'Welcom To Addmin Dashboard. How are you?'
 
-                function ShowAlert(msg) {
-                    let taost = document.createElement('div');
-                    taost.classList.add('taost');
-                    taost.innerHTML = msg;
-                    taostBox.appendChild(taost);
-
-                    if (msg.includes('alert')){
-                        taost.classList.add('alert');
-                    }
+                function ShowAlert() {
+                    taostBox.style.display = 'block';
+                    
                     setTimeout(() => {
-                        taostBox.removeChild(taost);
+                        taostBox.style.display = 'none'
                     }, 4000);
                 }
-            </script> -->
+
+                function HideAlert() {
+                    taostBox.style.display = 'none';
+                }
+
+                ShowAlert();
+
+            </script>
 
 
             <div class="Container p-2 d-flex justify-content-center" style="  width:100%">
