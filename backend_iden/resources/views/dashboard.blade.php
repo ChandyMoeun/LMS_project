@@ -209,7 +209,7 @@
                                     echo '<td>' . $employee['approver'] . '</td>';
                                     echo '<td>' . $employee['sub_approver'] . '</td>';
                                     echo '<td>' . $employee['status'] . '</td>';
-                                    echo '<td><a href="#" class="text-primary">More</a></td>';
+                                    echo '<td><a href="/admin/more" class="text-primary">More</a></td>';
                                     echo '</tr>';
                                 }
                                 ?>
