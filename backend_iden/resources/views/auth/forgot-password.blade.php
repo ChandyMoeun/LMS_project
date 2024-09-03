@@ -33,7 +33,7 @@
                                 <div class="form-group text-center mt-4">
                                     <button type="submit" class="w-5px mt-5 bg-red-500 text-red font-bold py-2 px-4 hover:bg-red-400 focus:outline-none focus:bg-red-700 transition-colors" style=" border-radius: 5px"><a href="/" style="text-decoration: none; color: white;">Back</a></button>
                                     <button type="submit" class="w-5px mt-5 bg-blue-500 text-white font-bold py-2 px-4 hover:bg-yellow-400 focus:outline-none focus:bg-blue-700 transition-colors" style=" border-radius: 5px">Next</button>
-
+                                </div>
                                 @error('email')
                                     <div class="alert alert-danger" role="alert">
                                         {{ $message }}
