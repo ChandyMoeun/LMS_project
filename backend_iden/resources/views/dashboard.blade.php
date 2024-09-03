@@ -167,9 +167,69 @@
                 }
             </style>
 
+<<<<<<< HEAD
             <div class="container mt-5">
                 <div class="section-header">
                     <h2><b>THIS WEEK </b></h2>
+=======
+            <body>
+
+                <div class="container mt-5">
+                    <div class="section-header">
+                        <h2><b>THIS WEEK </b></h2>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Profile</th>
+                                    <th>Em Name</th>
+                                    <th>Position</th>
+                                    <th>From | To </th>
+                                    <th>Approver</th>
+                                    <th>Sub-approver</th>
+                                    <th>Status</th>
+                                    <th>Detail</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php
+                                // Example data array
+                                $employees = [
+                                    [
+                                        'id' => 1,
+                                        'profile_img' => 'profile-pic-url',  // Replace with actual image URL
+                                        'name' => 'Kris Wang',
+                                        'position' => 'Front-end',
+                                        'from' => '28.08.2024',
+                                        'to' => '30.08.2024',
+                                        'approver' => 'Mr. Cat',
+                                        'sub_approver' => 'XXXXXX',
+                                        'status' => 'Pending'
+                                    ],
+                                    // Add more employees as needed...
+                                ];
+
+                                // Loop through each employee and generate table rows
+                                foreach ($employees as $employee) {
+                                    echo '<tr>';
+                                    echo '<td>' . $employee['id'] . '</td>';
+                                    echo '<td><img src="' . $employee['profile_img'] . '" alt="Profile Image" class="profile-img"></td>';
+                                    echo '<td>' . $employee['name'] . '</td>';
+                                    echo '<td>' . $employee['position'] . '</td>';
+                                    echo '<td>' . $employee['from'] . ' / ' . $employee['to'] . '</td>';
+                                    echo '<td>' . $employee['approver'] . '</td>';
+                                    echo '<td>' . $employee['sub_approver'] . '</td>';
+                                    echo '<td>' . $employee['status'] . '</td>';
+                                    echo '<td><a href="/admin/more" class="text-primary">More</a></td>';
+                                    echo '</tr>';
+                                }
+                                ?>
+                            </tbody>
+                        </table>
+                    </div>
+>>>>>>> Employee_management
                 </div>
                 <div class="table-responsive">
                     <table class="table table-striped">
