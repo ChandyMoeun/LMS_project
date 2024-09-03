@@ -58,8 +58,16 @@
                             <td class="p-3">{{ $employee->position->name}}</td>
                             <td class="p-3">
                                 <a href="#" class="text-gray-600 hover:text-gray-400">More</a>
-                                <a href="#" class="text-gray-600 hover:text-gray-400">Edit</a>
-                                <a href="#" class="text-gray-600 hover:text-gray-400">Delete</a>
+                                @can('Employee edit')
+                                <a href="{{route('admin.employee.edit',$employee->id)}}" class="ml-2 text-blue-600 hover:text-blue-400">Update</a>
+                                @endcan
+                                @can('Employee delete')
+                                <form action="{{ route('admin.employee.destroy', $employee->id) }}" method="POST" class="inline">
+                                    @csrf
+                                    @method('delete')
+                                    <button class="ml-2 text-red-600 hover:text-red-400">Delete</button>
+                                </form>
+                                @endcan
                             </td>
                         </tr>
                         @endforeach
