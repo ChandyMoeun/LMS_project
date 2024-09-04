@@ -14,13 +14,13 @@ class CalendarWorkDayController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    // function __construct()
-    // {
-    //     $this->middleware('role_or_permission:Calendar access|Calendar create|Calendar edit|Calendar delete', ['only' => ['index', 'show']]);
-    //     $this->middleware('role_or_permission:Calendar create', ['only' => ['create', 'store']]);
-    //     $this->middleware('role_or_permission:Calendar edit', ['only' => ['edit', 'update']]);
-    //     $this->middleware('role_or_permission:Calendar delete', ['only' => ['destroy']]);
-    // }
+    function __construct()
+    {
+        $this->middleware('role_or_permission:Calendar access|Calendar create|Calendar edit|Calendar delete', ['only' => ['index', 'show']]);
+        $this->middleware('role_or_permission:Calendar create', ['only' => ['create', 'store']]);
+        $this->middleware('role_or_permission:Calendar edit', ['only' => ['edit', 'update']]);
+        $this->middleware('role_or_permission:Calendar delete', ['only' => ['destroy']]);
+    }
 
     /**
      * Display a listing of the resource.
@@ -29,12 +29,13 @@ class CalendarWorkDayController extends Controller
      */
     public function index()
     {
-        // Fetch calendar workdays data from your model
+        // Fetch all records from the calendar_work_days table
         $calendarWorkDays = Calendar_work_day::all();
 
         // Pass the data to the view
         return view('calendar.index', compact('calendarWorkDays'));
     }
+
 
 
     /**
@@ -55,11 +56,12 @@ class CalendarWorkDayController extends Controller
      */
     public function store(Request $request)
     {
-        // $request->validate([
-        //     'date' => 'required|date',
-        //     'start_time' => 'required|date_format:H:i',
-        //     'end_time' => 'required|date_format:H:i|after:start_time',
-        // ]);
+        $request->validate([
+            'work_day' => 'required',
+            'start_time' => 'required',
+            'end_time' => 'required',
+            'day_type' => 'required',
+        ]);
 
         $data = $request->only(['start_time', 'end_time', 'work_day', 'day_type']);
         $data['user_id'] = Auth::user()->id; // Optional: Set the user_id if needed
@@ -77,7 +79,7 @@ class CalendarWorkDayController extends Controller
      */
     public function show(Calendar_work_day $calendarWorkDay)
     {
-        return view('calendar_workday.show', ['calendarWorkDay' => $calendarWorkDay]); // Adjust view accordingly
+        return view('calendar_workday.index', ['calendarWorkDays' => $calendarWorkDay]); // Adjust view accordingly
     }
 
     /**
@@ -86,10 +88,12 @@ class CalendarWorkDayController extends Controller
      * @param  Calendar_work_day  $calendarWorkDay
      * @return \Illuminate\Http\Response
      */
-    public function edit(Calendar_work_day $calendarWorkDay)
+    public function edit($id)
     {
-        return view('calendar_workday.edit', ['calendarWorkDay' => $calendarWorkDay]); // Adjust view accordingly
+        $calendarWorkDay = Calendar_work_day::findOrFail($id);
+        return view('calendar.edit', compact('calendarWorkDay'));
     }
+
 
     /**
      * Update the specified resource in storage.
@@ -98,18 +102,22 @@ class CalendarWorkDayController extends Controller
      * @param  Calendar_work_day  $calendarWorkDay
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Calendar_work_day $calendarWorkDay)
+    public function update(Request $request, $id)
     {
         $request->validate([
-            'date' => 'required|date',
-            'start_time' => 'required|date_format:H:i',
-            'end_time' => 'required|date_format:H:i|after:start_time',
+            'work_day' => 'required',
+            'start_time' => 'required',
+            'end_time' => 'required',
+            'day_type' => 'required',
         ]);
 
-        $calendarWorkDay->update($request->only(['date', 'start_time', 'end_time']));
+        $calendarWorkDay = Calendar_work_day::findOrFail($id);
+        $calendarWorkDay->update($request->all());
 
-        return redirect()->route('admin.calendar_workday.index')->withSuccess('Calendar workday updated successfully!');
+        return redirect()->route('admin.calendar_workday.index')->with('success', 'Calendar workday updated successfully!');
     }
+
+
 
     /**
      * Remove the specified resource from storage.
@@ -117,9 +125,15 @@ class CalendarWorkDayController extends Controller
      * @param  Calendar_work_day  $calendarWorkDay
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Calendar_work_day $calendarWorkDay)
+    public function destroy($id)
     {
+        // Find the Calendar_work_day by ID
+        $calendarWorkDay = Calendar_work_day::findOrFail($id);
+
+        // Delete the found record
         $calendarWorkDay->delete();
+
+        // Redirect back to the index with a success message
         return redirect()->route('admin.calendar_workday.index')->withSuccess('Calendar workday deleted successfully!');
     }
 }

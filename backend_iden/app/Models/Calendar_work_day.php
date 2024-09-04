@@ -8,10 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 class Calendar_work_day extends Model
 {
     use HasFactory;
+    protected $table = 'calendar_work_days';
 
     protected $fillable = ['start_time', 'end_time','work_day','day_type'];
 
-    public function calendarGroup(){
-        return $this->belongsTo(CalendarGroup::class, 'calendar_id');
+    
+    public function calendarGroups()
+    {
+        return $this->hasMany(CalendarGroup::class, 'calendar_work_day_id');
     }
 }

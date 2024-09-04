@@ -39,8 +39,8 @@
                                 <td class="py-4 px-6 border-b border-grey-light">{{ $employee->joined_date }}</td>
                                 <td class="py-4 px-6 border-b border-grey-light">{{ $employee->entitled_calendar }}</td>
                                 <td class="py-4 px-6 border-b border-grey-light">{{ $employee->reporting_line }}</td>
-                                <td class="py-4 px-6 border-b border-grey-light">{{ $employee->position->name}}</td>
-                                <td class="py-4 px-6 border-b border-grey-light">{{ $employee->department->name }}</td>
+                                <td class="py-4 px-6 border-b border-grey-light">{{ $employee->position->name ?? 'No position available'}}</td>
+                                <td class="py-4 px-6 border-b border-grey-light">{{ $employee->department->name ?? 'No position available' }}</td>
                                 <td class="py-4 px-6 border-b border-grey-light">
                                     @foreach($employee->roles as $role)
                                     <span class="inline-flex items-center justify-center px-2 py-1 mr-2 text-xs font-bold leading-none text-white bg-gray-500 rounded-full">{{ $role->name }}</span>
@@ -48,7 +48,7 @@
                                 </td>
                                 <td class="py-4 px-6 border-b border-grey-light text-right">
                                     @can('Employee edit')
-                                    <a href="{{route('admin.employee.edit',$employee->id)}}" class="text-grey-lighter font-bold py-1 px-3 rounded text-xs bg-green hover:bg-green-dark text-blue-400">Edit</a>
+                                    <a href="{{route('admin.employee.edit', $employee)}}" class="text-grey-lighter font-bold py-1 px-3 rounded text-xs bg-green hover:bg-green-dark text-blue-400">Edit</a>
                                     @endcan
 
                                     @can('Employee delete')
