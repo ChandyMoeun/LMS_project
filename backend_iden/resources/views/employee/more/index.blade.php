@@ -1,8 +1,17 @@
 <x-app-layout>
+
     <head>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     </head>
     <div class="container mt-20" style="padding: 5%;">
+        <a href="/admin/dashboard">
+            <svg class="w-6 h-6 text-gray-800 dark:text-white hover:text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5H1m0 0 4 4M1 5l4-4" />
+            </svg>
+        </a>
+        <div class="flex border-b-2 border-gray-300 h-20 items-center mb-10">
+            <h1 class="font-bold text-3xl mt-3 hover:text-yellow-500"><b>Update Employee </b></h1>
+        </div>
         <div class="card shadow-sm mx-auto px-4 py-6 bg-white text-dark">
             <div class="card-body">
                 <div class="d-flex justify-content-center">
