@@ -11,8 +11,8 @@
             <!-- Search and Filter -->
             <div class="flex justify-between mb-4">
                 <input type="text" placeholder="Search employee by name..." class="border rounded p-2 h-10 w-1/3">
-                <div class="flex items-center space-x-2">
-                    <select class="border rounded p-2">
+                <div class="flex items-center justify-end space-x-2 w-1/3">
+                    <select class="border rounded p-2 h-9 w-1/3">
                         <option>All positions</option>
                         <option>Front-end</option>
                         <option>Back-end</option>
@@ -48,7 +48,7 @@
 
                         @can('Employee access')
                         @foreach($employees as $employee)
-                        <tr class="bg-gray-100 border-b border-gray-200">
+                        <tr class="bg-gray-100 border-b border-gray-200 ">
                             <td class="p-3 text-center">{{ $employee->staff_id }}</td>
                             <td class="p-3">
                                 <img src="https://via.placeholder.com/30" alt="Profile" class="rounded-full w-8 h-8">
