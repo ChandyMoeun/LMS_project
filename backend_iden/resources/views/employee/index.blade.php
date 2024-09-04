@@ -1,7 +1,7 @@
 <x-app-layout>
 
     <main class="mt-20">
-        <div class="p-6 bg-gray-50">
+        <div class="p-10 ">
             <!-- Employee Management Header -->
             <div class="mb-6">
                 <h2 class="text-lg font-semibold">Employee Management</h2>
@@ -10,7 +10,7 @@
 
             <!-- Search and Filter -->
             <div class="flex justify-between mb-4">
-                <input type="text" placeholder="Search employee by name..." class="border rounded p-2 w-1/3">
+                <input type="text" placeholder="Search employee by name..." class="border rounded p-2 h-10 w-1/3">
                 <div class="flex items-center space-x-2">
                     <select class="border rounded p-2">
                         <option>All positions</option>
@@ -36,12 +36,12 @@
                 <table class="w-full bg-white shadow-md rounded">
                     <thead>
                         <tr class="bg-gray-800 text-white">
-                            <th class="p-3 text-left">Staff_id</th>
+                            <th class="p-3 text-center">Staff_id</th>
                             <th class="p-3 text-left">Profile</th>
-                            <th class="p-3 text-left">Name</th>
-                            <th class="p-3 text-left">Email</th>
-                            <th class="p-3 text-left">Position</th>
-                            <th class="p-3 text-left">Action</th>
+                            <th class="p-3 text-center">Name</th>
+                            <th class="p-3 text-center">Email</th>
+                            <th class="p-3 text-center">Position</th>
+                            <th class="p-3 text-center">Action</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -49,14 +49,14 @@
                         @can('Employee access')
                         @foreach($employees as $employee)
                         <tr class="bg-gray-100 border-b border-gray-200">
-                            <td class="p-3">{{ $employee->staff_id }}</td>
+                            <td class="p-3 text-center">{{ $employee->staff_id }}</td>
                             <td class="p-3">
                                 <img src="https://via.placeholder.com/30" alt="Profile" class="rounded-full w-8 h-8">
                             </td>
-                            <td class="p-3">{{ $employee->full_name }}</td>
-                            <td class="p-3 text-blue-600">{{ $employee->email }}</td>
-                            <td class="p-3">{{ $employee->position->name}}</td>
-                            <td class="p-3">
+                            <td class="p-3 text-center">{{ $employee->full_name }}</td>
+                            <td class="p-3 text-blue-600 text-center">{{ $employee->email }}</td>
+                            <td class="p-3 text-center">{{ $employee->position->name}}</td>
+                            <td class="p-3 text-center">
                                 <a href="#" class="text-gray-600 hover:text-gray-400">More</a>
                                 @can('Employee edit')
                                 <a href="{{route('admin.employee.edit',$employee->id)}}" class="ml-2 text-blue-600 hover:text-blue-400">Update</a>
