@@ -2,7 +2,7 @@
 
     <main class="mt-20">
         <!-- Employee Management Header -->
-        <div class="d-flex border-b-2 border-gray-300 h-20 pl-6 items-center mb-10">
+        <div class="d-flex border-b-2 border-gray-300 h-20 pl-20 items-center mb-10">
             <h1 class="font-bold text-3xl mt-5 w-1/3 hover:text-yellow-400"><b>Employee Management</b></h1>
             <p class="text-gray-600 pl-6">Total Employees: </p>
         </div>
@@ -18,18 +18,15 @@
                         <option>Full-stack</option>
                     </select>
                     <button class="p-2 flex items-center bg-blue-500 text-white font-bold px-2 py-1 rounded focus:outline-none shadow hover:bg-yellow-500 transition-colors">
-
                         @can('Employee create')
                         <a href="{{route('admin.employee.create')}}" style="display: flex; justify-content: space-evenly; gap:5%;">
                             <svg class="w-5 h-5 " fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
                             </svg> Add</a>
                         @endcan
-
                     </button>
                 </div>
             </div>
-
             <!-- Employee Table -->
             <div class="overflow-x-auto">
                 <table class="w-full bg-white shadow-md rounded">
@@ -44,7 +41,6 @@
                         </tr>
                     </thead>
                     <tbody>
-
                         @can('Employee access')
                         @foreach($employees as $employee)
                         <tr class="bg-gray-100 border-b border-gray-200 ">
