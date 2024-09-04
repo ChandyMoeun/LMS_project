@@ -103,10 +103,12 @@ class EmployeeController extends Controller
      */
     public function edit(Employee $employee)
     {
+        $positions = Position::all(); // Fetch all positions
+        $departments = Department::all(); // Fetch all departments
         $roles = Role::get();
         $employee->roles;
         
-        return view('employee.edit', ['employee' => $employee, 'roles' => $roles]);
+        return view('employee.edit', ['employee' => $employee, 'roles' => $roles, 'positions' => $positions, 'departments' => $departments]);
     }
 
     /**
@@ -118,27 +120,30 @@ class EmployeeController extends Controller
      */
     public function update(Request $request, Employee $employee)
     {
-        $validated = $request->validate([
-            'staff_id' => 'required|unique:employees,staff_id,' . $employee->id,
-            'full_name' => 'required',
-            'email' => 'required|email|unique:employees,email,' . $employee->id,
-            'dob' => 'required|date',
-            'position_id' => 'required|integer',
-            'department_id' => 'required|integer',
-        ]);
+        // $validated = $request->validate([
+        //     'staff_id' => 'required',
+        //     'full_name' => 'required',
+        //     'email' => 'required',
+        //     'dob' => 'required',
+        //     'position_id' => 'required',
+        //     'department_id' => 'required',
+        // ]);
 
-        if ($request->password != null) {
-            $request->validate([
-                'password' => 'required|confirmed'
-            ]);
-            $validated['password'] = bcrypt($request->password);
-        }
+        // if ($request->password != null) {
+        //     $request->validate([
+        //         'password' => 'required|confirmed'
+        //     ]);
+        //     $validated['password'] = bcrypt($request->password);
+        // }
 
-        $employee->update($validated);
+        // $employee->update($validated);
 
-        $employee->syncRoles($request->roles);
 
-        return redirect()->back()->withSuccess('Employee updated successfully!');
+        // $employee->syncRoles($request->roles);
+        $Em = Employee::where('id', $employee->id)->first();
+        $Em->update($request->all());
+        
+        return redirect()->back()->withSuccess($Em);
     }
 
     /**

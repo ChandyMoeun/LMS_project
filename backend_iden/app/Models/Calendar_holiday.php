@@ -9,16 +9,12 @@ class Calendar_holiday extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'holiday_name',
-        'from_date',
-        'to_date',
-        'holiday',
-        'description',
-    ];
+    protected $table = 'calendar_holidays'; // Ensure this matches your table name
+    protected $fillable = ['holiday_name', 'from_date', 'to_date', 'holiday', 'description'];
 
-    public function calendarGroup()
+
+    public function calendarGroups()
     {
-        return $this->belongsTo(CalendarGroup::class);
+        return $this->hasMany(CalendarGroup::class, 'calendar_holiday_id');
     }
 }

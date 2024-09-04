@@ -1,29 +1,31 @@
 <?php
 
 namespace App\Http\Controllers\Admin;
+
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Employee;
-use Auth;
+use App\Models\CalendarGroup;
 
-class CalendarController extends Controller
+class CalendarGroupController extends Controller
 {
     /**
      * Display a listing of the resource.
-     * @return \Illuminate\Http\Response
      */
-
-     function __construct()
-     {
-         $this->middleware('role_or_permission:Calendar access|Calendar create|Calendar edit|Calendar delete', ['only' => ['index','show']]);
-         $this->middleware('role_or_permission:Calendar create', ['only' => ['create','store']]);
-         $this->middleware('role_or_permission:Calendar edit', ['only' => ['edit','update']]);
-         $this->middleware('role_or_permission:Calendar delete', ['only' => ['destroy']]);
-     }
-
     public function index()
     {
-        // return view('calendar.index');
+        // Retrieve all CalendarGroup records with their related Holiday and WorkDay
+        $calendarGroups = CalendarGroup::with(['holiday', 'workDay'])->get();
+
+        // Pass the data to the view
+        return view('calendar.group', compact('calendarGroups'));
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create()
+    {
+        //
     }
 
     /**
@@ -38,6 +40,14 @@ class CalendarController extends Controller
      * Display the specified resource.
      */
     public function show(string $id)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(string $id)
     {
         //
     }
