@@ -21,7 +21,7 @@
                     <input id="full_name" type="text" name="full_name" value="{{ old('full_name', $employee->full_name) }}"
                       placeholder="Enter Full Name" class="px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-200"
                     />
-                  </div>
+                  </div>  
 
                   <!-- Gender -->
                   <div class="flex flex-col space-y-2">
