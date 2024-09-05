@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\Admin;
+
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Employee;
@@ -14,13 +15,13 @@ class LeavePfDetailController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-     function __construct()
-     {
-         $this->middleware('role_or_permission:LeaveType access|LeaveType create|LeaveType edit|LeaveType delete', ['only' => ['index','show']]);
-         $this->middleware('role_or_permission:LeaveType create', ['only' => ['create','store']]);
-         $this->middleware('role_or_permission:LeaveType edit', ['only' => ['edit','update']]);
-         $this->middleware('role_or_permission:LeaveType delete', ['only' => ['destroy']]);
-     }
+    function __construct()
+    {
+        $this->middleware('role_or_permission:LeaveType access|LeaveType create|LeaveType edit|LeaveType delete', ['only' => ['index', 'show']]);
+        $this->middleware('role_or_permission:LeaveType create', ['only' => ['create', 'store']]);
+        $this->middleware('role_or_permission:LeaveType edit', ['only' => ['edit', 'update']]);
+        $this->middleware('role_or_permission:LeaveType delete', ['only' => ['destroy']]);
+    }
 
     public function index()
     {
@@ -57,5 +58,12 @@ class LeavePfDetailController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function employeeProfile(string $id)
+    {
+        $employee = Employee::find($id);
+
+        return view('employee.profile.index', ['employee' => $employee]);
     }
 }

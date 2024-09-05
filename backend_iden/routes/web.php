@@ -106,8 +106,7 @@ Route::namespace('App\Http\Controllers\Admin')->name('admin.')->prefix('admin')
 
         //more//
         Route::get('/more', [LeavePfDetailController::class, 'index'])->name('more.index');
-
-
+        Route::get('/employee/profile/{id}', [LeavePfDetailController::class, 'employeeProfile']);
       
     });
     
