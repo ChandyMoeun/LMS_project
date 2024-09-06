@@ -42,9 +42,10 @@
                     </div>
                 </div>
 
-                <div class="flex justify-center p-4">
+                <div class="flex justify-center gap-4 p-4">
                     <button type="submit" class="w-5px mt-5 bg-red-500 text-red font-bold py-2 px-4 hover:bg-red-400 focus:outline-none focus:bg-red-700 transition-colors" style=" border-radius: 5px"><a href="/admin/employee" style="text-decoration: none; color: white;">Back</a></button>
-                    <button type="submit" class="w-5px mt-5 bg-blue-500 text-white font-bold py-2 px-4 hover:bg-yellow-400 focus:outline-none focus:bg-blue-700 transition-colors" style=" border-radius: 5px"><a href="/admin/employee/{id}/edit" style="text-decoration: none; color: white;">Edit</a></button>
+                    <button type="submit" class="w-5px mt-5 bg-blue-500 text-white font-bold py-2 px-4 hover:bg-yellow-400 focus:outline-none focus:bg-blue-700 transition-colors" style=" border-radius: 5px">@can('Employee edit')
+                                   <a href="{{route('admin.employee.edit',$employee->id)}}" style="text-decoration: none; color: white;">Edit</a></button>@endcan 
                 </div>
             </div>
         </div>
