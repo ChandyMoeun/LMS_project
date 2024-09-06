@@ -4,7 +4,7 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     </head>
     <div class="container mt-20" style="padding: 5%;">
-        {{ $employee}}
+       <!-- {{ $employee}} -->
         <a href="/admin/employee">
             <svg class="w-6 h-6 text-gray-800 dark:text-white hover:text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5H1m0 0 4 4M1 5l4-4" />
@@ -17,7 +17,7 @@
         <div class="container mx-auto p-6">
             <div class="max-w-4xl mx-auto bg-white rounded-lg shadow-md">
                 <div class="flex items-center justify-center p-6 bg-yellow-200">
-                    <img src="{{ asset('path-to-image.jpg') }}" alt="Profile Image" class="w-32 h-32 bg-green-200">
+                    <img src="{{ asset('path-to-image.jpg') }}" alt="Profile Image" class="w-32 h-32 bg-gray-200">
                 </div>
                 <div class="d-flex justify-around gap-4 p-6 mt-3">
                     <!-- Left column -->
