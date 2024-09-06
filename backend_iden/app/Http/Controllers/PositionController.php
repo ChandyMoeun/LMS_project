@@ -1,18 +1,18 @@
 <?php
 
-namespace App\Http\Controllers\Supervisor;
+namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
+use App\Models\Position;
 use Illuminate\Http\Request;
 
-class SupervisorController extends Controller
+class PositionController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return view('supervisor.index');
+        //
     }
 
     /**
@@ -26,7 +26,7 @@ class SupervisorController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Position $position)
     {
         //
     }
@@ -34,7 +34,7 @@ class SupervisorController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Position $position)
     {
         //
     }
@@ -42,7 +42,7 @@ class SupervisorController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Position $position)
     {
         //
     }
