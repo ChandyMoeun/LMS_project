@@ -13,12 +13,11 @@ return new class extends Migration
     {
         Schema::create('leave_types', function (Blueprint $table) {
             $table->id();
-            $table->string('leave_name', 255);
+            $table->string('leave_name');
+            $table->unsignedBigInteger('employee_id');
             $table->boolean('requires_attachment');
             $table->boolean('auto_increase_entitlement');
-            $table->integer('increase_rate')->nullable(); // Rate at which entitlement increases (e.g., days/year)
-            $table->boolean('required_hr_approval')->default(false);
-            $table->string('hr_approver_ids')->nullable(); 
+            $table->integer('increase_rate');
             $table->timestamps();
         });
     }

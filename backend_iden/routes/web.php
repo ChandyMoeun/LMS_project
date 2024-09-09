@@ -15,6 +15,7 @@ use App\Http\Controllers\Admin\{
     LeaveController,
     LeaveTypeController,
     LeavePfDetailController
+    
 };
 
 /*
@@ -71,7 +72,7 @@ Route::namespace('App\Http\Controllers\Admin')->name('admin.')->prefix('admin')
         Route::resource('users', 'UserController');
         Route::resource('posts', 'PostController');
         Route::resource('employee', 'EmployeeController');
-        
+
         //=====>Calendar Group<=====
         Route::resource('calendar_group', 'CalendarGroupController');
         //=====>Calendar workday/time<=====
@@ -85,28 +86,32 @@ Route::namespace('App\Http\Controllers\Admin')->name('admin.')->prefix('admin')
         Route::resource('department', 'DepartmentController');
         Route::resource('attendance', 'AttendanceController');
         Route::resource('leave', 'LeaveController');
+        //=====>LeaveType<=====
         Route::resource('leavetype', 'LeaveTypeController');
+
+        //=====>approver or reject route<====
+        Route::post('admin/leave/{leaveRequest}/approve', [LeaveController::class, 'approve'])->name('leave.approve');
+        Route::post('admin/leave/{leaveRequest}/reject', [LeaveController::class, 'reject'])->name('leave.reject');
+
+       
+
 
         Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
         Route::put('/profile-update', [ProfileController::class, 'update'])->name('profile.update');
         Route::get('/mail', [MailSettingController::class, 'index'])->name('mail.index');
         Route::put('/mail-update/{mailsetting}', [MailSettingController::class, 'update'])->name('mail.update');
 
-        // Route::get('/employee', [EmployeeController::class, 'index'])->name('employee.index');
-        // Route::get('/calendar', [CalendarController::class, 'index'])->name('calendar.index');
 
 
-        //=====>Calendar workday/time<=====
-        // Route::get('/calendar', [CalendarWorkDayController::class, 'index'])->name('admin.calendar_workday.index');
 
-        Route::get('/position', [PositionController::class, 'index'])->name('position.index');
-        Route::get('/attendance', [AttendanceController::class, 'index'])->name('attendance.index');
-        Route::get('/leave', [LeaveController::class, 'index'])->name('leave.index');
-        Route::get('/leavetype', [LeaveTypeController::class, 'index'])->name('leavetype.index');
+
+        // Route::get('/position', [PositionController::class, 'index'])->name('position.index');
+        // Route::get('/attendance', [AttendanceController::class, 'index'])->name('attendance.index');
+        // Route::get('/leave', [LeaveController::class, 'index'])->name('leave.index');
+        // Route::get('/leavetype', [LeaveTypeController::class, 'index'])->name('leavetype.index');
 
         //more//
         Route::get('/more', [LeavePfDetailController::class, 'index'])->name('more.index');
         Route::get('/employee/profile/{id}', [LeavePfDetailController::class, 'employeeProfile']);
       
     });
-    

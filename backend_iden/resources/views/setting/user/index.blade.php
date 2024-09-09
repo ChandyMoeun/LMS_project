@@ -22,7 +22,7 @@
                     @can('User access')
                       @foreach($users as $user)
                       <tr class="hover:bg-grey-lighter">
-                        <td class="py-4 px-6 border-b border-grey-light">{{ $user->name }}</td>
+                        <td class="py-4 px-6 border-b border-grey-light">{{ $user->full_name }}</td>
                         <td class="py-4 px-6 border-b border-grey-light">
                             @foreach($user->roles as $role)
                               <span class="inline-flex items-center justify-center px-2 py-1 mr-2 text-xs font-bold leading-none text-white bg-gray-500 rounded-full">{{ $role->name }}</span>

@@ -43,12 +43,27 @@
                   </select>
                 </div>
 
-                <!-- Email -->
-                <div class="flex flex-col space-y-2">
-                  <label for="email" class="text-gray-700 select-none font-medium ml-3">Email</label>
-                  <input id="email" type="email" name="email" value="{{ old('email', $employee->email) }}"
-                    placeholder="Enter Email" class="px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-200" />
-                </div>
+                  <!-- Email -->
+                  <div class="flex flex-col space-y-2">
+                    <label for="email" class="text-gray-700 select-none font-medium">Email</label>
+                    <input id="email" type="email" name="email" value="{{ old('email', $employee->email) }}"
+                      placeholder="Enter Email" class="px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-200"
+                    />
+                  </div>
+                  
+                  <!-- Password -->
+                  <div class="flex flex-col space-y-2">
+                    <label for="password" class="text-gray-700 select-none font-medium">Password</label>
+                    <input id="password" type="password" name="password" value="{{old('password')}}" placeholder="Enter Password" class="px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-200"
+                    />
+                  </div>
+                  
+                  <!-- Confirm Password -->
+                  <div class="flex flex-col space-y-2">
+                    <label for="password_confirmation" class="text-gray-700 select-none font-medium">Confirm Password</label>
+                    <input id="password_confirmation" type="password" name="password_confirmation" placeholder="Re-enter Password" class="px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-200"
+                    />
+                  </div>
 
                 <!-- Password -->
                 <div class="flex flex-col space-y-2">

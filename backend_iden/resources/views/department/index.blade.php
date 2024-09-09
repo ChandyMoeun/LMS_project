@@ -11,7 +11,7 @@
         </div>
             <div class="text-right">
                 @can('Department create')
-                <a href="{{ route('admin.department.create') }}" class="bg-blue-500 text-white font-bold px-5 py-1 rounded focus:outline-none shadow hover:bg-blue-600 transition-colors">New Department</a>
+                <a href="{{ route('admin.department.create') }}" class="bg-blue-500 text-white font-bold px-5 py-1 rounded focus:outline-none shadow hover:bg-blue-600 transition-colors">Add New</a>
                 @endcan
             </div>
 
