@@ -8,19 +8,19 @@ use Illuminate\Database\Eloquent\Model;
 class CalendarGroup extends Model
 {
     use HasFactory;
-    protected $fillable = ['name'];
+    protected $fillable = ['calendar_name','for_year','active','calendar_holiday_id','calendar_work_dia_id'];
     
     public function users(){
         return $this->belongsToMany(User::class,'calendar_group_user');
     }
 
-    public function calendarWorkDay()
+    public function workDay()
     {
-        return $this->belongsTo(Calendar_work_day::class);
+        return $this->belongsTo(Calendar_work_day::class, 'calendar_work_day_id');
     }
 
-    public function calendarHolidays()
+    public function holiday()
     {
-        return $this->hasMany(Calendar_holiday::class);
+        return $this->belongsTo(Calendar_holiday::class, 'calendar_holiday_id');
     }
 }

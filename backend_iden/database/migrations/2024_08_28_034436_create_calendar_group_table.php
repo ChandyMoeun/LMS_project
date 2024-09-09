@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('calendar_group', function (Blueprint $table) {
+        Schema::create('calendar_groups', function (Blueprint $table) {
             $table->id();
             $table->string('calendar_name'); // Calendar name
             $table->integer('for_year'); // Year for which the calendar is applicable
@@ -27,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('calendar_group');
+        Schema::dropIfExists('calendar_groups');
     }
 };

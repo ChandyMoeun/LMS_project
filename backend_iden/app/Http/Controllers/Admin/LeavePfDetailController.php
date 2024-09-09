@@ -1,29 +1,31 @@
 <?php
 
 namespace App\Http\Controllers\Admin;
+
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Employee;
 use Auth;
 
-class CalendarController extends Controller
+
+class LeavePfDetailController extends Controller
 {
     /**
      * Display a listing of the resource.
      * @return \Illuminate\Http\Response
      */
 
-     function __construct()
-     {
-         $this->middleware('role_or_permission:Calendar access|Calendar create|Calendar edit|Calendar delete', ['only' => ['index','show']]);
-         $this->middleware('role_or_permission:Calendar create', ['only' => ['create','store']]);
-         $this->middleware('role_or_permission:Calendar edit', ['only' => ['edit','update']]);
-         $this->middleware('role_or_permission:Calendar delete', ['only' => ['destroy']]);
-     }
+    function __construct()
+    {
+        $this->middleware('role_or_permission:LeaveType access|LeaveType create|LeaveType edit|LeaveType delete', ['only' => ['index', 'show']]);
+        $this->middleware('role_or_permission:LeaveType create', ['only' => ['create', 'store']]);
+        $this->middleware('role_or_permission:LeaveType edit', ['only' => ['edit', 'update']]);
+        $this->middleware('role_or_permission:LeaveType delete', ['only' => ['destroy']]);
+    }
 
     public function index()
     {
-        // return view('calendar.index');
+        return view('employee.more.index');
     }
 
     /**
@@ -56,5 +58,12 @@ class CalendarController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function employeeProfile(string $id)
+    {
+        $employee = Employee::find($id);
+
+        return view('employee.profile.index', ['employee' => $employee]);
     }
 }

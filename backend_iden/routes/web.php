@@ -6,11 +6,15 @@ use App\Http\Controllers\Admin\{
     MailSettingController,
     EmployeeController,
     CalendarController,
+    CalendarWorkDayController,
+    CalendarHolidayController,
+    CalendarGroupController,
     PositionController,
     DepartmentController,
     AttendanceController,
     LeaveController,
     LeaveTypeController,
+    LeavePfDetailController
 };
 
 /*
@@ -67,10 +71,14 @@ Route::namespace('App\Http\Controllers\Admin')->name('admin.')->prefix('admin')
         Route::resource('users', 'UserController');
         Route::resource('posts', 'PostController');
         Route::resource('employee', 'EmployeeController');
-
+        
+        //=====>Calendar Group<=====
+        Route::resource('calendar_group', 'CalendarGroupController');
         //=====>Calendar workday/time<=====
-        Route::resource('calendar', 'CalendarController');
-        Route::resource('calendar_workday','CalendarWorkDayController');
+        // Route::resource('calendar', 'CalendarController');
+        Route::resource('calendar_workday', 'CalendarWorkDayController');
+        //=====>Calendar Holiday<=====
+        Route::resource('calendar_holiday', 'CalendarHolidayController');
 
         //=====>Employee workday/time<=====
         Route::resource('position', 'PositionController');
@@ -86,11 +94,19 @@ Route::namespace('App\Http\Controllers\Admin')->name('admin.')->prefix('admin')
 
         // Route::get('/employee', [EmployeeController::class, 'index'])->name('employee.index');
         // Route::get('/calendar', [CalendarController::class, 'index'])->name('calendar.index');
+
+
+        //=====>Calendar workday/time<=====
+        // Route::get('/calendar', [CalendarWorkDayController::class, 'index'])->name('admin.calendar_workday.index');
+
         Route::get('/position', [PositionController::class, 'index'])->name('position.index');
         Route::get('/attendance', [AttendanceController::class, 'index'])->name('attendance.index');
         Route::get('/leave', [LeaveController::class, 'index'])->name('leave.index');
         Route::get('/leavetype', [LeaveTypeController::class, 'index'])->name('leavetype.index');
 
-
+        //more//
+        Route::get('/more', [LeavePfDetailController::class, 'index'])->name('more.index');
+        Route::get('/employee/profile/{id}', [LeavePfDetailController::class, 'employeeProfile']);
       
     });
+    
