@@ -13,9 +13,12 @@ class AddProfileToUsersTable extends Migration
      */
     public function up()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->string('profile')->after('email')->nullable();
-        });
+        // Check if the 'profile' column does not exist before adding it
+        if (!Schema::hasColumn('employees', 'profile')) {
+            Schema::table('employees', function (Blueprint $table) {
+                $table->string('profile')->nullable()->after('email');
+            });
+        }
     }
 
     /**
@@ -25,8 +28,11 @@ class AddProfileToUsersTable extends Migration
      */
     public function down()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('profile');
+        Schema::table('employees', function (Blueprint $table) {
+            // Drop the column only if it exists
+            if (Schema::hasColumn('employees', 'profile')) {
+                $table->dropColumn('profile');
+            }
         });
     }
 }

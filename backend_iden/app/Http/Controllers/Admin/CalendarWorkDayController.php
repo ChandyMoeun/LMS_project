@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Calendar_work_day;
+use App\Models\Calendar_holiday;
 use Auth;
 
 class CalendarWorkDayController extends Controller
@@ -32,9 +33,13 @@ class CalendarWorkDayController extends Controller
         // Fetch all records from the calendar_work_days table
         $calendarWorkDays = Calendar_work_day::all();
 
-        // Pass the data to the view
-        return view('calendar.index', compact('calendarWorkDays'));
+        // Fetch all records from the calendar_holidays table
+        $calendarHolidays = Calendar_holiday::all();
+
+        // Pass both workdays and holidays data to the view
+        return view('calendar.index', compact('calendarWorkDays', 'calendarHolidays'));
     }
+
 
 
 

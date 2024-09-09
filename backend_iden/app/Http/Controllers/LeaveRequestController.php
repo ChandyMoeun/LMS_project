@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Calendar_holiday;
+use App\Models\LeaveRequest;
 use Illuminate\Http\Request;
 
-class CalendarHolidayController extends Controller
+class LeaveRequestController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -34,7 +34,7 @@ class CalendarHolidayController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Calendar_holiday $calendar_holiday)
+    public function show(LeaveRequest $leaveRequest)
     {
         //
     }
@@ -42,7 +42,7 @@ class CalendarHolidayController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Calendar_holiday $calendar_holiday)
+    public function edit(LeaveRequest $leaveRequest)
     {
         //
     }
@@ -50,7 +50,7 @@ class CalendarHolidayController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Calendar_holiday $calendar_holiday)
+    public function update(Request $request, LeaveRequest $leaveRequest)
     {
         //
     }
@@ -58,7 +58,7 @@ class CalendarHolidayController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Calendar_holiday $calendar_holiday)
+    public function destroy(LeaveRequest $leaveRequest)
     {
         //
     }

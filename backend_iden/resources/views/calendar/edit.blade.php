@@ -1,5 +1,5 @@
 <x-app-layout>
-    <div class="container mx-auto px-6 py-8">
+    <div class="container mx-auto px-6 py-8 mt-20">
         <div class="bg-white shadow-md rounded-lg p-6">
             <form method="POST" action="{{ route('admin.calendar_workday.update', $calendarWorkDay->id) }}">
                 @csrf
@@ -11,13 +11,13 @@
                     <select id="work_day" name="work_day"
                         class="px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-200">
                         @foreach(['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'] as $day)
-                            <option value="{{ $day }}" {{ $calendarWorkDay->work_day == $day ? 'selected' : '' }}>
-                                {{ $day }}
-                            </option>
+                        <option value="{{ $day }}" {{ $calendarWorkDay->work_day == $day ? 'selected' : '' }}>
+                            {{ $day }}
+                        </option>
                         @endforeach
                     </select>
                     @error('work_day')
-                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                    <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                     @enderror
                 </div>
 
@@ -27,7 +27,7 @@
                     <input id="start_time" type="time" name="start_time" value="{{ $calendarWorkDay->start_time }}"
                         class="px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-200" />
                     @error('start_time')
-                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                    <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                     @enderror
                 </div>
 
@@ -37,7 +37,7 @@
                     <input id="end_time" type="time" name="end_time" value="{{ $calendarWorkDay->end_time }}"
                         class="px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-200" />
                     @error('end_time')
-                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                    <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                     @enderror
                 </div>
 
@@ -51,12 +51,17 @@
                         <option value="afternoon" {{ $calendarWorkDay->day_type == 'afternoon' ? 'selected' : '' }}>Afternoon</option>
                     </select>
                     @error('day_type')
-                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                    <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                     @enderror
                 </div>
 
-                <!-- Submit Button -->
-                <div class="text-center mt-8">
+                <!-- form Button -->
+                <div class="flex justify-start space-x-4 mt-4">
+                    <a href="{{ route('admin.calendar_workday.index') }}"
+                        class="bg-gray-500 text-white font-bold px-5 py-2 rounded-lg shadow-md hover:bg-gray-600 transition-colors focus:outline-none focus:ring-2 focus:ring-gray-300">
+                        Back
+                    </a>
+                    <!-- Update Button -->
                     <button type="submit" class="bg-blue-500 text-white font-bold px-5 py-2 rounded focus:outline-none shadow hover:bg-blue-600 transition-colors">
                         Update
                     </button>

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -11,9 +12,11 @@ use Spatie\Permission\Traits\HasRoles;
 class Employee extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable, HasRoles;
-    use HasRoles;
 
-    protected $guard_name = 'web';
+
+    protected $guard_name = 'web';  // Specify the guard
+
+    protected $table = 'employees';
 
     /**
      * The attributes that are mass assignable.
@@ -22,17 +25,18 @@ class Employee extends Authenticatable
      */
     protected $fillable = [
         'staff_id',
-        'full_name',
         'gender',
+        'full_name',
         'email',
+        'profile',
         'password',
         'dob',
         'joined_date',
         'entitled_calendar',
         'reporting_line',
-        'profile_image',
         'position_id',
         'department_id',
+        
     ];
 
     /**
@@ -51,12 +55,8 @@ class Employee extends Authenticatable
      * @var array
      */
     protected $casts = [
-        'dob' => 'date',
-        'joined_date' => 'date',
+        'email_verified_at' => 'datetime',
     ];
-
-    
-
     /**
      * Define the relationship with the Position model.
      */
@@ -73,6 +73,12 @@ class Employee extends Authenticatable
         return $this->belongsTo(Department::class);
     }
 
+     /**
+     * Define the relationship with another Employee as the reporting line.
+     */
+   
+
+
     /**
      * Define the relationship with the CalendarGroup model.
      */
@@ -80,12 +86,17 @@ class Employee extends Authenticatable
     {
         return $this->belongsTo(CalendarGroup::class, 'entitled_calendar');
     }
-
+    
     /**
-     * Define the relationship with another Employee as the reporting line.
+     * Define the relationship with the Employee model.
      */
-    public function reportingLine()
+    public function leaveTypes()
     {
-        return $this->belongsTo(Employee::class, 'reporting_line');
+        return $this->hasMany(LeaveType::class, 'employee_id'); // Adjust the foreign key if necessary
     }
+
+    public function leaveRequests(){
+        return $this->hasMany(LeaveRequest::class, 'employee_id'); // Adjust the foreign key if necessary
+    }
+   
 }

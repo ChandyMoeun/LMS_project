@@ -10,6 +10,7 @@ use Spatie\Permission\Models\Permission;
 use App\Models\Position;
 use App\Models\Department;
 
+
 class EmployeeController extends Controller
 {
     /**
@@ -19,9 +20,9 @@ class EmployeeController extends Controller
      */
     function __construct()
     {
-        $this->middleware('role_or_permission:Employee access|Employee create|Employee edit|Employee delete', ['only' => ['index','show']]);
-        $this->middleware('role_or_permission:Employee create', ['only' => ['create','store']]);
-        $this->middleware('role_or_permission:Employee edit', ['only' => ['edit','update']]);
+        $this->middleware('role_or_permission:Employee access|Employee create|Employee edit|Employee delete', ['only' => ['index', 'show']]);
+        $this->middleware('role_or_permission:Employee create', ['only' => ['create', 'store']]);
+        $this->middleware('role_or_permission:Employee edit', ['only' => ['edit', 'update']]);
         $this->middleware('role_or_permission:Employee delete', ['only' => ['destroy']]);
     }
 
@@ -32,9 +33,7 @@ class EmployeeController extends Controller
      */
     public function index()
     {
-        // $employees = Employee::latest()->get();
-        // return view('employee.index', ['employees' => $employees]);
-
+        //======> Displays the resource listing form for the current user <=====
         $employees = Employee::with(['position', 'department'])->get();
         return view('employee.index', compact('employees'));
     }
@@ -50,7 +49,7 @@ class EmployeeController extends Controller
         $positions = Position::all(); // Fetch all positions
         $departments = Department::all(); // Fetch all departments
         $roles = Role::all(); // Assuming you have a Role model
-        
+
         // return view('employee.new', ['roles' => $roles]);
         return view('employee.new', compact('positions', 'departments', 'roles'));
     }
@@ -92,13 +91,12 @@ class EmployeeController extends Controller
 
         return redirect()->route('admin.employee.index')->withSuccess('Employee created successfully!');
 
-        // return redirect()->back()->withSuccess('Employee created successfully!');
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Employee  $employee
+     * @param  \App\Models\User  $employee
      * @return \Illuminate\Http\Response
      */
     public function edit(Employee $employee)
@@ -107,7 +105,7 @@ class EmployeeController extends Controller
         $departments = Department::all(); // Fetch all departments
         $roles = Role::get();
         $employee->roles;
-        
+
         return view('employee.edit', ['employee' => $employee, 'roles' => $roles, 'positions' => $positions, 'departments' => $departments]);
     }
 
@@ -115,49 +113,63 @@ class EmployeeController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Employee  $employee
+     * @param  \App\Models\User  $employee
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Employee $employee)
     {
-        // $validated = $request->validate([
-        //     'staff_id' => 'required',
-        //     'full_name' => 'required',
-        //     'email' => 'required',
-        //     'dob' => 'required',
-        //     'position_id' => 'required',
-        //     'department_id' => 'required',
-        // ]);
+        // ======>Define validation rules<======
+        $rules = [
+            'staff_id' => 'required',
+            'full_name' => 'required',
+            'email' => 'required|email',
+            'dob' => 'required|date',
+            'position_id' => 'required|exists:positions,id',
+            'department_id' => 'required|exists:departments,id',
+            'profile_image' => 'nullable|image|max:2048', // Allow image upload if provided
+            'password' => 'nullable|confirmed', // Password is optional but must be confirmed if provided
+        ];
 
-        // if ($request->password != null) {
-        //     $request->validate([
-        //         'password' => 'required|confirmed'
-        //     ]);
-        //     $validated['password'] = bcrypt($request->password);
-        // }
+        // ====>Validate the request<======
+        $validated = $request->validate($rules);
 
-        // $employee->update($validated);
+        // =====>Handle file upload if present<=========
+        if ($request->hasFile('profile_image')) {
+            $validated['profile_image'] = $request->file('profile_image')->store('public/images');
+        } else {
+            // =======>Keep existing profile image if no new image is uploaded<======
+            $validated['profile_image'] = $employee->profile_image;
+        }
 
+        // =======>Hash the password if it's present and confirmed<======
+        if ($request->filled('password')) {
+            $validated['password'] = bcrypt($request->password);
+        } else {
+            // =======>Remove the password field if it's not present<=======
+            unset($validated['password']);
+        }
 
-        // $employee->syncRoles($request->roles);
-        $Em = Employee::where('id', $employee->id)->first();
-        $Em->update($request->all());
-        
-        return redirect()->back()->withSuccess($Em);
+        // ======>Update the employee record<======
+        $employee->update($validated);
+
+        // ======>Sync roles if provided<======
+        if ($request->has('roles')) {
+            $employee->syncRoles($request->roles);
+        }
+        // ======>Redirect to employee index page with success message<======
+        return redirect()->route('admin.employee.index')->with('success', 'Employee updated successfully.');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Employee  $employee
+     * @param  \App\Models\User  $employee
      * @return \Illuminate\Http\Response
      */
     public function destroy(Employee $employee)
     {
         $employee->delete();
 
-        // return redirect()->back()->withSuccess('Employee deleted successfully!');
         return redirect()->route('admin.employee.index')->withSuccess('Employee deleted successfully!');
-
     }
 }
