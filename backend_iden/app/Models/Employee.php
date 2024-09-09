@@ -98,5 +98,10 @@ class Employee extends Authenticatable
     public function leaveRequests(){
         return $this->hasMany(LeaveRequest::class, 'employee_id'); // Adjust the foreign key if necessary
     }
+
+    public function attendances()
+    {
+        return $this->hasMany(Attendance::class, 'employee_id'); // Assuming the foreign key is 'employee_id'
+    }
    
 }

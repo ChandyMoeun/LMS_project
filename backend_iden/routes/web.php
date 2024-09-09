@@ -92,6 +92,9 @@ Route::namespace('App\Http\Controllers\Admin')->name('admin.')->prefix('admin')
         Route::post('admin/leave/{leaveRequest}/approve', [LeaveController::class, 'approve'])->name('leave.approve');
         Route::post('admin/leave/{leaveRequest}/reject', [LeaveController::class, 'reject'])->name('leave.reject');
 
+       
+
+
         Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
         Route::put('/profile-update', [ProfileController::class, 'update'])->name('profile.update');
         Route::get('/mail', [MailSettingController::class, 'index'])->name('mail.index');
