@@ -1,5 +1,5 @@
 <x-app-layout>
-    <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-200 mt-20">
+    <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-200 mt-10 p-10">
         <div class="container mx-auto px-6 py-2">
             <div class="d-flex border-b-2 border-gray-300 px-8 h-20 items-center mb-5">
                 <a href="/admin/mail">
@@ -7,9 +7,9 @@
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5H1m0 0 4 4M1 5l4-4" />
                     </svg>
                 </a>
-                <h1 class="font-bold text-3xl mt-5 hover:text-yellow-400"><b>Departments </b></h1>
+                <h1 class="font-bold text-3xl mt-5 hover:text-yellow-400 w-1/4"><b>Departments </b></h1>
             </div>
-            <div class="flex items-center justify-between">
+            <div class="flex items-center justify-between mt-20 px-9">
                 <div class="relative mx-4 lg:mx-0">
                     <a class="absolute inset-y-0 left-0 pl-3 flex items-center">
                         <svg class="h-5 w-5 text-gray-500" viewBox="0 0 24 24" fill="none">
