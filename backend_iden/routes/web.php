@@ -14,8 +14,7 @@ use App\Http\Controllers\Admin\{
     AttendanceController,
     LeaveController,
     LeaveTypeController,
-    LeavePfDetailController
-    
+    LeavePfDetailController,
 };
 
 /*
@@ -113,5 +112,8 @@ Route::namespace('App\Http\Controllers\Admin')->name('admin.')->prefix('admin')
         //more//
         Route::get('/more', [LeavePfDetailController::class, 'index'])->name('more.index');
         Route::get('/employee/profile/{id}', [LeavePfDetailController::class, 'employeeProfile']);
+
+        //department
+        Route::get('/detail/{id}', [DepartmentController::class, 'detail']);
       
     });
