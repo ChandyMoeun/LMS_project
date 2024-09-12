@@ -29,9 +29,11 @@ class DepartmentController extends Controller
      */
     public function index()
     {
-        $departments = Department::paginate(4);
+       // Eager load the positions for each department
+       $departments = Department::with('positions')->paginate(4);
 
-        return view('department.index', ['departments' => $departments]);
+       return view('department.index', ['departments' => $departments]);
+
     }
 
     /**
@@ -114,4 +116,17 @@ class DepartmentController extends Controller
         $department->delete();
         return redirect()->route('admin.department.index')->withSuccess('Department deleted successfully!');
     }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+   
+      public function detail(string $id) {
+        $department = Department::find($id);
+        return view('department.more.index', ['department'=> $department]);
+      }
+      
+      
 }
