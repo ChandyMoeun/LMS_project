@@ -1,28 +1,28 @@
 <x-app-layout>
-  <div class="mt-20">
+  <div class="mt-10 p-5">
     <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-200">
       <div class="d-flex border-b-2 border-gray-300 px-8 h-20 items-center mb-5">
         <a href="/admin/mail#">
-          <svg class="w-6 h-6 text-gray-800 dark:text-white hover:text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+          <svg class="w-6 h-6 mt-5 text-gray-800 dark:text-white hover:text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5H1m0 0 4 4M1 5l4-4" />
           </svg>
         </a>
-        <h1 class="font-bold text-3xl mt-5 hover:text-yellow-400"><b>Roles </b></h1> 
+        <h1 class="font-bold text-3xl mt-5 hover:text-yellow-400 w-1/12"><b>Roles </b></h1> 
       </div>
-      <div class="container mx-auto px-6 py-2">
+      <div class="container mx-auto px-6 py-2 "> 
         <div class="text-right">
           @can('Role create')
-          <a href="{{route('admin.roles.create')}}" class="bg-blue-500 text-white font-bold px-5 py-1 rounded focus:outline-none shadow hover:bg-blue-500 transition-colors ">New Role</a>
+          <a href="{{route('admin.roles.create')}}" class=" bg-yellow-400 text-white font-bold px-5 py-1 rounded focus:outline-none shadow hover:bg-black transition-colors ">New Role</a>
         </div>
         @endcan
 
-        <div class="bg-white shadow-md rounded my-6">
+        <div class="bg-white c rounded my-6">
           <table class="text-left w-full border-collapse">
-            <thead>
+            <thead class="bg-black text-white">
               <tr>
-                <th class="py-4 px-6 bg-grey-lightest font-bold text-sm text-grey-dark border-b border-grey-light w-2/12">Role Name</th>
-                <th class="py-4 px-6 bg-grey-lightest font-bold text-sm text-grey-dark border-b border-grey-light">Permissions</th>
-                <th class="py-4 px-6 bg-grey-lightest font-bold text-sm text-grey-dark border-b border-grey-light text-right w-2/12">Actions</th>
+                <th class="py-4 px-6 font-bold text-sm text-grey-dark border-b border-grey-light w-2/12">Role Name</th>
+                <th class="py-4 px-6 text-center font-bold text-sm text-grey-dark border-b border-grey-light">Permissions</th>
+                <th class="py-4 px-6 text-center font-bold text-sm text-grey-dark border-b border-grey-light w-2/12">Actions</th>
               </tr>
             </thead>
             <tbody>
@@ -38,14 +38,14 @@
                 <td class="py-4 px-6 border-b border-grey-light text-right">
 
                   @can('Role edit')
-                  <a href="{{route('admin.roles.edit',$role->id)}}" class="text-grey-lighter font-bold py-1 px-3 rounded text-xs bg-green hover:bg-green-dark text-blue-400">Edit</a>
+                  <a href="{{route('admin.roles.edit',$role->id)}}" class="text-white font-bold py-1 px-3 border rounded bg-blue-500 text-xs hover:bg-blue-300">Edit</a>
                   @endcan
 
                   @can('Role delete')
                   <form action="{{ route('admin.roles.destroy', $role->id) }}" method="POST" class="inline">
                     @csrf
                     @method('delete')
-                    <button class="text-grey-lighter font-bold py-1 px-3 rounded text-xs bg-blue hover:bg-blue-dark text-red-400">Delete</button>
+                    <button class="text-white font-bold py-1 px-3 rounded text-xs bg-red-400 hover:bg-red-300">Delete</button>
                   </form>
                   @endcan
 
