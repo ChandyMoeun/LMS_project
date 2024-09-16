@@ -19,8 +19,7 @@
                 @endcan
             </div>
             <!--leave type-->
-            <div class="container mx-auto mt-5 rounded">
-                <!-- Display Leave Types Here -->
+            <div class="container mx-auto mt-5">
                 <h6 class="text-center text-2xl font-bold mb-6">All Leave Types</h6>
                 <table class="min-w-full divide-y mb-5 divide-gray-200" style=" box-shadow:rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;">
                     <thead class="bg-black">
@@ -53,14 +52,14 @@
                             <td class="py-4 px-6 text-center border-b border-gray-200">{{ $leaveType->increase_rate }} days/year</td>
                             <td class="py-4 px-6 border-b border-gray-200 text-right">
                                 @can('LeaveType edit')
-                                <a href="{{ route('admin.leavetype.edit', $leaveType->id) }}" class="text-gray-600 font-bold py-1 px-3 rounded text-xs bg-green-500 hover:bg-green-600 text-white">Edit</a>
+                                <a href="{{ route('admin.leavetype.edit', $leaveType->id) }}" class="text-white font-bold py-1 px-3 rounded text-xs bg-black hover:bg-yellow-400 text-white">Edit</a>
                                 @endcan
 
                                 @can('LeaveType delete')
                                 <form action="{{ route('admin.leavetype.destroy', $leaveType->id) }}" method="POST" class="inline">
                                     @csrf
                                     @method('delete')
-                                    <button class="text-gray-600 font-bold py-1 px-3 rounded text-xs bg-red-500 hover:bg-red-600">Delete</button>
+                                    <button class="text-white font-bold py-1 px-3 rounded text-xs bg-red-500 hover:bg-red-400">Delete</button>
                                 </form>
                                 @endcan
                             </td>
