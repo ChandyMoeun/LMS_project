@@ -1,14 +1,14 @@
 <x-app-layout>
-  <div class="mt-10">
+  <div class="mt-10 p-5">
     <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-200">
-      <div class="container p-20">
-        <a href="/admin/employee">
-          <svg class="w-6 h-6 text-gray-800 dark:text-white hover:text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
-            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5H1m0 0 4 4M1 5l4-4" />
-          </svg>
-        </a>
-        <div class="flex border-b-2 border-gray-300 h-20 items-center mb-10">
-          <h1 class="font-bold text-3xl mt-5 hover:text-yellow-500"><b>Update Employee </b></h1>
+      <div class="container p-5">
+        <div class="d-flex border-b-2 border-gray-300 px-8 h-20 items-center mb-5">
+          <a href="/admin/employee">
+            <svg class="mb-5 w-6 h-6 text-gray-800 dark:text-white hover:text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5H1m0 0 4 4M1 5l4-4" />
+            </svg>
+          </a>
+          <h1 class="font-bold mr-20 text-3xl mt-5 hover:text-yellow-400"><b>Update Employee </b></h1>
         </div>
         <div class="bg-white shadow-md rounded my-6 p-10">
           <form method="POST" action="{{ route('admin.employee.update', $employee) }}">
@@ -43,41 +43,26 @@
                   </select>
                 </div>
 
-                  <!-- Email -->
-                  <div class="flex flex-col space-y-2">
-                    <label for="email" class="text-gray-700 select-none font-medium">Email</label>
-                    <input id="email" type="email" name="email" value="{{ old('email', $employee->email) }}"
-                      placeholder="Enter Email" class="px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-200"
-                    />
-                  </div>
-                  
-                  <!-- Password -->
-                  <div class="flex flex-col space-y-2">
-                    <label for="password" class="text-gray-700 select-none font-medium">Password</label>
-                    <input id="password" type="password" name="password" value="{{old('password')}}" placeholder="Enter Password" class="px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-200"
-                    />
-                  </div>
-                  
-                  <!-- Confirm Password -->
-                  <div class="flex flex-col space-y-2">
-                    <label for="password_confirmation" class="text-gray-700 select-none font-medium">Confirm Password</label>
-                    <input id="password_confirmation" type="password" name="password_confirmation" placeholder="Re-enter Password" class="px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-200"
-                    />
-                  </div>
+                <!-- Email -->
+                <div class="flex flex-col space-y-2">
+                  <label for="email" class="text-gray-700 select-none font-medium">Email</label>
+                  <input id="email" type="email" name="email" value="{{ old('email', $employee->email) }}"
+                    placeholder="Enter Email" class="px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-200" />
+                </div>
 
                 <!-- Password -->
                 <div class="flex flex-col space-y-2">
-                  <label for="password" class="text-gray-700 select-none font-medium ml-3">Password</label>
-                  <input id="password" type="password" name="password" value="{{old('password', $employee->password)}}" placeholder="Enter Password" class="px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-200" />
+                  <label for="password" class="text-gray-700 select-none font-medium">Password</label>
+                  <input id="password" type="password" name="password" value="{{old('password')}}" placeholder="Enter Password" class="px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-200" />
+                </div>
+
+                <!-- Confirm Password -->
+                <div class="flex flex-col space-y-2">
+                  <label for="password_confirmation" class="text-gray-700 select-none font-medium">Confirm Password</label>
+                  <input id="password_confirmation" type="password" name="password_confirmation" placeholder="Re-enter Password" class="px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-200" />
                 </div>
               </div>
               <div style="width:48%;">
-                <!-- Confirm Password -->
-                <div class="flex flex-col space-y-2">
-                  <label for="password_confirmation" class="text-gray-700 select-none font-medium ml-3">Confirm Password</label>
-                  <input id="password_confirmation" type="password" name="password_confirmation" placeholder="Re-enter Password" class="px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-200" />
-                </div>
-
                 <!-- Date of Birth -->
                 <div class="flex flex-col space-y-2">
                   <label for="dob" class="text-gray-700 select-none font-medium ml-3">Date of Birth</label>
@@ -89,6 +74,13 @@
                 <div class="flex flex-col space-y-2">
                   <label for="joined_date" class="text-gray-700 select-none font-medium ml-3">Joined Date</label>
                   <input id="joined_date" type="date" name="joined_date" value="{{ old('joined_date', $employee->joined_date) }}"
+                    class="px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-200" />
+                </div>
+
+                <!-- confirm Date -->
+                <div class="flex flex-col space-y-2">
+                  <label for="confirm_date" class="text-gray-600 select-none font-medium ml-3">Confirm Date</label>
+                  <input id="confirm_date" type="date" name="confirm_date" value="{{ old('confirm_date') }}"
                     class="px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-200" />
                 </div>
 
@@ -136,7 +128,7 @@
             <!-- Submit Button -->
             <div class="flex justify-center text-center mt-16 gap-5 mb-16">
               <button type="submit" class="w-5px mt-5 bg-red-500 text-red font-bold py-2 px-4 hover:bg-red-400 focus:outline-none focus:bg-red-700 transition-colors" style=" border-radius: 5px"><a href="/admin/employee" style="text-decoration: none; color: white;">Cancel</a></button>
-              <button type="submit" class="w-5px mt-5 bg-blue-500 text-white font-bold py-2 px-4 hover:bg-yellow-400 focus:outline-none focus:bg-blue-700 transition-colors" style=" border-radius: 5px">Submit</button>
+              <button type="submit" class="w-5px mt-5 bg-black text-white font-bold py-2 px-4 hover:bg-yellow-400 focus:outline-none focus:bg-blue-700 transition-colors" style=" border-radius: 5px">Submit</button>
             </div>
 
           </form>
