@@ -17,7 +17,7 @@
                         <option>Back-end</option>
                         <option>Full-stack</option>
                     </select>
-                    <button class="p-2 flex items-center bg-blue-500 text-white font-bold px-2 py-1 rounded focus:outline-none shadow hover:bg-yellow-500 transition-colors">
+                    <button class="p-2 flex items-center bg-black text-white font-bold px-2 py-1 rounded focus:outline-none shadow hover:bg-yellow-400 transition-colors">
                         @can('Employee create')
                         <a href="{{route('admin.employee.create')}}" style="display: flex; justify-content: space-evenly; gap:5%;">
                             <svg class="w-5 h-5 " fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -52,9 +52,7 @@
                             <td class="p-3 text-blue-600 text-center">{{ $employee->email }}</td>
                             <td class="p-3 text-center">{{ $employee->position->name}}</td>
                             <td class="p-3 text-center">
-                                @can('Employee view')
                                 <a href="employee/profile/{{$employee->id}}" class="text-gray-600 hover:text-gray-400">More</a>
-                                @endcan
                                 @can('Employee edit')
                                 <a href="{{route('admin.employee.edit',$employee->id)}}" class="ml-2 text-blue-600 hover:text-blue-400">Update</a>
                                 @endcan
