@@ -1,6 +1,6 @@
 <x-app-layout>
 
-    <div class="mt-10 p-10 bg-white">
+    <div class="mt-10 p-5 bg-white">
 
         <div class="container mx-auto px-6 py-8">
             <!----------- alert code -------------------->
@@ -171,7 +171,7 @@
                         <tr class="bg-black text-white">
                             <th class="py-2 px-4 border-b">ID</th>
                             <th class="py-2 px-4 border-b">Profile</th>
-                            <th class="py-2 px-4 border-b">Em Name</th>
+                            <th class="py-2 px-4 border-b">Name</th>
                             <th class="py-2 px-4 border-b">Position</th>
                             <th class="py-2 px-4 border-b">From | To</th>
                             <th class="py-2 px-4 border-b">Approver</th>
@@ -209,7 +209,7 @@
                             echo '<td class="py-2 px-4 border-b">' . $employee['approver'] . '</td>';
                             echo '<td class="py-2 px-4 border-b">' . $employee['sub_approver'] . '</td>';
                             echo '<td class="py-2 px-4 border-b">' . $employee['status'] . '</td>';
-                            echo '<td class="py-2 px-4 border-b"><a href="/admin/more" class="text-blue-500 hover:underline">More</a></td>';
+                            echo '<td class="py-2 px-4 border-b"><a href="/admin/more" class="text-blue-500">More</a></td>';
                             echo '<td class="py-2 px-4 border-b"><select id="dropdown" class="w-full border h-10 d-flex border-gray-300 rounded px-3 py-2 mt-2">
                                     <option>Action</option>
                                     <option value="1">Panding</option>

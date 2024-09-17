@@ -25,7 +25,7 @@
                 class="px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-200" />
             </div>
 
-            <strong><h1 class="text-xl text-center mt-10 my-4 text-gray-600">Permissions</h1></strong>
+            <strong><h1 class="text-3xl text-center mt-10 my-4 text-black">Select Permissions</h1></strong>
             <div class="grid grid-cols-3 gap-4 m-10">
               @foreach($permissions as $permission)
               <div class="flex flex-col justify-cente">
@@ -41,7 +41,7 @@
               @endforeach
             </div>
             <div class="text-center mt-5">
-              <button type="submit" class="bg-black text-white font-bold px-5 py-1 rounded focus:outline-none shadow hover:bg-yellow-400 transition-colors">Update</button>
+              <button type="submit" class="bg-yellow-400 text-white font-bold px-5 py-1 rounded focus:outline-none shadow hover:bg-black transition-colors">Update</button>
             </div>
         </div>
       </div>

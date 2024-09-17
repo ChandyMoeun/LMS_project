@@ -12,7 +12,7 @@
       <div class="container mx-auto px-6 py-2 "> 
         <div class="text-right">
           @can('Role create')
-          <a href="{{route('admin.roles.create')}}" class=" bg-yellow-400 text-white font-bold px-5 py-1 rounded focus:outline-none shadow hover:bg-black transition-colors ">New Role</a>
+          <a href="{{route('admin.roles.create')}}" class=" bg-black text-white font-bold px-5 py-1 rounded focus:outline-none shadow hover:bg-yellow-400 transition-colors ">New Role</a>
         </div>
         @endcan
 
@@ -38,14 +38,14 @@
                 <td class="py-4 px-6 border-b border-grey-light text-right">
 
                   @can('Role edit')
-                  <a href="{{route('admin.roles.edit',$role->id)}}" class="text-white font-bold py-1 px-3 border rounded bg-blue-500 text-xs hover:bg-blue-300">Edit</a>
+                  <a href="{{route('admin.roles.edit',$role->id)}}" class="text-white font-bold py-1 px-3 border rounded text-xs bg-black hover:bg-yellow-400">Edit</a>
                   @endcan
 
                   @can('Role delete')
                   <form action="{{ route('admin.roles.destroy', $role->id) }}" method="POST" class="inline">
                     @csrf
                     @method('delete')
-                    <button class="text-white font-bold py-1 px-3 rounded text-xs bg-red-400 hover:bg-red-300">Delete</button>
+                    <button class="text-white font-bold py-1 px-3 rounded text-xs bg-red-500 hover:bg-red-400">Delete</button>
                   </form>
                   @endcan
 

@@ -1,5 +1,5 @@
 <x-app-layout>
-    <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-200 mt-10 p-10">
+    <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-200 mt-10 p-5">
         <div class="container mx-auto px-6 py-2 ">
             <div class="d-flex border-b-2 border-gray-300 px-8 h-20 items-center mb-5">
                 <a href="/admin/department">
@@ -26,7 +26,7 @@
                         placeholder="Search department name...">
                 </div>
                 <div class="text-right">
-                    <a href="{{ route('admin.position.create') }}" class="bg-blue-500 text-white font-bold px-5 py-1 rounded focus:outline-none shadow hover:bg-blue-600 transition-colors">New Position</a>
+                    <a href="{{ route('admin.position.create') }}" class="bg-black text-white font-bold px-5 py-1 rounded focus:outline-none shadow hover:bg-yellow-400 transition-colors">New Position</a>
                 </div>
             </div>
 
@@ -47,8 +47,8 @@
                             </td>
 
                             <td class="py-4 px-6 border-b border-gray-200 text-right">
-                                <a href="{{ route('admin.position.edit', $position->id) }}" class="text-gray-600 font-bold py-1 px-3 rounded text-xs bg-green-500 hover:bg-green-300 text-white">Edit</a>
-                                <a href="#" class="text-gray-600 font-bold py-1 px-3 rounded text-xs bg-red-500 hover:bg-red-300 text-white">Delete</a>
+                                <a href="{{ route('admin.position.edit', $position->id) }}" class="text-white font-bold py-1 px-3 rounded text-xs bg-black hover:bg-yellow-400">Edit</a>
+                                <a href="#" class="text-white font-bold py-1 px-3 rounded text-xs bg-red-500 hover:bg-red-400">Delete</a>
                             </td>
                         </tr>
                         @empty

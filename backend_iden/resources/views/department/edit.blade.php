@@ -1,5 +1,5 @@
 <x-app-layout>
-    <div class="mt-20">
+    <div class="mt-20 p-5">
         <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-200">
             <div class="d-flex border-b-2 border-gray-300 px-8 h-20 items-center ml-7 mr-7">
                 <a href="/admin/department">
@@ -27,12 +27,8 @@
                         </div>
 
                         <!-- Submit Button -->
-                        <div class="flex justify-start space-x-4 mt-4">
-                            <a href="{{ route('admin.department.index') }}"
-                                class="bg-gray-500 text-white font-bold px-5 py-2 rounded-lg shadow-md hover:bg-gray-600 transition-colors focus:outline-none focus:ring-2 focus:ring-gray-300">
-                                Back
-                            </a>
-                            <button type="submit" class="bg-blue-500 text-white font-bold px-5 py-2 rounded focus:outline-none shadow hover:bg-blue-600 transition-colors">
+                        <div class="flex justify-center space-x-4 mt-4">
+                            <button type="submit" class="bg-yellow-400 text-white font-bold px-3 py-2 rounded focus:outline-none shadow hover:bg-black transition-colors">
                                 Update
                             </button>
                         </div>

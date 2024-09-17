@@ -13,7 +13,7 @@
             <div class="flex justify-end">
                 @can('LeaveType create')
                 <a href="{{ route('admin.leavetype.create') }}"
-                    class="bg-yellow-400 text-white font-bold mt-3 px-2 py-1 rounded focus:outline-none shadow hover:bg-black transition-colors">
+                    class="bg-black text-white font-bold mt-3 px-2 py-1 rounded focus:outline-none shadow hover:bg-yellow-400 transition-colors">
                     Add New Type
                 </a>
                 @endcan
@@ -52,7 +52,7 @@
                             <td class="py-4 px-6 text-center border-b border-gray-200">{{ $leaveType->increase_rate }} days/year</td>
                             <td class="py-4 px-6 border-b border-gray-200 text-right">
                                 @can('LeaveType edit')
-                                <a href="{{ route('admin.leavetype.edit', $leaveType->id) }}" class="text-white font-bold py-1 px-3 rounded text-xs bg-black hover:bg-yellow-400 text-white">Edit</a>
+                                <a href="{{ route('admin.leavetype.edit', $leaveType->id) }}" class="text-white font-bold py-1 px-3 rounded text-xs bg-black hover:bg-yellow-400">Edit</a>
                                 @endcan
 
                                 @can('LeaveType delete')

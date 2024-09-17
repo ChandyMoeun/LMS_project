@@ -1,18 +1,21 @@
 <x-app-layout>
-    <main class="m-5 mt-20">
+    <main class="p-12 mt-10">
+        <div class="d-flex border-b-2 border-gray-300 px-8 h-15 items-center">
+            <h1 class="font-bold text-3xl mt-7 hover:text-yellow-400 w-2/12"><b>Calendar</b></h1>
+        </div>
         <!-- Rout Calendar_workday -->
-        <div class="container mx-auto px-6 py-8">
+        <div class="container mx-auto px-6 py-4">
             <div class="flex justify-end space-x-4">
                 @can('Calendar create')
                 <a href="{{ route('admin.calendar_workday.create') }}"
-                    class="bg-blue-500 text-white font-bold px-5 py-2 rounded-lg shadow-md hover:bg-blue-600 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-300">
+                    class="bg-black text-white font-bold px-5 py-2 rounded-lg shadow-md hover:bg-yellow-400 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-300">
                     Add Work/Time
                 </a>
                 @endcan
 
                 @can('Calendar create')
                 <a href="{{ route('admin.calendar_holiday.create') }}"
-                    class="bg-green-500 text-white font-bold px-5 py-2 rounded-lg shadow-md hover:bg-green-600 transition-colors focus:outline-none focus:ring-2 focus:ring-green-300">
+                    class="text-white font-bold px-5 py-2 rounded-lg shadow-md bg-blue-500 hover:bg-blue-400 transition-colors focus:outline-none focus:ring-2 focus:ring-green-300">
                     Add Holiday
                 </a>
                 @endcan
@@ -103,9 +106,7 @@
                             </form>
                             @endcan
                         </td>
-
                     </tr>
-
                     @endforeach
                 </tbody>
             </table>

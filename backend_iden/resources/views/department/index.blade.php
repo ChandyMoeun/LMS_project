@@ -1,5 +1,5 @@
 <x-app-layout>
-    <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-200 mt-10 p-10">
+    <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-200 mt-10 p-5">
         <div class="container mx-auto px-6 py-2">
             <div class="d-flex border-b-2 border-gray-300 px-8 h-20 items-center mb-5">
                 <a href="/admin/mail">
@@ -25,7 +25,7 @@
                 </div>
                 <div class="text-right">
                     @can('Department create')
-                    <a href="{{ route('admin.department.create') }}" class="bg-blue-500 text-white font-bold px-5 py-1 rounded focus:outline-none shadow hover:bg-blue-600 transition-colors">New Department</a>
+                    <a href="{{ route('admin.department.create') }}" class="bg-black text-white font-bold px-5 py-1 rounded focus:outline-none shadow hover:bg-yellow-400 transition-colors">New Department</a>
                     @endcan
                 </div>
             </div>
@@ -45,16 +45,16 @@
                             <td class="py-4 px-6 border-b border-gray-200">{{ $department->name }}</td>
                             <td class="py-4 d-flex px-6 border-b border-gray-200 text-center w-4/4">
                                 
-                                <a href="{{ url('admin/detail/' . $department->id) }}" class="text-white font-bold py-1 px-3 rounded text-xs bg-blue-500 hover:bg-blue-600 ">View</a>
+                                <a href="{{ url('admin/detail/' . $department->id) }}" class="text-white font-bold py-1 px-3 rounded text-xs bg-blue-500 hover:bg-blue-400 ">View</a>
                                 @can('Department edit')
-                                <a href="{{ route('admin.department.edit', $department->id) }}" class="text-white font-bold py-1 px-3 rounded text-xs bg-green-500 hover:bg-green-600 ">Edit</a>
+                                <a href="{{ route('admin.department.edit', $department->id) }}" class="text-white font-bold py-1 px-3 rounded text-xs bg-black hover:bg-yellow-400 ">Edit</a>
                                 @endcan
 
                                 @can('Department delete')
                                 <form action="{{ route('admin.department.destroy', $department->id) }}" method="POST" class="inline">
                                     @csrf
                                     @method('delete')
-                                    <button class="text-white font-bold py-1 px-3 rounded text-xs bg-red-500 hover:bg-red-600">Delete</button>
+                                    <button class="text-white font-bold py-1 px-3 rounded text-xs bg-red-500 hover:bg-red-400">Delete</button>
                                 </form>
                                 @endcan
                             </td>
