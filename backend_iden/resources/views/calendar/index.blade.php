@@ -1,7 +1,7 @@
 <x-app-layout>
     <main class="p-12 mt-10">
         <div class="d-flex border-b-2 border-gray-300 px-8 h-15 items-center">
-            <h1 class="font-bold text-3xl mt-7 hover:text-yellow-400 w-2/12"><b>Calendar</b></h1>
+            <h1 class="font-bold text-3xl mb-3 hover:text-yellow-400 w-2/12"><b>Calendar</b></h1>
         </div>
         <!-- Rout Calendar_workday -->
         <div class="container mx-auto px-6 py-4">
@@ -42,7 +42,7 @@
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Start Time</th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">End Time</th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Day Type</th>
-                        <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                        <th class="px-6 py-3 w-2/12 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
                     </tr>
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-200">
@@ -54,14 +54,14 @@
                         <td class="py-4 px-6 border-b border-gray-200">{{ $workday->day_type }}</td>
                         <td class="py-4 px-6 border-b border-gray-200 text-right">
                             @can('Calendar edit')
-                            <a href="{{ route('admin.calendar_workday.edit', $workday->id) }}" class="text-gray-600 font-bold py-1 px-3 rounded text-xs bg-green-500 hover:bg-green-600 text-white">Edit</a>
+                            <a href="{{ route('admin.calendar_workday.edit', $workday->id) }}" class="text-white font-bold py-1 px-3 rounded text-xs bg-black hover:bg-yellow-400 text-white">Edit</a>
                             @endcan
 
                             @can('Calendar delete')
                             <form action="{{ route('admin.calendar_workday.destroy', $workday->id) }}" method="POST" class="inline">
                                 @csrf
                                 @method('delete')
-                                <button class="text-gray-600 font-bold py-1 px-3 rounded text-xs bg-red-500 hover:bg-red-600">Delete</button>
+                                <button class="text-white font-bold py-1 px-3 rounded text-xs bg-red-500 hover:bg-red-400">Delete</button>
                             </form>
                             @endcan
                         </td>
@@ -78,31 +78,31 @@
                 <thead class="bg-gray-50">
                     <tr>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Holiday Name</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">From</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">To</th>
+                        <th class="px-6 w-2/12 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">From</th>
+                        <th class="px-6 w-2/12 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">To</th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Holiday Type</th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Description</th>
-                        <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                        <th class="px-6 w-2/12 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
                     </tr>
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-200">
                     @foreach($calendarHolidays as $holiday)
                     <tr class="hover:bg-gray-100">
                         <td class="py-4 px-6 border-b border-gray-200">{{ $holiday->holiday_name }}</td>
-                        <td class="py-4 px-6 border-b border-gray-200">{{ $holiday->from_date }}</td>
-                        <td class="py-4 px-6 border-b border-gray-200">{{ $holiday->to_date}}</td>
+                        <td class="py-4 px-6 border-b text-center border-gray-200">{{ $holiday->from_date }}</td>
+                        <td class="py-4 px-6 border-b text-center border-gray-200">{{ $holiday->to_date}}</td>
                         <td class="py-4 px-6 border-b border-gray-200">{{ $holiday->holiday }}</td>
                         <td class="py-4 px-6 border-b border-gray-200">{{ $holiday->description }}</td>
                         <td class="py-4 px-6 border-b border-gray-200 text-right">
                             @can('Calendar edit')
-                            <a href="{{ route('admin.calendar_holiday.edit', $holiday->id) }}" class="text-gray-600 font-bold py-1 px-3 rounded text-xs bg-green-500 hover:bg-green-600 text-white">Edit</a>
+                            <a href="{{ route('admin.calendar_holiday.edit', $holiday->id) }}" class="text-white font-bold py-1 px-3 rounded text-xs bg-black hover:bg-yellow-400 text-white">Edit</a>
                             @endcan
 
                             @can('Calendar delete')
                             <form action="{{ route('admin.calendar_holiday.destroy', $holiday->id) }}" method="POST" class="inline">
                                 @csrf
                                 @method('delete')
-                                <button class="text-gray-600 font-bold py-1 px-3 rounded text-xs bg-red-500 hover:bg-red-600">Delete</button>
+                                <button class="text-white font-bold py-1 px-3 rounded text-xs bg-red-500 hover:bg-red-400">Delete</button>
                             </form>
                             @endcan
                         </td>
