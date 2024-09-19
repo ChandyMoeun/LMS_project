@@ -17,13 +17,14 @@
                             <tr>
                                 <th class="py-3 px-6 text-left text-xs text-white uppercase tracking-wider">Staff ID</th>
                                 <th class="py-3 px-6 text-center text-xs text-white uppercase tracking-wider">Name</th>
-                                <th class="py-3 px-6 text-center text-xs text-white uppercase tracking-wider">Leave Type</th>
-                                <th class="py-3 px-6 text-center text-xs text-white uppercase tracking-wider">From Date</th>
-                                <th class="py-3 px-6 text-center text-xs text-white uppercase tracking-wider">To Date</th>
+                                <th class="py-3 px-6 text-center text-xs text-white uppercase tracking-wider">Type</th>
+                                <th class="py-3 px-6 text-center text-xs text-white uppercase tracking-wider">From</th>
+                                <th class="py-3 px-6 text-center text-xs text-white uppercase tracking-wider">To</th>
                                 <th class="py-3 px-6 text-center text-xs text-white uppercase tracking-wider">Half Day</th>
                                 <th class="py-3 px-6 text-center text-xs text-white uppercase tracking-wider">files</th>
                                 <th class="py-3 px-6 text-center text-xs text-white uppercase tracking-wider">Status</th>
-                                <th class="py-3 px-6 text-center text-xs text-white uppercase tracking-wider">Total Days</th>
+                                <th class="py-3 px-6 text-center text-xs text-white uppercase tracking-wider">Total</th>
+                                <th class="py-3 px-6 text-center text-xs text-white uppercase tracking-wider">Detail</th>
                                 <th class="py-3 px-6 w-1/12 text-center text-xs text-white uppercase tracking-wider">Actions</th>
                             </tr>
                         </thead>
@@ -31,15 +32,15 @@
                             @can('Leave access')
                             @foreach($leaveRequests as $leaveRequest)
                             <tr class="hover:bg-gray-50">
-                                <td class="py-4 px-6 text-sm text-gray-500">{{ $leaveRequest->employee->staff_id ?? 'N/A' }}</td>
-                                <td class="py-4 px-6 text-sm text-gray-500">{{ $leaveRequest->employee->full_name ?? 'N/A' }}</td>
-                                <td class="py-4 text-center px-6 text-sm text-gray-500">{{ $leaveRequest->leaveType->leave_name ?? 'N/A' }}</td>
-                                <td class="py-4 px-6 text-sm text-gray-500">{{ \Carbon\Carbon::parse($leaveRequest->from_date)->format('Y-m-d') }} </td>
-                                <td class="py-4 px-6 text-sm text-gray-500">{{ $leaveRequest->to_date ? \Carbon\Carbon::parse($leaveRequest->to_date)->format('Y-m-d') : '-' }}</td>
-                                <td class="py-4 px-6 text-sm text-gray-500">
+                                <td class="py-4 px-6 text-sm text-center text-black">{{ $leaveRequest->employee->staff_id ?? 'N/A' }}</td>
+                                <td class="py-4 px-6 text-sm text-center text-black">{{ $leaveRequest->employee->full_name ?? 'N/A' }}</td>
+                                <td class="py-4 text-center px-6 text-sm text-black">{{ $leaveRequest->leaveType->leave_name ?? 'N/A' }}</td>
+                                <td class="py-4 px-6 text-sm text-center text-black">{{ \Carbon\Carbon::parse($leaveRequest->from_date)->format('Y-m-d') }} </td>
+                                <td class="py-4 px-6 text-sm text-center text-black">{{ $leaveRequest->to_date ? \Carbon\Carbon::parse($leaveRequest->to_date)->format('Y-m-d') : '-' }}</td>
+                                <td class="py-4 px-6 text-sm text-center text-black">
                                     {{ $leaveRequest->half_day_type ? ucfirst($leaveRequest->half_day_type) : ($leaveRequest->start_time && $leaveRequest->end_time ? \Carbon\Carbon::parse($leaveRequest->start_time)->format('H:i') . ' - ' . \Carbon\Carbon::parse($leaveRequest->end_time)->format('H:i')  : '-') }}
                                 </td>
-                                <td class="py-4 px-6 text-sm text-gray-500">
+                                <td class="py-4 px-6 text-sm text-center text-black">
                                     @if($leaveRequest->attachment)
                                     <a href="{{ asset('storage/attachments/' . $leaveRequest->attachment) }}" target="_blank">
                                         View
@@ -51,17 +52,23 @@
                                 </td>
                                 <td class="py-4 px-6 text-sm">
                                     @if($leaveRequest->status == 'pending')
-                                    <span class="bg-yellow-400 text-white px-2 py-1 rounded-full text-xs font-semibold">Pending</span>
+                                    <span class="bg-yellow-400 text-center text-white px-2 py-1 rounded-full text-xs font-semibold">Pending</span>
                                     @elseif($leaveRequest->status == 'approved')
-                                    <span class="bg-green-400 text-white px-2 py-1 rounded-full text-xs font-semibold">Approved</span>
+                                    <span class="bg-green-400 text-center text-white px-2 py-1 rounded-full text-xs font-semibold">Approved</span>
                                     @else
-                                    <span class="bg-red-400 text-white px-2 py-1 rounded-full text-xs font-semibold">Rejected</span>
+                                    <span class="bg-red-400 text-center text-white px-2 py-1 rounded-full text-xs font-semibold">Rejected</span>
                                     @endif
                                 </td>
-                                <td class="py-4 px-6 text-sm text-gray-500">{{ $leaveRequest->total_requested_days }}</td>
+                                <td class="py-4 px-6 text-sm text-center text-black">{{ $leaveRequest->total_requested_days }}</td>
+
+                                <td class="py-4 px-6 text-sm text-center">
+                                    <a href="/admin/more" class="text-blue-700 hover:text-blue-300 ">
+                                        View
+                                    </a>
+                                </td>
                                 <td class="text-center w-20 text-sm">
                                     <!-- View button to toggle the visibility -->
-                                    <button type="button" class="text-blue-600 hover:text-blue-800 font-semibold" onclick="toggleButtons({{ $leaveRequest->id }})">
+                                    <button type="button" class="text-blue-700 hover:text-blue-300 font-semibold" onclick="toggleButtons({{ $leaveRequest->id }})">
                                         View Options
                                     </button>
 
