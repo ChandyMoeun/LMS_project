@@ -1,5 +1,8 @@
 <x-app-layout>
-    <main class="m-5 mt-20">
+    <main class="p-10 mt-10">
+        <div class="border-b-2 border-gray-300 px-8 h-10">
+            <h1 class="font-bold text-3xl w-1/6 mt-10 hover:text-yellow-400"><b>Calendar</b></h1>
+        </div>
         <!-- Rout Calendar_workday -->
         <div class="container mx-auto px-6 py-8">
             <div class="flex justify-end space-x-4">
@@ -30,7 +33,7 @@
 
 
         <!-- Display Workdays Here -->
-        <div class="bg-white shadow-md rounded-lg p-6 mt-5">
+        <div class="bg-white shadow-md rounded-lg p-6 mt-10">
             <h2 class="text-2xl font-bold mb-4">Workdays and Times</h2>
             <table class="min-w-full divide-y divide-gray-200">
                 <thead class="bg-gray-50">
