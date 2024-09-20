@@ -1,13 +1,13 @@
 <x-app-layout>
     <div class="mt-10 p-10">
         <div class="d-flex border-b-2 border-gray-300 px-8 h-10 items-center mb-5">
-            <h1 class="font-bold mr-20 text-3xl mt-3 hover:text-yellow-400"><b>Leave</b></h1>
+            <h1 class="font-bold mr-20 text-3xl mt-3 hover:text-yellow-400 w-1/6"><b>Leave</b></h1>
         </div>
         <main class="flex-1 overflow-x-hidden overflow-y-auto">
             <div class="container">
                 <div class="flex justify-end mb-4">
                     @can('Leave create')
-                    <a href="{{ route('admin.leave.create') }}" class="bg-blue-600 text-white font-semibold px-5 py-2 rounded-lg shadow-md hover:bg-blue-700 transition-colors">Request Leave</a>
+                    <a href="{{ route('admin.leave.create') }}" class="bg-black text-white font-semibold px-5 py-2 rounded-lg shadow-md hover:bg-yellow-400 transition-colors">Request Leave</a>
                     @endcan
                 </div>
 

@@ -1,14 +1,14 @@
 <x-app-layout>
     <main class="mt-10 p-10">
-        <div class="d-flex border-b-2 border-gray-300 px-8 h-20 items-center mb-5">
+        <div class="d-flex border-b-2 border-gray-300 px-8 h-20 items-center">
             <a href="/admin/leave">
                 <svg class="mb-5 w-6 h-6 text-gray-800 dark:text-white hover:text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5H1m0 0 4 4M1 5l4-4" />
                 </svg>
             </a>
-            <h1 class="font-bold mr-20 text-3xl mt-3 hover:text-yellow-400"><b>Reques Leave </b></h1>
+            <h1 class="font-bold mr-20 text-3xl w-2/6 mt-3 hover:text-yellow-400"><b>Reques Leave </b></h1>
         </div>
-        <div class="container mt-20 px-6 py-4 bg-white shadow-md rounded-lg mt-5 ">
+        <div class="container mt-16 px-6 py-4 bg-white shadow-md rounded-lg mt-5 ">
             <!-- Leave Request Form -->
             <form method="POST" action="{{ route('admin.leave.store') }}" enctype="multipart/form-data" class="flex flex-row justify-between px-5 py-5 gap-5">
                 @csrf <!-- CSRF token for security -->
@@ -100,10 +100,10 @@
 
                     <!-- Submit Button -->
                     <div class="mt-6">
-                        <button type="submit" class="bg-yellow-400 text-white font-semibold px-2 py-1 rounded-lg shadow-md hover:bg-black transition-colors">
+                        <button type="submit" class="bg-black text-white font-semibold px-2 py-1 rounded-lg shadow-md hover:bg-yellow-400 transition-colors">
                             Take Leave
                         </button>
-                        <a href="">Back</a>
+                        <a href="/admin/leave" class="bg-red-600 text-white font-semibold px-2 py-1 rounded-lg shadow-md hover:bg-red-400 transition-colors">Back</a>
                     </div>
                 </div>
             </form>
