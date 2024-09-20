@@ -33,7 +33,7 @@
 
 
         <!-- Display Workdays Here -->
-        <div class="bg-white shadow-md rounded-lg p-6 mt-5">
+        <div class="bg-white shadow-md rounded-lg p-6 mt-14">
             <h2 class="text-2xl font-bold mb-4">Workdays and Times</h2>
             <table class="min-w-full divide-y divide-gray-200">
                 <thead class="bg-gray-50">
@@ -72,7 +72,7 @@
         </div>
 
         <!-- Display Holidays Here -->
-        <div class="bg-white shadow-md rounded-lg p-6 mt-5">
+        <div class="bg-white shadow-md rounded-lg p-6 mt-14">
             <h2 class="text-2xl font-bold mb-4">Holidays</h2>
             <table class="min-w-full divide-y divide-gray-200">
                 <thead class="bg-gray-50">

@@ -6,7 +6,7 @@
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5H1m0 0 4 4M1 5l4-4" />
                     </svg>
                 </a>
-                <h1 class="font-bold mr-20 text-3xl mt-3 hover:text-yellow-400"><b>Employee Profile </b></h1>
+                <h1 class="font-bold mr-20 text-3xl mt-3 w-3/12 hover:text-yellow-400"><b>Employee Profile </b></h1>
             </div>
             <div class="container p-6">
                 <div class="d-flex justify-center mx-auto bg-white rounded-lg shadow-md px-5 w-11/12">

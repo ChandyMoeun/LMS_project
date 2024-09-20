@@ -51,9 +51,7 @@
                         <td class="p-3 text-blue-600 text-center">{{ $employee->email }}</td>
                         <td class="p-3 text-center">{{ $employee->position->name}}</td>
                         <td class="p-3 text-center">
-                            @can('Employee view')
                             <a href="employee/profile/{{$employee->id}}" class="text-gray-600 hover:text-gray-400">More</a>
-                            @endcan
                             @can('Employee edit')
                             <a href="{{route('admin.employee.edit',$employee->id)}}" class="ml-2 text-blue-600 hover:text-blue-400">Update</a>
                             @endcan
