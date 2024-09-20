@@ -26,7 +26,7 @@
         <div class="container mx-auto">
             <div class="bg-white shadow-lg rounded-lg overflow-hidden">
                 <div class="p-4">
-                    <div id="calendar"></div>
+                    <div id="calendar" class="h-96 "></div>
                 </div>
             </div>
         </div>

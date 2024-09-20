@@ -1,12 +1,12 @@
 <div :class="sidebarOpen ? 'translate-x-0 ease-out' : '-translate-x-full ease-in'" class="fixed z-30 inset-y-0 left-0 w-64 transition duration-300 transform bg-gray-900 overflow-y-auto lg:translate-x-0 lg:static lg:inset-0">
     <div class="flex items-center justify-center mt-8">
-        <div class="flex items-center">
+        <div class="flex flex-col items-center">
             <!-- Logo -->
             <div class="logo">
-                <img src="{{ asset('images/logo1.png') }}" alt="Logo" class="w-20 h-20 rounded-full object-cover border-2 border-gray-300">
+                <img src="{{ asset('images/logo1.png') }}" alt="Logo" class="w-20 mb-3 h-20 rounded-full object-cover border-2 border-gray-300">
             </div>
             <a href="{{ route('admin.dashboard') }}">
-                <span class="text-white text-1xl mx-2 font-semibold">iDEN CO,LTD</span>
+                <span class="text-white text-1xl mx-1 font-semibold">iDEN CREATEIVE CO,LTD</span>
             </a>
         </div>
     </div>

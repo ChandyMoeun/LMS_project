@@ -165,6 +165,7 @@
                 }
             </style>
 
+            <!-- employees take leaves -->
             <div class="overflow-x-auto">
                 <table class="min-w-full bg-gray-100 border border-gray-100">
                     <thead>

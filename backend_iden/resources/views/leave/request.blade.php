@@ -1,99 +1,110 @@
 <x-app-layout>
-    <main class="mt-20">
-        <div class="container mx-auto px-6 py-4">
+    <main class="mt-10 p-10">
+        <div class="d-flex border-b-2 border-gray-300 px-8 h-20 items-center mb-5">
+            <a href="/admin/leave">
+                <svg class="mb-5 w-6 h-6 text-gray-800 dark:text-white hover:text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5H1m0 0 4 4M1 5l4-4" />
+                </svg>
+            </a>
+            <h1 class="font-bold mr-20 text-3xl mt-3 hover:text-yellow-400"><b>Reques Leave </b></h1>
+        </div>
+        <div class="container mt-20 px-6 py-4 bg-white shadow-md rounded-lg mt-5 ">
             <!-- Leave Request Form -->
-            <form method="POST" action="{{ route('admin.leave.store') }}" enctype="multipart/form-data">
+            <form method="POST" action="{{ route('admin.leave.store') }}" enctype="multipart/form-data" class="flex flex-row justify-between px-5 py-5 gap-5">
                 @csrf <!-- CSRF token for security -->
 
-                <!-- Select Employee -->
-                <div>
-                    <label for="employee_id" class="block text-sm font-medium text-gray-700">Select Employee</label>
-                    <select name="employee_id" id="employee_id" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm">
-                        <option value="">Select an Employee</option>
-                        @foreach($employees as $employee)
-                        <option value="{{ $employee->id }}">
-                            {{ $employee->full_name }} | Role: {{ $employee->roles->pluck('name')->join(', ') }}
-                        </option>
-                        @endforeach
-                    </select>
-                </div>
+                <div class="w-6/12">
+                    <!-- Select Employee -->
+                    <div>
+                        <label for="employee_id" class="block text-sm font-medium text-gray-700">Select Employee</label>
+                        <select name="employee_id" id="employee_id" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm">
+                            <option value="">Select an Employee</option>
+                            @foreach($employees as $employee)
+                            <option value="{{ $employee->id }}">
+                                {{ $employee->full_name }} | Role: {{ $employee->roles->pluck('name')->join(', ') }}
+                            </option>
+                            @endforeach
+                        </select>
+                    </div>
 
-                <!-- Select Leave Type -->
-                <div class="mt-4">
-                    <label for="leave_type_id" class="block text-sm font-medium text-gray-700">Leave Type</label>
-                    <select name="leave_type_id" id="leave_type_id" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm" required>
-                        <option value="">Select Leave Type</option>
-                        @foreach($leaveTypes as $leaveType)
-                        <option value="{{ $leaveType->id }}" {{ old('leave_type_id') == $leaveType->id ? 'selected' : '' }}>
-                            {{ $leaveType->leave_name }}
-                        </option>
-                        @endforeach
-                    </select>
-                    @error('leave_type_id')
-                    <span class="text-red-500 text-sm">{{ $message }}</span>
-                    @enderror
-                </div>
+                    <!-- Select Leave Type -->
+                    <div class="mt-4">
+                        <label for="leave_type_id" class="block text-sm font-medium text-gray-700">Leave Type</label>
+                        <select name="leave_type_id" id="leave_type_id" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm" required>
+                            <option value="">Select Leave Type</option>
+                            @foreach($leaveTypes as $leaveType)
+                            <option value="{{ $leaveType->id }}" {{ old('leave_type_id') == $leaveType->id ? 'selected' : '' }}>
+                                {{ $leaveType->leave_name }}
+                            </option>
+                            @endforeach
+                        </select>
+                        @error('leave_type_id')
+                        <span class="text-red-500 text-sm">{{ $message }}</span>
+                        @enderror
+                    </div>
 
-                <!-- From Date/Time -->
-                <div class="mt-4">
-                    <label for="from_date" id="from_date_label" class="block text-sm font-medium text-gray-700">From Date/Time</label>
-                    <input type="datetime-local" name="from_date" id="from_date" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm" value="{{ old('from_date') }}" required>
-                </div>
+                    <!-- From Date/Time -->
+                    <div class="mt-4">
+                        <label for="from_date" id="from_date_label" class="block text-sm font-medium text-gray-700">From Date/Time</label>
+                        <input type="datetime-local" name="from_date" id="from_date" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm" value="{{ old('from_date') }}" required>
+                    </div>
 
-                <!-- To Date/Time -->
-                <div class="mt-4">
-                    <label for="to_date" id="to_date_label" class="block text-sm font-medium text-gray-700">To Date/Time</label>
-                    <input type="datetime-local" name="to_date" id="to_date" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm" value="{{ old('to_date') }}" required>
-                </div>
+                    <!-- To Date/Time -->
+                    <div class="mt-4">
+                        <label for="to_date" id="to_date_label" class="block text-sm font-medium text-gray-700">To Date/Time</label>
+                        <input type="datetime-local" name="to_date" id="to_date" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm" value="{{ old('to_date') }}" required>
+                    </div>
 
-                <!-- Leave Duration (Full Day, Half Day, Custom Time) -->
-                <div class="mt-4">
-                    <label for="leave_type" class="block text-sm font-medium text-gray-700">Leave Duration</label>
-                    <select name="leave_type" id="leave_type" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm">
-                        <option value="full_day">Full Day</option>
-                        <option value="half_day">Half Day</option>
-                        <option value="time">Specific Time</option>
-                    </select>
-                </div>
-
-                <!-- Half Day Type (Morning, Afternoon) -->
-                <div id="halfDayType" class="mt-4" style="display: none;">
-                    <label class="block text-sm font-medium text-gray-700">Select Half Day Type</label>
-                    <div class="mt-2">
-                        <label class="inline-flex items-center">
-                            <input type="radio" name="half_day_type" value="morning" class="form-radio text-blue-600">
-                            <span class="ml-2">Morning</span>
-                        </label>
-                        <label class="inline-flex items-center ml-6">
-                            <input type="radio" name="half_day_type" value="afternoon" class="form-radio text-blue-600">
-                            <span class="ml-2">Afternoon</span>
-                        </label>
+                    <!-- Leave Duration (Full Day, Half Day, Custom Time) -->
+                    <div class="mt-4">
+                        <label for="leave_type" class="block text-sm font-medium text-gray-700">Leave Duration</label>
+                        <select name="leave_type" id="leave_type" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm">
+                            <option value="full_day">Full Day</option>
+                            <option value="half_day">Half Day</option>
+                            <option value="time">Specific Time</option>
+                        </select>
+                    </div>
+                    <!-- Half Day Type (Morning, Afternoon) -->
+                    <div id="halfDayType" class="mt-4" style="display: none;">
+                        <label class="block text-sm font-medium text-gray-700">Select Half Day Type</label>
+                        <div class="mt-2">
+                            <label class="inline-flex items-center">
+                                <input type="radio" name="half_day_type" value="morning" class="form-radio text-blue-600">
+                                <span class="ml-2">Morning</span>
+                            </label>
+                            <label class="inline-flex items-center ml-6">
+                                <input type="radio" name="half_day_type" value="afternoon" class="form-radio text-blue-600">
+                                <span class="ml-2">Afternoon</span>
+                            </label>
+                        </div>
                     </div>
                 </div>
+                <div class="w-6/12">
+                    <!-- Reason -->
+                    <div>
+                        <label for="reason" class="block text-sm font-medium text-gray-700">Reason</label>
+                        <textarea name="reason" id="reason" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm" rows="4" placeholder="Enter the reason for your leave">{{ old('reason') }}</textarea>
+                    </div>
 
-                <!-- Reason -->
-                <div class="mt-4">
-                    <label for="reason" class="block text-sm font-medium text-gray-700">Reason</label>
-                    <textarea name="reason" id="reason" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm" rows="4" placeholder="Enter the reason for your leave">{{ old('reason') }}</textarea>
-                </div>
+                    <!-- Duration -->
+                    <div class="mt-4">
+                        <label for="duration" class="block text-sm font-medium text-gray-700">Duration (in days)</label>
+                        <input type="number" name="duration" id="duration" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm" value="{{ old('duration') }}" min="1" step="0.5" placeholder="Enter duration in days">
+                    </div>
 
-                <!-- Duration -->
-                <div class="mt-4">
-                    <label for="duration" class="block text-sm font-medium text-gray-700">Duration (in days)</label>
-                    <input type="number" name="duration" id="duration" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm" value="{{ old('duration') }}" min="1" step="0.5" placeholder="Enter duration in days">
-                </div>
+                    <!-- Attachment -->
+                    <div class="mt-4">
+                        <label for="attachment" class="block text-sm font-medium text-gray-700">Attachment</label>
+                        <input type="file" name="attachment" id="attachment" class="mt-1 block w-5/12 rounded-md border-gray-300 shadow-sm">
+                    </div>
 
-                <!-- Attachment -->
-                <div class="mt-4">
-                    <label for="attachment" class="block text-sm font-medium text-gray-700">Attachment</label>
-                    <input type="file" name="attachment" id="attachment" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm">
-                </div>
-
-                <!-- Submit Button -->
-                <div class="mt-6">
-                    <button type="submit" class="bg-blue-600 text-white font-semibold px-5 py-2 rounded-lg shadow-md hover:bg-blue-700 transition-colors">
-                        Request Leave
-                    </button>
+                    <!-- Submit Button -->
+                    <div class="mt-6">
+                        <button type="submit" class="bg-yellow-400 text-white font-semibold px-2 py-1 rounded-lg shadow-md hover:bg-black transition-colors">
+                            Take Leave
+                        </button>
+                        <a href="">Back</a>
+                    </div>
                 </div>
             </form>
         </div>
