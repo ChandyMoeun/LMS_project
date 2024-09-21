@@ -1,14 +1,14 @@
 <x-app-layout>
     <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-200 mt-20">
         <div class="container mx-auto px-6 py-2">
-        <div class="d-flex border-b-2 border-gray-300 px-8 h-20 items-center mb-5">
-          <a href="/admin/mail">
-            <svg class="w-6 h-6 text-gray-800 dark:text-white hover:text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
-              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5H1m0 0 4 4M1 5l4-4" />
-            </svg>
-          </a>
-          <h1 class="font-bold text-3xl mt-5 hover:text-yellow-400"><b>Departments </b></h1>
-        </div>
+            <div class="d-flex border-b-2 border-gray-300 px-8 h-20 items-center mb-5">
+                <a href="/admin/mail">
+                    <svg class="w-6 h-6 text-gray-800 dark:text-white hover:text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5H1m0 0 4 4M1 5l4-4" />
+                    </svg>
+                </a>
+                <h1 class="font-bold text-3xl mt-5 hover:text-yellow-400"><b>Departments </b></h1>
+            </div>
             <div class="text-right">
                 @can('Department create')
                 <a href="{{ route('admin.department.create') }}" class="bg-blue-500 text-white font-bold px-5 py-1 rounded focus:outline-none shadow hover:bg-blue-600 transition-colors">Add New</a>
@@ -20,6 +20,7 @@
                     <thead>
                         <tr>
                             <th class="py-4 px-6 bg-gray-100 font-bold text-sm text-gray-700 border-b border-gray-200">Department Name</th>
+                            <th class="py-4 px-6 bg-gray-100 font-bold text-sm text-gray-700 border-b border-gray-200">Supervisor Name</th>
                             <th class="py-4 px-6 bg-gray-100 font-bold text-sm text-gray-700 border-b border-gray-200 text-right w-2/12">Actions</th>
                         </tr>
                     </thead>
@@ -28,6 +29,9 @@
                         @foreach($departments as $department)
                         <tr class="hover:bg-gray-100">
                             <td class="py-4 px-6 border-b border-gray-200">{{ $department->name }}</td>
+                            <td class="py-4 px-6 border-b border-gray-200">
+                                {{ $department->manager ? $department->manager->full_name : 'No manager assigned' }}
+                            </td>
                             <td class="py-4 px-6 border-b border-gray-200 text-right">
                                 @can('Department edit')
                                 <a href="{{ route('admin.department.edit', $department->id) }}" class="text-gray-600 font-bold py-1 px-3 rounded text-xs bg-green-500 hover:bg-green-600 text-white">Edit</a>

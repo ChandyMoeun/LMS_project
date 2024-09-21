@@ -1,5 +1,5 @@
 <x-app-layout>
-    <main class="mt-20">
+    <main class="p-20">
         <div class="container mx-auto px-6 py-4">
             <!-- Leave Request Form -->
             <form method="POST" action="{{ route('admin.leave.store') }}" enctype="multipart/form-data">
@@ -22,16 +22,28 @@
                 <div class="mt-4">
                     <label for="leave_type_id" class="block text-sm font-medium text-gray-700">Leave Type</label>
                     <select name="leave_type_id" id="leave_type_id" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm" required>
-                        <option value="">Select Leave Type</option>
+                        <option value="" disabled selected>Select Leave Type</option>
                         @foreach($leaveTypes as $leaveType)
-                        <option value="{{ $leaveType->id }}" {{ old('leave_type_id') == $leaveType->id ? 'selected' : '' }}>
-                            {{ $leaveType->leave_name }}
+                        <option
+                            value="{{ $leaveType->id }}"
+                            {{ old('leaveType_id') == $leaveType->id ? 'selected' : '' }}
+                            {{-- Disable Annual leave if the employee is not eligible --}}
+                            @if($leaveType->leave_name == 'Annual leave' && !$employees->first()->eligible_for_annual_leave)
+                            disabled
+                            @endif
+                            >
+                            {{ $leaveType->leave_name }}({{ $leaveType->id }})
                         </option>
                         @endforeach
                     </select>
                     @error('leave_type_id')
                     <span class="text-red-500 text-sm">{{ $message }}</span>
                     @enderror
+                </div>
+
+                <!-- Display Increase Rate as Total Leave -->
+                <div id="leaveTypeDetails" class="mt-4 hidden">
+                    <p>Total Leave:<span id="totalLeave"></span></p>
                 </div>
 
                 <!-- From Date/Time -->
@@ -134,4 +146,29 @@
 
     // Trigger change event on page load to ensure correct input types are set
     leaveType.dispatchEvent(new Event('change'));
+
+
+    // =====>javascript show total leave<=====
+
+    document.getElementById('leave_type_id').addEventListener('change', function() {
+        // Get the selected option
+        const selectedOption = this.options[this.selectedIndex];
+
+        // Get the increase rate from the selected option's data attribute
+        const increaseRate = selectedOption.getAttribute('data-increase-rate');
+
+        // Get the element to display total leave
+        const totalLeaveElement = document.getElementById('totalLeave');
+
+        if (increaseRate) {
+            // Set increase rate as total leave
+            totalLeaveElement.textContent = increaseRate;
+
+            // Show the leave type details section
+            document.getElementById('leaveTypeDetails').classList.remove('hidden');
+        } else {
+            // If no leave type is selected, hide the leave type details section
+            document.getElementById('leaveTypeDetails').classList.add('hidden');
+        }
+    });
 </script>

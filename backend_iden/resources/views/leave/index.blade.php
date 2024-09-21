@@ -1,6 +1,11 @@
 <x-app-layout>
     <div class="mt-20">
         <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-200">
+            <!-- Admin Requites leave -->
+            <div class="d-flex border-b-2 border-gray-300 h-20 pl-20 items-center mb-2">
+                <h1 class="font-bold text-3xl mt-5 w-1/3 hover:text-yellow-400"><b>Admin leave</b></h1>
+            </div>
+            
             <div class="container mx-auto px-6 py-4">
                 <div class="flex justify-end mb-4">
                     @can('Leave create')
@@ -20,6 +25,7 @@
                                 <th class="py-3 px-6 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Half Day</th>
                                 <th class="py-3 px-6 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">files</th>
                                 <th class="py-3 px-6 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                                <th class="py-3 px-6 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Approver</th>
                                 <th class="py-3 px-6 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Total Days</th>
                                 <th class="py-3 px-6 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
                             </tr>
@@ -53,6 +59,15 @@
                                     <span class="bg-green-400 text-white px-2 py-1 rounded-full text-xs font-semibold">Approved</span>
                                     @else
                                     <span class="bg-red-400 text-white px-2 py-1 rounded-full text-xs font-semibold">Rejected</span>
+                                    @endif
+                                </td>
+                                <td class="py-4 px-6 text-sm text-gray-500">
+                                    @if($leaveRequest->status === 'approved')
+                                    {{ $leaveRequest->approver->full_name ?? 'no name' }}
+                                    @elseif($leaveRequest->status === 'rejected')
+                                    {{ $leaveRequest->rejector->full_name ?? 'no name'}}
+                                    @else
+                                    Pending
                                     @endif
                                 </td>
                                 <td class="py-4 px-6 text-sm text-gray-500">{{ $leaveRequest->total_requested_days }}</td>
@@ -91,27 +106,6 @@
                                         @endcan
                                     </div>
                                 </td>
-
-                                <script>
-                                    function toggleButtons(leaveRequestId) {
-                                        var buttons = document.getElementById('action-buttons-' + leaveRequestId);
-                                        buttons.classList.toggle('hidden'); // Toggle 'hidden' class to show/hide the buttons
-                                    }
-
-                                    function disableButtons(leaveRequestId) {
-                                        var buttons = document.getElementById('action-buttons-' + leaveRequestId);
-                                        buttons.classList.add('hidden'); // Hide the buttons after form is submitted
-
-                                        // Disable the buttons within the forms to prevent further clicks
-                                        var forms = buttons.querySelectorAll('form');
-                                        forms.forEach(function(form) {
-                                            var submitButton = form.querySelector('button[type="submit"]');
-                                            submitButton.disabled = true; // Disable the button
-                                            submitButton.classList.add('opacity-50', 'cursor-not-allowed'); // Add visual feedback
-                                        });
-                                    }
-                                </script>
-
                                 @endforeach
                                 @endcan
                             </tr>
@@ -126,3 +120,23 @@
         </main>
     </div>
 </x-app-layout>
+
+<script>
+    function toggleButtons(leaveRequestId) {
+        var buttons = document.getElementById('action-buttons-' + leaveRequestId);
+        buttons.classList.toggle('hidden'); // Toggle 'hidden' class to show/hide the buttons
+    }
+
+    function disableButtons(leaveRequestId) {
+        var buttons = document.getElementById('action-buttons-' + leaveRequestId);
+        buttons.classList.add('hidden'); // Hide the buttons after form is submitted
+
+        // Disable the buttons within the forms to prevent further clicks
+        var forms = buttons.querySelectorAll('form');
+        forms.forEach(function(form) {
+            var submitButton = form.querySelector('button[type="submit"]');
+            submitButton.disabled = true; // Disable the button
+            submitButton.classList.add('opacity-50', 'cursor-not-allowed'); // Add visual feedback
+        });
+    }
+</script>

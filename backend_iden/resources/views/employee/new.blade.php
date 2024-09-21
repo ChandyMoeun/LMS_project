@@ -11,12 +11,38 @@
           <h1 class="font-bold text-3xl mt-5 hover:text-yellow-400"><b>Add Employee </b></h1>
         </div>
         <div class="bg-white shadow-md rounded my-6 p-10">
-          <form method="POST" action="{{ route('admin.employee.store') }}">
-            <div style="display: flex; justify-content:center; padding:2%; margin-bottom: 5%;">
-              <img src="https://via.placeholder.com/30" alt="Profile" class="rounded-full w-20 h-20">
-            </div>
+          <form id="profileForm" method="POST" action="{{ route('admin.employee.store') }}" enctype="multipart/form-data">
             @csrf
             @method('post')
+
+            <div style="display: flex; justify-content: center; padding: 2%; margin-bottom: 5%;">
+              <!-- Hidden file input -->
+              <input type="file" id="profileImageInput" name="profile" class="hidden" accept="image/*" onchange="previewImage(event)" />
+
+              <!-- Image element -->
+              <img
+                id="profileImage"
+                src="https://via.placeholder.com/120"
+                alt="Profile"
+                class="rounded-full w-20 h-20 cursor-pointer"
+                onclick="document.getElementById('profileImageInput').click()" />
+            </div>
+
+            <script>
+              function previewImage(event) {
+                const input = event.target;
+                const file = input.files[0];
+
+                if (file) {
+                  const reader = new FileReader();
+                  reader.onload = function(e) {
+                    document.getElementById('profileImage').src = e.target.result;
+                  };
+                  reader.readAsDataURL(file);
+                }
+              }
+            </script>
+
             <div style="display: flex; justify-content:center; justify-content: space-between; width:100%;">
               <div style="width:48%;">
                 <!-- Staff ID -->
@@ -78,6 +104,12 @@
                   <input id="joined_date" type="date" name="joined_date" value="{{ old('joined_date') }}"
                     class="px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-200" />
                 </div>
+                <!-- Joined Date -->
+                <div class="flex flex-col space-y-2">
+                  <label for="entitled_date" class="text-gray-600 select-none font-medium ml-3">Joined Date</label>
+                  <input id="entitled_date" type="date" name="entitled_date" value="{{ old('entitled_date') }}"
+                    class="px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-200" />
+                </div>
 
                 <!-- Position -->
                 <div class="flex flex-col space-y-2">
@@ -85,7 +117,7 @@
                   <select id="position_id" name="position_id" class="px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-200">
                     <option value="" disabled selected>Select Position</option>
                     @foreach($positions as $position)
-                    <option value="{{ $position->id }}">{{ $position->name }}</option>
+                    <option value="{{ $position->id }}" data-department-id="{{ $position->department_id }}">{{ $position->name }}</option>
                     @endforeach
                   </select>
                 </div>
@@ -117,12 +149,49 @@
 
             <!-- Submit Button -->
             <div class="text-center mt-16 mb-16">
-              <button type="submit" class="w-5px mt-5 bg-red-500 text-red font-bold py-2 px-4 hover:bg-red-400 focus:outline-none focus:bg-red-700 transition-colors" style=" border-radius: 5px"><a href="/admin/employee" style="text-decoration: none; color: white;">Cancel</a></button>
-              <button type="submit" class="w-5px mt-5 bg-blue-500 text-white font-bold py-2 px-4 hover:bg-yellow-400 focus:outline-none focus:bg-blue-700 transition-colors" style=" border-radius: 5px">Submit</button>
+              <button type="submit" class="w-5px mt-5 bg-red-500 text-white font-bold py-2 px-4 hover:bg-red-400 focus:outline-none focus:bg-red-700 transition-colors" style="border-radius: 5px"><a href="/admin/employee" style="text-decoration: none; color: white;">Cancel</a></button>
+              <button type="submit" class="w-5px mt-5 bg-blue-500 text-white font-bold py-2 px-4 hover:bg-blue-400 focus:outline-none focus:bg-blue-700 transition-colors" style="border-radius: 5px">Submit</button>
             </div>
           </form>
+
         </div>
       </div>
     </main>
   </div>
 </x-app-layout>
+
+<script>
+  document.getElementById('position_id').addEventListener('change', function() {
+    var selectedPosition = this.options[this.selectedIndex];
+    var departmentId = selectedPosition.getAttribute('data-department-id');
+
+    // Get the department select element
+    var departmentSelect = document.getElementById('department_id');
+
+    // Reset the department select options
+    for (var i = departmentSelect.options.length - 1; i >= 0; i--) {
+      departmentSelect.remove(i);
+    }
+
+    // Add default option
+    var defaultOption = document.createElement('option');
+    defaultOption.text = 'Select Department';
+    defaultOption.value = '';
+    defaultOption.disabled = true;
+    defaultOption.selected = true;
+    departmentSelect.add(defaultOption);
+
+    // Add departments and auto-select the matching one
+    @foreach($departments as $department)
+    var option = document.createElement('option');
+    option.text = '{{ $department->name }}';
+    option.value = '{{ $department->id }}';
+    departmentSelect.add(option);
+
+    // Auto-select the department if it matches the selected position
+    if ('{{ $department->id }}' === departmentId) {
+      option.selected = true;
+    }
+    @endforeach
+  });
+</script>

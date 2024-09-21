@@ -54,7 +54,7 @@
                         <img src="../images/employees.png" style="margin-left: 8px; width: 100px; height:50%; display: flex; align-self:center;">
                         <div class="ml-1">
                             <h4 class="font-bold mt-6 "><b>Employees</b></h4>
-                            <p>All :</p>
+                            <p>All :{{$totalEmployees}}</p>
                         </div>
                     </div>
                 </div>
@@ -105,7 +105,7 @@
             <!-- Chart Script -->
             <script>
                 var xValues = ["IT", "Production", "Finance", "Creative"];
-                var yValues = [2, 10, 2, 4];
+                var yValues = [24, 10, 2, 4];
                 var barColors = [
                     "#b91d47",
                     "#00aba9",
@@ -168,10 +168,11 @@
             <div class="overflow-x-auto">
                 <table class="min-w-full bg-gray-100 border border-gray-100">
                     <thead>
-                        <tr class="bg-black text-white">
+                        <tr class="bg-black text-white text-xs">
                             <th class="py-2 px-4 border-b">ID</th>
                             <th class="py-2 px-4 border-b">Profile</th>
                             <th class="py-2 px-4 border-b">Em Name</th>
+                            <th class="py-2 px-4 border-b">LeaveType</th>
                             <th class="py-2 px-4 border-b">Position</th>
                             <th class="py-2 px-4 border-b">From | To</th>
                             <th class="py-2 px-4 border-b">Approver</th>
@@ -182,47 +183,98 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <?php
-                        // Example data array
-                        $employees = [
-                            [
-                                'id' => 1,
-                                'profile_img' => 'profile-pic-url',  // Replace with actual image URL
-                                'name' => 'Kris Wang',
-                                'position' => 'Front-end',
-                                'from' => '28.08.2024',
-                                'to' => '30.08.2024',
-                                'approver' => 'Mr. Cat',
-                                'sub_approver' => 'XXXXXX',
-                                'status' => 'Pending',
-                            ],
-                        ];
+                        <!-- Loop through each employee and generate table rows -->
+                        @can('Leave access')
+                        @foreach($leaveRequests as $leaveRequest)
+                        <tr class="hover:bg-white text-xs">
+                            <td class="py-2 px-4 border-b">{{$leaveRequest->employee->staff_id ?? 'N/A' }}</td>
+                            <td class="py-2 px-4 border-b">
+                                @if($leaveRequest->employee->profile)
+                                <img src="{{ asset('images/' . $leaveRequest->employee->profile) }}" alt="Profile Image" class="w-12 h-12 rounded-full object-cover">
+                                @else
+                                <img src="{{ asset('images/default_profile.png') }}" alt="Default Profile" class="w-12 h-12 rounded-full object-cover">
+                                @endif
+                            </td>
 
-                        // Loop through each employee and generate table rows
-                        foreach ($employees as $employee) {
-                            echo '<tr class="hover:bg-white">';
-                            echo '<td class="py-2 px-4 border-b">' . $employee['id'] . '</td>';
-                            echo '<td class="py-2 px-4 border-b"><img src="' . $employee['profile_img'] . '" alt="Profile Image" class="w-10 h-10 rounded-full"></td>';
-                            echo '<td class="py-2 px-4 border-b">' . $employee['name'] . '</td>';
-                            echo '<td class="py-2 px-4 border-b">' . $employee['position'] . '</td>';
-                            echo '<td class="py-2 px-4 border-b">' . $employee['from'] . ' / ' . $employee['to'] . '</td>';
-                            echo '<td class="py-2 px-4 border-b">' . $employee['approver'] . '</td>';
-                            echo '<td class="py-2 px-4 border-b">' . $employee['sub_approver'] . '</td>';
-                            echo '<td class="py-2 px-4 border-b">' . $employee['status'] . '</td>';
-                            echo '<td class="py-2 px-4 border-b"><a href="/admin/more" class="text-blue-500 hover:underline">More</a></td>';
-                            echo '<td class="py-2 px-4 border-b"><select id="dropdown" class="w-full border h-10 d-flex border-gray-300 rounded px-3 py-2 mt-2">
-                                    <option>Action</option>
-                                    <option value="1">Panding</option>
-                                    <option value="2">Accept</option>
-                                    <option value="3">Reject</option> 
-                                </select></td>';
+                            <td class="py-2 px-4 border-b">{{ $leaveRequest->employee->full_name ?? 'N/A' }}</td>
+                            <td class="py-2 px-4 border-b">{{$leaveRequest->leaveType->leave_name ?? 'N/A'}}</td>
+                            <td class="py-2 px-4 border-b">position</td>
+                            <td class="py-2 px-4 border-b">{{ \Carbon\Carbon::parse($leaveRequest->from_date)->format('Y-m-d') }}|{{ $leaveRequest->to_date ? \Carbon\Carbon::parse($leaveRequest->to_date)->format('Y-m-d') : '-' }}</td>
+                            <td class="py-2 px-4 border-b">@if($leaveRequest->status === 'approved')
+                                {{ $leaveRequest->approver->full_name ?? 'no name' }}
+                                @elseif($leaveRequest->status === 'rejected')
+                                {{ $leaveRequest->rejector->full_name ?? 'no name'}}
+                                @else
+                                Pending
+                                @endif
+                            </td>
+                            <td class="py-2 px-4 border-b text-xs">XXX</td>
+                            <td class="py-2 px-4 border-b text-xs"> @if($leaveRequest->status == 'pending')
+                                <span class="bg-yellow-400 text-white px-2 py-1 rounded-full text-xs font-semibold">Pending</span>
+                                @elseif($leaveRequest->status == 'approved')
+                                <span class="bg-green-400 text-white px-2 py-1 rounded-full text-xs font-semibold">Approved</span>
+                                @else
+                                <span class="bg-red-400 text-white px-2 py-1 rounded-full text-xs font-semibold">Rejected</span>
+                                @endif
+                            </td>
+                            <td class="py-2 px-4 border-b text-xs">
+                                <a href="{{ route('admin.leave.show', $leaveRequest->id) }}" class="text-blue-500 hover:underline">More</a>
+                            </td>
 
-                            echo '</tr>';
-                        }
-                        ?>
+
+                            <td class="py-2 px-4 border-b text-xs">
+                                <!-- View button to toggle the visibility -->
+                                <button type="button" class="text-blue-600 hover:text-blue-800 font-semibold" onclick="toggleButtons({{ $leaveRequest->id }})">
+                                    Views
+                                </button>
+
+                                <!-- Hidden buttons (Edit, Approve, Reject) -->
+                                <div id="action-buttons-{{ $leaveRequest->id }}" class="mt-2 space-x-4 hidden">
+                                    @can('Leave edit')
+                                    <a href="{{ route('admin.leave.edit', $leaveRequest->id) }}" class="text-green-600 hover:text-green-800 font-semibold transition-colors duration-200 text-xs">
+                                        Edit
+                                    </a>
+                                    @endcan
+
+                                    @can('Leave edit')
+                                    <form action="{{ route('admin.leave.approve', $leaveRequest) }}" method="POST" class="inline" onsubmit="disableButtons({{ $leaveRequest->id }})">
+                                        @csrf
+                                        @method('post')
+                                        <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-md shadow-md hover:bg-blue-600 transition-all duration-300 ease-in-out font-semibold text-xs">
+                                            Approve
+                                        </button>
+                                    </form>
+                                    @endcan
+
+                                    @can('Leave edit')
+                                    <form action="{{ route('admin.leave.reject', $leaveRequest) }}" method="POST" class="inline" onsubmit="disableButtons({{ $leaveRequest->id }})">
+                                        @csrf
+                                        @method('post')
+                                        <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded-md shadow-md hover:bg-red-600 transition-all duration-300 ease-in-out font-semibold text-xs">
+                                            Reject
+                                        </button>
+                                    </form>
+                                    @endcan
+                                </div>
+                            </td>
+                        </tr>
+                        @endforeach
+                        @endcan
+
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
 </x-app-layout>
+
+<script>
+    function toggleButtons(id) {
+        const actionButtons = document.getElementById(`action-buttons-${id}`);
+        if (actionButtons.classList.contains('hidden')) {
+            actionButtons.classList.remove('hidden');
+        } else {
+            actionButtons.classList.add('hidden');
+        }
+    }
+</script>

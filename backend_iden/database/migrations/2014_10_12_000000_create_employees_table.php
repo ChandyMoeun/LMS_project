@@ -24,7 +24,7 @@ class CreateEmployeesTable extends Migration
             $table->string('password');
             $table->date('dob')->nullable();
             $table->date('joined_date')->nullable();
-            $table->unsignedBigInteger('entitled_calendar')->nullable();
+            $table->date('entitled_date')->nullable();
             $table->unsignedBigInteger('reporting_line')->nullable();
             $table->unsignedBigInteger('position_id')->nullable();
             $table->unsignedBigInteger('department_id')->nullable();

@@ -46,6 +46,7 @@ return [
             'provider' => 'employees',
             'hash' => false,
         ],
+        
     ],
 
 
@@ -99,7 +100,7 @@ return [
     */
 
     'passwords' => [
-        'users' => [
+        'employees' => [
             'provider' => 'employees',
             'table' => 'password_resets',
             'expire' => 60,

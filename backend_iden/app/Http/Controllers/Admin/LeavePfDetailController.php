@@ -5,6 +5,9 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Employee;
+use App\Models\LeaveRequest; // Assuming you have a LeaveRequest model
+use App\Models\LeaveType; // Assuming you have a LeaveType model
+use App\Models\Position; // Assuming you have a Position model
 use Auth;
 
 
@@ -24,8 +27,16 @@ class LeavePfDetailController extends Controller
     }
 
     public function index()
+
     {
-        return view('employee.more.index');
+        $employees = Employee::all();
+        $totalEmployees = $employees->count();
+
+        $leaveRequests = LeaveRequest::all();
+        $totalLeaveRequests = $leaveRequests->count();
+
+        // Pass both sets of data to the view
+        return view('employee.more.index', compact('employees', 'totalEmployees', 'leaveRequests', 'totalLeaveRequests'));
     }
 
     /**
@@ -41,7 +52,12 @@ class LeavePfDetailController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $employee = Employee::find($id);
+        $leaveRequests = LeaveRequest::where('employee_id', $id)->get();
+        $leaveTypes = LeaveType::all();
+        $positions = Position::all();
+
+        return view('employee.more.index', compact('employee', 'leaveRequests', 'leaveTypes', 'positions'));
     }
 
     /**
@@ -60,10 +76,10 @@ class LeavePfDetailController extends Controller
         //
     }
 
-    public function employeeProfile(string $id)
-    {
-        $employee = Employee::find($id);
+    // public function employeeProfile(string $id)
+    // {
+    //     $employee = Employee::find($id);
 
-        return view('employee.profile.index', ['employee' => $employee]);
-    }
+    //     return view('employee.profile.index', ['employee' => $employee]);
+    // }
 }
