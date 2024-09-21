@@ -27,6 +27,7 @@
                                 <th class="py-3 px-6 text-center text-xs text-white uppercase tracking-wider">Status</th>
                                 <th class="py-3 px-6 text-center text-xs text-white uppercase tracking-wider">Total</th>
                                 <th class="py-3 px-6 text-center text-xs text-white uppercase tracking-wider">Detail</th>
+                                <th class="py-3 px-6 text-center text-xs text-white uppercase tracking-wider">Approver</th>
                                 <th class="py-3 px-6 w-1/12 text-center text-xs text-white uppercase tracking-wider">Actions</th>
                             </tr>
                         </thead>
@@ -61,58 +62,54 @@
                                     <span class="bg-red-400 text-center text-white px-2 py-1 rounded-full text-xs font-semibold">Rejected</span>
                                     @endif
                                 </td>
-                                <<<<<<< HEAD
-                                    <td class="py-4 px-6 text-sm text-center text-black">{{ $leaveRequest->total_requested_days }}</td>
+                                <td class="py-4 px-6 text-sm text-center text-black">{{ $leaveRequest->total_requested_days }}</td>
 
-                                    <td class="py-4 px-6 text-sm text-center">
-                                        <a href="/admin/more" class="text-blue-700 hover:text-blue-300 ">
-                                            View
-                                        </a>
-                                    </td>
-                                    <td class="text-center w-20 text-sm">
-                                        =======
-                                    <td class="py-4 px-6 text-sm text-gray-500">
-                                        @if($leaveRequest->status === 'approved')
-                                        {{ $leaveRequest->approver->full_name ?? 'no name' }}
-                                        @elseif($leaveRequest->status === 'rejected')
-                                        {{ $leaveRequest->rejector->full_name ?? 'no name'}}
-                                        @else
-                                        Pending
-                                        @endif
-                                    </td>
-                                    <td class="py-4 px-6 text-sm text-gray-500">{{ $leaveRequest->total_requested_days }}</td>
-                                    <td class="py-4 px-6 text-sm font-medium text-right">
-                                        >>>>>>> rest_api
-                                        <!-- View button to toggle the visibility -->
-                                        <button type="button" class="text-blue-700 hover:text-blue-300 font-semibold" onclick="toggleButtons({{ $leaveRequest->id }})">
-                                            View Options
-                                        </button>
+                                <td class="py-4 px-6 text-sm text-center">
+                                    <a href="{{ route('admin.leave.show', $leaveRequest->id) }}" class="text-blue-700 hover:text-blue-300 ">
+                                        View
+                                    </a>
+                                </td>
 
-                                        <!-- Hidden buttons (Edit, Approve, Reject) -->
-                                        <div id="action-buttons-{{ $leaveRequest->id }}" class=" flex justify-center mt-2 m-2 flex space-x-2">
-                                            @can('Leave edit')
-                                            <form action="{{ route('admin.leave.approve', $leaveRequest) }}" method="POST" class="inline" onsubmit="disableButtons({{ $leaveRequest->id }})">
-                                                @csrf
-                                                @method('post')
-                                                <button type="submit" class="bg-blue-500 text-white px-2 py-2 rounded-md shadow-md hover:bg-blue-600 transition-all duration-300 ease-in-out font-semibold">
-                                                    Approve
-                                                </button>
-                                            </form>
-                                            @endcan
+                                <td class="py-4 px-6 text-sm text-gray-500">
+                                    @if($leaveRequest->status === 'approved')
+                                    {{ $leaveRequest->approver->full_name ?? 'no name' }}
+                                    @elseif($leaveRequest->status === 'rejected')
+                                    {{ $leaveRequest->rejector->full_name ?? 'no name'}}
+                                    @else
+                                    Pending
+                                    @endif
+                                </td>
+                                <td class="py-4 px-6 text-sm font-medium text-right">
+                                    <!-- View button to toggle the visibility -->
+                                    <button type="button" class="text-blue-700 hover:text-blue-300 font-semibold" onclick="toggleButtons({{ $leaveRequest->id }})">
+                                        View Options
+                                    </button>
 
-                                            @can('Leave edit')
-                                            <form action="{{ route('admin.leave.reject', $leaveRequest) }}" method="POST" class="inline" onsubmit="disableButtons({{ $leaveRequest->id }})">
-                                                @csrf
-                                                @method('post')
-                                                <button type="submit" class="bg-red-500 text-white px-2 py-2 rounded-md shadow-md hover:bg-red-600 transition-all duration-300 ease-in-out font-semibold">
-                                                    Reject
-                                                </button>
-                                            </form>
-                                            @endcan
-                                        </div>
-                                    </td>
-                                    @endforeach
-                                    @endcan
+                                    <!-- Hidden buttons (Edit, Approve, Reject) -->
+                                    <div id="action-buttons-{{ $leaveRequest->id }}" class=" flex justify-center mt-2 m-2 flex space-x-2">
+                                        @can('Leave edit')
+                                        <form action="{{ route('admin.leave.approve', $leaveRequest) }}" method="POST" class="inline" onsubmit="disableButtons({{ $leaveRequest->id }})">
+                                            @csrf
+                                            @method('post')
+                                            <button type="submit" class="bg-blue-500 text-white px-2 py-2 rounded-md shadow-md hover:bg-blue-600 transition-all duration-300 ease-in-out font-semibold">
+                                                Approve
+                                            </button>
+                                        </form>
+                                        @endcan
+
+                                        @can('Leave edit')
+                                        <form action="{{ route('admin.leave.reject', $leaveRequest) }}" method="POST" class="inline" onsubmit="disableButtons({{ $leaveRequest->id }})">
+                                            @csrf
+                                            @method('post')
+                                            <button type="submit" class="bg-red-500 text-white px-2 py-2 rounded-md shadow-md hover:bg-red-600 transition-all duration-300 ease-in-out font-semibold">
+                                                Reject
+                                            </button>
+                                        </form>
+                                        @endcan
+                                    </div>
+                                </td>
+                                @endforeach
+                                @endcan
                             </tr>
                         </tbody>
                     </table>

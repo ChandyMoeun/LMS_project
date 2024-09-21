@@ -1,12 +1,11 @@
 <x-app-layout>
-
     <main class="mt-10 p-12">
         <!-- Employee Management Header -->
         <div class="d-flex border-b-2 border-gray-300 h-20 pl-20 items-center mb-2">
             <h1 class="font-bold text-3xl mt-5 w-1/3 hover:text-yellow-400"><b>Employee Management</b></h1>
             <p class="text-gray-600 pl-6">Total Employees: {{ $totalEmployees }}</p>
         </div>
-        <div class="p-10">
+        <div class="employee-list">
             <!-- Search and Filter -->
             <div class="flex justify-between mb-4">
                 <input type="text" placeholder="Search employee by name..." class="border rounded p-2 h-10 w-1/3">
@@ -76,49 +75,6 @@
                     </tbody>
                 </table>
             </div>
-        </div>
-        <!-- Employee Table -->
-        <div class="overflow-x-auto">
-            <table class="w-full bg-white shadow-md rounded">
-                <thead>
-                    <tr class="bg-gray-800 text-white">
-                        <th class="p-3 text-center">Staff_id</th>
-                        <th class="p-3 text-left">Profile</th>
-                        <th class="p-3 text-center">Name</th>
-                        <th class="p-3 text-center">Email</th>
-                        <th class="p-3 text-center">Position</th>
-                        <th class="p-3 text-center">Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @can('Employee access')
-                    @foreach($employees as $employee)
-                    <tr class="bg-gray-100 border-b border-gray-200 ">
-                        <td class="p-3 text-center">{{ $employee->staff_id }}</td>
-                        <td class="p-3">
-                            <img src="https://via.placeholder.com/30" alt="Profile" class="rounded-full w-8 h-8">
-                        </td>
-                        <td class="p-3 text-center">{{ $employee->full_name }}</td>
-                        <td class="p-3 text-blue-600 text-center">{{ $employee->email }}</td>
-                        <td class="p-3 text-center">{{ $employee->position->name}}</td>
-                        <td class="p-3 text-center">
-                            <a href="employee/profile/{{$employee->id}}" class="text-gray-600 hover:text-gray-400">More</a>
-                            @can('Employee edit')
-                            <a href="{{route('admin.employee.edit',$employee->id)}}" class="ml-2 text-blue-600 hover:text-blue-400">Update</a>
-                            @endcan
-                            @can('Employee delete')
-                            <form action="{{ route('admin.employee.destroy', $employee->id) }}" method="POST" class="inline">
-                                @csrf
-                                @method('delete')
-                                <button class="ml-2 text-red-600 hover:text-red-400">Delete</button>
-                            </form>
-                            @endcan
-                        </td>
-                    </tr>
-                    @endforeach
-                    @endcan
-                </tbody>
-            </table>
         </div>
     </main>
 </x-app-layout>

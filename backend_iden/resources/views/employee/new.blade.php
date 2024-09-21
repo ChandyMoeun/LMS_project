@@ -18,7 +18,6 @@
             <div style="display: flex; justify-content: center; padding: 2%; margin-bottom: 5%;">
               <!-- Hidden file input -->
               <input type="file" id="profileImageInput" name="profile" class="hidden" accept="image/*" onchange="previewImage(event)" />
-
               <!-- Image element -->
               <img
                 id="profileImage"

@@ -173,6 +173,7 @@
                             <th class="py-2 px-4 border-b">ID</th>
                             <th class="py-2 px-4 border-b">Profile</th>
                             <th class="py-2 px-4 border-b">Name</th>
+                            <th class="py-2 px-4 border-b">Type</th>
                             <th class="py-2 px-4 border-b">Position</th>
                             <th class="py-2 px-4 border-b">From | To</th>
                             <th class="py-2 px-4 border-b">Approver</th>

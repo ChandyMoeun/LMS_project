@@ -77,7 +77,7 @@
                     </div>
                     <div class="w-10">
                         <button class="w-5px mt-5 bg-blue-500 text-white font-bold py-2 px-4 hover:bg-yellow-400 focus:outline-none focus:bg-blue-700 transition-colors" style=" border-radius: 5px;">
-                            <a href="{{ route('admin.dashboard') }}" class="btn-back" style=" text-decoration: none; color:white;">Back</a>
+                            <a href="{{ route('admin.leave.index') }}" class="btn-back" style=" text-decoration: none; color:white;">Back</a>
                         </button>
                     </div>
                 </div>

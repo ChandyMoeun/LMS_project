@@ -166,3 +166,11 @@
         calendar.render();
     });
 </script>
+
+<style scope>
+    /* Change the header background color (weekdays name: Monday, Tuesday, etc.) */
+    .fc-col-header-cell {
+        background-color: #FFDA03;
+        /* Light orange for header cells */
+    }
+</style>
