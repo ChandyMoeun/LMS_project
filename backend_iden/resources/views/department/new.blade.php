@@ -24,6 +24,15 @@
                             <span class="text-red-500 text-sm">{{ $message }}</span>
                             @enderror
                         </div>
+                        <div class="flex flex-col space-y-2 mb-4">
+                            <label for="manager_id" class="block text-gray-700 text-sm font-bold mb-2">Manager</label>
+                            <select name="manager_id" id="manager_id" class="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline">
+                                <option value="">Select a manager</option>
+                                @foreach($employees as $employee)
+                                <option value="{{ $employee->id }}">{{ $employee->full_name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
 
                         <!-- form Button -->
                         <div class="flex justify-center space-x-4 mt-4">

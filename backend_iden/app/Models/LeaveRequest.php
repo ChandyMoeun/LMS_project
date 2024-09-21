@@ -20,6 +20,8 @@ class LeaveRequest extends Model
         'to_date',
         'reason',
         'duration_leave',
+        'approved_by',
+        'rejected_by',
         'requested_at',
         'approved_at',
         'attachment',
@@ -34,6 +36,7 @@ class LeaveRequest extends Model
 
     
 
+
     // In LeaveRequest.php model
     public function leaveType()
     {
@@ -44,10 +47,14 @@ class LeaveRequest extends Model
         return $this->belongsTo(Employee::class, 'employee_id');
     }
 
-    // public function getAttachmentUrlAttribute()
-    // {
-    //     return $this->attachment ? asset('storage/attachments/' . $this->attachment) : null;
-    // }
+    public function approver()
+    {
+        return $this->belongsTo(Employee::class, 'approved_by');
+    }
 
+    public function rejector()
+    {
+        return $this->belongsTo(Employee::class, 'rejected_by');
+    }
     
 }

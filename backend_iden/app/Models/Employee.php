@@ -8,6 +8,8 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
+use Illuminate\Support\Carbon;
+
 
 class Employee extends Authenticatable
 {
@@ -32,11 +34,11 @@ class Employee extends Authenticatable
         'password',
         'dob',
         'joined_date',
-        'entitled_calendar',
+        'entitled_date',
         'reporting_line',
         'position_id',
         'department_id',
-        
+
     ];
 
     /**
@@ -73,10 +75,10 @@ class Employee extends Authenticatable
         return $this->belongsTo(Department::class);
     }
 
-     /**
+    /**
      * Define the relationship with another Employee as the reporting line.
      */
-   
+
 
 
     /**
@@ -86,7 +88,7 @@ class Employee extends Authenticatable
     {
         return $this->belongsTo(CalendarGroup::class, 'entitled_calendar');
     }
-    
+
     /**
      * Define the relationship with the Employee model.
      */
@@ -95,7 +97,8 @@ class Employee extends Authenticatable
         return $this->hasMany(LeaveType::class, 'employee_id'); // Adjust the foreign key if necessary
     }
 
-    public function leaveRequests(){
+    public function leaveRequests()
+    {
         return $this->hasMany(LeaveRequest::class, 'employee_id'); // Adjust the foreign key if necessary
     }
 
@@ -103,5 +106,25 @@ class Employee extends Authenticatable
     {
         return $this->hasMany(Attendance::class, 'employee_id'); // Assuming the foreign key is 'employee_id'
     }
-   
+
+    public function manager()
+    {
+        return $this->belongsTo(Employee::class, 'manager_id');
+    }
+
+    public function subordinates()
+    {
+        return $this->hasMany(Employee::class, 'manager_id');
+    }
+
+    public function getEligibleForAnnualLeaveAttribute()
+    {
+        // Use the joined_date to calculate if the employee is eligible for Annual Leave
+        if ($this->joined_date) {
+            $joinDate = Carbon::parse($this->joined_date);
+            return $joinDate->addMonths(3)->lte(Carbon::now());
+        }
+
+        return false; // If no join date, the employee is not eligible
+    }
 }

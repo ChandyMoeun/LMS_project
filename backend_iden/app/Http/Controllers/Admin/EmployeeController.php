@@ -9,6 +9,8 @@ use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 use App\Models\Position;
 use App\Models\Department;
+use App\Models\LeaveRequest;
+use Illuminate\Support\Facades\Auth;
 
 
 class EmployeeController extends Controller
@@ -34,8 +36,21 @@ class EmployeeController extends Controller
     public function index()
     {
         //======> Displays the resource listing form for the current user <=====
-        $employees = Employee::with(['position', 'department'])->get();
-        return view('employee.index', compact('employees'));
+        $employees = Employee::with(['position', 'department', 'manager'])->get();
+        $totalEmployees = $employees->count();  // Get the total number of employees
+        return view('employee.index', compact('employees', 'totalEmployees'));
+    }
+
+    public function EmployeeDashboard()
+    {
+        // Fetch the total number of employees
+        $totalEmployees = Employee::count();
+
+        // Optionally, fetch all employees if needed for the view
+        $employees = Employee::all();
+
+        // Pass data to the view
+        return view('dashboard', compact('employees', 'totalEmployees'));
     }
 
     /**
@@ -54,6 +69,37 @@ class EmployeeController extends Controller
         return view('employee.new', compact('positions', 'departments', 'roles'));
     }
 
+
+    // Fetch the employee with the given ID
+    public function show(Employee $employee)
+    {
+        // Get the current manager's ID
+        $managerId = Auth::id(); // Or any specific manager ID
+
+        // Fetch employees under the current manager
+        $employees = Employee::where('manager_id', $managerId)
+            ->with('position', 'department') // Include positions and departments
+            ->get();
+
+        // Fetch all positions
+        $positions = Position::all();
+        // Fetch all departments
+        $departments = Department::all();
+        // Fetch all roles
+        $roles = Role::all();
+
+        return view('employee.profile.index', [
+            'employee' => $employee,
+            'roles' => $roles,
+            'positions' => $positions,
+            'departments' => $departments,
+        ]);
+
+
+        // return view('employee.profile.index', ['employee' => $employee, 'roles' => $roles, 'positions' => $positions, 'departments' => $departments, 'manager' => $manger]);
+    }
+
+
     /**
      * Store a newly created resource in storage.
      *
@@ -62,35 +108,44 @@ class EmployeeController extends Controller
      */
     public function store(Request $request)
     {
-        // $request->validate([
-        //     'staff_id' => 'required|unique:employees',
-        //     'full_name' => 'required',
-        //     'email' => 'required|email|unique:employees',
-        //     'password' => 'required|confirmed',
-        //     'dob' => 'required|date',
-        //     'position_id' => 'required|integer',
-        //     'department_id' => 'required|integer',
-        // ]);
-
-        $employee = Employee::create([
-            'staff_id' => $request->staff_id,
-            'full_name' => $request->full_name,
-            'gender' => $request->gender,
-            'email' => $request->email,
-            'password' => bcrypt($request->password),
-            'dob' => $request->dob,
-            'joined_date' => $request->joined_date,
-            'entitled_calendar' => $request->entitled_calendar,
-            'reporting_line' => $request->reporting_line,
-            'profile_image' => $request->profile_image,
-            'position_id' => $request->position_id,
-            'department_id' => $request->department_id,
+        $request->validate([
+            'profile_image' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+            'staff_id' => 'required|string|max:255',
+            'full_name' => 'required|string|max:255',
+            'gender' => 'required|string',
+            'email' => 'required|email|unique:employees,email',
+            'password' => 'required|string|min:8|confirmed',
+            'dob' => 'required|date',
+            'joined_date' => 'required|date',
+            'entitled_date' => 'required|date|after_or_equal:joined_date',
+            'position_id' => 'required|exists:positions,id',
+            'department_id' => 'required|exists:departments,id'
         ]);
 
-        $employee->syncRoles($request->roles);
+        $employee = new Employee();
+        $employee->staff_id = $request->staff_id;
+        $employee->full_name = $request->full_name;
+        $employee->gender = $request->gender;
+        $employee->email = $request->email;
+        $employee->password = bcrypt($request->password);
+        $employee->dob = $request->dob;
+        $employee->joined_date = $request->joined_date;
+        $employee->entitled_date = $request->entitled_date;
+        $employee->position_id = $request->position_id;
+        $employee->department_id = $request->department_id;
 
-        return redirect()->route('admin.employee.index')->withSuccess('Employee created successfully!');
+        // Handle profile image upload
+        if ($request->hasFile('profile')) {
+            $file = $request->file('profile');
+            $filename = time() . '.' . $file->getClientOriginalExtension();
+            $file->move(public_path('images'), $filename);
+            $employee->profile = $filename;
+        }
 
+        $employee->save();
+        $employee->roles()->sync($request->roles);
+
+        return redirect()->route('admin.employee.index')->with('success', 'Employee created successfully.');
     }
 
     /**
@@ -118,47 +173,47 @@ class EmployeeController extends Controller
      */
     public function update(Request $request, Employee $employee)
     {
-        // ======>Define validation rules<======
-        $rules = [
-            'staff_id' => 'required',
-            'full_name' => 'required',
-            'email' => 'required|email',
+        $request->validate([
+            'staff_id' => 'required|string|max:255',
+            'full_name' => 'required|string|max:255',
+            'gender' => 'required|string',
+            'email' => 'required|email|unique:employees,email,' . $employee->id,
+            'password' => 'nullable|confirmed|min:6',
             'dob' => 'required|date',
+            'joined_date' => 'required|date',
             'position_id' => 'required|exists:positions,id',
             'department_id' => 'required|exists:departments,id',
-            'profile_image' => 'nullable|image|max:2048', // Allow image upload if provided
-            'password' => 'nullable|confirmed', // Password is optional but must be confirmed if provided
-        ];
+            'roles' => 'array'
+        ]);
 
-        // ====>Validate the request<======
-        $validated = $request->validate($rules);
+        $employee->staff_id = $request->staff_id;
+        $employee->full_name = $request->full_name;
+        $employee->gender = $request->gender;
+        $employee->email = $request->email;
 
-        // =====>Handle file upload if present<=========
-        if ($request->hasFile('profile_image')) {
-            $validated['profile_image'] = $request->file('profile_image')->store('public/images');
-        } else {
-            // =======>Keep existing profile image if no new image is uploaded<======
-            $validated['profile_image'] = $employee->profile_image;
-        }
-
-        // =======>Hash the password if it's present and confirmed<======
         if ($request->filled('password')) {
-            $validated['password'] = bcrypt($request->password);
-        } else {
-            // =======>Remove the password field if it's not present<=======
-            unset($validated['password']);
+            $employee->password = bcrypt($request->password);
         }
 
-        // ======>Update the employee record<======
-        $employee->update($validated);
+        $employee->dob = $request->dob;
+        $employee->joined_date = $request->joined_date;
+        $employee->position_id = $request->position_id;
+        $employee->department_id = $request->department_id;
 
-        // ======>Sync roles if provided<======
-        if ($request->has('roles')) {
-            $employee->syncRoles($request->roles);
+        // Handle profile image upload
+        if ($request->hasFile('profile')) {
+            $file = $request->file('profile');
+            $filename = time() . '.' . $file->getClientOriginalExtension();
+            $file->move(public_path('images'), $filename);
+            $employee->profile = $filename;
         }
-        // ======>Redirect to employee index page with success message<======
+
+        $employee->save();
+        $employee->roles()->sync($request->roles);
+
         return redirect()->route('admin.employee.index')->with('success', 'Employee updated successfully.');
     }
+
 
     /**
      * Remove the specified resource from storage.

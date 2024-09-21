@@ -27,14 +27,14 @@ class AdminSeeder extends Seeder
             'gender' => 'Male', // Or 'Female'
             'dob' => '1990-01-01', // Example date of birth
             'joined_date' => now(),
-            'entitled_calendar' => 1, // Assuming the calendar ID is 1
+            'entitled_date' => null, // Assuming the calendar ID is 1
             'reporting_line' => null, // Or specify a reporting line if available
             'position_id' => 1, // Assuming the position ID is 1
             'department_id' => 1, // Assuming the department ID is 1
         ]);
 
         $writer = Employee::create([
-            'staff_id' => '001', // Assuming you have a staff ID
+            'staff_id' => '002', // Assuming you have a staff ID
             'full_name' => 'user',
             'email' => 'user@gmail.com',
             'profile' => '?',
@@ -42,7 +42,7 @@ class AdminSeeder extends Seeder
             'gender' => 'Male', // Or 'Female'
             'dob' => '1990-01-01', // Example date of birth
             'joined_date' => now(),
-            'entitled_calendar' => 1, // Assuming the calendar ID is 1
+            'entitled_date' => null, // Assuming the calendar ID is 1
             'reporting_line' => null, // Or specify a reporting line if available
             'position_id' => 1, // Assuming the position ID is 1
             'department_id' => 1, // Assuming the department ID is 1

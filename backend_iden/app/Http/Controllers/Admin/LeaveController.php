@@ -9,6 +9,8 @@ use App\Models\LeaveRequest;
 use App\Models\LeaveType;
 use App\Models\Position;
 use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
+
 
 
 class LeaveController extends Controller
@@ -30,8 +32,25 @@ class LeaveController extends Controller
     public function index()
     {
         // Paginate leave requests and load the associated employee data
-        $leaveRequests = LeaveRequest::with('employee', 'leaveType')->paginate(10);
+        $leaveRequests = LeaveRequest::with('employee', 'leaveType', 'approver', 'rejector')->paginate(10);
         return view('leave.index', compact('leaveRequests'));
+    }
+
+    public function LeaveRequestDashboard()
+    {
+        // Paginate leave requests and load the associated employee data
+        $leaveRequests = LeaveRequest::with('employee', 'leaveType', 'approver', 'rejector')->paginate(10);
+        return view('dashboard', compact('leaveRequests'));
+    }
+
+
+    public function show($id)
+    {
+        // Find the leave request by ID or fail if not found
+        $leaveRequest = LeaveRequest::findOrFail($id);
+
+        // Return the view with leave request details
+        return view('employee.more.index', compact('leaveRequest'));
     }
 
     /**
@@ -39,9 +58,43 @@ class LeaveController extends Controller
      */
     public function create()
     {
-        $positions = Position::all(); // Get all available positions
-        $employees = Employee::with('roles', 'position')->get(); // Get all employees with roles and positions
-        $leaveTypes = LeaveType::all(); // Get all leave types (leave employees relationship out since it's not needed for leave types)
+        // $positions = Position::all(); // Get all available positions
+        // $employees = Employee::with('roles', 'position')->get(); // Get all employees with roles and positions
+        // $leaveTypes = LeaveType::all(); // Get all leave types (leave employees relationship out since it's not needed for leave types)
+
+        // return view('leave.request', compact('leaveTypes', 'positions', 'employees'));
+
+
+
+        // ======>test<======
+
+
+        // Fetch all available positions
+        $positions = Position::all();
+
+        // Get the current date
+        $now = Carbon::now();
+
+        // Filter employees and determine if they are eligible for annual leave
+        $employees = Employee::with('roles', 'position')
+            ->get()
+            ->map(function ($employee) use ($now) {
+                // Compare `joined_date` with `entitled_date`
+                if (!empty($employee->entitled_date) && !empty($employee->joined_date)) {
+                    $joinedDate = Carbon::parse($employee->joined_date);
+                    $entitledDate = Carbon::parse($employee->entitled_date);
+
+                    // Determine if the employee is eligible for annual leave based on entitled_date
+                    $employee->eligible_for_annual_leave = $joinedDate->gte($entitledDate);
+                } else {
+                    // If either of the dates are null, assume they are not eligible
+                    $employee->eligible_for_annual_leave = false;
+                }
+                return $employee;
+            });
+
+        // Get all leave types
+        $leaveTypes = LeaveType::all();
 
         return view('leave.request', compact('leaveTypes', 'positions', 'employees'));
     }
@@ -92,6 +145,9 @@ class LeaveController extends Controller
 
         return redirect()->route('admin.leave.index')->with('success', 'Leave request submitted successfully.');
     }
+
+
+
 
     /**
      * Show the form for editing a leave request.
@@ -146,21 +202,23 @@ class LeaveController extends Controller
     // =====>approve request<======
     public function approve(LeaveRequest $leaveRequest)
     {
-        $leaveRequest->status = 'approved'; // Update the status or any other logic
+        $leaveRequest->status = 'approved';
+        $leaveRequest->approved_by = auth()->user()->id; // Store the ID of the user who approved the request
         $leaveRequest->save();
 
-        return redirect()->route('admin.leave.index')->with('success', 'Leave request approved successfully.');
+        return redirect()->route('admin.dashboard')->with('success', 'Leave request approved successfully.');
     }
 
     // =====>reject request<======
-
     public function reject(LeaveRequest $leaveRequest)
     {
-        $leaveRequest->status = 'rejected'; // Update the status or any other logic
+        $leaveRequest->status = 'rejected';
+        $leaveRequest->rejected_by = auth()->user()->id; // Store the ID of the user who rejected the request
         $leaveRequest->save();
 
-        return redirect()->route('admin.leave.index')->with('success', 'Leave request rejected successfully.');
+        return redirect()->route('admin.dashboard')->with('success', 'Leave request rejected successfully.');
     }
+
 
     /**
      * Remove the specified leave request.

@@ -15,7 +15,10 @@ use App\Http\Controllers\Admin\{
     LeaveController,
     LeaveTypeController,
     LeavePfDetailController,
+    DashboardController,
 };
+use App\Http\Controllers\LeaveRequestController;
+use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 /*
 |--------------------------------------------------------------------------
@@ -53,11 +56,15 @@ Route::get('/dashboard', function () {
 
 require __DIR__ . '/front_auth.php';
 
-// Admin routes
+//Admin routes
 Route::get('/admin/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('admin.dashboard');
 
+
+Route::get('/admin/dashboard', [DashboardController::class, 'index'])
+    ->middleware(['auth'])
+    ->name('admin.dashboard');
 require __DIR__ . '/auth.php';
 
 
@@ -92,7 +99,11 @@ Route::namespace('App\Http\Controllers\Admin')->name('admin.')->prefix('admin')
         Route::post('admin/leave/{leaveRequest}/approve', [LeaveController::class, 'approve'])->name('leave.approve');
         Route::post('admin/leave/{leaveRequest}/reject', [LeaveController::class, 'reject'])->name('leave.reject');
 
-       
+        // ======dashboard<=====
+        Route::post('dashboard/{leaveRequest}/approve', [DashboardController::class, 'approve'])->name('dashboard.approve');
+        Route::post('dashboard/{leaveRequest}/reject', [DashboardController::class, 'reject'])->name('dashboard.reject');
+
+
 
 
         Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
@@ -108,12 +119,12 @@ Route::namespace('App\Http\Controllers\Admin')->name('admin.')->prefix('admin')
         // Route::get('/attendance', [AttendanceController::class, 'index'])->name('attendance.index');
         // Route::get('/leave', [LeaveController::class, 'index'])->name('leave.index');
         // Route::get('/leavetype', [LeaveTypeController::class, 'index'])->name('leavetype.index');
+        Route::get('/admin/leave/{id}', [LeaveController::class, 'show'])->name('admin.leave.show');
 
         //more//
         Route::get('/more', [LeavePfDetailController::class, 'index'])->name('more.index');
-        Route::get('/employee/profile/{id}', [LeavePfDetailController::class, 'employeeProfile']);
-
-        //department
-        Route::get('/detail/{id}', [DepartmentController::class, 'detail']);
-      
+        // Route::get('/more', [LeavePfDetailController::class, 'index'])->name('more.index');
+        Route::get('/admin/leave/{id}', [LeaveController::class, 'show'])->name('admin.leave.show');
+        // Route::get('/employee/profile/{id}', [EmployeeController::class,'show', 'employee.profile']);
+        // Route::get('/profile/{id}', [EmployeeController::class,'show'])->name('employee.profile');
     });

@@ -19,8 +19,13 @@ class Attendance extends Model
         'remarks',
     ];
 
+    protected $casts = [
+        'clock_in' => 'datetime:H:i:s',
+        'clock_out' => 'datetime:H:i:s',
+    ];
+
     public function employee()
     {
-        return $this->belongsTo(Employee::class, 'employee_id'); 
+        return $this->belongsTo(Employee::class, 'employee_id');
     }
 }
