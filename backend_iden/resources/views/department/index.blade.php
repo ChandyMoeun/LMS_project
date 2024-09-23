@@ -48,9 +48,10 @@
                             <td class="py-4 text-center px-4 border-b border-gray-200">
                                 {{ $department->manager ? $department->manager->full_name : 'No manager assigned' }}
                             </td>
-                            <td class="flex py-4 px-2 justify-center  gap-2 border-b border-gray-200 text-right">
-
-                                <a href="{{ url('admin/detail/' . $department->id) }}" class="text-white font-bold py-1 px-3 rounded text-xs bg-blue-500 hover:bg-blue-400 ">View</a>
+                            <td class="flex py-4 px-2 justify-center  gap-2 border-b border-gray-200">
+                                @can('Department edit')
+                                <a href="{{ route('admin.department.more.index' , $department->id) }}" class="text-white font-bold py-1 px-3 rounded text-xs bg-blue-500 hover:bg-blue-400 ">View</a>
+                                @endcan
                                 @can('Department edit')
                                 <a href="{{ route('admin.department.edit', $department->id) }}" class="text-white font-bold py-1 px-3 rounded text-xs bg-black hover:bg-yellow-400 ">Edit</a>
                                 @endcan
