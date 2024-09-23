@@ -16,6 +16,7 @@ use App\Http\Controllers\Admin\{
     LeaveTypeController,
     LeavePfDetailController,
     DashboardController,
+    ResetPasswordController,
 };
 use App\Http\Controllers\LeaveRequestController;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
@@ -76,8 +77,8 @@ Route::namespace('App\Http\Controllers\Admin')->name('admin.')->prefix('admin')
         Route::resource('roles', 'RoleController');
         Route::resource('permissions', 'PermissionController');
         Route::resource('users', 'UserController');
-        Route::resource('posts', 'PostController');
         Route::resource('employee', 'EmployeeController');
+
 
         //=====>Calendar Group<=====
         Route::resource('calendar_group', 'CalendarGroupController');
@@ -94,6 +95,17 @@ Route::namespace('App\Http\Controllers\Admin')->name('admin.')->prefix('admin')
         Route::resource('leave', 'LeaveController');
         //=====>LeaveType<=====
         Route::resource('leavetype', 'LeaveTypeController');
+
+
+        //=====>Reset password Employee<======
+        // Fetch all employees to display in the dropdown
+        Route::get('employee/resetpassword/index', [ResetPasswordController::class, 'index'])->name('employee.resetpassword.index');
+        // Show reset form for a specific employee
+        Route::get('employee/resetpassword/{id}', [ResetPasswordController::class, 'resetForm'])->name('employee.resetpassword.form');
+        // Handle password reset form submission
+        Route::post('employee/resetpassword/{id}', [ResetPasswordController::class, 'reset'])->name('employee.resetpassword.update');
+
+
 
         //=====>approver or reject route<====
         Route::post('admin/leave/{leaveRequest}/approve', [LeaveController::class, 'approve'])->name('leave.approve');
@@ -113,18 +125,15 @@ Route::namespace('App\Http\Controllers\Admin')->name('admin.')->prefix('admin')
 
 
 
-
-
-        // Route::get('/position', [PositionController::class, 'index'])->name('position.index');
-        // Route::get('/attendance', [AttendanceController::class, 'index'])->name('attendance.index');
-        // Route::get('/leave', [LeaveController::class, 'index'])->name('leave.index');
-        // Route::get('/leavetype', [LeaveTypeController::class, 'index'])->name('leavetype.index');
         Route::get('/admin/leave/{id}', [LeaveController::class, 'show'])->name('admin.leave.show');
 
         //more//
         Route::get('/more', [LeavePfDetailController::class, 'index'])->name('more.index');
         // Route::get('/more', [LeavePfDetailController::class, 'index'])->name('more.index');
         Route::get('/admin/leave/{id}', [LeaveController::class, 'show'])->name('admin.leave.show');
-        // Route::get('/employee/profile/{id}', [EmployeeController::class,'show', 'employee.profile']);
-        // Route::get('/profile/{id}', [EmployeeController::class,'show'])->name('employee.profile');
+
+        //====>details department<=======
+        Route::get('admin/department/more/{id}', [DepartmentController::class, 'detail'])->name('department.more.index');
+        
+        
     });
