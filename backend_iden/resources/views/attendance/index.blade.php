@@ -3,7 +3,7 @@
         <div class="d-flex border-b-2 border-gray-300 h-15 items-center">
             <h1 class="font-bold text-3xl mt-10 hover:text-yellow-400 w-3/12"><b>Admin Attendance</b></h1>
         </div>
-        <div class="mt-16 sm:px-6 lg:px-8">
+        <div class="mt-16">
             <div class="bg-white shadow-md rounded-lg overflow-hidden">
                 <div class="px-4 py-5 sm:px-6">
                     <h3 class="text-lg font-medium leading-6 text-yellow-400">Attendance Records</h3>
