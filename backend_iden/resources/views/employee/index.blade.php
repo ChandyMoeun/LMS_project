@@ -1,8 +1,8 @@
 <x-app-layout>
     <main class="mt-10 p-12">
         <!-- Employee Management Header -->
-        <div class="d-flex border-b-2 border-gray-300 h-20 pl-20 items-center mb-2">
-            <h1 class="font-bold text-3xl mt-5 w-1/3 hover:text-yellow-400"><b>Employee Management</b></h1>
+        <div class="d-flex border-b-2 border-gray-300 h-15 items-center mb-10">
+            <h1 class="font-bold text-3xl mt-3 w-1/3 hover:text-yellow-400"><b>Employee Management</b></h1>
             <p class="text-gray-600 pl-6">Total Employees: {{ $totalEmployees }}</p>
         </div>
         <div class="employee-list">
