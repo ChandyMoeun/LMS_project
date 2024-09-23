@@ -1,7 +1,6 @@
 <x-app-layout>
 
     <div class="mt-10 p-5 bg-white">
-
         <div class="container mx-auto px-6 py-8">
             <!----------- alert code -------------------->
             <div class="button" style="margin: 50px;">
@@ -170,17 +169,17 @@
                 <table class="min-w-full bg-gray-100 border border-gray-100">
                     <thead>
                         <tr class="bg-black text-white text-xs">
-                            <th class="py-2 px-4 border-b">ID</th>
-                            <th class="py-2 px-4 border-b">Profile</th>
-                            <th class="py-2 px-4 border-b">Name</th>
-                            <th class="py-2 px-4 border-b">Type</th>
-                            <th class="py-2 px-4 border-b">Position</th>
-                            <th class="py-2 px-4 border-b">From | To</th>
-                            <th class="py-2 px-4 border-b">Approver</th>
-                            <th class="py-2 px-4 border-b">Sub-approver</th>
-                            <th class="py-2 px-4 border-b">Status</th>
-                            <th class="py-2 px-4 border-b">Detail</th>
-                            <th class="py-2 px-4 border-b">Action</th>
+                            <th class="py-2 px-2 text-center border-b">ID</th>
+                            <th class="py-2 px-2 text-center border-b">Profile</th>
+                            <th class="py-2 px-2 text-center border-b">Name</th>
+                            <th class="py-2 px-2 text-center border-b">Type</th>
+                            <th class="py-2 px-2 text-center border-b">Position</th>
+                            <th class="py-2 px-2 text-center border-b">From | To</th>
+                            <th class="py-2 px-2 text-center border-b">Approver</th>
+                            <th class="py-2 px-2 text-center border-b">Sub-approver</th>
+                            <th class="py-2 px-2 text-center border-b">Status</th>
+                            <th class="py-2 px-2 text-center border-b">Detail</th>
+                            <th class="py-2 px-2 text-center border-b">Action</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -188,19 +187,19 @@
                         @can('Leave access')
                         @foreach($leaveRequests as $leaveRequest)
                         <tr class="hover:bg-white text-xs">
-                            <td class="py-2 px-4 border-b">{{$leaveRequest->employee->staff_id ?? 'N/A' }}</td>
-                            <td class="py-2 px-4 border-b">
+                            <td class="py-2 px-2 text-center border-b">{{$leaveRequest->employee->staff_id ?? 'N/A' }}</td>
+                            <td class="flex py-2 px-2 justify-center border-b">
                                 @if($leaveRequest->employee->profile)
                                 <img src="{{ asset('images/' . $leaveRequest->employee->profile) }}" alt="Profile Image" class="w-12 h-12 rounded-full object-cover">
                                 @else
                                 <img src="{{ asset('images/default_profile.png') }}" alt="Default Profile" class="w-12 h-12 rounded-full object-cover">
                                 @endif
                             </td>
-                            <td class="py-2 px-4 border-b">{{ $leaveRequest->employee->full_name ?? 'N/A' }}</td>
-                            <td class="py-2 px-4 border-b">{{$leaveRequest->leaveType->leave_name ?? 'N/A'}}</td>
-                            <td class="py-2 px-4 border-b">position</td>
-                            <td class="py-2 px-4 border-b">{{ \Carbon\Carbon::parse($leaveRequest->from_date)->format('Y-m-d') }}|{{ $leaveRequest->to_date ? \Carbon\Carbon::parse($leaveRequest->to_date)->format('Y-m-d') : '-' }}</td>
-                            <td class="py-2 px-4 border-b">@if($leaveRequest->status === 'approved')
+                            <td class="py-2 px-2 text-center border-b">{{ $leaveRequest->employee->full_name ?? 'N/A' }}</td>
+                            <td class="py-2 px-2 text-center border-b">{{$leaveRequest->leaveType->leave_name ?? 'N/A'}}</td>
+                            <td class="py-2 px-2 text-center border-b">position</td>
+                            <td class="py-2 px-2 text-center border-b">{{ \Carbon\Carbon::parse($leaveRequest->from_date)->format('Y-m-d') }}|{{ $leaveRequest->to_date ? \Carbon\Carbon::parse($leaveRequest->to_date)->format('Y-m-d') : '-' }}</td>
+                            <td class="py-2 px-2 text-center border-b">@if($leaveRequest->status === 'approved')
                                 {{ $leaveRequest->approver->full_name ?? 'no name' }}
                                 @elseif($leaveRequest->status === 'rejected')
                                 {{ $leaveRequest->rejector->full_name ?? 'no name'}}
@@ -208,8 +207,8 @@
                                 Pending
                                 @endif
                             </td>
-                            <td class="py-2 px-4 border-b text-xs">XXX</td>
-                            <td class="py-2 px-4 border-b text-xs"> @if($leaveRequest->status == 'pending')
+                            <td class="py-2 px-2 text-center border-b text-xs">XXX</td>
+                            <td class="py-2 px-2 text-center border-b text-xs"> @if($leaveRequest->status == 'pending')
                                 <span class="bg-yellow-400 text-white px-2 py-1 rounded-full text-xs font-semibold">Pending</span>
                                 @elseif($leaveRequest->status == 'approved')
                                 <span class="bg-green-400 text-white px-2 py-1 rounded-full text-xs font-semibold">Approved</span>
@@ -217,30 +216,22 @@
                                 <span class="bg-red-400 text-white px-2 py-1 rounded-full text-xs font-semibold">Rejected</span>
                                 @endif
                             </td>
-                            <td class="py-2 px-4 border-b text-xs">
-                                <a href="{{ route('admin.leave.show', $leaveRequest->id) }}" class="text-blue-500 hover:underline">More</a>
+                            <td class="py-2 px-2 text-center border-b text-xs">
+                                <a href="{{ route('admin.leave.show', $leaveRequest->id) }}" class="text-blue-500 hover:text-blue-400">More</a>
                             </td>
-
-
-                            <td class="py-2 px-4 border-b text-xs">
+                            <td class="action text-center align-middle">
                                 <!-- View button to toggle the visibility -->
-                                <button type="button" class="text-blue-600 hover:text-blue-800 font-semibold" onclick="toggleButtons({{ $leaveRequest->id }})">
+                                <button type="button" class="text-blue-500 hover:text-blue-400 font-semibold px-2 py-1 rounded-md" onclick="toggleButtons({{ $leaveRequest->id }})">
                                     Views
                                 </button>
 
-                                <!-- Hidden buttons (Edit, Approve, Reject) -->
-                                <div id="action-buttons-{{ $leaveRequest->id }}" class="mt-2 space-x-4 hidden">
-                                    @can('Leave edit')
-                                    <a href="{{ route('admin.leave.edit', $leaveRequest->id) }}" class="text-green-600 hover:text-green-800 font-semibold transition-colors duration-200 text-xs">
-                                        Edit
-                                    </a>
-                                    @endcan
-
+                                <!-- Hidden buttons (Approve, Reject) -->
+                                <div id="action-buttons-{{ $leaveRequest->id }}" class="mt-2 hidden">
                                     @can('Leave edit')
                                     <form action="{{ route('admin.leave.approve', $leaveRequest) }}" method="POST" class="inline" onsubmit="disableButtons({{ $leaveRequest->id }})">
                                         @csrf
                                         @method('post')
-                                        <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-md shadow-md hover:bg-blue-600 transition-all duration-300 ease-in-out font-semibold text-xs">
+                                        <button type="submit" class="bg-blue-500 text-white px-1 py-2 rounded-md shadow-md hover:bg-blue-600 transition-all duration-300 ease-in-out font-semibold text-xs">
                                             Approve
                                         </button>
                                     </form>
@@ -257,6 +248,7 @@
                                     @endcan
                                 </div>
                             </td>
+
                         </tr>
                         @endforeach
                         @endcan

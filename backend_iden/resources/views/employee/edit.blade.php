@@ -8,7 +8,7 @@
               <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5H1m0 0 4 4M1 5l4-4" />
             </svg>
           </a>
-          <h1 class="font-bold mr-20 text-3xl mt-5 hover:text-yellow-400"><b>Update Employee </b></h1>
+          <h1 class="font-bold mr-20 w-3/12 text-3xl mt-5 hover:text-yellow-400"><b>Update Employee </b></h1>
         </div>
         <div class="bg-white shadow-md rounded my-6 p-10">
           <form method="POST" action="{{ route('admin.employee.update', $employee) }}" enctype="multipart/form-data">
@@ -136,7 +136,7 @@
               <!-- Submit Button -->
               <div class="flex justify-center text-center mt-16 gap-5 mb-16">
                 <a href="/admin/employee" class="w-5px mt-5 bg-red-500 text-white font-bold py-2 px-4 hover:bg-red-400 focus:outline-none focus:bg-red-700 transition-colors" style="border-radius: 5px;">Cancel</a>
-                <button type="submit" class="w-5px mt-5 bg-blue-500 text-white font-bold py-2 px-4 hover:bg-yellow-400 focus:outline-none focus:bg-blue-700 transition-colors" style="border-radius: 5px;">Submit</button>
+                <button type="submit" class="w-5px mt-5 bg-black text-white font-bold py-2 px-4 hover:bg-yellow-400 focus:outline-none focus:bg-blue-700 transition-colors" style="border-radius: 5px;">Submit</button>
               </div>
           </form>
         </div>

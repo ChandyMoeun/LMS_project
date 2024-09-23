@@ -32,23 +32,23 @@
 
             <div class="bg-white shadow-md rounded my-6">
                 <table class="text-left w-full border-collapse">
-                    <thead>
+                    <thead class="bg-black">
                         <tr>
-                            <th class="py-4 px-6 bg-gray-100 font-bold text-sm text-gray-700 border-b border-gray-200">Department Name</th>
-                            <th class="py-4 px-6 bg-gray-100 font-bold text-sm text-gray-700 border-b border-gray-200">Supervisor Name</th>
-                            <th class="py-4 px-6 bg-gray-100 font-bold text-sm text-gray-700 border-b border-gray-200 text-right w-2/12">Actions</th>
+                            <th class="py-4 px-6 w-3/12 font-bold text-sm text-white border-b border-gray-200">Department Name</th>
+                            <th class="py-4 px-6 w-5/12 font-bold text-sm text-white text-center border-b border-gray-200">Supervisor Name</th>
+                            <th class="py-4 px-6 w-3/12 font-bold text-sm text-white text-center border-b border-gray-200">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
                         @can('Department access')
                         @foreach($departments as $department)
                         <tr class="hover:bg-gray-100">
-                            <td class="py-4 px-6 border-b border-gray-200">{{ $department->name }}</td>
+                            <td class="py-4 px-4 border-b border-gray-200">{{ $department->name }}</td>
 
-                            <td class="py-4 px-6 border-b border-gray-200">
+                            <td class="py-4 text-center px-4 border-b border-gray-200">
                                 {{ $department->manager ? $department->manager->full_name : 'No manager assigned' }}
                             </td>
-                            <td class="py-4 px-6 border-b border-gray-200 text-right">
+                            <td class="flex py-4 px-2 justify-center  gap-2 border-b border-gray-200 text-right">
 
                                 <a href="{{ url('admin/detail/' . $department->id) }}" class="text-white font-bold py-1 px-3 rounded text-xs bg-blue-500 hover:bg-blue-400 ">View</a>
                                 @can('Department edit')

@@ -16,7 +16,7 @@
                         <option>Back-end</option>
                         <option>Full-stack</option>
                     </select>
-                    <button class="p-2 flex items-center bg-blue-500 text-white font-bold px-2 py-1 rounded focus:outline-none shadow hover:bg-yellow-500 transition-colors">
+                    <button class="p-2 flex items-center bg-black text-white font-bold px-2 py-1 rounded focus:outline-none shadow hover:bg-yellow-500 transition-colors">
                         @can('Employee create')
                         <a href="{{route('admin.employee.create')}}" style="display: flex; justify-content: space-evenly; gap:5%;">
                             <svg class="w-5 h-5 " fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -30,8 +30,8 @@
             <div class="overflow-x-auto">
                 <table class="w-full bg-white shadow-md rounded">
                     <thead>
-                        <tr class="bg-gray-800 text-white">
-                            <th class="p-3 text-center">Staff_id</th>
+                        <tr class="bg-black text-white">
+                            <th class="p-3 text-left">Staff_id</th>
                             <th class="p-3 text-left">Profile</th>
                             <th class="p-3 text-center">Name</th>
                             <th class="p-3 text-center">Email</th>
@@ -43,7 +43,7 @@
                         @can('Employee access')
                         @foreach($employees as $employee)
                         <tr class="bg-gray-100 border-b border-gray-200 ">
-                            <td class="p-3 text-center">{{ $employee->staff_id }}</td>
+                            <td class="p-3">{{ $employee->staff_id }}</td>
                             <td class="p-3">
                                 @if($employee->profile)
                                 <img src="{{ asset('images/' . $employee->profile) }}" alt="Profile" class="w-12 h-12 rounded-full object-cover">
@@ -54,18 +54,18 @@
                             <td class="p-3 text-center">{{ $employee->full_name }}</td>
                             <td class="p-3 text-blue-600 text-center">{{ $employee->email }}</td>
                             <td class="p-3 text-center">{{ $employee->position->name ?? 'No position'}}</td>
-                            <td class="p-3 text-center">
+                            <td class="text-center w-3/12">
                                 @can('Employee edit')
-                                <a href="{{route('admin.employee.show',$employee->id)}}" class="text-gray-600 hover:text-gray-400">More</a>
+                                <a href="{{route('admin.employee.show',$employee->id)}}" class="text-white px-2 py-1 border-solid border-1 border-indigo-600 rounded-lg bg-blue-600 hover:bg-blue-400">More</a>
                                 @endcan
                                 @can('Employee edit')
-                                <a href="{{route('admin.employee.edit',$employee->id)}}" class="ml-2 text-blue-600 hover:text-blue-400">Update</a>
+                                <a href="{{route('admin.employee.edit',$employee->id)}}" class="ml-2 text-white px-2 py-1 border-solid border-1 border-indigo-600 rounded-lg bg-black hover:bg-yellow-400">Update</a>
                                 @endcan
                                 @can('Employee delete')
                                 <form action="{{ route('admin.employee.destroy', $employee->id) }}" method="POST" class="inline">
                                     @csrf
                                     @method('delete')
-                                    <button class="ml-2 text-red-600 hover:text-red-400">Delete</button>
+                                    <button class="ml-2 text-white px-2 py-1 border-solid border-1 border-indigo-600 rounded-lg bg-red-600 hover:bg-red-400">Delete</button>
                                 </form>
                                 @endcan
                             </td>
