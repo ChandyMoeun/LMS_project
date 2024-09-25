@@ -227,4 +227,11 @@ class EmployeeController extends Controller
 
         return redirect()->route('admin.employee.index')->withSuccess('Employee deleted successfully!');
     }
+    public function search(Request $request)
+    {
+        $query = $request->input('query');
+        $employees = Employee::where('name', 'LIKE', "%{$query}%")->get();
+
+        return view('employees.index', compact('employees'));
+    }
 }

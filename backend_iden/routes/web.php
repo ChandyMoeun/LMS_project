@@ -96,7 +96,6 @@ Route::namespace('App\Http\Controllers\Admin')->name('admin.')->prefix('admin')
         //=====>LeaveType<=====
         Route::resource('leavetype', 'LeaveTypeController');
 
-
         //=====>Reset password Employee<======
         // Fetch all employees to display in the dropdown
         Route::get('employee/resetpassword/index', [ResetPasswordController::class, 'index'])->name('employee.resetpassword.index');
@@ -104,8 +103,6 @@ Route::namespace('App\Http\Controllers\Admin')->name('admin.')->prefix('admin')
         Route::get('employee/resetpassword/{id}', [ResetPasswordController::class, 'resetForm'])->name('employee.resetpassword.form');
         // Handle password reset form submission
         Route::post('employee/resetpassword/{id}', [ResetPasswordController::class, 'reset'])->name('employee.resetpassword.update');
-
-
 
         //=====>approver or reject route<====
         Route::post('admin/leave/{leaveRequest}/approve', [LeaveController::class, 'approve'])->name('leave.approve');
@@ -115,15 +112,10 @@ Route::namespace('App\Http\Controllers\Admin')->name('admin.')->prefix('admin')
         Route::post('dashboard/{leaveRequest}/approve', [DashboardController::class, 'approve'])->name('dashboard.approve');
         Route::post('dashboard/{leaveRequest}/reject', [DashboardController::class, 'reject'])->name('dashboard.reject');
 
-
-
-
         Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
         Route::put('/profile-update', [ProfileController::class, 'update'])->name('profile.update');
         Route::get('/mail', [MailSettingController::class, 'index'])->name('mail.index');
         Route::put('/mail-update/{mailsetting}', [MailSettingController::class, 'update'])->name('mail.update');
-
-
 
         Route::get('/admin/leave/{id}', [LeaveController::class, 'show'])->name('admin.leave.show');
 
@@ -134,6 +126,8 @@ Route::namespace('App\Http\Controllers\Admin')->name('admin.')->prefix('admin')
 
         //====>details department<=======
         Route::get('admin/department/more/{id}', [DepartmentController::class, 'detail'])->name('department.more.index');
-        
-        
+
+        //search//
+        // Route::get('/search', [EmployeeController::class, 'search'])->name('search');
+        Route::get('/employees/search', [EmployeeController::class, 'search'])->name('employee.search');
     });

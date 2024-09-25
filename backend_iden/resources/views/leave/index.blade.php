@@ -2,21 +2,22 @@
     <div class="mt-16 p-5">
         <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-200">
             <!-- Admin Requites leave -->
-            <div class="d-flex border-b-2 border-gray-300 m-5 items-center mb-2">
+            <div class="d-flex border-b-2 border-gray-300 m-5 items-center mb-10">
                 <h1 class="font-bold text-3xl mt-5 w-1/3 hover:text-yellow-400"><b>Admin leave</b></h1>
             </div>
 
             <div class="container mx-auto px-6 py-4">
-                <div class="flex justify-end mb-4">
+                <div class="flex justify-between mb-4">
+                    <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names.." title="Type in a name" class="w-3/6 py-2 px-2 border rounded">
                     @can('Leave create')
                     <a href="{{ route('admin.leave.create') }}" class="bg-black text-white font-semibold px-5 py-2 rounded-lg shadow-md hover:bg-yellow-400 transition-colors">Request Leave</a>
                     @endcan
                 </div>
 
                 <div class="bg-white shadow-lg rounded-lg overflow-x-auto">
-                    <table class="w-full divide-y divide-gray-200">
+                    <table id="myTable" class=" w-full divide-y divide-gray-200">
                         <thead class="bg-black">
-                            <tr>
+                            <tr class="header">
                                 <th class="py-3 px-2 text-center text-xs text-white uppercase tracking-wider">Staff ID</th>
                                 <th class="py-3 px-2 text-center text-xs text-white uppercase tracking-wider">Name</th>
                                 <th class="py-3 px-2 text-center text-xs text-white uppercase tracking-wider">Type</th>
@@ -142,5 +143,24 @@
             submitButton.disabled = true; // Disable the button
             submitButton.classList.add('opacity-50', 'cursor-not-allowed'); // Add visual feedback
         });
+    }
+
+    function myFunction() {
+        var input, filter, table, tr, td, i, txtValue;
+        input = document.getElementById("myInput");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("myTable");
+        tr = table.getElementsByTagName("tr");
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[1];
+            if (td) {
+                txtValue = td.textContent || td.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
     }
 </script>

@@ -135,7 +135,7 @@
               </div>
               <!-- Submit Button -->
               <div class="flex justify-center text-center mt-16 gap-5 mb-16">
-                <a href="/admin/employee" class="w-5px mt-5 bg-red-500 text-white font-bold py-2 px-4 hover:bg-red-400 focus:outline-none focus:bg-red-700 transition-colors" style="border-radius: 5px;">Cancel</a>
+                <button type="submit" class="w-5px mt-5 bg-red-500 text-white font-bold py-2 px-4 hover:bg-red-400 focus:outline-none focus:bg-red-700 transition-colors" style="border-radius: 5px"><a href="/admin/employee" style="text-decoration: none; color: white;">Cancel</a></button>
                 <button type="submit" class="w-5px mt-5 bg-black text-white font-bold py-2 px-4 hover:bg-yellow-400 focus:outline-none focus:bg-blue-700 transition-colors" style="border-radius: 5px;">Submit</button>
               </div>
           </form>

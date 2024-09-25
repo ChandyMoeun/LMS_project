@@ -8,7 +8,7 @@
         <div class="employee-list">
             <!-- Search and Filter -->
             <div class="flex justify-between mb-4">
-                <input type="text" placeholder="Search employee by name..." class="border rounded p-2 h-10 w-1/3">
+                <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names.." title="Type in a name" class="w-3/6 py-2 px-2 border rounded">
                 <div class="flex items-center justify-end space-x-2 w-2/5">
                     <select class="border rounded p-2 h-9 w-1/3">
                         <option>All positions</option>
@@ -16,7 +16,7 @@
                         <option>Back-end</option>
                         <option>Full-stack</option>
                     </select>
-                    <button class="p-2 flex items-center bg-black text-white font-bold px-2 py-1 rounded focus:outline-none shadow hover:bg-yellow-500 transition-colors">
+                    <button class="p-2 flex items-center bg-black text-white font-bold px-2 py-1 rounded focus:outline-none shadow hover:bg-yellow-400 transition-colors">
                         @can('Employee create')
                         <a href="{{route('admin.employee.create')}}" style="display: flex; justify-content: space-evenly; gap:5%;">
                             <svg class="w-5 h-5 " fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -28,9 +28,9 @@
             </div>
             <!-- Employee Table -->
             <div class="overflow-x-auto">
-                <table class="w-full bg-white shadow-md rounded">
+                <table id="myTable" class="w-full bg-white shadow-md rounded">
                     <thead>
-                        <tr class="bg-black text-white">
+                        <tr class="header bg-black text-white">
                             <th class="p-3 text-left">Staff_id</th>
                             <th class="p-3 text-left">Profile</th>
                             <th class="p-3 text-center">Name</th>
@@ -77,4 +77,24 @@
             </div>
         </div>
     </main>
+    <script>
+        function myFunction() {
+            var input, filter, table, tr, td, i, txtValue;
+            input = document.getElementById("myInput");
+            filter = input.value.toUpperCase();
+            table = document.getElementById("myTable");
+            tr = table.getElementsByTagName("tr");
+            for (i = 0; i < tr.length; i++) {
+                td = tr[i].getElementsByTagName("td")[2];
+                if (td) {
+                    txtValue = td.textContent || td.innerText;
+                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                        tr[i].style.display = "";
+                    } else {
+                        tr[i].style.display = "none";
+                    }
+                }
+            }
+        }
+    </script>
 </x-app-layout>
