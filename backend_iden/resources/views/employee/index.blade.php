@@ -6,17 +6,19 @@
             <p class="text-gray-600 pl-6">Total Employees: {{ $totalEmployees }}</p>
         </div>
         <div class="employee-list">
-            <!-- Search and Filter -->
-            <div class="flex justify-between mb-4">
-                <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names.." title="Type in a name" class="w-3/6 py-2 px-2 border rounded">
+            <!-- Search and Filter select position-->
+            <div class="flex justify-between mb-7">
+                <input type="text" id="searchInput" onkeyup="filterTable()" placeholder="Search employee..." title="Type in an ID or Name" class="w-2/6 py-2 px-2 h-9 border rounded">
                 <div class="flex items-center justify-end space-x-2 w-2/5">
-                    <select class="border rounded p-2 h-9 w-1/3">
+                    @can('Employee access')
+                    <select id="positionSelect" onchange="filterByPosition()" class="border rounded p-2 h-9 w-1/3">
                         <option>All positions</option>
-                        <option>Front-end</option>
-                        <option>Back-end</option>
-                        <option>Full-stack</option>
+                        @foreach($positions as $position)
+                        <option value="{{ $position->name }}">{{ $position->name }}</option>
+                        @endforeach
                     </select>
-                    <button class="p-2 flex items-center bg-black text-white font-bold px-2 py-1 rounded focus:outline-none shadow hover:bg-yellow-400 transition-colors">
+                    @endcan
+                    <button class="p-2 flex items-center bg-black text-white font-bold h-9 px-2 py-1 rounded focus:outline-none shadow hover:bg-yellow-400 transition-colors">
                         @can('Employee create')
                         <a href="{{route('admin.employee.create')}}" style="display: flex; justify-content: space-evenly; gap:5%;">
                             <svg class="w-5 h-5 " fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -78,17 +80,37 @@
         </div>
     </main>
     <script>
-        function myFunction() {
-            var input, filter, table, tr, td, i, txtValue;
-            input = document.getElementById("myInput");
+        // Filter search employees by name and by id
+        function filterTable() {
+            var input = document.getElementById("searchInput").value.toUpperCase();
+            var table = document.getElementById("myTable");
+            var tr = table.getElementsByTagName("tr");
+
+            for (var i = 1; i < tr.length; i++) { // Start at 1 to skip the header row
+                var tdId = tr[i].getElementsByTagName("td")[0]; // Staff ID column
+                var tdName = tr[i].getElementsByTagName("td")[2]; // Name column
+                var idMatch = tdId && tdId.textContent.toUpperCase().indexOf(input) > -1;
+                var nameMatch = tdName && tdName.textContent.toUpperCase().indexOf(input) > -1;
+
+                if (idMatch || nameMatch) {
+                    tr[i].style.display = ""; // Show the row
+                } else {
+                    tr[i].style.display = "none"; // Hide the row
+                }
+            }
+        }
+        // Filter employees by position
+        function filterByPosition() {
+            var input, filter, table, tr, td, i;
+            input = document.getElementById("positionSelect");
             filter = input.value.toUpperCase();
             table = document.getElementById("myTable");
             tr = table.getElementsByTagName("tr");
+
             for (i = 0; i < tr.length; i++) {
-                td = tr[i].getElementsByTagName("td")[2];
+                td = tr[i].getElementsByTagName("td")[4]; // Ensure the index '4' is correct for the position column
                 if (td) {
-                    txtValue = td.textContent || td.innerText;
-                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    if (td.innerHTML.toUpperCase().indexOf(filter) > -1 || filter == "ALL POSITIONS") {
                         tr[i].style.display = "";
                     } else {
                         tr[i].style.display = "none";

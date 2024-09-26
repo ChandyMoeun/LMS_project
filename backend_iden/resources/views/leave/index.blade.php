@@ -8,7 +8,7 @@
 
             <div class="container mx-auto px-6 py-4">
                 <div class="flex justify-between mb-4">
-                    <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names.." title="Type in a name" class="w-3/6 py-2 px-2 border rounded">
+                    <input type="text" id="searchInput" onkeyup="filterTable()" placeholder="Search employee..." title="Type in an ID or Name" class="w-2/6 py-2 px-2 h-9 border rounded">
                     @can('Leave create')
                     <a href="{{ route('admin.leave.create') }}" class="bg-black text-white font-semibold px-5 py-2 rounded-lg shadow-md hover:bg-yellow-400 transition-colors">Request Leave</a>
                     @endcan
@@ -144,22 +144,22 @@
             submitButton.classList.add('opacity-50', 'cursor-not-allowed'); // Add visual feedback
         });
     }
+    // Filter search employees by name and by id
+    function filterTable() {
+        var input = document.getElementById("searchInput").value.toUpperCase();
+        var table = document.getElementById("myTable");
+        var tr = table.getElementsByTagName("tr");
 
-    function myFunction() {
-        var input, filter, table, tr, td, i, txtValue;
-        input = document.getElementById("myInput");
-        filter = input.value.toUpperCase();
-        table = document.getElementById("myTable");
-        tr = table.getElementsByTagName("tr");
-        for (i = 0; i < tr.length; i++) {
-            td = tr[i].getElementsByTagName("td")[1];
-            if (td) {
-                txtValue = td.textContent || td.innerText;
-                if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                    tr[i].style.display = "";
-                } else {
-                    tr[i].style.display = "none";
-                }
+        for (var i = 1; i < tr.length; i++) { // Start at 1 to skip the header row
+            var tdId = tr[i].getElementsByTagName("td")[0]; // Staff ID column
+            var tdName = tr[i].getElementsByTagName("td")[2]; // Name column
+            var idMatch = tdId && tdId.textContent.toUpperCase().indexOf(input) > -1;
+            var nameMatch = tdName && tdName.textContent.toUpperCase().indexOf(input) > -1;
+
+            if (idMatch || nameMatch) {
+                tr[i].style.display = ""; // Show the row
+            } else {
+                tr[i].style.display = "none"; // Hide the row
             }
         }
     }

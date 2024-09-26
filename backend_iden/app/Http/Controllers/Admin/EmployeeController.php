@@ -38,7 +38,8 @@ class EmployeeController extends Controller
         //======> Displays the resource listing form for the current user <=====
         $employees = Employee::with(['position', 'department', 'manager'])->get();
         $totalEmployees = $employees->count();  // Get the total number of employees
-        return view('employee.index', compact('employees', 'totalEmployees'));
+        $positions = Position::all(); // Get the positions
+        return view('employee.index', compact('employees', 'totalEmployees', 'positions'));
     }
 
     public function EmployeeDashboard()
