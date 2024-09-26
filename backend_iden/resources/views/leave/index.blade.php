@@ -2,7 +2,7 @@
     <div class="mt-16 p-5">
         <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-200">
             <!-- Admin Requites leave -->
-            <div class="d-flex border-b-2 border-gray-300 m-5 items-center mb-10">
+            <div class="d-flex border-b-2 border-gray-300 m-5 px-8 items-center mb-10">
                 <h1 class="font-bold text-3xl mt-5 w-1/3 hover:text-yellow-400"><b>Admin leave</b></h1>
             </div>
 

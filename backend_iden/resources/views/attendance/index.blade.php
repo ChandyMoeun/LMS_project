@@ -1,6 +1,6 @@
 <x-app-layout>
     <main class="mt-10 p-10 ">
-        <div class="d-flex border-b-2 border-gray-300 h-15 items-center">
+        <div class="d-flex border-b-2 px-8 border-gray-300 h-15 items-center">
             <h1 class="font-bold text-3xl mt-10 hover:text-yellow-400 w-3/12"><b>Admin Attendance</b></h1>
         </div>
         <div class="mt-16">

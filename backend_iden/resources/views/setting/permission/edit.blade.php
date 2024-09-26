@@ -1,7 +1,7 @@
 <x-app-layout>
   <div class="mt-10 p-5">
     <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-200">
-      <div class="d-flex border-b-2 border-gray-300 m-7 h-13 items-center">
+      <div class="d-flex border-b-2 border-gray-300 m-7 px-8 h-13 items-center">
             <a href="/admin/permissions">
                 <svg class="w-6 h-6 mt-3 text-gray-800 dark:text-white hover:text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5H1m0 0 4 4M1 5l4-4" />
