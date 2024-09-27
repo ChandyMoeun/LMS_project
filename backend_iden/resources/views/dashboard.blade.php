@@ -72,7 +72,8 @@
 
             <!--............................// Chart js // total employee chart ..............................  -->
             <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
-            <h1 class="text-4xl">Employee Chart</h1>
+            <!-- Chart Container -->
+            <h1 class="text-4xl p-10 text-center">Employee Chart</h1>
             <style>
                 /* Center the chart on the page */
                 .chart-container {
@@ -89,20 +90,20 @@
                     padding: 3%;
                     border-radius: 10px;
                 }
-
-                h1 {
-                    display: flex;
-                    justify-content: center;
-                    padding: 3%;
-                    font-weight: bold;
-                }
             </style>
-            <!-- Chart Container -->
-            <div class="chart-container">
-                <canvas id="employeeChart"></canvas>
+            <!-- Doughnut Chart Container -->
+            <div class="chart-container m-10">
+                <canvas id="employeeChart" width="300" height="120"></canvas>
             </div>
+
+            <!-- Bar Chart Container -->
+            <div class="chart-container m-10">
+                <canvas id="leaveChart" width="300" height="100"></canvas>
+            </div>
+
             <!-- Chart Script -->
             <script>
+                // Doughnut Chart for Employee Sections
                 var xValues = ["IT", "Production", "Finance", "Creative"];
                 var yValues = [24, 10, 2, 4];
                 var barColors = [
@@ -124,47 +125,47 @@
                     options: {
                         title: {
                             display: true,
-                            text: "Employees by section"
+                            text: "Employees by Section"
+                        }
+                    }
+                });
+
+                // Bar Chart for Employee Data
+                var barData = {
+                    labels: ["Creative", "Content Creator", "Production", "IT"],
+                    datasets: [{
+                        label: "Employees leaving",
+                        backgroundColor: "rgba(151,187,205,0.5)",
+                        borderColor: "rgba(151,187,205,1)",
+                        borderWidth: 1,
+                        hoverBackgroundColor: "rgba(151,187,205,0.75)",
+                        hoverBorderColor: "rgba(151,187,205,1)",
+                        data: [1, 2, 4, 1]
+                    }]
+                };
+
+                var ctx = document.getElementById("leaveChart").getContext("2d");
+                var myBarChart = new Chart(ctx, {
+                    type: 'bar',
+                    data: barData,
+                    options: {
+                        scales: {
+                            yAxes: [{
+                                ticks: {
+                                    beginAtZero: true
+                                }
+                            }]
+                        },
+                        title: {
+                            display: true,
+                            text: 'Employees leaving by Department'
                         }
                     }
                 });
             </script>
-
             <!--............................// Chart js // total employee chart ..............................  -->
 
-            <!--.......................... employees list of leave......................... -->
-            <style>
-                .table th,
-                .table td {
-                    vertical-align: middle;
-                    text-align: center;
-                }
-
-                .profile-img {
-                    width: 40px;
-                    height: 40px;
-                    border-radius: 50%;
-                }
-
-                .table thead th {
-                    background-color: black;
-                    color: white;
-                }
-
-                .table-striped tbody tr:nth-of-type(odd) {
-                    background-color: #f8f9fa;
-                }
-
-                .section-header {
-                    text-align: center;
-                    font-weight: bold;
-                    font-size: 24px;
-                    margin-top: 30px;
-                    margin-bottom: 30px;
-                }
-            </style>
-
-            <!-- employees take leaves -->
+            <!--.......................... employees take leaves ......................... -->
             <div class="overflow-x-auto">
                 <table class="min-w-full bg-gray-100 border border-gray-100">
                     <thead>
