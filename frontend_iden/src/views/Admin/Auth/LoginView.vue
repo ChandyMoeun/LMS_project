@@ -1,71 +1,84 @@
-<!-- src/components/Login.vue -->
 <template>
-  <div class="flex items-center justify-center min-h-screen bg-gray-100">
-    <el-card class="w-full max-w-md shadow-lg">
-      <h2 class="text-2xl font-bold mb-6 text-center">Login</h2>
-      <el-form @submit="onSubmit">
-        <el-form-item :error="emailError">
-          <el-input placeholder="Email Address" v-model="email" size="large" />
-        </el-form-item>
+  <div
+    class="login-container min-h-screen flex items-center justify-center flex-col bg-gray-100"
+    style="background-color: #ececec"
+  >
+    <div class="login-card w-full max-w-md bg-white rounded-lg shadow-lg flex overflow-hidden flex-row">
+      <!-- Left section with image -->
+      <div class="login-image flex flex-col justify-center">
+        <img :src="loginImage" alt="Login Illustration" class="object-cover" />
+        <p class="text-sm text-center mt-4" style="color: #b7b7b7">
+          Sign in here to join iDEN leave management system.
+        </p>
+      </div>
 
-        <el-form-item :error="nameError" class="mt-8">
-          <el-input placeholder="Password" v-model="password" size="large" type="password" />
-        </el-form-item>
-        <div>
-          <el-button
-            size="large"
-            class="mt-3 w-full"
-            :disabled="isSubmitting"
-            type="primary"
-            native-type="submit"
-            >Submit</el-button
-          >
-        </div>
-      </el-form>
-    </el-card>
+      <!-- Right section with form -->
+      <div class="login-form p-6 flex-grow">
+        <h2 class="text-center text-2xl mb-10"><b>SIGN IN</b></h2>
+
+        <el-form :model="form" :rules="rules" ref="loginForm" @submit.native.prevent="onSubmit">
+          <el-form-item prop="email">
+            <el-input
+              v-model="form.email"
+              placeholder="Enter your email"
+              size="large"
+              type="email"
+            />
+          </el-form-item>
+
+          <el-form-item prop="password">
+            <el-input
+              v-model="form.password"
+              placeholder="Enter your password"
+              size="large"
+              ype="password"
+            />
+          </el-form-item>
+
+          <div class="flex justify-between mt-4">
+            <el-button type="primary" class="w-full" @click="onSubmit"> Sign In </el-button>
+          </div>
+          <p class="mt-4 text-sm text-right">
+            <a href="#" class="text-blue-500">Forgot password?</a>
+          </p>
+        </el-form>
+      </div>
+    </div>
   </div>
 </template>
 
-<script setup lang="ts">
-import axiosInstance from '@/plugins/axios'
-import { useField, useForm } from 'vee-validate'
-import * as yup from 'yup'
-import { useRouter } from 'vue-router'
-import { useAuthStore } from '@/stores/auth-store'
-
-const router = useRouter()
-const store = useAuthStore()
-
-const formSchema = yup.object({
-  password: yup.string().required().label('Password'),
-  email: yup.string().required().email().label('Email address')
-})
-
-const { handleSubmit, isSubmitting } = useForm({
-  initialValues: {
-    password: '',
-    email: ''
+<script>
+export default {
+  data() {
+    return {
+      form: {
+        email: '',
+        password: ''
+      },
+      rules: {
+        email: [
+          { required: true, message: 'Please input your email', trigger: 'blur' },
+          { type: 'email', message: 'Please input a valid email', trigger: 'blur' }
+        ],
+        password: [{ required: true, message: 'Please input your password', trigger: 'blur' }]
+      },
+    }
   },
-  validationSchema: formSchema
-})
-
-const onSubmit = handleSubmit(async (values) => {
-  try {
-    const { data } = await axiosInstance.post('/login', values)
-    localStorage.setItem('access_token', data.access_token)
-    console.log(store);
-    router.push('/')
-  } catch (error) {
-    console.warn('Error')
+  methods: {
+    onSubmit() {
+      this.$refs.loginForm.validate((valid) => {
+        if (valid) {
+          alert('Login successful')
+        } else {
+          console.log('Error in form submission')
+          return false
+        }
+      })
+    }
   }
-})
-
-const { value: password, errorMessage: nameError } = useField('password')
-const { value: email, errorMessage: emailError } = useField('email')
+}
 </script>
 
-<style scoped>
-.min-h-screen {
-  min-height: 100vh;
-}
+<style>
+
 </style>
