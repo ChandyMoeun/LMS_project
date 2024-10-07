@@ -15,7 +15,7 @@ function logOut() {
 }
 </script>
 <template>
-  <header class="flex justify-between px-50 py-3 bg-white items-center">
+  <header class="hearder-container flex justify-between px-50 py-3 bg-yellow-400 items-center">
     <!-- Logo -->
     <div class="flex items-center space-x-2">
       <Icon icon="skill-icons:devto-dark" style="font-size: 45px" />
@@ -52,3 +52,4 @@ function logOut() {
     </div>
   </header>
 </template>
+

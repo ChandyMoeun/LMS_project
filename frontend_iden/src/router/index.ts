@@ -26,24 +26,34 @@ const router = createRouter({
       component: () => import('../views/Admin/Auth/LoginView.vue')
     },
     // ----- user -----
+    // {
+    //   path: '/employee_dashboard',
+    //   name: 'employee_dashboard',
+    //   component: () => import('../views/Employee/EmployeeView.vue'),
+    //   meta: {
+    //     requiresAuth: true,
+    //     role: 'employee'
+    //   }
+    // },
+    // {
+    //   path: '/approver_dashboard',
+    //   name: 'approver_dashboard',
+    //   component: () => import('../views/Supervisor/SupervisorView.vue'),
+    //   meta: {
+    //     requiresAuth: true,
+    //     role: 'approver'
+    //   }
+    // },
     {
-      path: '/employee_dashboard',
-      name: 'employee_dashboard',
-      component: () => import('../views/Employee/EmployeeView.vue'),
-      meta: {
-        requiresAuth: true,
-        role: 'employee'
-      }
+      path: '/calendar',
+      'name': 'calendar',
+      component: () => import('../views/Supervisor/calendarPage.vue'),
     },
     {
-      path: '/approver_dashboard',
-      name: 'approver_dashboard',
-      component: () => import('../views/Supervisor/SupervisorView.vue'),
-      meta: {
-        requiresAuth: true,
-        role: 'approver'
-      }
-    },
+      path: '/employee/leave',
+      'name': 'leave',
+      component: () => import('../views/Employee/LeavPage.vue'),
+    }
   ]
 })
 
@@ -55,7 +65,6 @@ router.beforeEach(async (to, from, next) => {
   try {
     // Attempt to fetch the current user's details
     const { data } = await axiosInstance.get('/me')
-
     // Update the auth store with the fetched data
     store.isAuthenticated = true
     store.user = data.data
