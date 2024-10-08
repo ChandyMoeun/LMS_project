@@ -24,20 +24,5 @@ import WebHeaderMenu from '@/Components/WebHeaderMenu.vue';
   width: 100%;
   
 }
-.sidebar{
-  width: 15%;
-  height: 100vh;
-  background-color: #040405;
-  color: white;
-}
-.container-page {
-  width: 85%;
-}
-main{
-  padding: 50px 50px 0px 50px;
-  height: auto;
-  width: 100%;
-  background-color: rgb(231, 215, 215);
-}
 
 </style>

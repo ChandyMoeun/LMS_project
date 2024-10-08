@@ -1,9 +1,3 @@
-<!-- <script setup lang="ts"></script>
-
-<template>
-  <RouterView />
-</template> -->
-
 <template>
   <SupervisorLayout>
     <div class="supervisor">
@@ -32,24 +26,26 @@ import WebHeaderMenu from '@/Components/WebHeaderMenu.vue';
   display: flex;
   height: 100vh;
   align-items: start;
-  background-color: #f5f5f5;
+  background-color: #E5E7EB;
+
   width: 100%;
   
 }
 .sidebar{
-  width: 15%;
-  height: 100vh;
-  background-color: #040405;
+  width: 17%;
+  height: auto;
+  background-color: #141c2e;
   color: white;
 }
 .container-page {
-  width: 85%;
+  width: 83%;
 }
 main{
   padding: 50px 50px 0px 50px;
   height: auto;
   width: 100%;
-  background-color: rgb(231, 215, 215);
+  background-color: #E5E7EB;
+  margin-bottom: 50px;
 }
 
 </style>
