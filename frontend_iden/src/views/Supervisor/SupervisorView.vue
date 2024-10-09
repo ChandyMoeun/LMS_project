@@ -99,20 +99,21 @@
       </div>
 
       <!--............................// Chart js // total employee chart ..............................  -->
-      <div class="chartjs mt-10 mb-10 py-10">
+      <div class="chartjs mb-10 py-10">
         <!-- Chart Container -->
-        <h1 class="text-4xl p-10 text-center">Employee Chart</h1>
+        <h1 class="text-4xl text-black p-10 text-center">Employee Chart</h1>
 
-        <div class="chart-container mb-10 rounded-2xl py-5 bg-red-300">
+        <div class="chart-container mb-10 rounded-2xl py-5 bg-white shadow-[0_35px_60px_-15px_rgba(0,0,0,0.3)]">
           <canvas id="employeeChart"></canvas>
         </div>
 
-        <div class="chart-container mb-10 rounded-2xl px-10 py-5 bg-white shadow-[rgba(0,_0,_0,_0.4)_0px_30px_90px]">
+        <div class="chart-container mb-10 rounded-2xl px-10 py-5 bg-white shadow-[0_35px_60px_-15px_rgba(0,0,0,0.3)]">
           <canvas id="leaveChart"></canvas>
         </div>
       </div>
       <!--.......................... employees take leaves ......................... -->
       <div class="overflow-x-auto">
+        <h1 class="text-4xl p-10 text-black text-center">Leave Requests</h1>
         <table class="min-w-full bg-gray-100 border border-gray-100">
           <thead>
             <tr class="bg-black text-white text-xs">
@@ -202,7 +203,10 @@ const createEmployeeChart = () => {
       plugins: {
         title: {
           display: true,
-          text: 'Employees by Section'
+          text: 'Employees by Section',
+          font: {
+            size: 25, // Set the font size for the title
+          }
         }
       }
     }
