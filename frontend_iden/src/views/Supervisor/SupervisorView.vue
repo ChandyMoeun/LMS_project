@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container pb-20">
       <!----------- alert code -------------------->
       <div class="button" style="margin: 50px">
         <!-- Toast Alert Box -->
@@ -149,15 +149,9 @@
               <td class="py-2 px-2 text-center border-b text-xs">XXX</td>
               <td class="py-2 px-2 text-center border-b text-xs">
                 Status
-                <span class="bg-yellow-400 text-white px-2 py-1 rounded-full text-xs font-semibold"
-                  >Pending</span
-                >
-                <span class="bg-green-400 text-white px-2 py-1 rounded-full text-xs font-semibold"
-                  >Approved</span
-                >
-                <span class="bg-red-400 text-white px-2 py-1 rounded-full text-xs font-semibold"
-                  >Rejected</span
-                >
+                <span class="bg-yellow-400 text-white px-2 py-1 rounded-full text-xs font-semibold">Pending</span>
+                <span class="bg-green-400 text-white px-2 py-1 rounded-full text-xs font-semibold">Approved</span>
+                <span class="bg-red-400 text-white px-2 py-1 rounded-full text-xs font-semibold">Rejected</span>
               </td>
               <td class="py-2 px-2 text-center border-b text-xs">
                 <a href="#" class="text-blue-500 hover:text-blue-400">More</a>
@@ -167,8 +161,7 @@
                 <button
                   type="button"
                   class="text-blue-500 hover:text-blue-400 font-semibold px-2 py-1 rounded-md"
-                  onclick="toggleButtons({{ $leaveRequest->id }})"
-                >
+                  onclick="toggleButtons({{ $leaveRequest->id }})">
                   Views
                 </button>
               </td>
