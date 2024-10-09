@@ -61,7 +61,7 @@
             "
           >
             <img
-              src="../../assets/image/profile-avatar.jpg"
+              src="../../assets/image/employees.png"
               style="margin-left: 8px; width: 100px; height: 50%; display: flex; align-self: center"
             />
             <div class="ml-1">
@@ -86,7 +86,7 @@
             "
           >
             <img
-              src="../../assets/image/profile-avatar.jpg"
+              src="../../assets/image/Leave.png"
               style="margin-left: 25px; width: 75px; height: 9vh; display: flex; align-self: center"
             />
             <div>
@@ -148,7 +148,6 @@
               <td class="py-2 px-2 text-center border-b">Approver</td>
               <td class="py-2 px-2 text-center border-b text-xs">XXX</td>
               <td class="py-2 px-2 text-center border-b text-xs">
-                Status
                 <span class="bg-yellow-400 text-white px-2 py-1 rounded-full text-xs font-semibold">Pending</span>
                 <span class="bg-green-400 text-white px-2 py-1 rounded-full text-xs font-semibold">Approved</span>
                 <span class="bg-red-400 text-white px-2 py-1 rounded-full text-xs font-semibold">Rejected</span>
