@@ -17,6 +17,7 @@ use App\Http\Controllers\Admin\{
     LeavePfDetailController,
     DashboardController,
     ResetPasswordController,
+    NotificationController,
 };
 use App\Http\Controllers\LeaveRequestController;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
@@ -134,6 +135,10 @@ Route::namespace('App\Http\Controllers\Admin')->name('admin.')->prefix('admin')
 
         //====>details department<=======
         Route::get('admin/department/more/{id}', [DepartmentController::class, 'detail'])->name('department.more.index');
-        
-        
+
+        //====>Notification<=======
+        Route::get('/notifications', [NotificationController::class, 'index'])->name('notifications.index');
+
+        // Example route to trigger notification after a leave request (for demonstration purposes)
+        Route::get('/notify-leave/{id}', [NotificationController::class, 'notifyAfterLeaveRequest'])->name('notifications.leave');
     });

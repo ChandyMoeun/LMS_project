@@ -18,7 +18,7 @@ return new class extends Migration
             $table->enum('half_day_type', ['full_day', 'morning', 'afternoon', 'time'])->nullable(); // Enum for Half Day Type
             $table->time('start_time')->nullable();
             $table->time('end_time')->nullable();
-            $table->string('attachment')->nullable(); // Path to the attachment file
+            $table->json('attachment')->nullable(); // Path to the attachment file
             $table->float('total_requested_days'); // Total number of days requested
             $table->date('from_date'); // Start date of the leave
             $table->date('to_date'); // End date of the leave

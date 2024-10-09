@@ -1,9 +1,10 @@
 <x-app-layout>
     <main class="mt-10 p-5">
+
         <head>
             <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
         </head>
-        <div class="container" >
+        <div class="container">
             <a href="{{ route('admin.employee.index') }}">
                 <svg class="w-6 h-6 text-gray-800 dark:text-white hover:text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5H1m0 0 4 4M1 5l4-4" />
@@ -31,8 +32,14 @@
                             <p><strong>Date of Birth:</strong> {{$employee->dob}}</p>
                             <p><strong>Position:</strong> {{$employee->position->name}}</p>
                             <p><strong>Department:</strong> {{$employee->department->name}}</p>
+                            <p><strong>Roles:</strong>
+                                @foreach($employee->roles as $role)
+                                {{ $role->name }}@if(!$loop->last), @endif
+                                @endforeach
+                            </p>
+
                         </div>
-                        
+
                         <!-- Right column -->
                         <div>
                             <p><strong>Date join:</strong> {{$employee->joined_date}}</p>

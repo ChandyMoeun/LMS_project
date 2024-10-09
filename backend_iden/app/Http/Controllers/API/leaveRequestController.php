@@ -10,6 +10,8 @@ use App\Models\Position;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
+use App\Models\Notifications;
+use Illuminate\Support\Facades\Log; // Make sure to import the Log facade
 
 class leaveRequestController extends Controller
 {
@@ -39,26 +41,57 @@ class leaveRequestController extends Controller
      */
     public function store(Request $request)
     {
-        // Handle file upload if there is any
-        $attachmentPath = null;
+        Log::info('Request Data:', ['request' => $request->all()]);
+        // Validate the incoming request
+        $validatedData = $request->validate([
+            'leaveType_id' => 'required|integer|exists:leave_types,id', // Ensure leaveType_id exists in leave_types table
+            'half_day_type' => 'required|string|in:full_day,half_day', // Validate against allowed types
+            'start_time' => 'required|date_format:H:i:s', // Ensure the time is in HH:MM:SS format
+            'end_time' => 'required|date_format:H:i:s|after:start_time', // Ensure end_time is after start_time
+            'from_date' => 'required|date|date_format:Y-m-d', // Ensure date is in Y-m-d format
+            'to_date' => 'required|date|date_format:Y-m-d|after_or_equal:from_date', // Ensure to_date is after or equal to from_date
+            'reason' => 'required|string|max:255', // Reason should be a string with a max length
+            'attachment.*' => 'file|mimes:jpg,jpeg,png,pdf|max:2048', // Validate each file in the attachments array
+        ]);
+
+        // Handle file upload if there are any
+        $attachmentPaths = [];
         if ($request->hasFile('attachment')) {
-            $attachmentPath = $request->file('attachment')->store('attachments', 'public');
+            foreach ($request->file('attachment') as $file) {
+                // Ensure the uploaded file is valid
+                if ($file->isValid()) {
+                    // Store each file and push the path to the array
+                    $attachmentPaths[] = $file->store('attachment', 'public');
+                } else {
+                    Log::warning('Invalid file uploaded', ['file' => $file]);
+                }
+            }
         }
+
+        // Log the file paths
+        Log::info('File Attachments:', ['attachment' => $attachmentPaths]);
+
+        // Convert attachment paths to JSON
+        $attachmentsJson = !empty($attachmentPaths) ? json_encode($attachmentPaths) : null;
 
         // Create a new leave request
         $leaveRequest = LeaveRequest::create([
             'employee_id' => Auth::id(), // Assuming you are using Auth to get the current user ID
-            'leaveType_id' => $request->leaveType_id,
-            'half_day_type' => $request->half_day_type,
-            'start_time' => $request->start_time,
-            'end_time' => $request->end_time,
-            'from_date' => $request->from_date,
-            'to_date' => $request->to_date,
-            'reason' => $request->reason,
-            'attachment' => $attachmentPath,
+            'leaveType_id' => $validatedData['leaveType_id'], // Use validated data
+            'half_day_type' => $validatedData['half_day_type'], // Use validated data
+            'start_time' => $validatedData['start_time'], // Use validated data
+            'end_time' => $validatedData['end_time'], // Use validated data
+            'from_date' => $validatedData['from_date'], // Use validated data
+            'to_date' => $validatedData['to_date'], // Use validated data
+            'reason' => $validatedData['reason'], // Use validated data
+            'attachment' => $attachmentsJson, // Use the JSON of attachment paths
             'status' => 'pending', // Default status
             'total_requested_days' => $this->calculateLeaveDays($request),
         ]);
+
+
+        $notificationController = new NotificationController();
+        $notificationController->notifyAfterLeaveRequest($leaveRequest->id);
 
         return response()->json([
             'message' => 'Leave request submitted successfully.',
@@ -132,7 +165,7 @@ class leaveRequestController extends Controller
     }
 
 
-    // Approve the specified leave request
+    // ======>Approve the specified leave request<========
     public function approve($id)
     {
         $leaveRequest = LeaveRequest::find($id);
@@ -168,12 +201,12 @@ class leaveRequestController extends Controller
             'data' => [
                 'leave_request' => $leaveRequest,
                 'approved_by' => $leaveRequest->approver->full_name, // Return the approver's name
-                
+
             ]
         ], 200);
     }
 
-    // Reject the specified leave request
+    // ========>Reject the specified leave request<========
     public function reject($id)
     {
         $leaveRequest = LeaveRequest::find($id);
@@ -216,5 +249,26 @@ class leaveRequestController extends Controller
         }
 
         return $fromDate->diffInDays($toDate) + 1; // Full-day leave
+    }
+
+    /**
+     * Delete the specified leave request.
+     */
+    public function destroy($id)
+    {
+        // Find the leave request by ID
+        $leaveRequest = LeaveRequest::find($id);
+
+        // Check if the leave request exists
+        if (!$leaveRequest) {
+            return response()->json(['message' => 'Leave request not found.'], 404);
+        }
+
+        // Delete the leave request
+        $leaveRequest->delete();
+
+        return response()->json([
+            'message' => 'Leave request deleted successfully.',
+        ], 200);
     }
 }

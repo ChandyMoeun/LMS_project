@@ -178,6 +178,7 @@
                             <th class="py-2 px-4 border-b">From | To</th>
                             <th class="py-2 px-4 border-b">Approver</th>
                             <th class="py-2 px-4 border-b">Sub-approver</th>
+                            <th class="py-2 px-4 border-b">File</th>
                             <th class="py-2 px-4 border-b">Status</th>
                             <th class="py-2 px-4 border-b">Detail</th>
                             <th class="py-2 px-4 border-b">Action</th>
@@ -209,6 +210,118 @@
                                 @endif
                             </td>
                             <td class="py-2 px-4 border-b text-xs">XXX</td>
+                            <!-- Display attachment -->
+                            @php
+                            // Initialize $attachments to an empty array
+                            $attachments = [];
+                            if ($leaveRequest->attachment) {
+                            // Decode the JSON or explode the comma-separated string into an array
+                            $attachments = json_decode($leaveRequest->attachment, true);
+                            }
+                            @endphp
+
+                            <td class="py-2 px-4 border-b text-xs">
+                                <!-- Display the first attachment if it exists -->
+                                @if(isset($attachments[0]))
+                                @php
+                                // Get the full path of the first file
+                                $firstFilePath = asset('storage/' . $attachments[0]);
+                                // Get the file extension for the first file
+                                $firstExtension = pathinfo($attachments[0], PATHINFO_EXTENSION);
+                                @endphp
+                                <!-- Check if the first file is an image -->
+                                @if(in_array($firstExtension, ['jpg', 'jpeg', 'png', 'gif', 'svg']))
+                                <!-- Image Thumbnail (Clickable) -->
+                                <img src="{{ $firstFilePath }}" alt="Attachment Preview" class="max-h-5 max-w-full object-cover mb-2 cursor-pointer" id="first-image" onclick="showFullScreenImage('{{ $firstFilePath }}')">
+                                @else
+                                <a href="{{ $firstFilePath }}" class="text-blue-600" target="_blank">{{ basename($attachments[0]) }}</a>
+                                @endif
+
+                                <!-- Fullscreen Image Modal -->
+                                <div id="imageModal" class="hidden fixed inset-0 z-50 bg-black bg-opacity-80 flex items-center justify-center">
+                                    <span class="absolute top-4 right-4 text-white text-3xl cursor-pointer" onclick="closeImageModal()">&times;</span>
+                                    <img id="modalImage" class="max-w-full max-h-screen object-contain">
+                                </div>
+                                @endif
+                                <!-- Show more button -->
+                                @if(count($attachments) > 1)
+                                <button class="show-more-btn mt-2 text-blue-600 hover:underline" data-modal-id="attachmentModal-{{ $leaveRequest->id }}">See More</button>
+                                @endif
+                            </td>
+                            <!-- Modal for showing all attachments -->
+                            @if(count($attachments) > 0)
+                            <div id="attachmentModal-{{ $leaveRequest->id }}" class="fixed inset-0 flex items-center justify-center hidden z-50">
+                                <!-- Modal Overlay and Content for Attachments -->
+                                <div class="modal-overlay fixed inset-0 bg-black bg-opacity-50"></div>
+                                <div class="modal-content bg-white p-2 rounded shadow-lg max-w-lg mx-auto max-h-[80vh] overflow-auto fixed inset-0 mt-20 mb-20">
+                                    <h2 class="text-lg font-semibold mb-4">Attachments for Leave Request {{ $leaveRequest->id }}</h2>
+                                    <div id="modal-attachments-{{ $leaveRequest->id }}">
+                                        @foreach($attachments as $attachment)
+                                        @php
+                                        $filePath = asset('storage/' . $attachment);
+                                        $extension = pathinfo($attachment, PATHINFO_EXTENSION);
+                                        @endphp
+
+                                        @if(in_array($extension, ['jpg', 'jpeg', 'png', 'gif', 'svg']))
+                                        <!-- Image that can be clicked for full screen -->
+                                        <img src="{{ $filePath }}" alt="Attachment Preview" class="max-h-40 max-w-full object-cover mb-2 cursor-pointer preview-image-{{ $leaveRequest->id }}">
+                                        @else
+                                        <!-- Download link for non-image attachments -->
+                                        <a href="{{ $filePath }}" class="text-blue-600" target="_blank">{{ basename($attachment) }}</a>
+                                        @endif
+                                        @endforeach
+                                    </div>
+                                    <div class="flex justify-end">
+                                        <svg class="h-10 w-10 text-red-600 cursor-pointer close-modal-btn" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                        </svg>
+                                    </div>
+
+                                </div>
+
+                                <!-- Full-screen Image Modal -->
+                                <div id="fullscreen-modal-{{ $leaveRequest->id }}" class="fixed inset-0 bg-black bg-opacity-75 hidden z-50 flex items-center justify-center">
+                                    <img id="fullscreen-image-{{ $leaveRequest->id }}" src="" class="max-w-full max-h-full object-contain">
+                                    <div class="absolute top-4 right-4 flex items-center">
+                                        <svg id="close-fullscreen-{{ $leaveRequest->id }}" class="h-12 w-12 text-white cursor-pointer" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                        </svg>
+                                    </div>
+
+
+                                </div>
+
+                                <!-- JavaScript to handle full-screen image viewing -->
+                                <script>
+                                    document.addEventListener('DOMContentLoaded', function() {
+                                        const previewImages = document.querySelectorAll('.preview-image-{{ $leaveRequest->id }}');
+                                        const fullscreenModal = document.getElementById('fullscreen-modal-{{ $leaveRequest->id }}');
+                                        const fullscreenImage = document.getElementById('fullscreen-image-{{ $leaveRequest->id }}');
+                                        const closeFullscreenBtn = document.getElementById('close-fullscreen-{{ $leaveRequest->id }}');
+
+                                        // Add click event to all preview images
+                                        previewImages.forEach(image => {
+                                            image.addEventListener('click', function() {
+                                                fullscreenImage.src = this.src; // Set the full-screen image source
+                                                fullscreenModal.classList.remove('hidden'); // Show full-screen modal
+                                            });
+                                        });
+
+                                        // Close full-screen modal when clicking close button
+                                        closeFullscreenBtn.addEventListener('click', function() {
+                                            fullscreenModal.classList.add('hidden');
+                                        });
+
+                                        // Close full-screen modal when clicking anywhere outside the image
+                                        fullscreenModal.addEventListener('click', function(event) {
+                                            if (event.target === fullscreenModal) {
+                                                fullscreenModal.classList.add('hidden');
+                                            }
+                                        });
+                                    });
+                                </script>
+                            </div>
+                            @endif
                             <td class="py-2 px-4 border-b text-xs"> @if($leaveRequest->status == 'pending')
                                 <span class="bg-yellow-400 text-white px-2 py-1 rounded-full text-xs font-semibold">Pending</span>
                                 @elseif($leaveRequest->status == 'approved')
@@ -276,5 +389,49 @@
         } else {
             actionButtons.classList.add('hidden');
         }
+    };
+    // Show the modal when any "Show More" button is clicked
+    document.querySelectorAll('.show-more-btn').forEach(button => {
+        button.addEventListener('click', function() {
+            const modalId = this.getAttribute('data-modal-id');
+            const modal = document.getElementById(modalId);
+            modal.classList.remove('hidden'); // Show the modal
+        });
+    });
+
+    // Hide the modal when any "Close" button is clicked
+    document.querySelectorAll('.close-modal-btn').forEach(button => {
+        button.addEventListener('click', function() {
+            const modal = this.closest('.modal-content').parentElement; // Get the modal
+            modal.classList.add('hidden'); // Hide the modal
+        });
+    });
+
+    // Optional: Close the modal when clicking on the overlay
+    document.querySelectorAll('.modal-overlay').forEach(overlay => {
+        overlay.addEventListener('click', function() {
+            const modal = this.parentElement; // Get the modal
+            modal.classList.add('hidden'); // Hide the modal
+        });
+    });
+
+    // Function to show the fullscreen image modal
+    function showFullScreenImage(imageSrc) {
+        var modal = document.getElementById('imageModal');
+        var modalImage = document.getElementById('modalImage');
+
+        // Set the image source to the clicked image's source
+        modalImage.src = imageSrc;
+
+        // Display the modal by removing the 'hidden' class
+        modal.classList.remove('hidden');
+    }
+
+    // Function to close the image modal
+    function closeImageModal() {
+        var modal = document.getElementById('imageModal');
+
+        // Hide the modal by adding the 'hidden' class
+        modal.classList.add('hidden');
     }
 </script>
