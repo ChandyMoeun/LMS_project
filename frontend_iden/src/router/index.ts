@@ -47,7 +47,7 @@ const router = createRouter({
     {
       path: '/calendar',
       'name': 'calendar',
-      component: () => import('../views/Supervisor/calendarPage.vue'),
+      component: () => import('../views/Supervisor/calenda/calendarPage.vue'),
     },
     {
       path: '/employee/leave',
