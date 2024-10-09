@@ -1,7 +1,7 @@
 <template>
-      <main class="p-12 mt-10">
-        <div class="d-flex border-b-2 border-gray-300 px-8 h-15 items-center">
-          <h1 class="font-bold text-3xl mb-3 hover:text-yellow-400 w-2/12"><b>Calendar</b></h1>
+      <div class="mt-15">
+        <div class="text-black border-b-2 border-gray-300 px-8 h-15 items-center" style="border-bottom: solid 1px;">
+          <h1 class="font-bold text-3xl mb-3 hover:text-yellow-400 w-2/12">Calendar</h1>
         </div>
         
         <!-- Rout Calendar_workday -->
@@ -15,7 +15,7 @@
             </a>
   
             <a v-if="canCreateCalendar" 
-               href="/admin/calendar_holiday/create" 
+               href="/holiday/create" 
                class="no-underline text-white font-bold px-5 py-2 rounded-lg shadow-md bg-blue-500 hover:bg-blue-400 transition-colors focus:outline-none focus:ring-2 focus:ring-green-300">
               Add Holiday
             </a>
@@ -94,7 +94,7 @@
             </tbody>
           </table>
         </div>
-      </main>
+      </div>
   </template>
   
   <script>

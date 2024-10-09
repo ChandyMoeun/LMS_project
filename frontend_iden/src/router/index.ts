@@ -11,7 +11,7 @@ const router = createRouter({
     // ----- authentication -----
     {
       path: '/',
-      name: 'Welcome',
+      name: 'dashboard',
       component: () => import('../views/Supervisor/SupervisorView.vue')
       
     },
@@ -53,6 +53,11 @@ const router = createRouter({
       path: '/employee/leave',
       'name': 'leave',
       component: () => import('../views/Employee/LeavPage.vue'),
+    },
+    {
+      path: '/holiday/create',
+      'name': 'holidayCreate',
+      component: () => import('../views/Supervisor/calenda/holiday/createHoliday.vue'),
     }
   ]
 })
