@@ -9,6 +9,7 @@ use App\Models\LeaveRequest;
 use App\Models\LeaveType;
 use App\Models\Position;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Notifications;
 use Carbon\Carbon;
 
 
@@ -95,7 +96,6 @@ class LeaveController extends Controller
 
         // Get all leave types
         $leaveTypes = LeaveType::all();
-
         return view('leave.request', compact('leaveTypes', 'positions', 'employees'));
     }
 
@@ -104,47 +104,54 @@ class LeaveController extends Controller
      */
     public function store(Request $request)
     {
-        // Validate the request
-        // $request->validate([
-        //     'leave_type_id' => 'required|exists:leave_types,id',
-        //     'from_date' => 'required|date',
-        //     'to_date' => 'nullable|date|after_or_equal:from_date',
-        //     'half_day_type' => 'required|in:full_day,morning,afternoon,time',
-        //     'start_time' => 'nullable|date_format:H:i|required_if:half_day_type,time',
-        //     'end_time' => 'nullable|date_format:H:i|required_if:half_day_type,time',
-        //     'reason' => 'nullable|string|max:255',
-        //     'attachment' => 'nullable|file|mimes:jpg,png,pdf|max:2048', // Accepts image/pdf attachments
-        // ]);
+        // Validate the request (add validation for attachments if needed)
+        $request->validate([
+            'leave_type_id' => 'required|integer',
+            'from_date' => 'required|date',
+            'to_date' => 'required|date',
+            'reason' => 'required|string',
+            'attachment.*' => 'nullable|file|mimes:jpg,jpeg,png,gif,doc,docx,xls,xlsx,ppt,pptx,pdf|max:2048', // Max 2MB per file
 
-        // Handle file upload if there is any
-        $attachmentPath = null;
+        ]);
+
+        // Handle file upload if there are any attachments
         if ($request->hasFile('attachment')) {
-            $attachmentPath = $request->file('attachment')->store('attachments', 'public');
+            $attachmentPaths = []; // Array to hold the paths of multiple attachments
+            foreach ($request->file('attachment') as $file) {
+                // Store each file in the 'uploads' folder in the 'public' disk
+                $path = $file->store('uploads', 'public');
+                $attachmentPaths[] = $path; // Add the file path to the array
+            }
+            // Convert the array of paths into a comma-separated string or store as JSON
+            $attachmentPath = json_encode($attachmentPaths); // Or use implode(',', $attachmentPaths) for comma-separated
+        } else {
+            $attachmentPath = null; // Set to null if no attachments are uploaded
         }
 
-
         // Create a new leave request
-
-        LeaveRequest::create([
-            'employee_id' => Auth::id(), // Assuming you are using Auth to get the current user ID
-            'leaveType_id' => $request->leave_type_id, // Ensure this is being passed
+        $leaveRequest = LeaveRequest::create([
+            'employee_id' => Auth::id(), // Assuming the logged-in user is the employee
+            'leaveType_id' => $request->leave_type_id,
             'half_day_type' => $request->half_day_type,
-            'start_time' => $request->start_time, // Only required if half_day_type is 'time'
-            'end_time' => $request->end_time, // Only required if half_day_type is 'time'
+            'start_time' => $request->half_day_type == 'time' ? $request->start_time : null,
+            'end_time' => $request->half_day_type == 'time' ? $request->end_time : null,
             'from_date' => $request->from_date,
             'to_date' => $request->to_date,
             'reason' => $request->reason,
             'duration_leave' => $request->duration_leave,
-            'requested_at' => $request->quested_at,
-            'approved_at' => $request->approved_at,
-            'attachment' => $attachmentPath, // Path to the uploaded file
-            'status' => 'pending', // Default status
+            'requested_at' => $request->requested_at,
+            'approved_at' => $request->approved_at ?? null,
+            'attachment' => $attachmentPath, // Store the attachment paths (comma-separated or JSON)
+            'status' => 'pending',
             'total_requested_days' => $this->calculateLeaveDays($request),
         ]);
 
+        $notificationController = new NotificationController();
+        $notificationController->notifyAfterLeaveRequest($leaveRequest->id);
 
         return redirect()->route('admin.leave.index')->with('success', 'Leave request submitted successfully.');
     }
+
 
 
 
@@ -199,14 +206,26 @@ class LeaveController extends Controller
         return redirect()->route('leave.index')->with('success', 'Leave request updated successfully.');
     }
 
-    // =====>approve request<======
+
+     // =====>approve request<======
     public function approve(LeaveRequest $leaveRequest)
     {
+        // Mark the leave request as approved
         $leaveRequest->status = 'approved';
         $leaveRequest->approved_by = auth()->user()->id; // Store the ID of the user who approved the request
-        $leaveRequest->save();
+        
+        // Get the associated leave type (assuming there's a relationship between LeaveRequest and LeaveType)
+        $leaveType = $leaveRequest->leaveType; // Assuming LeaveRequest has a leaveType relationship
 
-        return redirect()->route('admin.dashboard')->with('success', 'Leave request approved successfully.');
+        // Ensure there's an increase_rate to subtract
+        if ($leaveType->increase_rate > 0) {
+            // Subtract 1 from the increase_rate
+            $leaveType->increase_rate -= 1;
+            $leaveType->save();
+        }
+        $leaveRequest->save();
+        // Redirect to the admin dashboard with a success message
+        return redirect()->route('admin.dashboard')->with('success', 'Leave request approved successfully and 1 day was subtracted from the increase rate.');
     }
 
     // =====>reject request<======

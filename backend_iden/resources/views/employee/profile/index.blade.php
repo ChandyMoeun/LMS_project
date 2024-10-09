@@ -31,6 +31,12 @@
                             <p><strong>Date of Birth:</strong> {{$employee->dob}}</p>
                             <p><strong>Position:</strong> {{$employee->position->name}}</p>
                             <p><strong>Department:</strong> {{$employee->department->name}}</p>
+                            <p><strong>Roles:</strong>
+                                @foreach($employee->roles as $role)
+                                {{ $role->name }}@if(!$loop->last), @endif
+                                @endforeach
+                            </p>
+
                         </div>
 
                         <!-- Right column -->

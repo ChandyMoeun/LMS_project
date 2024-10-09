@@ -106,7 +106,9 @@
                     <!-- Attachment -->
                     <div class="mt-4">
                         <label for="attachment" class="block text-sm font-medium text-gray-700">Attachment</label>
-                        <input type="file" name="attachment" id="attachment" class="mt-1 block w-5/12 rounded-md border-gray-300 shadow-sm">
+                        @csrf
+                        <input type="file" name="attachment[]" multiple accept=".jpg,.jpeg,.png,.gif,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.pdf">
+                        <!-- Accepts images (jpg, jpeg, png, gif) and Microsoft Office files (doc, docx, xls, xlsx, ppt, pptx), and PDFs -->
                     </div>
 
                     <!-- Submit Button -->

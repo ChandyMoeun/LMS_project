@@ -36,7 +36,6 @@ class LeaveRequest extends Model
 
     
 
-
     // In LeaveRequest.php model
     public function leaveType()
     {
