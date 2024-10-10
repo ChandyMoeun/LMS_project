@@ -58,7 +58,12 @@ const router = createRouter({
       path: '/holiday/create',
       'name': 'holidayCreate',
       component: () => import('../views/Supervisor/calenda/holiday/createHoliday.vue'),
-    }
+    },
+    {
+      path: '/workTime/create',
+      'name': 'workTimeCreate',
+      component: () => import('../views/Supervisor/calenda/holiday/addWorkTime.vue'),
+    },
   ]
 })
 

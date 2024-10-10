@@ -9,7 +9,7 @@
           <div class="flex justify-end space-x-4">
             <!-- Conditionally render buttons -->
             <a v-if="canCreateCalendar" 
-               href="/admin/calendar_workday/create" 
+               href="/workTime/create" 
                class="no-underline bg-black text-white font-bold px-5 py-2 rounded-lg shadow-md hover:bg-yellow-400 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-300">
               Add Work/Time
             </a>
@@ -84,10 +84,10 @@
                     <td class="py-4 px-6 border-b text-center border-gray-200">15.04.2024</td>
                     <td class="py-4 px-6 border-b border-gray-200">national</td>
                     <td class="py-4 px-6 border-b border-gray-200">enjoy your days guys</td>
-                    <td class="py-4 px-6 border-b border-gray-200 text-right">
-                        <a href="#" class="text-white font-bold py-1 px-3 rounded text-xs bg-green-200 no-underline hover:bg-yellow-400 text-white">Edit</a>
+                    <td class="py-4 px-6 border-b border-gray-200 d-flex justify-center gap-3">
+                        <a href="#" class="font-bold py-1 px-3 rounded text-xs bg-yellow-400 no-underline hover:bg-black text-white">Edit</a>
                         <form action="#" method="POST" class="inline">
-                            <button class="text-white font-bold py-1 px-3 rounded text-xs bg-red-500 hover:bg-red-400">Delete</button>
+                            <button class="text-white font-bold py-1 px-3 rounded text-xs bg-red-400 hover:bg-red-600 border-none">Delete</button>
                         </form>
                     </td>
                 </tr>

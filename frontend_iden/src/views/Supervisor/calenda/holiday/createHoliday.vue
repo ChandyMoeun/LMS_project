@@ -52,10 +52,11 @@
 
           <!-- Submit Button -->
           <div class="flex justify-center space-x-4 mt-4">
-            <button type="submit" class="bg-yellow-400 text-white font-bold px-5 py-2 rounded focus:outline-none shadow hover:bg-black transition-colors">
-              Save
+            <button type="submit" class="bg-yellow-400 font-bold px-5 py-2 rounded focus:outline-none shadow hover:bg-black transition-colors border-none">
+              <a href="/calendar" class="no-underline text-white ">Save</a>
             </button>
           </div>
+
         </form>
       </div>
     </div>
