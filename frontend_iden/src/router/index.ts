@@ -11,7 +11,7 @@ const router = createRouter({
     // ----- authentication -----
     {
       path: '/',
-      name: 'Welcome',
+      name: 'dashboard',
       component: () => import('../views/Supervisor/SupervisorView.vue')
       
     },
@@ -26,23 +26,53 @@ const router = createRouter({
       component: () => import('../views/Admin/Auth/LoginView.vue')
     },
     // ----- user -----
+    // {
+    //   path: '/employee_dashboard',
+    //   name: 'employee_dashboard',
+    //   component: () => import('../views/Employee/EmployeeView.vue'),
+    //   meta: {
+    //     requiresAuth: true,
+    //     role: 'employee'
+    //   }
+    // },
+    // {
+    //   path: '/approver_dashboard',
+    //   name: 'approver_dashboard',
+    //   component: () => import('../views/Supervisor/SupervisorView.vue'),
+    //   meta: {
+    //     requiresAuth: true,
+    //     role: 'approver'
+    //   }
+    // },
     {
-      path: '/employee_dashboard',
-      name: 'employee_dashboard',
-      component: () => import('../views/Employee/EmployeeView.vue'),
-      meta: {
-        requiresAuth: true,
-        role: 'employee'
-      }
+      path: '/calendar',
+      'name': 'calendar',
+      component: () => import('../views/Supervisor/calenda/calendarPage.vue'),
     },
     {
-      path: '/approver_dashboard',
-      name: 'approver_dashboard',
-      component: () => import('../views/Supervisor/SupervisorView.vue'),
-      meta: {
-        requiresAuth: true,
-        role: 'approver'
-      }
+      path: '/employee/leave',
+      'name': 'leave',
+      component: () => import('../views/Employee/LeavPage.vue'),
+    },
+    {
+      path: '/holiday/create',
+      'name': 'holidayCreate',
+      component: () => import('../views/Supervisor/calenda/holiday/createHoliday.vue'),
+    },
+    {
+      path: '/workTime/create',
+      'name': 'workTimeCreate',
+      component: () => import('../views/Supervisor/calenda/holiday/addWorkTime.vue'),
+    },
+    {
+      path: '/workTime/edit',
+      'name': 'workTimeEdit',
+      component: () => import('../views/Supervisor/calenda/holiday/editWorkTime.vue'),
+    },
+    {
+      path: '/holiday/edit',
+      'name': 'holidayEdit',
+      component: () => import('../views/Supervisor/calenda/holiday/editHoliday.vue'),
     },
   ]
 })
@@ -55,7 +85,6 @@ router.beforeEach(async (to, from, next) => {
   try {
     // Attempt to fetch the current user's details
     const { data } = await axiosInstance.get('/me')
-
     // Update the auth store with the fetched data
     store.isAuthenticated = true
     store.user = data.data
