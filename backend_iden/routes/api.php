@@ -1,7 +1,15 @@
 <?php
 
-use App\Http\Controllers\API\PostController;
+use App\Http\Controllers\API\{
+    PostController,
+    LeaveRequestController, // Use PascalCase for controller names
+    CalendarGroupController,
+    CalendarWorkDayController,
+    AttendanceController,
+    NotificationController,
+};
 use App\Http\Controllers\AuthController;
+use App\Models\CalendarGroup;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -16,9 +24,55 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+// =====>Public Routes<======
 Route::post('/login', [AuthController::class, 'login']);
-Route::get('/me', [AuthController::class, 'index'])->middleware('auth:sanctum');
-Route::get('/post/list', [PostController::class, 'index'])->middleware('auth:sanctum');
+
+// ======>Authenticated Routes<=======
+Route::middleware('auth:sanctum')->group(function () {
+    // =====>get authenticated specific profile<====
+    Route::get('/me', [AuthController::class, 'index']);
+
+    // ======>List positions <=====
+    Route::get('/position/list', [PostController::class, 'index']);
+
+    // ======>authenticated user's profile<=====
+    Route::get('/employee', function (Request $request) {
+        return $request->user(); // Return the authenticated user's details
+    });
+
+    // =====>CRUD operations for leave requests<====
+    Route::apiResource('leave_requests', LeaveRequestController::class);
+    
+    // ======>Approve and reject leave requests<=====
+    Route::post('/leave_requests/{id}/approve', [LeaveRequestController::class, 'approve']);
+    Route::post('/leave_requests/{id}/reject', [LeaveRequestController::class, 'reject']);
+
+    //=======>Calendar_groups<=========
+    Route::get('/calendar_groups/{id}', [CalendarGroupController::class, 'index']);
+    Route::get('/calendar_work', [CalendarWorkDayController::class, 'index']);
+});
+
+//========>Attendance<========
+
+Route::middleware('auth:sanctum')->group(function () {
+    Route::post('attendance/clock-in', [AttendanceController::class, 'clockIn']);
+    Route::post('attendance/clock-out', [AttendanceController::class, 'clockOut']);
+    Route::get('attendance/history', [AttendanceController::class, 'getAttendanceHistory']);
+});
+
+
+//========>Notification<========
+
+Route::middleware('auth:sanctum')->group(function () {
+    Route::get('notification', [NotificationController::class, 'index']);
+    Route::post('notification/{id}/read', [NotificationController::class, 'read']);
+});
+
+
+
+Route::middleware('auth:sanctum')->group(function () {
+    // Route to trigger Telegram notification after leave request
+    Route::post('notification/{id}', [NotificationController::class, 'notifyAfterLeaveRequest']);
+    Route::post('leave_requests/{id}/approve', [NotificationController::class, 'approveLeaveRequest']);
+    Route::post('leave_requests/{id}/reject', [NotificationController::class, 'rejectLeaveRequest']);
+});

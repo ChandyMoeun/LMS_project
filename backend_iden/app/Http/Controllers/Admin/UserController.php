@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\User;
+use App\Models\Employee;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 
@@ -32,7 +32,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $user= User::latest()->get();
+        $user= Employee::latest()->get();
 
         return view('setting.user.index',['users'=>$user]);
     }
@@ -45,6 +45,7 @@ class UserController extends Controller
     public function create()
     {
         $roles = Role::get();
+        
         return view('setting.user.new',['roles'=>$roles]);
     }
 
@@ -58,12 +59,12 @@ class UserController extends Controller
     {
 
         $request->validate([
-            'name'=>'required',
+            'full_name'=>'required',
             'email' => 'required|email|unique:users',
             'password'=>'required|confirmed'
         ]);
-        $user = User::create([
-            'name'=>$request->name,
+        $user = Employee::create([
+            'full_name'=>$request->full_name,
             'email'=>$request->email,
             'password'=> bcrypt($request->password),
         ]);
@@ -88,7 +89,7 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(User $user)
+    public function edit(Employee $user)
     {
         $role = Role::get();
         $user->roles;
@@ -102,7 +103,7 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, User $user)
+    public function update(Request $request, Employee $user)
     {
         $validated = $request->validate([
             'name'=>'required',

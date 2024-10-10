@@ -1,36 +1,53 @@
 <x-guest-layout>
-    <x-auth-card>
-        <x-slot name="logo">
-            <a href="/">
-                <x-application-logo class="w-20 h-20 fill-current text-gray-500" />
-            </a>
-        </x-slot>
+<!DOCTYPE html>
+    <html lang="en">
 
-        <div class="mb-4 text-sm text-gray-600">
-            {{ __('Forgot your password? No problem. Just let us know your email address and we will email you a password reset link that will allow you to choose a new one.') }}
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Forgot Password</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    </head>
+
+    <body style="background-color: #ECECEC;">
+        <div class="container mt-5 ">
+            <div class="row justify-content-center ">
+                <div class="col-md-6 w-75 bg-green ">
+                    <div class="card shadow-lg overflow-hidden">
+                        <div class="card-body bg-white-100">
+                            @if (session('status'))
+                            <div class="alert alert-success" role="alert">
+                                {{ session('status') }}
+                            </div>
+                            @endif
+
+                            <form method="POST" action="{{ route('password.email') }}">
+                                @csrf
+                                <h1 class="font-bold text-3xl mb-20 text-center">Forgot Password</h1>
+
+                                <div class="form-group">
+                                    <label for="email">Your Email Address</label>
+                                    <input type="email" name="email" id="email" class="form-control" placeholder="Enter your email" required autofocus>
+                                </div>
+
+                                <div class="form-group text-center mt-4">
+                                    <button type="submit" class="w-5px mt-5 bg-red-500 text-red font-bold py-2 px-4 hover:bg-red-400 focus:outline-none focus:bg-red-700 transition-colors" style=" border-radius: 5px"><a href="/" style="text-decoration: none; color: white;">Back</a></button>
+                                    <button type="submit" class="w-5px mt-5 bg-blue-500 text-white font-bold py-2 px-4 hover:bg-yellow-400 focus:outline-none focus:bg-blue-700 transition-colors" style=" border-radius: 5px">Next</button>
+                                </div>
+                                @error('email')
+                                    <div class="alert alert-danger" role="alert">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
+        </div>
+    </body>
 
-        <!-- Session Status -->
-        <x-auth-session-status class="mb-4" :status="session('status')" />
+    </html>
 
-        <!-- Validation Errors -->
-        <x-auth-validation-errors class="mb-4" :errors="$errors" />
-
-        <form method="POST" action="{{ route('password.email') }}">
-            @csrf
-
-            <!-- Email Address -->
-            <div>
-                <x-label for="email" :value="__('Email')" />
-
-                <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus />
-            </div>
-
-            <div class="flex items-center justify-end mt-4">
-                <x-button>
-                    {{ __('Email Password Reset Link') }}
-                </x-button>
-            </div>
-        </form>
-    </x-auth-card>
 </x-guest-layout>

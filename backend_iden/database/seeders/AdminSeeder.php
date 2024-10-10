@@ -2,11 +2,11 @@
 
 namespace Database\Seeders;
 
+use App\Models\Employee;
+
 use Illuminate\Database\Seeder;
-use App\Models\User;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
-
 
 class AdminSeeder extends Seeder
 {
@@ -17,53 +17,109 @@ class AdminSeeder extends Seeder
      */
     public function run()
     {
-        $admin = User::create([
-            'name'=>'Admin',
-            'email'=>'admin@gmail.com',
-            'password'=>bcrypt('password'),
-            'profile' => 'user.avif'
+        // Create Users
+        $admin = Employee::create([
+            'staff_id' => '001', // Assuming you have a staff ID
+            'full_name' => 'admin',
+            'email' => 'admin@gmail.com',
+            'profile' => 'user.avif',
+            'password' => bcrypt('password'),
+            'gender' => 'Male', // Or 'Female'
+            'dob' => '1990-01-01', // Example date of birth
+            'joined_date' => now(),
+            'entitled_date' => null, // Assuming the calendar ID is 1
+            'reporting_line' => null, // Or specify a reporting line if available
+            'position_id' => 1, // Assuming the position ID is 1
+            'department_id' => 1, // Assuming the department ID is 1
         ]);
 
-        $writer = User::create([
-            'name'=>'User',
-            'email'=>'user@gmail.com',
-            'password'=>bcrypt('password')
+        $writer = Employee::create([
+            'staff_id' => '002', // Assuming you have a staff ID
+            'full_name' => 'user',
+            'email' => 'user@gmail.com',
+            'profile' => '?',
+            'password' => bcrypt('password'),
+            'gender' => 'Male', // Or 'Female'
+            'dob' => '1990-01-01', // Example date of birth
+            'joined_date' => now(),
+            'entitled_date' => null, // Assuming the calendar ID is 1
+            'reporting_line' => null, // Or specify a reporting line if available
+            'position_id' => 1, // Assuming the position ID is 1
+            'department_id' => 1, // Assuming the department ID is 1
         ]);
+
         
 
+        // Create Roles
+        $admin_role = Role::create(['name' => 'admin', 'guard_name' => 'web']);
+        $writer_role = Role::create(['name' => 'user', 'guard_name' => 'web']);
+        
 
-        $admin_role = Role::create(['name' => 'admin']);
-        $writer_role = Role::create(['name' => 'user']);
+        // Create Permissions
+        $permissions = [
+            
+            //<====>Role access====>
+            'Role access',
+            'Role edit',
+            'Role create',
+            'Role delete',
+            
+            //<====>Permission access====>
+            'Permission access',
+            'Permission edit',
+            'Permission create',
+            'Permission delete',
+            //<====>Mail access====>
+            'Mail access',
+            'Mail edit',
+            //<====>Employee access====>
+            'Employee access',
+            'Employee edit',
+            'Employee create',
+            'Employee delete',
+            //<====>Calendar access====>
+            'Calendar access',
+            'Calendar edit',
+            'Calendar create',
+            'Calendar delete',
+            //<====>Position access====>
+            'Position access',
+            'Position edit',
+            'Position create',
+            'Position delete',
+            //<====>Attendance access====>
+            'Attendance access',
+            'Attendance edit',
+            'Attendance create',
+            'Attendance delete',
+            //<====>Leave access====>
+            'Leave access',
+            'Leave edit',
+            'Leave create',
+            'Leave delete',
+            //<====>Leave Type access====>
+            'LeaveType access',
+            'LeaveType edit',
+            'LeaveType create',
+            'LeaveType delete',
+            //<====>Department access====>
+            'Department access',
+            'Department edit',
+            'Department create',
+            'Department delete',
 
-        $permission = Permission::create(['name' => 'Post access']);
-        $permission = Permission::create(['name' => 'Post edit']);
-        $permission = Permission::create(['name' => 'Post create']);
-        $permission = Permission::create(['name' => 'Post delete']);
+        ];
 
-        $permission = Permission::create(['name' => 'Role access']);
-        $permission = Permission::create(['name' => 'Role edit']);
-        $permission = Permission::create(['name' => 'Role create']);
-        $permission = Permission::create(['name' => 'Role delete']);
+        foreach ($permissions as $permission) {
+            Permission::create(['name' => $permission, 'guard_name' => 'web']);
+        }
 
-        $permission = Permission::create(['name' => 'User access']);
-        $permission = Permission::create(['name' => 'User edit']);
-        $permission = Permission::create(['name' => 'User create']);
-        $permission = Permission::create(['name' => 'User delete']);
-
-        $permission = Permission::create(['name' => 'Permission access']);
-        $permission = Permission::create(['name' => 'Permission edit']);
-        $permission = Permission::create(['name' => 'Permission create']);
-        $permission = Permission::create(['name' => 'Permission delete']);
-
-        $permission = Permission::create(['name' => 'Mail access']);
-        $permission = Permission::create(['name' => 'Mail edit']);
-
-
-
+        // Assign Roles to Users
         $admin->assignRole($admin_role);
         $writer->assignRole($writer_role);
+        
 
-
+        // Give All Permissions to Admin Role
         $admin_role->givePermissionTo(Permission::all());
     }
 }
