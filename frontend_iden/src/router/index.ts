@@ -64,11 +64,11 @@ const router = createRouter({
       'name': 'workTimeCreate',
       component: () => import('../views/Supervisor/calenda/holiday/addWorkTime.vue'),
     },
-    // {
-    //   path: '/workTime/edit',
-    //   'name': 'workTimeEdit',
-    //   component: () => import('../views/Supervisor/calenda/holiday/'),
-    // },
+    {
+      path: '/workTime/edit',
+      'name': 'workTimeEdit',
+      component: () => import('../views/Supervisor/calenda/holiday/editWorkTime.vue'),
+    },
     {
       path: '/holiday/edit',
       'name': 'holidayEdit',

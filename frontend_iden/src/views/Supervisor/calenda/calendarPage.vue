@@ -10,7 +10,7 @@
             <!-- Conditionally render buttons -->
             <a v-if="canCreateCalendar" 
                href="/workTime/create" 
-               class="no-underline bg-gray-900 text-white font-bold px-5 py-2 rounded-lg shadow-md hover:bg-yellow-400 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-300">
+               class="no-underline bg-gray-900 text-white font-bold px-5 py-2 rounded-lg shadow-md hover:bg-yellow-500 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-300">
               Add Work/Time
             </a>
   
@@ -56,7 +56,7 @@
                 <td class="py-4 px-6 border-b border-gray-200"> full days</td>
                 <!-- {{ workday.day_type }} -->
                 <td class="py-4 px-6 border-b border-gray-200 d-flex justify-center gap-3">
-                  <a href="#" class="font-bold py-1 px-3 rounded flex items-center text-xs bg-gray-900 no-underline hover:bg-yellow-400 text-white">Edit</a>
+                  <a href="/workTime/edit" class="font-bold py-1 px-3 rounded flex items-center text-xs bg-gray-900 no-underline hover:bg-yellow-500 text-white">Edit</a>
                   <form action="#" method="POST" class="inline">
                     <button class="text-white font-bold py-2 px-3 rounded text-xs bg-red-400 hover:bg-red-600 border-none">Delete</button>
                   </form>
@@ -64,7 +64,7 @@
                 <!-- <td class="py-4 px-6 border-b border-gray-200 text-right">
                   <a v-if="canEditCalendar" 
                      :href="`/admin/calendar_workday/${workday.id}/edit`" 
-                     class="text-white font-bold py-1 px-3 rounded text-xs bg-black hover:bg-yellow-400 text-white">Edit</a>
+                     class="text-white font-bold py-1 px-3 rounded text-xs bg-black hover:bg-yellow-500 text-white">Edit</a>
                   <button v-if="canDeleteCalendar" 
                           @click="deleteWorkday(workday.id)" 
                           class="text-white font-bold py-1 px-3 rounded text-xs bg-red-500 hover:bg-red-400">Delete</button>
@@ -96,7 +96,7 @@
                     <td class="py-4 px-6 border-b border-gray-200">national</td>
                     <td class="py-4 px-6 border-b border-gray-200">enjoy your days guys</td>
                     <td class="py-4 px-6 border-b border-gray-200 d-flex justify-center gap-3">
-                        <a href="/holiday/edit" class="font-bold py-1 px-3 rounded flex items-center text-xs bg-gray-900 no-underline hover:bg-yellow-400 text-white">Edit</a>
+                        <a href="/holiday/edit" class="font-bold py-1 px-3 rounded flex items-center text-xs bg-gray-900 no-underline hover:bg-yellow-500 text-white">Edit</a>
                         <form action="#" method="POST" class="inline">
                             <button class="text-white font-bold py-2 px-3 rounded text-xs bg-red-400 hover:bg-red-600 border-none">Delete</button>
                         </form>

@@ -49,7 +49,7 @@
   
             <!-- Submit Button -->
             <div class="flex justify-center space-x-4 mt-4">
-            <button type="submit" class="bg-yellow-400 font-bold px-5 py-2 rounded focus:outline-none shadow hover:bg-black transition-colors border-none">
+            <button type="submit" class="bg-yellow-500 font-bold px-5 py-2 rounded focus:outline-none shadow hover:bg-black transition-colors border-none">
               <a href="/calendar" class="no-underline text-white ">Add</a>
             </button>
           </div>
