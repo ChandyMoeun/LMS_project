@@ -1,7 +1,7 @@
 <template>
     <div class="editHoliday mt-3 pb-10">
       <div class="d-flex text-black" style="display: flex; flex-direction: column; border-bottom: solid 1px gray;">
-        <router-link to="/calendar">
+        <router-link to="/Supervisor/calendar">
           <svg class="w-6 h-6 mt-3 text-gray-800 dark:text-white hover:text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5H1m0 0 4 4M1 5l4-4"/>
           </svg>
@@ -55,7 +55,7 @@
             <!-- Submit Button -->
             <div class="flex justify-center space-x-4 mt-4">
                 <button type="submit" class="bg-yellow-500 font-bold px-5 py-2 rounded focus:outline-none shadow hover:bg-black transition-colors border-none">
-                  <a href="/calendar" class="no-underline text-white ">Save</a>
+                  <a href="/Supervisor/calendar" class="no-underline text-white ">Save</a>
                 </button>
             </div>
           </form>

@@ -10,7 +10,7 @@ const router = createRouter({
   routes: [
     // ----- authentication -----
     {
-      path: '/',
+      path: '/Supervisor/dashboard',
       name: 'dashboard',
       component: () => import('../views/Supervisor/SupervisorView.vue')
       
@@ -44,35 +44,50 @@ const router = createRouter({
     //     role: 'approver'
     //   }
     // },
+
+    //..............................supervisor routes -------------------------------- 
     {
-      path: '/calendar',
+      path: '/Supervisor/calendar',
       'name': 'calendar',
       component: () => import('../views/Supervisor/calenda/calendarPage.vue'),
     },
     {
-      path: '/employee/leave',
-      'name': 'leave',
-      component: () => import('../views/Employee/LeavPage.vue'),
-    },
-    {
-      path: '/holiday/create',
+      path: '/Supervisor/holiday/create',
       'name': 'holidayCreate',
       component: () => import('../views/Supervisor/calenda/holiday/createHoliday.vue'),
     },
     {
-      path: '/workTime/create',
+      path: '/Supervisor/workTime/create',
       'name': 'workTimeCreate',
       component: () => import('../views/Supervisor/calenda/holiday/addWorkTime.vue'),
     },
     {
-      path: '/workTime/edit',
+      path: '/Supervisor/workTime/edit',
       'name': 'workTimeEdit',
       component: () => import('../views/Supervisor/calenda/holiday/editWorkTime.vue'),
     },
     {
-      path: '/holiday/edit',
+      path: '/Supervisor/holiday/edit',
       'name': 'holidayEdit',
       component: () => import('../views/Supervisor/calenda/holiday/editHoliday.vue'),
+    },
+    {
+      path: '/Supervisor/takeLeave',
+      'name': 'takeLeave',
+      component: () => import('../views/Supervisor/take_leaves/take_leave.vue'),
+    },
+    {
+      path: '/Supervisor/requestLeave',
+      'name': 'requestLeave',
+      component: () => import('../views/Supervisor/take_leaves/requestLeave.vue'),
+    },
+    
+
+    //-----------------------------------employees routes --------------------------------
+    {
+      path: '/employee/leave',
+      'name': 'leave',
+      component: () => import('../views/Employee/LeavPage.vue'),
     },
   ]
 })

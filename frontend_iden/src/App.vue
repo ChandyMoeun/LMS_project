@@ -27,6 +27,7 @@ import WebHeaderMenu from '@/Components/WebHeaderMenu.vue';
   height: 100vh;
   align-items: start;
   width: 100%;
+  background-color: #E5E7EB;
 }
 .sidebar{
   width: 17%;
