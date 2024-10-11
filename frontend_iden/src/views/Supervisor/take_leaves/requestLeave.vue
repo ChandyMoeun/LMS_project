@@ -11,7 +11,7 @@
       <div class="flex justify-end items-end mt-16 mb-3">
         <a href="/Supervisor/requestLeave/myLeaved" class=" mr-10 px-3 py-1 bg-gray-900 text-white font-semibold rounded-lg shadow-md hover:bg-yellow-400 transition-colors no-underline">My History</a>
       </div>
-      <div class="container mt-2 py-4 bg-white shadow-md rounded-lg">
+      <div class="container mt-2 px-6 py-4 bg-white shadow-md rounded-lg">
         <form @submit.prevent="submitForm" enctype="multipart/form-data" class="flex flex-row justify-between p-3 gap-5">
           <div class="w-6/12">
             <div>

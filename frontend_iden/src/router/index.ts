@@ -86,6 +86,11 @@ const router = createRouter({
       'name': 'myLeaved',
       component: () => import('../views/Supervisor/take_leaves/MyLeave/MyHistoryLeave.vue'),
     },
+    {
+      path: '/Supervisor/requestLeave/myLeaved/viewHistory',
+      'name': 'viewHistory',
+      component: () => import('../views/Supervisor/take_leaves/MyLeave/viewMyHistory.vue'),
+    },
     
 
     //-----------------------------------employees routes --------------------------------

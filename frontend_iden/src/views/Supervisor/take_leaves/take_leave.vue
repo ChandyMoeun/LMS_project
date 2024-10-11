@@ -8,7 +8,7 @@
   
         <div class="container mx-auto mt-16 px-6 py-4">
           <div class="flex justify-between mb-4">
-            <input v-model="searchQuery" type="text" placeholder="Search employee..." title="Type in an ID or Name" class="w-2/6 py-2 px-2 h-9 border rounded" />
+            <input v-model="searchQuery" type="text" placeholder="Search employee..." title="Type in an ID or Name" class="w-2/6 py-2 px-2 h-9 border rounded rounded-lg shadow-md" />
             <div class="d-flex gap-2">
               <a  href="#" class="bg-gray-900 text-white font-semibold px-3 py-1 mt-1 no-underline rounded-lg shadow-md hover:bg-yellow-500 transition-colors">
                 History
