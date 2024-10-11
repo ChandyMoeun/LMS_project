@@ -77,6 +77,11 @@ const router = createRouter({
       component: () => import('../views/Supervisor/take_leaves/take_leave.vue'),
     },
     {
+      path: '/Supervisor/takeLeave/view/leaveHistory',
+      'name': 'vueLeaveHistory',
+      component: () => import('../views/Supervisor/take_leaves/viewleaveHistory.vue'),
+    },
+    {
       path: '/Supervisor/takeLeave/requestLeave',
       'name': 'requestLeave',
       component: () => import('../views/Supervisor/take_leaves/requestLeave.vue'),
