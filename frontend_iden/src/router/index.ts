@@ -52,22 +52,22 @@ const router = createRouter({
       component: () => import('../views/Supervisor/calenda/calendarPage.vue'),
     },
     {
-      path: '/Supervisor/holiday/create',
+      path: '/Supervisor/calendar/holiday/create',
       'name': 'holidayCreate',
       component: () => import('../views/Supervisor/calenda/holiday/createHoliday.vue'),
     },
     {
-      path: '/Supervisor/workTime/create',
+      path: '/Supervisor/calendar/workTime/create',
       'name': 'workTimeCreate',
       component: () => import('../views/Supervisor/calenda/holiday/addWorkTime.vue'),
     },
     {
-      path: '/Supervisor/workTime/edit',
+      path: '/Supervisor/calendar/workTime/edit',
       'name': 'workTimeEdit',
       component: () => import('../views/Supervisor/calenda/holiday/editWorkTime.vue'),
     },
     {
-      path: '/Supervisor/holiday/edit',
+      path: '/Supervisor/calendar/holiday/edit',
       'name': 'holidayEdit',
       component: () => import('../views/Supervisor/calenda/holiday/editHoliday.vue'),
     },
@@ -77,9 +77,14 @@ const router = createRouter({
       component: () => import('../views/Supervisor/take_leaves/take_leave.vue'),
     },
     {
-      path: '/Supervisor/requestLeave',
+      path: '/Supervisor/takeLeave/requestLeave',
       'name': 'requestLeave',
       component: () => import('../views/Supervisor/take_leaves/requestLeave.vue'),
+    },
+    {
+      path: '/Supervisor/requestLeave/myLeaved',
+      'name': 'myLeaved',
+      component: () => import('../views/Supervisor/take_leaves/MyLeave/MyHistoryLeave.vue'),
     },
     
 
