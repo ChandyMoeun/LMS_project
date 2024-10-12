@@ -16,7 +16,7 @@ const router = createRouter({
       
     },
     {
-      path: '/login',
+      path: '/',
       name: 'login',
       component: () => import('../views/Admin/Auth/LoginView.vue')
     },
@@ -78,8 +78,18 @@ const router = createRouter({
     },
     {
       path: '/Supervisor/takeLeave/view/leaveHistory',
-      'name': 'vueLeaveHistory',
+      'name': 'viewLeaveHistory',
       component: () => import('../views/Supervisor/take_leaves/viewleaveHistory.vue'),
+    },
+    {
+      path: '/Supervisor/takeLeave/All/leaveHistory',
+      'name': 'AllLeaveHistory',
+      component: () => import('../views/Supervisor/take_leaves/AllLeaveHistory.vue'),
+    },
+    {
+      path: '/Supervisor/takeLeave/All/leaveHistory/rejectHistory',
+      'name': 'AllRejectHistory',
+      component: () => import('../views/Supervisor/take_leaves/AllRejectedLeaves.vue'),
     },
     {
       path: '/Supervisor/takeLeave/requestLeave',

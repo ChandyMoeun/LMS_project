@@ -23,7 +23,7 @@
           <div class="flex justify-end items-center mb-4">
             <a href="#" class="text-blue-500 text-sm">Forget password?</a>
           </div>
-          <button type="submit" class="w-5px mt-5 bg-blue-500 text-white font-bold py-2 px-4 rounded hover:bg-yellow-400 focus:outline-none focus:bg-blue-700 transition-colors">Sign in</button>
+          <button type="submit" herf="/Supervisor/dashboard" class="w-5px mt-5 bg-blue-500 text-white font-bold py-2 px-4 rounded hover:bg-yellow-400 focus:outline-none focus:bg-blue-700 transition-colors">Sign in</button>
         </form>
       </div>
     </div>
