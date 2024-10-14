@@ -47,7 +47,7 @@
               <td class="p-3 text-blue-600 text-center">{{ employee.email }}</td>
               <td class="p-3 text-center">{{ employee.position ? employee.position.name : 'No position' }}</td>
               <td class="text-center w-3/12">
-                <button @click="viewEmployee(employee.id)" class="text-white px-2 py-1 border-solid border-0 border-indigo-600 rounded-lg bg-blue-600 hover:bg-blue-400 border-none">More</button>
+                <button @click="viewEmployee(employee.id)" class="text-white px-2 py-1 border-solid border-0 border-indigo-600 rounded-lg bg-blue-600 hover:bg-blue-400 border-none"><a href="/Supervisor/Employee/Profile/More" class="no-underline text-white">More</a></button>
                 <!-- <button @click="editEmployee(employee.id)" class="ml-2 text-white px-2 py-1 border-solid border-1 border-indigo-600 rounded-lg bg-gray-900 hover:bg-yellow-400">Update</button> -->
                 <button @click="editEmployee(employee.id)" class="ml-2 text-white px-2 py-1 border-solid border-0 border-indigo-600 rounded-lg bg-gray-900 hover:bg-yellow-500"><a href="/Supervisor/Employee/Update" class="no-underline text-white">Update</a></button>
                 <button @click="deleteEmployee(employee.id)" class="ml-2 text-white px-2 py-1 border-solid border-0 border-indigo-600 rounded-lg bg-red-600 hover:bg-red-400 border-none">Delete</button>
