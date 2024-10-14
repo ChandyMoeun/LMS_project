@@ -106,11 +106,15 @@ const router = createRouter({
       'name': 'viewHistory',
       component: () => import('../views/Supervisor/take_leaves/MyLeave/viewMyHistory.vue'),
     },
-    
     {
       path: '/Supervisor/Employee',
       'name': 'Employee',
       component: () => import('../views/Supervisor/Employees/EmployeePage.vue'),
+    },
+    {
+      path: '/Supervisor/Employee/Update',
+      'name': 'EmployeeUpdate',
+      component: () => import('../views/Supervisor/Employees/emploeeUpdate.vue'),
     },
 
     //-----------------------------------employees routes --------------------------------
