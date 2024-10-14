@@ -2,7 +2,7 @@
     <div class="mt-10">
         <!-- Admin Requests leave -->
         <div class="d-flex text-black" style="display: flex; flex-direction: column; border-bottom: solid 1px gray;">
-          <h1 class="font-bold text-3xl px-8 hover:text-yellow-500 w-3/12"><b>Rejected  </b></h1>
+          <h1 class="font-bold text-3xl px-8 hover:text-yellow-500 w-3/12"><b>Rejected</b></h1>
           <p class="px-8">Number of rejected: </p>
         </div>
 

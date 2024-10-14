@@ -107,6 +107,11 @@ const router = createRouter({
       component: () => import('../views/Supervisor/take_leaves/MyLeave/viewMyHistory.vue'),
     },
     
+    {
+      path: '/Supervisor/Employee',
+      'name': 'Employee',
+      component: () => import('../views/Supervisor/Employees/EmployeePage.vue'),
+    },
 
     //-----------------------------------employees routes --------------------------------
     {
