@@ -81,6 +81,13 @@ export default {
           email: 'john.doe@example.com',
           position: { name: 'Developer' }
         },
+        {
+          staff_id: '002',
+          profile: null, // assuming null means no profile
+          full_name: 'chandy',
+          email: 'chandy@example.com',
+          position: { name: 'Designer' }
+        },
         // ...other employees
       ],
       filteredEmployees: []
