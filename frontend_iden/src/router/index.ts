@@ -116,6 +116,11 @@ const router = createRouter({
       'name': 'EmployeeUpdate',
       component: () => import('../views/Supervisor/Employees/emploeeUpdate.vue'),
     },
+    {
+      path: '/Supervisor/Employee/create',
+      'name': 'Employeecreate',
+      component: () => import('../views/Supervisor/Employees/createEmployee.vue'),
+    },
 
     //-----------------------------------employees routes --------------------------------
     {
