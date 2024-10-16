@@ -2,7 +2,7 @@
   <div class="min-h-screen flex items-center justify-center bg-gray-100">
     <div class="bg-white rounded-lg shadow-lg overflow-hidden flex w-3/4">
       <!-- Left section with image -->
-      <div class="flex flex-col items-center justify-center bg-blue-200 w-8/12">
+      <div class="flex flex-col items-center justify-center w-8/12">
         <img src="../../../assets/image/login.png" alt="Login Illustration" class="object-cover w-4/4">
         <div class="flex justify-end mb-4">
           <p class="text-sm">Sign in here to join iDen leave management system.</p>
@@ -23,7 +23,7 @@
           <div class="flex justify-end items-center mb-4">
             <a href="#" class="text-blue-500 text-sm">Forget password?</a>
           </div>
-          <button type="submit" class="w-3/12 flex justify-center mt-5 bg-blue-500 text-white font-bold py-2 px-4 rounded hover:bg-yellow-400 focus:outline-none focus:bg-blue-700 transition-colors">Sign in</button>
+          <button type="submit" class="w-2/12 flex justify-center mt-5 bg-blue-600 border-none text-white font-bold py-2 rounded hover:bg-yellow-500 focus:outline-none focus:bg-blue-700 transition-colors">Sign in</button>
         </form>
       </div>
     </div>
