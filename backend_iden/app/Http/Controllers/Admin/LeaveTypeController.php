@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Employee;
 use App\Models\LeaveType;
+use App\Models\LeaveBalance;
 use App\Models\User; // Assuming you have a User model
 use Auth;
 
@@ -53,8 +54,8 @@ class LeaveTypeController extends Controller
             'increase_rate' => 'required|integer',
         ]);
 
-        // Create the new LeaveType
-        LeaveType::create([
+        // Store the new LeaveType in the $leaveType variable
+        $leaveType = LeaveType::create([
             'leave_name' => $request->leave_name,
             'employee_id' => $request->employee_id,
             'requires_attachment' => $request->has('requires_attachment') ? 1 : 0,
@@ -62,8 +63,16 @@ class LeaveTypeController extends Controller
             'increase_rate' => $request->increase_rate,
         ]);
 
-        // Redirect back to the leave type index
-        return redirect()->route('admin.leavetype.index')->with('success', 'Leave type created successfully.');
+        // Create the LeaveBalance associated with the new LeaveType
+        LeaveBalance::create([
+            'employee_id' => $request->employee_id,
+            'leave_type_id' => $leaveType->id, // Use the ID of the newly created LeaveType
+            'used' => 0, // Initially, no leave is used
+            'available' => $leaveType->increase_rate, // Initialize available with the increase_rate
+        ]);
+
+        // Redirect back to the leave type index with a success message
+        return redirect()->route('admin.leavetype.index')->with('success', 'Leave type and balance created successfully.');
     }
 
     /**

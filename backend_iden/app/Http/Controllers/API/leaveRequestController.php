@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Employee;
 use App\Models\LeaveRequest;
 use App\Models\LeaveType;
+use App\Models\LeaveBalance;
 use App\Models\Position;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -15,6 +16,12 @@ use Illuminate\Support\Facades\Log; // Make sure to import the Log facade
 
 class leaveRequestController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth'); // Ensures only authenticated users can access these methods
+    }
+
     /**
      * Display a listing of leave requests.
      */
@@ -166,45 +173,54 @@ class leaveRequestController extends Controller
 
 
     // ======>Approve the specified leave request<========
-    public function approve($id)
+    public function approve(LeaveRequest $leaveRequest)
     {
-        $leaveRequest = LeaveRequest::find($id);
-
-        if (!$leaveRequest) {
-            return response()->json(['message' => 'Leave request not found.'], 404);
-        }
-
         // Ensure the leave request hasn't already been approved
         if ($leaveRequest->status === 'approved') {
-            return response()->json(['message' => 'Leave request is already approved.'], 400);
+            return response()->json(['error' => 'Leave request is already approved.'], 400);
         }
 
-        // Subtract leave days from the employee's balance
-        $employee = Employee::find($leaveRequest->employee_id);
-        // $totalRequestedDays = $this->calculateLeaveDays($leaveRequest);
-
-        // if ($employee->leave_balance < $totalRequestedDays) {
-        //     return response()->json(['message' => 'Insufficient leave balance.'], 400);
-        // }
-
-        // $employee->leave_balance -= $totalRequestedDays;
-        $employee->save();
-
-        // Update leave request status and approver
+        // Mark the leave request as approved
         $leaveRequest->status = 'approved';
-        $leaveRequest->approved_by = Auth::id(); // Set the ID of the user who approved
-        $leaveRequest->rejected_by = null; // Clear rejected_by if previously set
+        $leaveRequest->approved_by = auth()->user()->id; // Store the ID of the user who approved the request
+
+        // Get the associated leave type
+        $leaveType = LeaveType::findOrFail($leaveRequest->leave_type_id); // Fetch the leave type directly
+
+        // Fetch the employee's leave balance for this leave type
+        $leaveBalance = LeaveBalance::where('employee_id', $leaveRequest->employee_id)
+            ->where('leave_type_id', $leaveType->id)
+            ->first();
+
+        // Ensure the leave balance exists
+        if (!$leaveBalance) {
+            return response()->json(['error' => 'Leave balance not found for this employee.'], 404);
+        }
+
+        // Calculate the number of days requested
+        $totalRequestedDays = $this->calculateLeaveDays($leaveRequest); // Implement this method based on your logic
+
+        // Ensure there's enough available leave balance
+        if ($leaveBalance->available < $totalRequestedDays) {
+            return response()->json(['error' => 'Insufficient leave balance.'], 400);
+        }
+
+        // Subtract the requested days from available balance and add to used balance
+        $leaveBalance->available -= $totalRequestedDays;
+        $leaveBalance->used += $totalRequestedDays;
+
+        // Save the updated leave balance
+        $leaveBalance->save();
+
+        // Save the leave request status
         $leaveRequest->save();
 
-        return response()->json([
-            'message' => 'Leave request approved successfully.',
-            'data' => [
-                'leave_request' => $leaveRequest,
-                'approved_by' => $leaveRequest->approver->full_name, // Return the approver's name
-
-            ]
-        ], 200);
+        // Return a success response
+        return response()->json(['message' => 'Leave request approved successfully, and the leave balance was updated.'], 200);
     }
+
+
+
 
     // ========>Reject the specified leave request<========
     public function reject($id)
@@ -248,8 +264,9 @@ class leaveRequestController extends Controller
             return 0.5; // Half-day leave counts as 0.5 day
         }
 
-        return $fromDate->diffInDays($toDate) + 1; // Full-day leave
+        return $fromDate->diffInDays($toDate); // Full-day leave
     }
+    
 
     /**
      * Delete the specified leave request.

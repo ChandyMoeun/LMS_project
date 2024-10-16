@@ -7,6 +7,7 @@ use App\Models\Employee;
 use Illuminate\Http\Request;
 use App\Models\LeaveRequest;
 use App\Models\LeaveType;
+use App\Models\LeaveBalance;
 use App\Models\Position;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Notifications;
@@ -19,13 +20,13 @@ class LeaveController extends Controller
     /**
      * LeaveController constructor with role-based permissions.
      */
-    public function __construct()
-    {
-        $this->middleware('role_or_permission:Leave access|Leave create|Leave edit|Leave delete', ['only' => ['index', 'show']]);
-        $this->middleware('role_or_permission:Leave create', ['only' => ['create', 'store']]);
-        $this->middleware('role_or_permission:Leave edit', ['only' => ['edit', 'update']]);
-        $this->middleware('role_or_permission:Leave delete', ['only' => ['destroy']]);
-    }
+    // public function __construct()
+    // {
+    //     $this->middleware('role_or_permission:Leave access|Leave create|Leave edit|Leave delete', ['only' => ['index', 'show']]);
+    //     $this->middleware('role_or_permission:Leave create', ['only' => ['create', 'store']]);
+    //     $this->middleware('role_or_permission:Leave edit', ['only' => ['edit', 'update']]);
+    //     $this->middleware('role_or_permission:Leave delete', ['only' => ['destroy']]);
+    // }
 
     /**
      * Display a listing of leave requests.
@@ -207,26 +208,54 @@ class LeaveController extends Controller
     }
 
 
-     // =====>approve request<======
+    // =====>approve request<======
     public function approve(LeaveRequest $leaveRequest)
     {
+        // Ensure the leave request hasn't already been approved
+        if ($leaveRequest->status === 'approved') {
+            return redirect()->route('admin.dashboard')->with('error', 'Leave request is already approved.');
+        }
+
         // Mark the leave request as approved
         $leaveRequest->status = 'approved';
         $leaveRequest->approved_by = auth()->user()->id; // Store the ID of the user who approved the request
-        
+
         // Get the associated leave type (assuming there's a relationship between LeaveRequest and LeaveType)
         $leaveType = $leaveRequest->leaveType; // Assuming LeaveRequest has a leaveType relationship
 
-        // Ensure there's an increase_rate to subtract
-        if ($leaveType->increase_rate > 0) {
-            // Subtract 1 from the increase_rate
-            $leaveType->increase_rate -= 1;
-            $leaveType->save();
+        // Fetch the employee's leave balance for this leave type
+        $leaveBalance = LeaveBalance::where('employee_id', $leaveRequest->employee_id)
+            ->where('leave_type_id', $leaveType->id)
+            ->first();
+
+        // Ensure the leave balance exists
+        if (!$leaveBalance) {
+            return redirect()->route('admin.dashboard')->with('error', 'Leave balance not found for this employee.');
         }
+
+        // Calculate the number of days requested
+        $totalRequestedDays = $this->calculateLeaveDays($leaveRequest);
+
+        // Ensure there's enough available leave balance
+        if ($leaveBalance->available < $totalRequestedDays) {
+            return redirect()->route('admin.dashboard')->with('error', 'Insufficient leave balance.');
+        }
+
+        // Subtract the requested days from available balance and add to used balance
+        $leaveBalance->available -= $totalRequestedDays;
+        $leaveBalance->used += $totalRequestedDays;
+
+        // Save the updated leave balance
+        $leaveBalance->save();
+
+        // Save the leave request status
         $leaveRequest->save();
+
         // Redirect to the admin dashboard with a success message
-        return redirect()->route('admin.dashboard')->with('success', 'Leave request approved successfully and 1 day was subtracted from the increase rate.');
+        return redirect()->route('admin.dashboard')->with('success', 'Leave request approved successfully, and the leave balance was updated.');
     }
+
+
 
     // =====>reject request<======
     public function reject(LeaveRequest $leaveRequest)
@@ -263,6 +292,6 @@ class LeaveController extends Controller
             return 0.5; // Half-day leave counts as 0.5 day
         }
 
-        return $fromDate->diffInDays($toDate) + 1; // Full-day leave
+        return $fromDate->diffInDays($toDate); // Full-day leave
     }
 }

@@ -7,6 +7,7 @@ use App\Http\Controllers\API\{
     CalendarWorkDayController,
     AttendanceController,
     NotificationController,
+    LeaveBalanceController,
 };
 use App\Http\Controllers\AuthController;
 use App\Models\CalendarGroup;
@@ -76,3 +77,9 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('leave_requests/{id}/approve', [NotificationController::class, 'approveLeaveRequest']);
     Route::post('leave_requests/{id}/reject', [NotificationController::class, 'rejectLeaveRequest']);
 });
+
+// <======leave balanced=====>
+Route::middleware('auth:sanctum')->group(function () {
+    Route::apiResource('leave_balances', LeaveBalanceController::class);
+});
+
