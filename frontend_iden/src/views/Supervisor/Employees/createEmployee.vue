@@ -1,5 +1,13 @@
 <template>
-    <div class="mt-10">
+  <SupervisorLayout>
+    <div class="supervisor">
+      <div class="sidebar">
+        <SupervisorSidebar></SupervisorSidebar>
+      </div>
+      <div class="container-page">
+        <WebHeaderMenu/>
+        <main class="bg-gray sticky top-0">
+          <div class="mt-10">
         <div class="container flex-1 overflow-x-hidden overflow-y-auto bg-gray-200">
           <div class="d-flex text-black" style="display: flex; flex-direction: column; border-bottom: solid 1px gray;">
             <router-link to="/Supervisor/Employee">
@@ -119,11 +127,18 @@
             </form>
           </div>
         </div>
+    </div> 
+        </main>
+      </div>
     </div>
-  </template>
-  
-  <script>
-  export default {
+  </SupervisorLayout>
+</template>
+
+<script>
+import SupervisorSidebar from '@/Components/SupervisorSidebar.vue';
+import WebHeaderMenu from '@/Components/WebHeaderMenu.vue';
+export default {
+  components: {SupervisorSidebar, WebHeaderMenu},
     data() {
       return {
         form: {
@@ -181,5 +196,33 @@
       // });
     },
   };
-  </script>
-  
+
+</script>
+
+
+<style scoped>
+.supervisor{
+  display: flex;
+  height: 100vh;
+  align-items: start;
+  width: 100%;
+  background-color: #E5E7EB;
+}
+.sidebar{
+  width: 17%;
+  height: auto;
+  background-color: #141c2e;
+  color: white;
+}
+.container-page {
+  width: 83%;
+}
+main{
+  padding: 50px 50px 0px 50px;
+  height: auto;
+  width: 100%;
+  background-color: #E5E7EB;
+  margin-bottom: 50px;
+}
+
+</style>

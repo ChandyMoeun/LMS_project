@@ -1,5 +1,13 @@
-<template>
-    <div class="mt-5 pb-20">
+  <template>
+    <SupervisorLayout>
+      <div class="supervisor">
+        <div class="sidebar">
+          <SupervisorSidebar></SupervisorSidebar>
+        </div>
+        <div class="container-page">
+          <WebHeaderMenu/>
+          <main class="bg-gray sticky top-0">
+            <div class="mt-5 pb-20">
       <div class="flex text-black " style="display: flex; flex-direction: column; border-bottom: solid 1px gray;">
         <router-link to="/Supervisor/takeLeave">
           <svg class="w-6 h-6 text-gray-800 hover:text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
@@ -96,14 +104,21 @@
           </div>
         </form>
       </div>
-    </div>
+    </div> 
+          </main>
+        </div>
+      </div>
+    </SupervisorLayout>
   </template>
   
   <script>
+  import SupervisorSidebar from '@/Components/SupervisorSidebar.vue';
+  import WebHeaderMenu from '@/Components/WebHeaderMenu.vue';
   import { ref } from 'vue';
   import axios from 'axios';
   
   export default {
+    components: {SupervisorSidebar, WebHeaderMenu},
     setup() {
       const employee_id = ref('');
       const leave_type_id = ref('');
@@ -164,9 +179,33 @@
       };
     }
   };
+  
   </script>
   
+  
   <style scoped>
-  /* Add your custom styles here */
+  .supervisor{
+    display: flex;
+    height: 100vh;
+    align-items: start;
+    width: 100%;
+    background-color: #E5E7EB;
+  }
+  .sidebar{
+    width: 17%;
+    height: auto;
+    background-color: #141c2e;
+    color: white;
+  }
+  .container-page {
+    width: 83%;
+  }
+  main{
+    padding: 50px 50px 0px 50px;
+    height: auto;
+    width: 100%;
+    background-color: #E5E7EB;
+    margin-bottom: 50px;
+  }
   </style>
   

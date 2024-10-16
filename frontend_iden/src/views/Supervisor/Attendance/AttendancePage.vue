@@ -1,5 +1,13 @@
 <template>
-  <div class="mt-16">
+  <SupervisorLayout>
+    <div class="supervisor">
+      <div class="sidebar">
+        <SupervisorSidebar></SupervisorSidebar>
+      </div>
+      <div class="container-page">
+        <WebHeaderMenu/>
+        <main class="bg-gray sticky top-0">
+          <div class="mt-16">
     <div class="d-flex text-black" style="display: flex; flex-direction: column; border-bottom: solid 1px gray;">
       <h1 class="font-bold text-3xl px-8 hover:text-yellow-500 w-4/12"><b>Supervisor Attendance</b></h1>
     </div>
@@ -11,11 +19,13 @@
             <p class="mt-1 text-sm text-gray-500">Detailed attendance records for all employees.</p>
           </div>
           <!-- Search Bar -->
-          <input 
-            v-model="searchQuery" 
-            placeholder="Search employee by name..." 
-            class="w-2/6 py-2 px-2 bg-yellow-300 mt-3 h-9 border rounded"
-          >
+          <div class="w-5/12 flex justify-between">
+              <input 
+                v-model="searchQuery" 
+                placeholder="Search employee by name..." 
+                class="w-4/6 py-2 px-2 bg-blue-100 mt-3 h-9 border rounded">
+              <a  href="/Supervisor/MyAttendance" class="bg-gray-900 d-flex items-center justify-center mt-3 h-9 w-35 text-white font-semibold no-underline rounded-lg shadow-md hover:bg-yellow-500 transition-colors">My Attendance</a>
+           </div>
         </div>
         <div class="overflow-x-auto">
           <table class="min-w-full divide-y divide-gray-200">
@@ -50,11 +60,18 @@
         </div>
       </div>
     </div>
-  </div>
+  </div> 
+        </main>
+      </div>
+    </div>
+  </SupervisorLayout>
 </template>
 
 <script>
+import SupervisorSidebar from '@/Components/SupervisorSidebar.vue';
+import WebHeaderMenu from '@/Components/WebHeaderMenu.vue';
 export default {
+  components: {SupervisorSidebar, WebHeaderMenu},
   name: "AttendanceRecords",
   data() {
     return {
@@ -119,6 +136,30 @@ export default {
 };
 </script>
 
+
 <style scoped>
-/* Add your custom styles here */
+.supervisor{
+  display: flex;
+  height: 100vh;
+  align-items: start;
+  width: 100%;
+  background-color: #E5E7EB;
+}
+.sidebar{
+  width: 17%;
+  height: auto;
+  background-color: #141c2e;
+  color: white;
+}
+.container-page {
+  width: 83%;
+}
+main{
+  padding: 50px 50px 0px 50px;
+  height: auto;
+  width: 100%;
+  background-color: #E5E7EB;
+  margin-bottom: 50px;
+}
+
 </style>

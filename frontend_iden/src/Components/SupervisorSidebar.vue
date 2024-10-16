@@ -1,39 +1,100 @@
 <template>
   <div
-  class="sidebar d-flex flex-column flex-shrink-0 p-3 bg-dark text-white"
-  style="width: 100%; height: 100vh;">
-  <!-- Logo -->
-      <div class="logo flex flex-col items-center justify-center mt-4">
-        <img src="../assets/image/logo1.png" alt="Logo" class="w-21 mb-3 h-21 rounded-full object-cover" style="border: 2px solid whitesmoke; border-radius: 50%;">
-        <span class="text-white text-1xl mx-1 font-semibold">iDEN CREATEIVE CO,LTD</span>
-      </div>
+    class="sidebar d-flex flex-column flex-shrink-0 p-3 bg-dark text-white"
+    style="width: 17%; height: 100vh; position: fixed;"
+  >
+    <!-- Logo -->
+    <div class="logo flex flex-col items-center justify-center mt-4">
+      <img
+        src="../assets/image/logo1.png"
+        alt="Logo"
+        class="w-21 mb-3 h-21 rounded-full object-cover"
+        style="border: 2px solid whitesmoke; border-radius: 50%;"
+      />
+      <span class="text-white text-1xl mx-1 font-semibold"
+        >iDEN CREATEIVE CO,LTD</span
+      >
+    </div>
+
     <div class="nav nav-pills flex-column mb-auto gap-2">
-      <a class="flex no-underline items-center mt-4 py-2 px-6 text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100" href="/Supervisor/dashboard">
-            <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z"></path>
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z"></path>
-            </svg>
-            <span class="mx-3">Dashboard</span>
+      <a
+        :class="['flex no-underline items-center mt-4 py-2 px-6 text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100', activeLink === '/Supervisor/dashboard' ? 'active' : '']"
+        href="/Supervisor/dashboard"
+        @click="setActiveLink('/Supervisor/dashboard')"
+      >
+        <svg
+          class="h-6 w-6"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z"
+          ></path>
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z"
+          ></path>
+        </svg>
+        <span class="mx-3">Dashboard</span>
       </a>
-      <!--Calendar sidebar-->
-      <a class="flex no-underline items-center mt-4 py-2 px-6 text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100"
-        href="/Supervisor/calendar">
-        <svg class="w-6 h-6 text-white-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 10h16M8 14h8m-4-7V4M7 7V4m10 3V4M5 20h14a1 1 0 0 0 1-1V7a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1Z" />
-          </svg>
-          <span class="mx-3">Calendar</span>
+
+      <a
+        :class="['flex no-underline items-center mt-4 py-2 px-6 text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100', activeLink === '/Supervisor/calendar' ? 'active' : '']"
+        href="/Supervisor/calendar"
+        @click="setActiveLink('/Supervisor/calendar')"
+      >
+        <svg
+          class="w-6 h-6 text-white-800 dark:text-white"
+          aria-hidden="true"
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          fill="none"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M4 10h16M8 14h8m-4-7V4M7 7V4m10 3V4M5 20h14a1 1 0 0 0 1-1V7a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1Z"
+          />
+        </svg>
+        <span class="mx-3">Calendar</span>
       </a>
-      <a class="flex no-underline items-center mt-4 py-2 px-6 text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100"
-            href="/Supervisor/takeLeave">
-            <svg class="w-6 h-6 text-white-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m11.5 11.5 2.071 1.994M4 10h5m11 0h-1.5M12 7V4M7 7V4m10 3V4m-7 13H8v-2l5.227-5.292a1.46 1.46 0 0 1 2.065 2.065L10 17Zm-5 3h14a1 1 0 0 0 1-1V7a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1Z" />
-            </svg>
-            <span class="mx-3">Leave</span>
+
+      <a
+        :class="['flex no-underline items-center mt-4 py-2 px-6 text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100', activeLink === '/Supervisor/takeLeave' ? 'active' : '']"
+        href="/Supervisor/takeLeave"
+        @click="setActiveLink('/Supervisor/takeLeave')"
+      >
+        <svg
+          class="w-6 h-6 text-white-800 dark:text-white"
+          aria-hidden="true"
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          fill="none"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="m11.5 11.5 2.071 1.994M4 10h5m11 0h-1.5M12 7V4M7 7V4m10 3V4m-7 13H8v-2l5.227-5.292a1.46 1.46 0 0 1 2.065 2.065L10 17Zm-5 3h14a1 1 0 0 0 1-1V7a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1Z"
+          />
+        </svg>
+        <span class="mx-3">Leave</span>
       </a>
-      <a class="flex no-underline items-center mt-4 py-2 px-6 text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100"
+      <a :class="['flex no-underline items-center mt-4 py-2 px-6 text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100', activeLink === '/Supervisor/Employee' ? 'active' : '']"
             href="/Supervisor/Employee">
             <svg class="w-6 h-6 text-white-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
                 <path fill-rule="evenodd" d="M12 6a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7Zm-1.5 8a4 4 0 0 0-4 4 2 2 0 0 0 2 2h7a2 2 0 0 0 2-2 4 4 0 0 0-4-4h-3Zm6.82-3.096a5.51 5.51 0 0 0-2.797-6.293 3.5 3.5 0 1 1 2.796 6.292ZM19.5 18h.5a2 2 0 0 0 2-2 4 4 0 0 0-4-4h-1.1a5.503 5.503 0 0 1-.471.762A5.998 5.998 0 0 1 19.5 18ZM4 7.5a3.5 3.5 0 0 1 5.477-2.889 5.5 5.5 0 0 0-2.796 6.293A3.501 3.501 0 0 1 4 7.5ZM7.1 12H6a4 4 0 0 0-4 4 2 2 0 0 0 2 2h.5a5.998 5.998 0 0 1 3.071-5.238A5.505 5.505 0 0 1 7.1 12Z" clip-rule="evenodd" />
@@ -41,7 +102,8 @@
 
             <span class="mx-3">Employees</span>
       </a>
-      <a class="flex no-underline items-center mt-4 py-2 px-6 text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100 "
+      <a :class="['flex no-underline items-center mt-4 py-2 px-6 text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100', activeLink === '/Supervisor/Attendance' ? 'active' : '']"
+
             href="/Supervisor/Attendance">
             <svg class="w-6 h-6 text-white-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
                 <path fill-rule="evenodd" d="M18 14a1 1 0 1 0-2 0v2h-2a1 1 0 1 0 0 2h2v2a1 1 0 1 0 2 0v-2h2a1 1 0 1 0 0-2h-2v-2Z" clip-rule="evenodd" />
@@ -50,7 +112,7 @@
             <span class="mx-3">Attendances</span>
         </a>
         <!--Setting sidebar-->
-        <a class="flex no-underline items-center mt-4 py-2 px-6 text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100 "
+      <a :class="['flex no-underline items-center mt-4 py-2 px-6 text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100', activeLink === '/#' ? 'active' : '']"
             href="#">
             <svg class="w-6 h-6 text-white-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13v-2a1 1 0 0 0-1-1h-.757l-.707-1.707.535-.536a1 1 0 0 0 0-1.414l-1.414-1.414a1 1 0 0 0-1.414 0l-.536.535L14 4.757V4a1 1 0 0 0-1-1h-2a1 1 0 0 0-1 1v.757l-1.707.707-.536-.535a1 1 0 0 0-1.414 0L4.929 6.343a1 1 0 0 0 0 1.414l.536.536L4.757 10H4a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1h.757l.707 1.707-.535.536a1 1 0 0 0 0 1.414l1.414 1.414a1 1 0 0 0 1.414 0l.536-.535 1.707.707V20a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1v-.757l1.707-.708.536.536a1 1 0 0 0 1.414 0l1.414-1.414a1 1 0 0 0 0-1.414l-.535-.536.707-1.707H20a1 1 0 0 0 1-1Z" />
@@ -58,15 +120,44 @@
             </svg>
             <span class="mx-3">Setting</span>
         </a>
+
+      <!-- Add similar links for other routes: Employee, Attendance, etc. -->
     </div>
-  </div>  
+  </div>
 </template>
 
+
+
 <script setup lang="ts">
-import { ref, computed, watchEffect } from 'vue'
+import { ref, computed, watchEffect, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useAuthStore } from '@/stores/auth-store'
+
+
+// State for the active link
+const activeLink = ref('/Supervisor/dashboard')
+
+// Get route and router
+const route = useRoute()
+
+// Function to set the active link
+const setActiveLink = (path: string) => {
+  activeLink.value = path
+}
+
+// Watch for route changes and update active link accordingly
+watch(
+  () => route.path,
+  (newPath) => {
+    activeLink.value = newPath
+  }
+)
 </script>
 
 <style scoped>
+.active {
+  background: rgba(154, 154, 198, 0.14);
+  color: white
+}
+
 </style>

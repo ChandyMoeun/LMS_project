@@ -59,12 +59,12 @@ const router = createRouter({
     {
       path: '/Supervisor/calendar/workTime/create',
       'name': 'workTimeCreate',
-      component: () => import('../views/Supervisor/calenda/holiday/addWorkTime.vue'),
+      component: () => import('../views/Supervisor/calenda/work_time/addWorkTime.vue'),
     },
     {
       path: '/Supervisor/calendar/workTime/edit',
       'name': 'workTimeEdit',
-      component: () => import('../views/Supervisor/calenda/holiday/editWorkTime.vue'),
+      component: () => import('../views/Supervisor/calenda/work_time/editWorkTime.vue'),
     },
     {
       path: '/Supervisor/calendar/holiday/edit',
@@ -136,6 +136,11 @@ const router = createRouter({
       path: '/Supervisor/Attendance',
       'name': 'Attendance',
       component: () => import('../views/Supervisor/Attendance/AttendancePage.vue'),
+    },
+    {
+      path: '/Supervisor/MyAttendance',
+      'name': 'SupervisorAttendance',
+      component: () => import('../views/Supervisor/Attendance/supervisorAttendance.vue'),
     },
 
     //-----------------------------------employees routes --------------------------------

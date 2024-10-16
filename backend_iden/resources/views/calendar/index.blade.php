@@ -24,12 +24,12 @@
 
         <!-- Add your calendar HTML here -->
         <div class="container mx-auto">
-            <div class="bg-white shadow-lg rounded-lg overflow-hidden">
-                <div class="p-4">
-                    <div id="calendar" class="h-96 "></div>
-                </div>
-            </div>
-        </div>
+    <div class="bg-white shadow-lg rounded-lg overflow-hidden">
+      <div class="p-4">
+        <div id="calendar" class="h-96"></div>
+      </div>
+    </div>
+  </div>
 
 
         <!-- Display Workdays Here -->

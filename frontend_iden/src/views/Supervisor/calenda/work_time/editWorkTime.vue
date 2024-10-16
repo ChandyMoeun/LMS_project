@@ -7,7 +7,7 @@
       <div class="container-page">
         <WebHeaderMenu />
         <main class="bg-gray sticky top-0">
-          <div class="editHoliday mt-3 pb-10">
+          <div class="mt-10 pb-10">
             <div
               class="d-flex text-black"
               style="display: flex; flex-direction: column; border-bottom: solid 1px gray"
@@ -30,93 +30,92 @@
                 </svg>
               </router-link>
               <h1 class="font-bold text-3xl mt-3 hover:text-yellow-400 w-3/12">
-                <b>Edit Holidays</b>
+                <b>Edit Working Days</b>
               </h1>
             </div>
 
-            <div class="container mx-auto py-8 mt-3">
+            <div class="container mx-auto px-6 py-8 mt-3">
               <div class="bg-white shadow-md rounded-lg p-6">
-                <!-- Update Form -->
-                <form @submit.prevent="updateHoliday">
-                  <!-- Holiday Name -->
+                <form @submit.prevent="updateWorkday">
+                  <!-- Work Day -->
                   <div class="flex flex-col space-y-2 mb-4">
-                    <label for="holiday_name" class="text-gray-700 select-none font-medium"
-                      >Holiday Name</label
-                    >
-                    <input
-                      v-model="holidayData.holiday_name"
-                      id="holiday_name"
-                      type="text"
-                      class="px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-200"
-                    />
-                    <p v-if="errors.holiday_name" class="text-red-500 text-xs mt-1">
-                      {{ errors.holiday_name }}
-                    </p>
-                  </div>
-
-                  <!-- From Date -->
-                  <div class="flex flex-col space-y-2 mb-4">
-                    <label for="from_date" class="text-gray-700 select-none font-medium"
-                      >From Date</label
-                    >
-                    <input
-                      v-model="holidayData.from_date"
-                      id="from_date"
-                      type="date"
-                      class="px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-200"
-                    />
-                    <p v-if="errors.from_date" class="text-red-500 text-xs mt-1">
-                      {{ errors.from_date }}
-                    </p>
-                  </div>
-
-                  <!-- To Date -->
-                  <div class="flex flex-col space-y-2 mb-4">
-                    <label for="to_date" class="text-gray-700 select-none font-medium"
-                      >To Date</label
-                    >
-                    <input
-                      v-model="holidayData.to_date"
-                      id="to_date"
-                      type="date"
-                      class="px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-200"
-                    />
-                    <p v-if="errors.to_date" class="text-red-500 text-xs mt-1">
-                      {{ errors.to_date }}
-                    </p>
-                  </div>
-
-                  <!-- Holiday Type -->
-                  <div class="flex flex-col space-y-2 mb-4">
-                    <label for="holiday" class="text-gray-700 select-none font-medium"
-                      >Holiday Type</label
+                    <label for="work_day" class="text-gray-700 select-none font-medium"
+                      >Work Day</label
                     >
                     <select
-                      v-model="holidayData.holiday"
-                      id="holiday"
+                      v-model="workdayData.work_day"
+                      id="work_day"
                       class="px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-200"
                     >
-                      <option value="" disabled>Select type</option>
-                      <option value="national">National</option>
-                      <option value="observance">Observance</option>
+                      <option
+                        v-for="day in [
+                          'Monday',
+                          'Tuesday',
+                          'Wednesday',
+                          'Thursday',
+                          'Friday',
+                          'Saturday',
+                          'Sunday'
+                        ]"
+                        :key="day"
+                        :value="day"
+                      >
+                        {{ day }}
+                      </option>
                     </select>
-                    <p v-if="errors.holiday" class="text-red-500 text-xs mt-1">
-                      {{ errors.holiday }}
+                    <p v-if="errors.work_day" class="text-red-500 text-xs mt-1">
+                      {{ errors.work_day }}
                     </p>
                   </div>
 
-                  <!-- Description -->
+                  <!-- Start Time -->
                   <div class="flex flex-col space-y-2 mb-4">
-                    <label for="description" class="text-gray-700 select-none font-medium"
-                      >Description</label
+                    <label for="start_time" class="text-gray-700 select-none font-medium"
+                      >Start Time</label
                     >
-                    <textarea
-                      v-model="holidayData.description"
-                      id="description"
+                    <input
+                      v-model="workdayData.start_time"
+                      id="start_time"
+                      type="time"
                       class="px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-200"
-                    ></textarea>
-                    <p v-if="errors.description" class="text-red-500 text-xs mt-1">
-                      {{ errors.description }}
+                    />
+                    <p v-if="errors.start_time" class="text-red-500 text-xs mt-1">
+                      {{ errors.start_time }}
+                    </p>
+                  </div>
+
+                  <!-- End Time -->
+                  <div class="flex flex-col space-y-2 mb-4">
+                    <label for="end_time" class="text-gray-700 select-none font-medium"
+                      >End Time</label
+                    >
+                    <input
+                      v-model="workdayData.end_time"
+                      id="end_time"
+                      type="time"
+                      class="px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-200"
+                    />
+                    <p v-if="errors.end_time" class="text-red-500 text-xs mt-1">
+                      {{ errors.end_time }}
+                    </p>
+                  </div>
+
+                  <!-- Day Type -->
+                  <div class="flex flex-col space-y-2 mb-4">
+                    <label for="day_type" class="text-gray-700 select-none font-medium"
+                      >Day Type</label
+                    >
+                    <select
+                      v-model="workdayData.day_type"
+                      id="day_type"
+                      class="px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-200"
+                    >
+                      <option value="full_day">Full Day</option>
+                      <option value="morning">Morning</option>
+                      <option value="afternoon">Afternoon</option>
+                    </select>
+                    <p v-if="errors.day_type" class="text-red-500 text-xs mt-1">
+                      {{ errors.day_type }}
                     </p>
                   </div>
 
@@ -138,8 +137,8 @@
     </div>
   </SupervisorLayout>
 </template>
-
-<script>
+  
+  <script>
 import SupervisorSidebar from '@/Components/SupervisorSidebar.vue'
 import WebHeaderMenu from '@/Components/WebHeaderMenu.vue'
 import axios from 'axios'
@@ -149,26 +148,25 @@ import { useRoute, useRouter } from 'vue-router'
 export default {
   components: { SupervisorSidebar, WebHeaderMenu },
   setup() {
-    const holidayData = ref({
-      holiday_name: '',
-      from_date: '',
-      to_date: '',
-      holiday: '',
-      description: ''
+    const workdayData = ref({
+      work_day: '',
+      start_time: '',
+      end_time: '',
+      day_type: ''
     })
 
     const errors = ref({})
     const route = useRoute()
     const router = useRouter()
 
-    const updateHoliday = async () => {
+    const updateWorkday = async () => {
       try {
         const response = await axios.put(
-          `/api/calendar_holiday/${route.params.id}`,
-          holidayData.value
+          `/api/calendar_workday/${route.params.id}`,
+          workdayData.value
         )
         console.log(response.data)
-        router.push('/admin/calendar_holiday')
+        router.push('/admin/calendar_workday')
       } catch (error) {
         if (error.response && error.response.data.errors) {
           errors.value = error.response.data.errors
@@ -176,13 +174,13 @@ export default {
       }
     }
 
-    return { holidayData, errors, updateHoliday }
+    return { workdayData, errors, updateWorkday }
   }
 }
 </script>
-
-
-<style scoped>
+  
+  
+  <style scoped>
 .supervisor {
   display: flex;
   height: 100vh;
