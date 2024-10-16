@@ -147,6 +147,16 @@ const router = createRouter({
       'name': 'SupervisorAttendance',
       component: () => import('../views/Supervisor/Attendance/supervisorAttendance.vue'),
     },
+    {
+      path: '/Supervisor/Settings',
+      'name': 'Settings',
+      component: () => import('../views/Supervisor/settings/settingPage.vue'),
+    },
+    {
+      path: '/Supervisor/Departments',
+      'name': 'Departments',
+      component: () => import('../views/Supervisor/settings/depaetments/departmentPage.vue'),
+    },
 
     //-----------------------------------employees routes --------------------------------
     {
