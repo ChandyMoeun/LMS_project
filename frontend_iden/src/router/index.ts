@@ -25,6 +25,11 @@ const router = createRouter({
       name: 'logout',
       component: () => import('../views/Admin/Auth/LoginView.vue')
     },
+    {
+      path: '/forgotPassword',
+      name: 'forgotPassword',
+      component: () => import('../views/Admin/Auth/forgotPassword.vue')
+    },
     // ----- user -----
     // {
     //   path: '/employee_dashboard',

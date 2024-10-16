@@ -21,7 +21,7 @@
             <input v-model="password" type="password" id="password" class="border border-gray-300 rounded w-full py-2 px-3 mt-2 focus:outline-none focus:border-blue-400" placeholder="Enter your password" required>
           </div>
           <div class="flex justify-end items-center mb-4">
-            <a href="#" class="text-blue-500 text-sm">Forget password?</a>
+            <a href="/forgotPassword" class="text-blue-500 text-sm">Forget password?</a>
           </div>
           <button type="submit" class="w-2/12 flex justify-center mt-5 bg-blue-600 border-none text-white font-bold py-2 rounded hover:bg-yellow-500 focus:outline-none focus:bg-blue-700 transition-colors">Sign in</button>
         </form>
