@@ -147,15 +147,32 @@ const router = createRouter({
       'name': 'SupervisorAttendance',
       component: () => import('../views/Supervisor/Attendance/supervisorAttendance.vue'),
     },
+
+    //----------------supervisor settings routes ---------------------------------
     {
       path: '/Supervisor/Settings',
       'name': 'Settings',
       component: () => import('../views/Supervisor/settings/settingPage.vue'),
     },
     {
-      path: '/Supervisor/Departments',
+      path: '/Supervisor/Settings/Departments',
       'name': 'Departments',
       component: () => import('../views/Supervisor/settings/depaetments/departmentPage.vue'),
+    },
+    {
+      path: '/Supervisor/Settings/Departments/Create',
+      'name': 'DepartmentsCreate',
+      component: () => import('../views/Supervisor/settings/depaetments/createDepartment.vue'),
+    },
+    {
+      path: '/Supervisor/Settings/Departments/Update',
+      'name': 'DepartmentsUpdate',
+      component: () => import('../views/Supervisor/settings/depaetments/editDepartment.vue'),
+    },
+    {
+      path: '/Supervisor/Settings/Departments/View',
+      'name': 'DepartmentsView',
+      component: () => import('../views/Supervisor/settings/depaetments/viewDepartment.vue'),
     },
 
     //-----------------------------------employees routes --------------------------------

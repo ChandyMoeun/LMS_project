@@ -37,7 +37,7 @@
           </div>
   
           <div class="text-right">
-            <router-link to="/admin/department/create" class="bg-black no-underline text-white font-bold px-2 py-2 rounded focus:outline-none shadow hover:bg-yellow-400 transition-colors">
+            <router-link to="/Supervisor/Settings/Departments/Create" class="bg-black no-underline text-white font-bold px-2 py-2 rounded focus:outline-none shadow hover:bg-yellow-400 transition-colors">
               New Department
             </router-link>
           </div>
@@ -60,8 +60,8 @@
                   {{ department.manager ? department.manager.full_name : 'No manager assigned' }}
                 </td>
                 <td class="flex py-4 px-2 justify-center gap-2 border-b border-gray-200">
-                  <router-link :to="`/admin/department/more/index/${department.id}`" class="text-white font-bold py-1 px-3 rounded text-xs no-underline bg-blue-500 hover:bg-blue-400">View</router-link>
-                  <router-link :to="`/admin/department/edit/${department.id}`" class="text-white font-bold py-1 text-center px-3 rounded text-xs no-underline bg-gray-900 hover:bg-yellow-400">Edit</router-link>
+                  <router-link :to="`/Supervisor/Settings/Departments/View`" class="text-white font-bold py-1 px-3 rounded text-xs no-underline bg-blue-500 hover:bg-blue-400">View</router-link>
+                  <router-link :to="`/Supervisor/Settings/Departments/Update`" class="text-white font-bold py-1 text-center px-3 rounded text-xs no-underline bg-gray-900 hover:bg-yellow-400">Edit</router-link>
                   <button @click="deleteDepartment(department.id)" class="text-white font-bold py-1 px-3 rounded text-xs bg-red-500 border-none no-underline hover:bg-red-400">Delete</button>
                 </td>
               </tr>
