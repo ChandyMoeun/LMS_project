@@ -6,23 +6,11 @@
       </div>
       <div class="container-page">
         <WebHeaderMenu />
-        <main class="flex-1 mt-5 overflow-x-hidden overflow-y-auto bg-gray-200">
-          <div
-            style="
-              display: flex;
-              color: black;
-              flex-direction: column;
-              border-bottom: solid 1px gray;
-            "
-          >
+        <main class="flex-1 mt-5 overflow-x-hidden overflow-y-auto">
+          <div style=" display: flex; color: black; flex-direction: column; border-bottom: solid 1px gray; ">
               <a href="/Supervisor/Settings/Departments">
               <svg
-                class="w-6 h-4 text-gray-800 dark:text-white hover:text-gray-500"
-                aria-hidden="true"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 14 10"
-              >
+                class="w-6 h-4 text-gray-800 dark:text-white hover:text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10" >
                 <path
                   stroke="currentColor"
                   stroke-linecap="round"
@@ -32,7 +20,7 @@
                 />
               </svg>
             </a>
-            <h1 class="font-bold text-3xl px-8 mt-2 hover:text-yellow-400 w-2/6">
+            <h1 class="font-bold text-3xl px-8 mt-2 hover:text-yellow-400 w-4/12">
               <b>New Department</b>
             </h1>
           </div>

@@ -6,7 +6,7 @@
         </div>
         <div class="container-page">
           <WebHeaderMenu/>
-          <main class="bg-gray sticky flex-1 overflow-x-hidden overflow-y-auto bg-gray-200 mt-10 p-5">
+          <main class="bg-gray sticky flex-1 overflow-x-hidden overflow-y-auto mt-10 p-5">
             <div class="container mx-auto px-6 py-2 ">
           <div class="mb-5" style="display: flex; color: black; flex-direction: column; border-bottom: solid 1px gray">
             <a href="/Supervisor/Settings/Departments">

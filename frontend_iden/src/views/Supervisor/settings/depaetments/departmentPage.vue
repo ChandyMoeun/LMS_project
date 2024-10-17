@@ -6,7 +6,7 @@
         </div>
         <div class="container-page">
           <WebHeaderMenu/>
-          <main class="sticky flex-1 overflow-x-hidden overflow-y-auto bg-gray-200 mt-5">
+          <main class="sticky flex-1 overflow-x-hidden overflow-y-auto mt-5">
         <!-- Header Section -->
         <div style="display: flex; color: black; flex-direction: column; border-bottom: solid 1px gray">
           <router-link to="/Supervisor/Settings">
