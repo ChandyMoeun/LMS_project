@@ -177,7 +177,17 @@ const router = createRouter({
     {
       path: '/Supervisor/Settings/Positions',
       'name': 'Positions',
+      component: () => import('../views/Supervisor/settings/positions/positionPage.vue'),
+    },
+    {
+      path: '/Supervisor/Settings/Positions/Create',
+      'name': 'PositionsCreate',
       component: () => import('../views/Supervisor/settings/positions/createPosition.vue'),
+    },
+    {
+      path: '/Supervisor/Settings/Positions/Update',
+      'name': 'PositionsUpdate',
+      component: () => import('../views/Supervisor/settings/positions/editPosition.vue'),
     },
 
     //-----------------------------------employees routes --------------------------------

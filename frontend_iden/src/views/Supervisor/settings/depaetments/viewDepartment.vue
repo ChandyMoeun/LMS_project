@@ -26,7 +26,7 @@
               <input v-model="search" class="form-input w-32 h-9 sm:w-64 rounded-md pl-10 pr-4 focus:border-indigo-600" type="text" placeholder="Search department name...">
             </div>
             <div class="text-right">
-              <a href="#" class="bg-gray-900 no-underline text-white font-bold px-2 py-2 rounded focus:outline-none shadow hover:bg-yellow-400 transition-colors">New Position</a>
+              <a href="/Supervisor/Settings/Positions/Create" class="bg-gray-900 no-underline text-white font-bold px-2 py-2 rounded focus:outline-none shadow hover:bg-yellow-400 transition-colors">New Position</a>
             </div>
           </div>
   
@@ -44,7 +44,7 @@
                     <p>{{ position.name }}</p>
                   </td>
                   <td class="py-4 px-6 border-b border-gray-200 text-right">
-                    <a href="#" class="text-white no-underline font-bold py-1 mr-2 px-3 rounded text-xs bg-black hover:bg-yellow-400">Edit</a>
+                    <a href="/Supervisor/Settings/Positions/Update" class="text-white no-underline font-bold py-1 mr-2 px-3 rounded text-xs bg-black hover:bg-yellow-400">Edit</a>
                     <a href="#" @click.prevent="deletePosition(position.id)" class="text-white no-underline font-bold py-1 px-3 rounded text-xs bg-red-500 hover:bg-red-400">Delete</a>
                   </td>
                 </tr>
