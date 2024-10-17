@@ -154,6 +154,8 @@ const router = createRouter({
       'name': 'Settings',
       component: () => import('../views/Supervisor/settings/settingPage.vue'),
     },
+
+      //-----------------supervisor Department routes---------------- 
     {
       path: '/Supervisor/Settings/Departments',
       'name': 'Departments',
@@ -174,6 +176,7 @@ const router = createRouter({
       'name': 'DepartmentsView',
       component: () => import('../views/Supervisor/settings/depaetments/viewDepartment.vue'),
     },
+        //-----------------supervisor Position routes---------------- 
     {
       path: '/Supervisor/Settings/Positions',
       'name': 'Positions',
@@ -188,6 +191,14 @@ const router = createRouter({
       path: '/Supervisor/Settings/Positions/Update',
       'name': 'PositionsUpdate',
       component: () => import('../views/Supervisor/settings/positions/editPosition.vue'),
+    },
+    
+
+    //-----------------supervisor Leave Type routes---------------- 
+    {
+      path: '/Supervisor/Settings/LeaveType',
+      'name': 'LeaveType',
+      component: () => import('../views/Supervisor/settings/leave_types/leaveType.vue'),
     },
 
     //-----------------------------------employees routes --------------------------------
