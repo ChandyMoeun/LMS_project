@@ -200,6 +200,16 @@ const router = createRouter({
       'name': 'LeaveType',
       component: () => import('../views/Supervisor/settings/leave_types/leaveType.vue'),
     },
+    {
+      path: '/Supervisor/Settings/LeaveType/Create',
+      'name': 'LeaveTypeCreate',
+      component: () => import('../views/Supervisor/settings/leave_types/createLeaveType.vue'),
+    },
+    {
+      path: '/Supervisor/Settings/LeaveType/Update',
+      'name': 'LeaveTypeUpdate',
+      component: () => import('../views/Supervisor/settings/leave_types/editLeaveType.vue'),
+    },
 
     //-----------------------------------employees routes --------------------------------
     {
