@@ -228,6 +228,13 @@ const router = createRouter({
       component: () => import('../views/Supervisor/settings/Permissions/editPermission.vue'),
     },
 
+    //-----------------supervisor Role routes---------------- 
+    {
+      path: '/Supervisor/Settings/Role',
+      'name': 'Role',
+      component: () => import('../views/Supervisor/settings/Roles/rolePage.vue'),
+    },
+
     //-----------------------------------employees routes --------------------------------
     {
       path: '/employee/leave',
