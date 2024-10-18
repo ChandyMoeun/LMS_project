@@ -211,6 +211,13 @@ const router = createRouter({
       component: () => import('../views/Supervisor/settings/leave_types/editLeaveType.vue'),
     },
 
+    //-----------------supervisor Permissions routes---------------- 
+    {
+      path: '/Supervisor/Settings/Permissions',
+      'name': 'Permissions',
+      component: () => import('../views/Supervisor/settings/Permissions/permissionsPage.vue'),
+    },
+
     //-----------------------------------employees routes --------------------------------
     {
       path: '/employee/leave',
