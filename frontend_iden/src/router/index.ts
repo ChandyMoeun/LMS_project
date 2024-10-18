@@ -217,6 +217,16 @@ const router = createRouter({
       'name': 'Permissions',
       component: () => import('../views/Supervisor/settings/Permissions/permissionsPage.vue'),
     },
+    {
+      path: '/Supervisor/Settings/Permissions/Create',
+      'name': 'PermissionsCreate',
+      component: () => import('../views/Supervisor/settings/Permissions/createPermission.vue'),
+    },
+    {
+      path: '/Supervisor/Settings/Permissions/Update',
+      'name': 'PermissionsUpdate',
+      component: () => import('../views/Supervisor/settings/Permissions/editPermission.vue'),
+    },
 
     //-----------------------------------employees routes --------------------------------
     {

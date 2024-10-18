@@ -14,13 +14,11 @@
                     </svg>
                 </router-link>
                 <h1 class="font-bold text-3xl mt-3 hover:text-yellow-400 px-8 w-1/6"><b>Permission</b></h1>
-                </div>
+            </div>
         
-                <div class="container mx-auto mt-20 px-6 py-2">
+            <div class="container mx-auto mt-20 px-6 py-2">
                 <div class="text-right">
-                    <button @click="createPermission" class="bg-gray-900 text-white font-bold px-5 py-1 rounded focus:outline-none shadow hover:bg-yellow-400 transition-colors">
-                    New Permission
-                    </button>
+                    <a href="/Supervisor/Settings/Permissions/Create" class="bg-gray-900 mr-8 text-white font-bold px-2 py-2 no-underline rounded shadow hover:bg-yellow-400 transition-colors">New Permission</a>
                 </div>
         
                 <div class="bg-white shadow-md rounded my-6">
@@ -46,7 +44,7 @@
                             <tr>
                                 <td class="py-4 px-6 border-b border-grey-light">Role access</td>
                                 <td class="py-4 px-3 border-b text-right">
-                                    <a href="#" class="text-grey-lighter font-bold py-1 no-underline px-2 text-xs text-blue-400">Edit</a>
+                                    <a href="/Supervisor/Settings/Permissions/Update" class="text-grey-lighter font-bold py-1 no-underline px-2 text-xs text-blue-400">Edit</a>
                                     <a href="#" class=" font-bold py-1 px-2 no-underline text-xs text-red-400 ">delete</a>
                                 </td>
                             </tr>
