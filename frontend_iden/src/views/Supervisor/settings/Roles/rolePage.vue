@@ -8,21 +8,21 @@
         <WebHeaderMenu />
         <main class="bg-gray sticky mt-5">
             <div style="display: flex; color: black; flex-direction: column; border-bottom: solid 1px gray">
-            <router-link to="/admin/mail">
+              <router-link to="/admin/mail">
                 <svg class="w-6 h-6 text-gray-800 dark:text-white hover:text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5H1m0 0 4 4M1 5l4-4" />
                 </svg>
-            </router-link>
-            <h1 class="font-bold text-3xl mt-3 px-8 hover:text-yellow-400 w-1/12"><b>Roles</b></h1>
+              </router-link>
+              <h1 class="font-bold text-3xl mt-3 px-8 hover:text-yellow-400 w-1/12"><b>Roles</b></h1>
             </div>
     
             <div class="container mx-auto mt-20 px-6 py-2">
             <div class="text-right">
-                <button
+                <router-link to="/Supervisor/Settings/Role/Create"><button
                 @click="createRole"
                 class="bg-gray-900 border-none text-white font-bold px-3 mr-8 py-1 rounded focus:outline-none shadow hover:bg-yellow-400 transition-colors">
                 New Role
-                </button>
+                </button></router-link>
             </div>
     
             <div class="bg-white rounded my-3">
@@ -50,12 +50,13 @@
                                 </span>
                             </td>
                             <td class="py-4 px-6 border-b border-grey-light text-right">
-                                <button
+                                
+                                <router-link to="/Supervisor/Settings/Role/Update"><button
                                 @click="editRole(role.id)"
-                                class="text-white font-bold py-1 px-3 border rounded text-xs bg-black hover:bg-yellow-400">
+                                class="text-white font-bold py-1 px-3 border rounded text-xs bg-gray-900 hover:bg-yellow-400">
                                 Edit
-                                </button>
-            
+                                </button></router-link>
+                               
                                 <button
                                 @click="deleteRole(role.id)"
                                 class="text-white font-bold py-1 border-none px-2 ml-3 rounded text-xs bg-red-500 hover:bg-red-400">
