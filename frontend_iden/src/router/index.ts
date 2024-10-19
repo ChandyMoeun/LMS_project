@@ -245,6 +245,13 @@ const router = createRouter({
       component: () => import('../views/Supervisor/settings/Roles/editRole.vue'),
     },
 
+    //-----------------supervisor Reset Password routes---------------- 
+    {
+      path: '/Supervisor/Settings/ResetPassword',
+      'name': 'ResetPassword',
+      component: () => import('../views/Supervisor/settings/ResetPasswords/resetPasswordPage.vue'),
+    },
+
     //-----------------------------------employees routes --------------------------------
     {
       path: '/employee/leave',
