@@ -46,7 +46,7 @@
                   <td class="py-3 px-5 text-sm text-center border-b">employees test1</td>
                   <td class="py-3 px-5 text-sm text-center text-gray-600 border-b">employee@gmail.com</td>
                   <td class="py-3 px-5 text-center text-sm text-gray-600 border-b">
-                    <a href="#" class="inline-block bg-yellow-500 no-underline text-white font-bold py-2 px-2 rounded-md hover:bg-black transition duration-300">Reset Password</a>
+                    <a href="/Supervisor/Settings/ResetPassword/Form" class="inline-block bg-yellow-500 no-underline text-white font-bold py-2 px-2 rounded-md hover:bg-black transition duration-300">Reset Password</a>
                   </td>
                 </tr>
               </tbody>

@@ -251,6 +251,11 @@ const router = createRouter({
       'name': 'ResetPassword',
       component: () => import('../views/Supervisor/settings/ResetPasswords/resetPasswordPage.vue'),
     },
+    {
+      path: '/Supervisor/Settings/ResetPassword/Form',
+      'name': 'ResetPasswordForm',
+      component: () => import('../views/Supervisor/settings/ResetPasswords/createResetPassword.vue'),
+    },
 
     //-----------------------------------employees routes --------------------------------
     {
