@@ -1,71 +1,67 @@
-<!-- src/components/Login.vue -->
 <template>
-  <div class="flex items-center justify-center min-h-screen bg-gray-100">
-    <el-card class="w-full max-w-md shadow-lg">
-      <h2 class="text-2xl font-bold mb-6 text-center">Login</h2>
-      <el-form @submit="onSubmit">
-        <el-form-item :error="emailError">
-          <el-input placeholder="Email Address" v-model="email" size="large" />
-        </el-form-item>
-
-        <el-form-item :error="nameError" class="mt-8">
-          <el-input placeholder="Password" v-model="password" size="large" type="password" />
-        </el-form-item>
-        <div>
-          <el-button
-            size="large"
-            class="mt-3 w-full"
-            :disabled="isSubmitting"
-            type="primary"
-            native-type="submit"
-            >Submit</el-button
-          >
+  <div class="min-h-screen flex items-center justify-center bg-gray-100">
+    <div class="bg-white rounded-lg shadow-lg overflow-hidden flex w-3/4">
+      <!-- Left section with image -->
+      <div class="flex flex-col items-center justify-center w-8/12">
+        <img src="../../../assets/image/login.png" alt="Login Illustration" class="object-cover w-4/4">
+        <div class="flex justify-end mb-4">
+          <p class="text-sm">Sign in here to join iDen leave management system.</p>
         </div>
-      </el-form>
-    </el-card>
+      </div>
+      <!-- Right section with form -->
+      <div class="w-1/2 p-10 flex flex-col justify-center">
+        <h1 class="font-bold text-2xl mb-6 text-center"><b>SIGN IN</b></h1>
+        <form @submit.prevent="login">
+          <div class="mb-4">
+            <label for="email" class="block text-gray-700">Email</label>
+            <input v-model="email" type="email" id="email" class="border border-gray-300 rounded w-full py-2 px-3 mt-2 focus:outline-none focus:border-blue-400" placeholder="Enter your email" required autofocus>
+          </div>
+          <div class="mb-4">
+            <label for="password" class="block text-gray-700">Password</label>
+            <input v-model="password" type="password" id="password" class="border border-gray-300 rounded w-full py-2 px-3 mt-2 focus:outline-none focus:border-blue-400" placeholder="Enter your password" required>
+          </div>
+          <div class="flex justify-end items-center mb-4">
+            <a href="/forgotPassword" class="text-blue-500 text-sm">Forget password?</a>
+          </div>
+          <button type="submit" class="w-2/12 flex justify-center mt-5 bg-blue-600 border-none text-white font-bold py-2 rounded hover:bg-yellow-500 focus:outline-none focus:bg-blue-700 transition-colors">Sign in</button>
+        </form>
+      </div>
+    </div>
   </div>
 </template>
 
-<script setup lang="ts">
-import axiosInstance from '@/plugins/axios'
-import { useField, useForm } from 'vee-validate'
-import * as yup from 'yup'
-import { useRouter } from 'vue-router'
-import { useAuthStore } from '@/stores/auth-store'
+<script>
+import axios from 'axios';
+import { ref } from 'vue';
 
-const router = useRouter()
-const store = useAuthStore()
+export default {
+  setup() {
+    const email = ref('');
+    const password = ref('');
 
-const formSchema = yup.object({
-  password: yup.string().required().label('Password'),
-  email: yup.string().required().email().label('Email address')
-})
+    const login = async () => {
+      try {
+        const response = await axios.post('/api/login', {
+          email: email.value,
+          password: password.value,
+        });
+        console.log(response.data);
+        // Handle successful login (redirect, save token, etc.)
+      } catch (error) {
+        console.error(error);
+        // Handle errors (display validation messages, etc.)
+      }
+    };
 
-const { handleSubmit, isSubmitting } = useForm({
-  initialValues: {
-    password: '',
-    email: ''
+    return {
+      email,
+      password,
+      login,
+    };
   },
-  validationSchema: formSchema
-})
-
-const onSubmit = handleSubmit(async (values) => {
-  try {
-    const { data } = await axiosInstance.post('/login', values)
-    localStorage.setItem('access_token', data.access_token)
-    console.log(store);
-    router.push('/')
-  } catch (error) {
-    console.warn('Error')
-  }
-})
-
-const { value: password, errorMessage: nameError } = useField('password')
-const { value: email, errorMessage: emailError } = useField('email')
+};
 </script>
 
 <style scoped>
-.min-h-screen {
-  min-height: 100vh;
-}
+/* Add custom styles here */
 </style>
