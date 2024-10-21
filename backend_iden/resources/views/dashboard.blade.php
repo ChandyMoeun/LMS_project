@@ -53,7 +53,7 @@
                         <img src="../images/employees.png" style="margin-left: 8px; width: 100px; height:50%; display: flex; align-self:center;">
                         <div class="ml-1">
                             <h4 class="font-bold mt-6 "><b>Employees</b></h4>
-                            <p>All :{{$totalEmployees}}</p>
+                            <p>All : {{$totalEmployees}}</p>
                         </div>
                     </div>
                 </div>
@@ -62,9 +62,8 @@
                         <img src="../images/Leave.png" style="margin-left: 25px; width: 75px; height:9vh; display: flex; align-self:center;">
                         <div>
                             <h4 class="font-bold mt-6 ml-3 "><b>Leaveds</b></h4>
-
-                            <p class="ml-1"><em>This week : </em></p>
-
+                            <p class="ml-1"><em>Total leave : {{$TotalLeave}}</em></p>
+                            <p class="ml-1"><em>This week : {{$leaveRequestsCountThisWeek}}</em></p>
                         </div>
                     </div>
                 </div>
@@ -105,7 +104,7 @@
             <script>
                 // Doughnut Chart for Employee Sections
                 var xValues = ["IT", "Production", "Finance", "Creative"];
-                var yValues = [24, 10, 2, 4];
+                var yValues = [2, 10, 2, 4];
                 var barColors = [
                     "#b91d47",
                     "#00aba9",

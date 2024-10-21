@@ -42,17 +42,17 @@ class EmployeeController extends Controller
         return view('employee.index', compact('employees', 'totalEmployees', 'positions'));
     }
 
-    public function EmployeeDashboard()
-    {
-        // Fetch the total number of employees
-        $totalEmployees = Employee::count();
+    // public function EmployeeDashboard()
+    // {
+    //     // Fetch the total number of employees
+    //     $totalEmployees = Employee::count();
 
-        // Optionally, fetch all employees if needed for the view
-        $employees = Employee::all();
+    //     // Optionally, fetch all employees if needed for the view
+    //     $employees = Employee::all();
 
-        // Pass data to the view
-        return view('dashboard', compact('employees', 'totalEmployees'));
-    }
+    //     // Pass data to the view
+    //     return view('dashboard', compact('employees', 'totalEmployees'));
+    // }
 
     /**
      * Show the form for creating a new resource.

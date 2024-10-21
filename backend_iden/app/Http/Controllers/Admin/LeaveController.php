@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Models\LeaveRequest;
 use App\Models\LeaveType;
 use App\Models\Position;
+use App\Models\Department;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Notifications;
 use Carbon\Carbon;
@@ -37,11 +38,34 @@ class LeaveController extends Controller
         return view('leave.index', compact('leaveRequests'));
     }
 
+    // ====>dashboard <===
     public function LeaveRequestDashboard()
     {
+
+        $department = Department::all();
         // Paginate leave requests and load the associated employee data
+        // $leaveRequests = LeaveRequest::with('employee', 'leaveType', 'approver', 'rejector')->paginate(10);
+        // return view('dashboard', compact('leaveRequests'));
+        
+        // Count total leave requests
+
+        $totalEmployees = Employee::count();
+        $TotalLeave = LeaveRequest::count();
+
+        // Get the start and end of the current week
+        $startOfWeek = Carbon::now()->startOfWeek();
+        $endOfWeek = Carbon::now()->endOfWeek();
+
+        // Count leave requests for the current week
+        $leaveRequestsCountThisWeek = LeaveRequest::whereBetween('from_date', [$startOfWeek, $endOfWeek])
+            ->orWhereBetween('to_date', [$startOfWeek, $endOfWeek])
+            ->count();
+
+        // Paginate leave requests and load associated employee data
         $leaveRequests = LeaveRequest::with('employee', 'leaveType', 'approver', 'rejector')->paginate(10);
-        return view('dashboard', compact('leaveRequests'));
+
+        // Pass the counts and leave requests to the view
+        return view('dashboard', compact('leaveRequests', 'TotalLeave', 'leaveRequestsCountThisWeek','totalEmployees','department'));
     }
 
 
@@ -152,10 +176,6 @@ class LeaveController extends Controller
         return redirect()->route('admin.leave.index')->with('success', 'Leave request submitted successfully.');
     }
 
-
-
-
-
     /**
      * Show the form for editing a leave request.
      */
@@ -207,13 +227,13 @@ class LeaveController extends Controller
     }
 
 
-     // =====>approve request<======
+    // =====>approve request<======
     public function approve(LeaveRequest $leaveRequest)
     {
         // Mark the leave request as approved
         $leaveRequest->status = 'approved';
         $leaveRequest->approved_by = auth()->user()->id; // Store the ID of the user who approved the request
-        
+
         // Get the associated leave type (assuming there's a relationship between LeaveRequest and LeaveType)
         $leaveType = $leaveRequest->leaveType; // Assuming LeaveRequest has a leaveType relationship
 

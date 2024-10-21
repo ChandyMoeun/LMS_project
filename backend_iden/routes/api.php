@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\DepartmentController;
 use App\Http\Controllers\API\{
     PostController,
     LeaveRequestController, // Use PascalCase for controller names
@@ -7,6 +8,8 @@ use App\Http\Controllers\API\{
     CalendarWorkDayController,
     AttendanceController,
     NotificationController,
+    DempartmentController,
+    PositionController,
 };
 use App\Http\Controllers\AuthController;
 use App\Models\CalendarGroup;
@@ -32,9 +35,6 @@ Route::middleware('auth:sanctum')->group(function () {
     // =====>get authenticated specific profile<====
     Route::get('/me', [AuthController::class, 'index']);
 
-    // ======>List positions <=====
-    Route::get('/position/list', [PostController::class, 'index']);
-
     // ======>authenticated user's profile<=====
     Route::get('/employee', function (Request $request) {
         return $request->user(); // Return the authenticated user's details
@@ -42,7 +42,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
     // =====>CRUD operations for leave requests<====
     Route::apiResource('leave_requests', LeaveRequestController::class);
-    
+
     // ======>Approve and reject leave requests<=====
     Route::post('/leave_requests/{id}/approve', [LeaveRequestController::class, 'approve']);
     Route::post('/leave_requests/{id}/reject', [LeaveRequestController::class, 'reject']);
@@ -61,13 +61,25 @@ Route::middleware('auth:sanctum')->group(function () {
 });
 
 
-//========>Notification<========
+// ======>List Department <=====
+Route::middleware('auth:sanctum')->group(function () {
+    Route::get('departments', [DempartmentController::class, 'index']);
+    Route::apiResource('departments', DempartmentController::class);
+    Route::get('departments', [DempartmentController::class, 'showChart']);
 
+});
+
+// ======>List  Position<=====
+Route::middleware('auth:sanctum')->group(function () {
+    Route::get('/position/list', [PositionController::class, 'index']);
+});
+
+
+//========>Notification<========
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('notification', [NotificationController::class, 'index']);
     Route::post('notification/{id}/read', [NotificationController::class, 'read']);
 });
-
 
 
 Route::middleware('auth:sanctum')->group(function () {

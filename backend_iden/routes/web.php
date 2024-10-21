@@ -112,6 +112,10 @@ Route::namespace('App\Http\Controllers\Admin')->name('admin.')->prefix('admin')
         // ======dashboard<=====
         Route::post('dashboard/{leaveRequest}/approve', [DashboardController::class, 'approve'])->name('dashboard.approve');
         Route::post('dashboard/{leaveRequest}/reject', [DashboardController::class, 'reject'])->name('dashboard.reject');
+        Route::get('dashboard', [LeaveController::class, 'LeaveRequestDashboard'])->name('dashboard');
+        // Route::get('/dashboard', [EmployeeController::class, 'EmployeeDashboard'])->name('dashboard');
+
+
 
         Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
         Route::put('/profile-update', [ProfileController::class, 'update'])->name('profile.update');
