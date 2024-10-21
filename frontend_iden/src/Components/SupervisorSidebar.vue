@@ -129,27 +129,29 @@
 
 
 <script setup lang="ts">
-import { ref, computed, watchEffect, watch } from 'vue'
+import { ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import { useAuthStore } from '@/stores/auth-store'
 
-
-// State for the active link
-const activeLink = ref('/Supervisor/dashboard')
-
-// Get route and router
+// Get route and router instances
 const route = useRoute()
+const router = useRouter()
 
-// Function to set the active link
+// Reactive state for the active link
+const activeLink = ref(route.path) // Initially set to the current route path
+
+// Function to set the active link and navigate to the desired route
 const setActiveLink = (path: string) => {
-  activeLink.value = path
+  if (activeLink.value !== path) {
+    activeLink.value = path  // Set the active link
+    router.push(path)        // Programmatically navigate to the clicked route
+  }
 }
 
 // Watch for route changes and update active link accordingly
 watch(
   () => route.path,
   (newPath) => {
-    activeLink.value = newPath
+    activeLink.value = newPath  // Automatically update the active link when the route changes
   }
 )
 </script>

@@ -46,7 +46,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="employee in filteredEmployees" :key="employee.staff_id" class="bg-gray-100 border-b border-gray-200">
+            <tr v-for="employee in employees_list" :key="employee.id" class="bg-gray-100 border-b border-gray-200">
               <td class="p-3">{{ employee.staff_id }}</td>
               <td class="p-3">
                 <img :src="employee.profile ? `/images/${employee.profile}` : '/images/default_profile.png'" alt="Profile" class="w-12 h-12 rounded-full object-cover">
@@ -73,6 +73,7 @@
 </template>
 
 <script>
+import axiosInstance from '@/plugins/axios';
 import SupervisorSidebar from '@/Components/SupervisorSidebar.vue';
 import WebHeaderMenu from '@/Components/WebHeaderMenu.vue';
 
@@ -80,72 +81,43 @@ export default {
   components: {SupervisorSidebar, WebHeaderMenu},
   data() {
     return {
-      searchQuery: '',
-      selectedPosition: 'all',
-      totalEmployees: 1, // Assuming you're fetching this value from the backend
-      positions: [
-        { name: 'Manager' },
-        { name: 'Developer' },
-        { name: 'Designer' }
-        // ...other positions
-      ],
-      employees: [
-        {
-          staff_id: '001',
-          profile: null, // assuming null means no profile
-          full_name: 'John Doe',
-          email: 'john.doe@example.com',
-          position: { name: 'Developer' }
-        },
-        {
-          staff_id: '002',
-          profile: null, // assuming null means no profile
-          full_name: 'chandy',
-          email: 'chandy@example.com',
-          position: { name: 'Designer' }
-        },
-        // ...other employees
-      ],
-      filteredEmployees: []
+      employees_list: [],
+
     };
   },
   mounted() {
-    this.filteredEmployees = this.employees; // Initialize filteredEmployees
+    this.fatchData();// Initialize filteredEmployees
   },
   methods: {
-    filterTable() {
-      const query = this.searchQuery.toUpperCase();
-      this.filteredEmployees = this.employees.filter(employee => {
-        return employee.staff_id.toUpperCase().includes(query) || employee.full_name.toUpperCase().includes(query);
-      });
+    fatchData(){
+      this.fetchEmployee();
     },
-    filterByPosition() {
-      if (this.selectedPosition === 'all') {
-        this.filteredEmployees = this.employees;
-      } else {
-        this.filteredEmployees = this.employees.filter(employee => {
-          return employee.position && employee.position.name === this.selectedPosition;
-        });
-      }
-    },
-    addEmployee() {
-      // Logic to navigate to the Add Employee page or open a form
-      this.$router.push({ name: 'EmployeeCreate' });
-    },
-    viewEmployee(id) {
-      // Logic to view the employee details
-      this.$router.push({ name: 'EmployeeShow', params: { id } });
-    },
-    editEmployee(id) {
-      // Logic to edit employee
-      this.$router.push({ name: 'EmployeeEdit', params: { id } });
-    },
-    deleteEmployee(id) {
-      // Logic to delete employee
-      if (confirm('Are you sure you want to delete this employee?')) {
-        // Perform delete action here, likely an API call
-        this.employees = this.employees.filter(employee => employee.id !== id);
-        this.filterTable(); // Update table after deletion
+
+    // filterTable() {
+    //   const query = this.searchQuery.toUpperCase();
+    //   this.filteredEmployees = this.employees.filter(employee => {
+    //     return employee.staff_id.toUpperCase().includes(query) || employee.full_name.toUpperCase().includes(query);
+    //   });
+    // },
+    // filterByPosition() {
+    //   if (this.selectedPosition === 'all') {
+    //     this.filteredEmployees = this.employees;
+    //   } else {
+    //     this.filteredEmployees = this.employees.filter(employee => {
+    //       return employee.position && employee.position.name === this.selectedPosition;
+    //     });
+    //   }
+    // },
+ 
+
+    //intergation data
+
+    async fetchEmployee() {
+      try {
+        const response = await axiosInstance.get('/employee');
+        this.employees_list = response.data
+      } catch (error) {
+        console.error(error);
       }
     }
   }

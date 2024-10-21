@@ -52,11 +52,11 @@
           </tr>
         </thead>
         <tbody class="bg-white divide-y divide-gray-200">
-          <tr class="hover:bg-gray-100">
-            <td class="py-4 px-6 border-b border-gray-200">Monday to Friday</td>
-            <td class="py-4 px-6 border-b border-gray-200">8:00am</td>
-            <td class="py-4 px-6 border-b border-gray-200">5:00pm</td>
-            <td class="py-4 px-6 border-b border-gray-200">Full days</td>
+          <tr v-for="work in work_days" :key="work.id" class="hover:bg-gray-100">
+            <td class="py-4 px-6 border-b border-gray-200">{{ work.work_day }}</td>
+            <td class="py-4 px-6 border-b border-gray-200">{{ work.start_time }}</td>
+            <td class="py-4 px-6 border-b border-gray-200">{{ work.end_time }}</td>
+            <td class="py-4 px-6 border-b border-gray-200">{{ work.day_type }}</td>
             <td class="py-4 px-6 border-b border-gray-200 d-flex justify-center gap-3">
               <a href="/Supervisor/calendar/workTime/edit" class="font-bold py-1 px-3 rounded flex items-center text-xs bg-gray-900 no-underline hover:bg-yellow-500 text-white">Edit</a>
               <form action="#" method="POST" class="inline">
@@ -107,6 +107,7 @@
 </template>
 
 <script>
+import axiosInstance from '@/plugins/axios';
 import SupervisorSidebar from '@/Components/SupervisorSidebar.vue';
 import WebHeaderMenu from '@/Components/WebHeaderMenu.vue';
 import { onMounted } from "vue";
@@ -127,8 +128,26 @@ export default {
         },
         // Add other events here...
       ],
+      work_days: [],
+
     };
   },
+
+  mounted() {
+    this.fetchWorkDays();
+  },
+
+  methods: {
+    async fetchWorkDays() {
+      try {
+        const response = await axiosInstance.get("/calendar_work");
+        this.work_days = response.data;
+      } catch (error) {
+        console.error(error);
+      }
+    },
+  },
+
   setup() {
     onMounted(() => {
       const calendarEl = document.getElementById("calendar");
@@ -184,7 +203,7 @@ export default {
 </script>
 
 
-<style scoped>
+<style>
 .supervisor{
   display: flex;
   height: 100vh;
@@ -212,4 +231,10 @@ main{
 .fc-col-header-cell {
   background-color: #FFDA03;
 }
+
+.fc .fc-daygrid-day-number, .fc .fc-col-header-cell-cushion {
+    color: #000000;
+    text-decoration: none;
+}
+
 </style>

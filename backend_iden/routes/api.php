@@ -37,7 +37,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
     // ======>authenticated user's profile<=====
     Route::get('/employee', function (Request $request) {
-        return $request->user(); // Return the authenticated user's details
+        return $request->user()->all(); // Return the authenticated user's details
     });
 
     // =====>CRUD operations for leave requests<====
