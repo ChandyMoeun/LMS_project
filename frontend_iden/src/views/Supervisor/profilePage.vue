@@ -15,13 +15,11 @@
                         <input  id="full_name" type="text" placeholder="Dara"
                             class="px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-200" />
                     </div>
-        
                     <div class="flex flex-col space-y-2">
                         <label for="email" class="text-gray-700 select-none font-medium">Email</label>
                         <input id="email" type="email" placeholder="Dara"
                             class="px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-200" />
                     </div>
-        
                     <div class="flex text-gray-500 mt-5">
                         <div class="bg-white rounded-lg">
                             <div class="text-center uppercase text-bold">
@@ -32,7 +30,6 @@
                             <button type="button" @click="clearPreview">Change</button>
                         </div>
                     </div>
-        
                     <div class="text-center mb-16">
                         <button type="submit" class="bg-blue-600 border-none text-white font-bold px-3 py-1 rounded focus:outline-none shadow hover:bg-yellow-500 transition-colors">
                         Update
@@ -47,9 +44,9 @@
     </SupervisorLayout>
   </template>
   
-  <script>
-  import SupervisorSidebar from '@/Components/SupervisorSidebar.vue';
-  import WebHeaderMenu from '@/Components/WebHeaderMenu.vue';
+<script>
+ import SupervisorSidebar from '@/Components/SupervisorSidebar.vue';
+ import WebHeaderMenu from '@/Components/WebHeaderMenu.vue';
   export default {
     components: { SupervisorSidebar, WebHeaderMenu },
   data() {

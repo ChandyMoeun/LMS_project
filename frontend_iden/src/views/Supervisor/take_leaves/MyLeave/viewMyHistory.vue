@@ -60,54 +60,39 @@
                       <img
                         class="h-6 w-6 rounded-full mr-2"
                         src="https://via.placeholder.com/40"
-                        alt="Profile"
-                      />
+                        alt="Profile"/>
                       Kris Wang
                     </p>
                   </div>
-
                   <div class="mb-4">
                     <span class="font-semibold">Reason:</span>
-                    <textarea disabled class="w-full p-2 mt-1 border rounded-md bg-gray-50">
- Dear Mr.Cat, I would like to ask for permission to take leave one day. Because I'm feeling sick.</textarea
-                    >
+                    <textarea disabled class="w-full p-2 mt-1 border rounded-md bg-gray-50">Dear Mr.Cat, I would like to ask for permission to take leave one day. Because I'm feeling sick.</textarea>
                   </div>
                 </div>
-
                 <!-- Right Column: Approval Details -->
                 <div>
                   <div class="mb-4">
                     <span class="font-semibold">Type of leave:</span>
                     <p class="mt-1">Sick leave</p>
                   </div>
-
                   <div class="mb-4">
                     <span class="font-semibold">Status:</span>
                     <p class="mt-1">Approved</p>
                   </div>
-
                   <div class="mb-4">
                     <span class="font-semibold">Approved at:</span>
                     <p class="mt-1">📅 Thu 13 Aug 2024 | 10:30 AM</p>
                   </div>
-
                   <div class="mb-4">
                     <span class="font-semibold">Approval by:</span>
                     <p class="mt-1 flex items-center">
-                      <img
-                        class="h-6 w-6 rounded-full mr-2"
-                        src="https://via.placeholder.com/40"
-                        alt="Profile"
-                      />
+                      <img class="h-6 w-6 rounded-full mr-2" src="https://via.placeholder.com/40" alt="Profile"/>
                       Cat
                     </p>
                   </div>
-
                   <div class="mb-4">
                     <span class="font-semibold">Comment:</span>
-                    <textarea disabled class="w-full p-2 mt-1 border rounded-md bg-gray-50">
-Okay.</textarea
-                    >
+                    <textarea disabled class="w-full p-2 mt-1 border rounded-md bg-gray-50">Okay.</textarea>
                   </div>
                 </div>
               </div>
@@ -119,43 +104,42 @@ Okay.</textarea
   </SupervisorLayout>
 </template>
   
-  <script>
-import SupervisorSidebar from '@/Components/SupervisorSidebar.vue'
-import WebHeaderMenu from '@/Components/WebHeaderMenu.vue'
-export default {
-  components: { SupervisorSidebar, WebHeaderMenu },
-  data() {
-    return {
-      // Data can be added if needed for dynamic rendering
+<script>
+  import SupervisorSidebar from '@/Components/SupervisorSidebar.vue'
+  import WebHeaderMenu from '@/Components/WebHeaderMenu.vue'
+  export default {
+    components: { SupervisorSidebar, WebHeaderMenu },
+    data() {
+      return {
+        // Data can be added if needed for dynamic rendering
+      }
     }
   }
-}
 </script>
-  
-  
-  <style scoped>
-.supervisor {
-  display: flex;
-  height: 100vh;
-  align-items: start;
-  width: 100%;
-  background-color: #e5e7eb;
-}
-.sidebar {
-  width: 17%;
-  height: auto;
-  background-color: #141c2e;
-  color: white;
-}
-.container-page {
-  width: 83%;
-}
-main {
-  padding: 50px 50px 0px 50px;
-  height: auto;
-  width: 100%;
-  background-color: #e5e7eb;
-  margin-bottom: 50px;
-}
+    
+<style scoped>
+  .supervisor {
+    display: flex;
+    height: 100vh;
+    align-items: start;
+    width: 100%;
+    background-color: #e5e7eb;
+  }
+  .sidebar {
+    width: 17%;
+    height: auto;
+    background-color: #141c2e;
+    color: white;
+  }
+  .container-page {
+    width: 83%;
+  }
+  main {
+    padding: 50px 50px 0px 50px;
+    height: auto;
+    width: 100%;
+    background-color: #e5e7eb;
+    margin-bottom: 50px;
+  }
 </style>
   
