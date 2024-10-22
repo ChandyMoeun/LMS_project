@@ -133,7 +133,7 @@
               </div>
 
               <div
-                class="chart-container mb-10 rounded-2xl px-10 py-5 bg-white shadow-[0_35px_60px_-15px_rgba(0,0,0,0.3)]"
+                class="chart-container mb-10 h-60vh rounded-2xl px-10 py-5 bg-white shadow-[0_35px_60px_-15px_rgba(0,0,0,0.3)]"
               >
                 <canvas id="leaveChart"></canvas>
               </div>
