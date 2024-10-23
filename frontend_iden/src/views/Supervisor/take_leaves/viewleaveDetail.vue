@@ -21,7 +21,7 @@
                 </svg>
               </router-link>
               <h1 class="font-bold mr-20 text-3xl px-8 w-4/12 mt-3 hover:text-yellow-400">
-                <b>(EmployeeName) Leave History</b>
+                <b>(EmployeeName) Leave Request</b>
               </h1>
             </div>
             <!-- Leave Request Details -->

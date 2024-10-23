@@ -93,14 +93,14 @@
                     <td class="py-2 px-2 text-center border-b">position</td>
                     <td class="py-2 px-2 text-center border-b">12,02.2024|12,03.2024</td>
                     <td class="py-2 px-2 text-center border-b">Approver</td>
-                    <td class="py-2 px-2 text-center border-b text-xs">XXX</td>
+                    <td class="py-2 px-2 text-center border-b text-xs">XXX</td> 
                     <td class="py-2 px-2 text-center border-b text-xs">
                       <span class="bg-yellow-400 text-white px-2 py-1 rounded-full text-xs font-semibold">Pending</span>
                       <span class="bg-green-400 text-white px-2 py-1 rounded-full text-xs font-semibold">Approved</span>
                       <span class="bg-red-400 text-white px-2 py-1 rounded-full text-xs font-semibold">Rejected</span >
                     </td>
                     <td class="py-2 px-2 text-center border-b text-xs">
-                      <a href="#" class="text-blue-500 hover:text-blue-400">More</a>
+                      <a href="/Supervisor/takeLeave/view/leaveDetail" class="text-blue-500 no-underline hover:text-blue-400">More</a>
                     </td>
                     <td class="action text-center align-middle">
                       <!-- View button to toggle the visibility -->

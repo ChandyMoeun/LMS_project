@@ -117,7 +117,7 @@ const activeTab = computed(() => {
       <transition name="fade">
         <div v-if="showDropdown"
           class="absolute right-7 z-50 mt-40 w-45 text-center rounded-lg bg-gray-100 shadow-lg dark:bg-neutral-800">
-          <a href="/my/profile" class="block no-underline w-full px-4 py-2 text-sm text-neutral-700 hover:bg-blue-600 hover:text-white dark:text-white dark:hover:bg-neutral-700 cursor-pointer">My profile</a>
+          <a href="/myprofile" class="block no-underline w-full px-4 py-2 text-sm text-neutral-700 hover:bg-blue-600 hover:text-white dark:text-white dark:hover:bg-neutral-700 cursor-pointer">My profile</a>
           <div class="block w-full px-4 py-2 text-sm text-neutral-700 hover:bg-blue-600 hover:text-white dark:text-white dark:hover:bg-neutral-700 cursor-pointer" @click="logOut" >
             Log out
           </div>
