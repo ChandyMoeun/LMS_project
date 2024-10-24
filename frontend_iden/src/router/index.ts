@@ -264,9 +264,9 @@ const router = createRouter({
 
     //-----------------------------------employees routes --------------------------------
     {
-      path: '/employee/leave',
+      path: '/employee/myleave',
       'name': 'leave',
-      component: () => import('../views/Employee/LeavPage.vue'),
+      component: () => import('../views/Employee/myLeave/myLeavePage.vue'),
     },
     {
       path: '/employee/dashbaord',
