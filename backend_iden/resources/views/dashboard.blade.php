@@ -1,6 +1,5 @@
 <x-app-layout>
-
-    <div class="mt-10 p-5 bg-white">
+    <div class="mt-10 p-5 border-gray-300">
         <div class="container mx-auto px-6 py-8">
             <!----------- alert code -------------------->
             <div class="button" style="margin: 50px;">
@@ -31,22 +30,18 @@
             </div>
             <script>
                 let taostBox = document.getElementById('taostBox');
-
                 function ShowAlert() {
                     taostBox.style.display = 'block';
-
                     setTimeout(() => {
                         taostBox.style.display = 'none'
                     }, 4000);
                 }
-
                 function HideAlert() {
                     taostBox.style.display = 'none';
                 }
                 ShowAlert();
             </script>
             <!----------- // alert code //-------------------->
-
             <div style="border-bottom: #B0B0B0 1px solid;  display: flex; justify-content:center; flex-direction: row; height:30vh; width: 100%;">
                 <div style="margin-bottom: 10px; border-right: #B0B0B0 1px solid; width: 55%; display: flex; justify-content:center;">
                     <div class=" bg-yellow-300" style="margin-top: 30px; margin-left: 70px; width: 50%; height:75%; display: flex; flex-direction: row; box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px;">
@@ -64,11 +59,11 @@
                             <h4 class="font-bold mt-6 ml-3 "><b>Leaveds</b></h4>
                             <p class="ml-1"><em>Total leave : {{$TotalLeave}}</em></p>
                             <p class="ml-1"><em>This week : {{$leaveRequestsCountThisWeek}}</em></p>
+                            
                         </div>
                     </div>
                 </div>
             </div>
-
             <!--............................// Chart js // total employee chart ..............................  -->
             <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
             <!-- Chart Container -->
@@ -81,7 +76,6 @@
                     align-items: center;
                     margin-bottom: 90px;
                 }
-
                 canvas {
                     background: #ECECEC;
                     width: 100%;
@@ -91,15 +85,13 @@
                 }
             </style>
             <!-- Doughnut Chart Container -->
-            <div class="chart-container m-10">
+            <div class="chart-container m-10" style="height: 60vh;">
                 <canvas id="employeeChart" width="300" height="120"></canvas>
             </div>
-
             <!-- Bar Chart Container -->
             <div class="chart-container m-10">
-                <canvas id="leaveChart" width="300" height="100"></canvas>
+                <canvas id="leaveChart" width="300" ></canvas>
             </div>
-
             <!-- Chart Script -->
             <script>
                 // Doughnut Chart for Employee Sections
@@ -111,7 +103,6 @@
                     "#2b5797",
                     "#e8c3b9"
                 ];
-
                 new Chart("employeeChart", {
                     type: "doughnut",
                     data: {
@@ -128,7 +119,6 @@
                         }
                     }
                 });
-
                 // Bar Chart for Employee Data
                 var barData = {
                     labels: ["Creative", "Content Creator", "Production", "IT"],
@@ -142,7 +132,6 @@
                         data: [1, 2, 4, 1]
                     }]
                 };
-
                 var ctx = document.getElementById("leaveChart").getContext("2d");
                 var myBarChart = new Chart(ctx, {
                     type: 'bar',
@@ -151,7 +140,8 @@
                         scales: {
                             yAxes: [{
                                 ticks: {
-                                    beginAtZero: true
+                                    beginAtZero: true,
+                                    stepSize: 1 // Step size placed inside ticks
                                 }
                             }]
                         },
@@ -165,7 +155,7 @@
             <!--............................// Chart js // total employee chart ..............................  -->
 
             <!--.......................... employees take leaves ......................... -->
-            <div class="overflow-x-auto">
+            <div class="overflow-x-auto p-6">
                 <table class="min-w-full bg-gray-100 border border-gray-100">
                     <thead>
                         <tr class="bg-black text-white text-xs">
@@ -187,7 +177,7 @@
                         <!-- Loop through each employee and generate table rows -->
                         @can('Leave access')
                         @foreach($leaveRequests as $leaveRequest)
-                        <tr class="hover:bg-white text-xs">
+                        <tr class="hover:bg-white text-xs hover:bg-gray-300">
                             <td class="py-2 px-2 text-center border-b">{{$leaveRequest->employee->staff_id ?? 'N/A' }}</td>
                             <td class="flex py-2 px-2 justify-center border-b">
                                 @if($leaveRequest->employee->profile)

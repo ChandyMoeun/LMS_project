@@ -16,7 +16,7 @@ const router = createRouter({
       
     },
     {
-      path: '/',
+      path: '/login',
       name: 'login',
       component: () => import('../views/Admin/Auth/LoginView.vue')
     },
@@ -29,6 +29,11 @@ const router = createRouter({
       path: '/forgotPassword',
       name: 'forgotPassword',
       component: () => import('../views/Admin/Auth/forgotPassword.vue')
+    },
+    {
+      path: '/my/profile',
+      name: 'profile',
+      component: () => import('../views/Supervisor/profilePage.vue')
     },
     // ----- user -----
     // {
@@ -82,9 +87,9 @@ const router = createRouter({
       component: () => import('../views/Supervisor/take_leaves/take_leave.vue'),
     },
     {
-      path: '/Supervisor/takeLeave/view/leaveHistory',
-      'name': 'viewLeaveHistory',
-      component: () => import('../views/Supervisor/take_leaves/viewleaveHistory.vue'),
+      path: '/Supervisor/takeLeave/view/leaveDetail',
+      'name': 'viewLeaveDetail',
+      component: () => import('../views/Supervisor/take_leaves/viewleaveDetail.vue'),
     },
     {
       path: '/Supervisor/takeLeave/All/leaveHistory',

@@ -1,8 +1,3 @@
-
-    
-
- 
-
 <template>
   <SupervisorLayout>
     <div class="supervisor">
@@ -16,39 +11,28 @@
             <!-- Admin Requests leave -->
             <div
               class="d-flex text-black"
-              style="display: flex; flex-direction: column; border-bottom: solid 1px gray"
-            >
+              style="display: flex; flex-direction: column; border-bottom: solid 1px gray">
               <h1 class="font-bold text-3xl px-8 hover:text-yellow-500 w-3/12">
                 <b>Supervisor Leave</b>
               </h1>
               <p class="px-8">Total leaves:</p>
             </div>
-
             <div class="container mx-auto mt-16 px-6 py-4">
               <div class="flex justify-between mb-4">
-                <input
-                  v-model="searchQuery"
-                  type="text"
-                  placeholder="Search employee..."
-                  title="Type in an ID or Name"
-                  class="w-2/6 py-2 px-2 h-9 border rounded rounded-lg shadow-md"
-                />
+                <input v-model="searchQuery" type="text" placeholder="Search employee..." title="Type in an ID or Name" class="w-2/6 py-2 px-2 h-9 border rounded rounded-lg shadow-md" />
                 <div class="d-flex gap-2">
                   <a
                     href="/Supervisor/takeLeave/All/leaveHistory"
-                    class="bg-gray-900 text-white font-semibold px-3 py-1 mt-1 no-underline rounded-lg shadow-md hover:bg-yellow-500 transition-colors"
-                  >
-                    History
+                    class="bg-gray-900 text-white font-semibold px-3 py-1 mt-1 no-underline rounded-lg shadow-md hover:bg-yellow-500 transition-colors">
+                  History
                   </a>
                   <a
                     href="/Supervisor/takeLeave/requestLeave"
-                    class="bg-gray-900 text-white font-semibold px-3 py-1 mt-1 no-underline rounded-lg shadow-md hover:bg-yellow-500 transition-colors"
-                  >
+                    class="bg-gray-900 text-white font-semibold px-3 py-1 mt-1 no-underline rounded-lg shadow-md hover:bg-yellow-500 transition-colors">
                     Request Leave
                   </a>
                 </div>
-              </div>
-
+              </div> 
               <div class="bg-white shadow-lg rounded-lg overflow-x-auto">
                 <table class="w-full divide-y divide-gray-200">
                   <thead class="bg-black">
@@ -107,10 +91,7 @@
                       <!-- Display attachment -->
                       <td class="py-4 px-6 text-sm text-center text-black">
                         <div class="flex gap-2">
-                          <img
-                            src="#"
-                            class="max-h-5 max-w-full object-cover mb-2 cursor-pointer"
-                          />
+                          <img src="#" class="max-h-5 max-w-full object-cover mb-2 cursor-pointer"/>
                           <a href="#">See More</a>
                         </div>
                       </td>
@@ -121,18 +102,13 @@
                             'bg-green-500 text-white': leaveRequest.status === 'Approved',
                             'bg-red-500 text-white': leaveRequest.status === 'Rejected'
                           }"
-                          class="text-center px-2 py-1 rounded-full text-xs font-semibold"
-                        >
+                          class="text-center px-2 py-1 rounded-full text-xs font-semibold" >
                           {{ leaveRequest.status }}
                         </span>
                       </td>
                       <td class="py-4 px-2 text-sm text-center text-black">2</td>
                       <td class="py-4 px-2 text-sm text-center">
-                        <a
-                          href="/Supervisor/takeLeave/view/leaveHistory"
-                          class="text-blue-700 no-underline hover:text-blue-300"
-                          >View</a
-                        >
+                        <a href="/Supervisor/takeLeave/view/leaveDetail" class="text-blue-700 no-underline hover:text-blue-300" >View</a>
                       </td>
                       <td class="d-flex flex-col py-4 text-center text-sm text-gray-500">
                         <span v-if="leaveRequest.approver">{{ leaveRequest.approver }}</span>
@@ -143,15 +119,11 @@
                         <div class="flex justify-center mt-2 space-x-2">
                           <button
                             class="bg-gray-900 text-white px-2 py-1 rounded-md shadow-md hover:bg-yellow-500 transition-all duration-300 ease-in-out font-semibold border-none"
-                            @click="approveLeave(leaveRequest)"
-                          >
-                            Approve
+                            @click="approveLeave(leaveRequest)" > Approve
                           </button>
                           <button
                             class="bg-red-500 text-white px-2 py-1 rounded-md shadow-md hover:bg-red-400 transition-all duration-300 ease-in-out font-semibold border-none"
-                            @click="rejectLeave(leaveRequest)"
-                          >
-                            Reject
+                            @click="rejectLeave(leaveRequest)" >Reject
                           </button>
                         </div>
                       </td>

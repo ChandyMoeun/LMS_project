@@ -49,8 +49,7 @@
                                 hhhhhhh
                                 </span>
                             </td>
-                            <td class="py-4 px-6 border-b border-grey-light text-right">
-                                
+                            <td class="py-4 px-6 border-b border-grey-light text-right">  
                                 <router-link to="/Supervisor/Settings/Role/Update"><button
                                 @click="editRole(role.id)"
                                 class="text-white font-bold py-1 px-3 border rounded text-xs bg-gray-900 hover:bg-yellow-400">

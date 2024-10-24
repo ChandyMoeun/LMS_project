@@ -6,7 +6,7 @@
       </div>
       <div class="container-page">
         <WebHeaderMenu/>
-        <main class="bg-gray sticky top-0">
+        <main class="sticky top-0">
           <div class="mt-15">
     <!-- Header -->
     <div class="text-black border-b-2 border-gray-300 px-8 h-15 items-center" style="border-bottom: solid 1px gray">

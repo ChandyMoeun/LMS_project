@@ -1,18 +1,50 @@
 <script setup lang="ts">
 import { Icon } from '@iconify/vue'
 // import { ref, computed, watchEffect } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
 import { useAuthStore } from '@/stores/auth-store'
+import { ref, computed, watchEffect } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
 
-// const showDropdown = ref(false)
+const showDropdown = ref(false)
 const route = useRoute()
 const router = useRouter()
+const authStore = useAuthStore()
+const user = authStore.user
+const roles = authStore.roles
+const permissions = authStore.permissions
+const isAuthenticated = authStore.isAuthenticated
+const index = ref<string>('1')
+
+function toggleDropdown() {
+  showDropdown.value = !showDropdown.value
+}
+
+function closeDropdown() {
+  showDropdown.value = false
+}
 
 function logOut() {
   localStorage.removeItem('access_token')
-  router.push('/')
-  window.location.reload()
+  router.push('/login')
 }
+
+const tabs = [
+  { id: 1, name: 'Dashboard', path: '/supervisor_dashboard' },
+]
+
+const activeTab = computed(() => {
+  return tabs.findIndex((tab) => route.path.includes(tab.path))
+  // user,
+  // roles,
+  // permissions,
+  // isAuthenticated
+})
+
+// watchEffect(() => {
+//   if (activeTab.value === -1) {
+//     router.push(tabs[0].path)
+//   }
+// })
 </script>
 <template>
   <header
@@ -72,21 +104,26 @@ function logOut() {
       <span>Welcome, <strong>user full name</strong></span>
       <div class="relative">
         <button class="relative block h-8 w-8 rounded-full overflow-hidden shadow focus:outline-none">
-          <img class="h-full w-full object-cover" src="../assets/image/profile-avatar.jpg" alt="Your avatar" />
+          <img class="h-full w-full object-cover"  @click="toggleDropdown" src="../assets/image/profile-avatar.jpg" alt="Your avatar" />
         </button>
 
-        <div class="absolute right-0 mt-2 w-48 bg-white rounded-md overflow-hidden shadow-xl z-10" style="display: none" >
-          <a href="#"
-            class="block px-4 py-2 text-sm text-gray-700 hover:bg-indigo-600 hover:text-white" >Profile</a>
-
-            <!-- logout -->
-            <div>
-              <div class="px-4 py-2 rounded font-semibold" @click="logOut">Logout</div>
-            </div>
-        </div>
       </div>
+      <!-- <a class="flex items-center whitespace-nowrap transition duration-150 ease-in-out"
+        href="#" @click="toggleDropdown" role="button" aria-expanded="false">
+        <img :src="`http://127.0.0.1:8000/images/${user.profile}`"
+          class="rounded-full h-12 w-12 border-2 border-white shadow-lg" alt="" loading="lazy" />
+      </a> -->
+      <!-- Dropdown menu -->
+      <transition name="fade">
+        <div v-if="showDropdown"
+          class="absolute right-7 z-50 mt-40 w-45 text-center rounded-lg bg-gray-100 shadow-lg dark:bg-neutral-800">
+          <a href="/myprofile" class="block no-underline w-full px-4 py-2 text-sm text-neutral-700 hover:bg-blue-600 hover:text-white dark:text-white dark:hover:bg-neutral-700 cursor-pointer">My profile</a>
+          <div class="block w-full px-4 py-2 text-sm text-neutral-700 hover:bg-blue-600 hover:text-white dark:text-white dark:hover:bg-neutral-700 cursor-pointer" @click="logOut" >
+            Log out
+          </div>
+        </div>
+      </transition>
     </div>
-
   </header>
 </template>
 
