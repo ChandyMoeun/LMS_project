@@ -268,6 +268,11 @@ const router = createRouter({
       'name': 'leave',
       component: () => import('../views/Employee/LeavPage.vue'),
     },
+    {
+      path: '/employee/dashbaord',
+      'name': 'dashbaord',
+      component: () => import('../views/Employee/EmDashbaord.vue'),
+    },
   ]
 })
 
