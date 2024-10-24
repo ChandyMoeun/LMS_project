@@ -37,6 +37,7 @@
                 <canvas id="myLeaveBalance" style="width:100%; max-width:800px; height:100vh; max-height:70vh;"></canvas>
               </div>
             </div>
+            <!--............................list of my requesting leaves ..............................  -->
             <div class="px-8 overflow-x-auto">
               <h1 class="text-4xl p-10 text-black text-center">My Requesting Leaves</h1>
               <table class="min-w-full bg-gray-100 border border-gray-100">
@@ -76,7 +77,7 @@
                     </td>
                     
                     <td class="py-2 px-2 text-center border-b text-xs">
-                      <a href="/Supervisor/takeLeave/view/leaveDetail" class="text-blue-500 no-underline hover:text-blue-400">More</a>
+                      <a href="#" class="text-blue-500 no-underline hover:text-blue-400">More</a>
                     </td>
                   </tr>
                 </tbody>

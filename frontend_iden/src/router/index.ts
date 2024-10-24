@@ -264,14 +264,19 @@ const router = createRouter({
 
     //-----------------------------------employees routes --------------------------------
     {
+      path: '/employee/dashbaord',
+      'name': 'dashbaord',
+      component: () => import('../views/Employee/EmDashbaord.vue'),
+    },
+    {
       path: '/employee/myleave',
       'name': 'leave',
       component: () => import('../views/Employee/myLeave/myLeavePage.vue'),
     },
     {
-      path: '/employee/dashbaord',
-      'name': 'dashbaord',
-      component: () => import('../views/Employee/EmDashbaord.vue'),
+      path: '/employee/myleave/view/detail',
+      'name': 'leaveDetail',
+      component: () => import('../views/Employee/myLeave/myLeaveDetail.vue'),
     },
   ]
 })
