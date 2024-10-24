@@ -7,18 +7,18 @@
       <div class="container-page">
         <WebHeaderMenu />
         <main class="bg-gray sticky top-0">
-          <div class="container pb-20">
+          <div class="container pb-30">
                 <!-- Header -->
             <div class="mt-5 text-black" style="border-bottom: solid 1px gray">
-              <h1 class="font-bold text-3xl px-8 mb-3 hover:text-yellow-400 w-4/12">Employee Dashboard</h1>
+              <h1 class="font-bold text-3xl px-8 hover:text-yellow-400 w-4/12">Employee Dashboard</h1>
             </div>
             <!----------- alert code -------------------->
-            <div class="button" style="margin: 50px">
+            <div class="button">
               <!-- Toast Alert Box -->
-              <div class="button" style="margin: 50px">
+              <div class="button">
                 <div v-show="isToastVisible"
                   class="toast-box"
-                  style=" position: absolute; top: 5%; right: 2%; display: flex; align-items: flex-end; flex-direction: column; overflow: hidden; padding: 2px; width: 23%;">
+                  style=" position: absolute; top: 7%; right: 2%; display: flex; align-items: flex-end; flex-direction: column; overflow: hidden; padding: 2px; width: 23%;">
                   <div
                     role="alert"
                     class="mb-4 relative flex w-full p-3 pr-5 text-sm text-white bg-black rounded-md items-center">
@@ -30,12 +30,57 @@
             <!----------- //end alert code //--------------------> 
 
             <!--............................// Chart js // total employee leave balance chart ..............................  -->
-            <div class="chartjs mb-10 px-8 py-10">
+            <div class="chartjs px-8 py-10">
               <!-- Chart Container -->
-              <h1 class="text-4xl text-black p-10 text-center">Employee Dashboard</h1>  
+              <h1 class="text-4xl text-black p-10 text-center">My Leave Balance</h1>  
               <div class="chart-container flex justify-center mb-10 rounded-2xl py3 bg-white shadow-[0_35px_60px_-15px_rgba(0,0,0,0.3)]">
                 <canvas id="myLeaveBalance" style="width:100%; max-width:800px; height:100vh; max-height:70vh;"></canvas>
               </div>
+            </div>
+            <div class="px-8 overflow-x-auto">
+              <h1 class="text-4xl p-10 text-black text-center">My Requesting Leaves</h1>
+              <table class="min-w-full bg-gray-100 border border-gray-100">
+                <thead>
+                  <tr class="bg-black text-white text-xs">
+                    <th class="py-2 px-2 text-center border-b">ID</th>
+                    <th class="py-2 px-2 text-center border-b">Profile</th>
+                    <th class="py-2 px-2 text-center border-b">Name</th>
+                    <th class="py-2 px-2 text-center border-b">Type</th>
+                    <th class="py-2 px-2 text-center border-b">Position</th>
+                    <th class="py-2 px-2 text-center border-b">From | To</th>
+                    <th class="py-2 px-2 text-center border-b">Approver</th>
+                    <th class="py-2 px-2 text-center border-b">Sub-approver</th>
+                    <th class="py-2 px-2 text-center border-b">Status</th>
+                    <th class="py-2 px-2 text-center border-b">Detail</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="hover:bg-white text-xs" v-for="(request, index) in leaveRequests" :key="index">
+                    <td class="py-2 px-2 text-center border-b">{{ request.id }}</td>
+                    <td class="flex py-2 px-2 justify-center border-b">
+                      <img src="../../assets/image/profile-avatar.jpg" alt="Profile Image" class="w-12 h-12 rounded-full object-cover" />
+                    </td>
+                    <td class="py-2 px-2 text-center border-b">{{ request.name }}</td>
+                    <td class="py-2 px-2 text-center border-b">{{ request.type }}</td>
+                    <td class="py-2 px-2 text-center border-b">{{ request.position }}</td>
+                    <td class="py-2 px-2 text-center border-b">{{ request.date }}</td>
+                    <td class="py-2 px-2 text-center border-b">{{ request.approver }}</td>
+                    <td class="py-2 px-2 text-center border-b">{{ request.subApprover }}</td>
+                    
+                    <!-- Dropdown status update -->
+                    <td class="py-2 px-2 text-center border-b">
+                      
+                      <div>
+                        <span :class="statusClass(request.status)">{{ request.status }}</span>
+                      </div>
+                    </td>
+                    
+                    <td class="py-2 px-2 text-center border-b text-xs">
+                      <a href="/Supervisor/takeLeave/view/leaveDetail" class="text-blue-500 no-underline hover:text-blue-400">More</a>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
           </div>
         </main>
@@ -104,6 +149,40 @@ const showToast = () => {
 onMounted(() => {
   showToast()
 })
+
+// Sample data for leave requests
+const leaveRequests = ref([
+  { id: 1, name: 'John Doe', type: 'Sick Leave', position: 'Developer', date: '12.02.2024 | 12.03.2024', approver: 'Approver1', subApprover: 'Sub1', status: 'Pending' },
+  { id: 2, name: 'Jane Doe', type: 'Annual Leave', position: 'Designer', date: '01.01.2024 | 01.02.2024', approver: 'Approver2', subApprover: 'Sub2', status: 'Approved' }
+]);
+
+const dropdownVisible = ref(null);
+
+// Method to toggle the visibility of the dropdown
+const toggleDropdown = (index) => {
+  dropdownVisible.value = dropdownVisible.value === index ? null : index;
+};
+
+// Method to handle status update
+const updateStatus = (index) => {
+  const updatedStatus = leaveRequests.value[index].status;
+  // Do something with the updated status, like sending it to a server or storing it
+  console.log(`Leave request ${leaveRequests.value[index].id} updated to: ${updatedStatus}`);
+};
+
+// Method to dynamically assign classes based on status
+const statusClass = (status) => {
+  switch (status) {
+    case 'Pending':
+      return 'bg-yellow-400 text-white px-2 py-1 rounded-full text-xs font-semibold';
+    case 'Approved':
+      return 'bg-green-400 text-white px-2 py-1 rounded-full text-xs font-semibold';
+    case 'Rejected':
+      return 'bg-red-400 text-white px-2 py-1 rounded-full text-xs font-semibold';
+    default:
+      return '';
+  }
+};
 </script>
 
 
