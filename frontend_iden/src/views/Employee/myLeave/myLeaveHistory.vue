@@ -74,7 +74,7 @@
                         </td>
                         <td class="py-4 px-2 text-sm text-center text-black">2</td>
                         <td class="py-4 px-2 text-sm text-center">
-                          <a href="/employee/myleave/view/detail" 
+                          <a href="/employee/myleave/historyleave/detail" 
                             class="text-blue-700 no-underline hover:text-blue-300"
                             >View</a >
                         </td>

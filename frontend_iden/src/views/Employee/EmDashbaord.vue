@@ -77,7 +77,7 @@
                     </td>
                     
                     <td class="py-2 px-2 text-center border-b text-xs">
-                      <a href="#" class="text-blue-500 no-underline hover:text-blue-400">More</a>
+                      <a href="/employee/myleave/view/detail" class="text-blue-500 no-underline hover:text-blue-400">More</a>
                     </td>
                   </tr>
                 </tbody>
