@@ -278,6 +278,11 @@ const router = createRouter({
       'name': 'leaveDetail',
       component: () => import('../views/Employee/myLeave/myLeaveDetail.vue'),
     },
+    {
+      path: '/employee/myleave/historyleave',
+      'name': 'historyleave',
+      component: () => import('../views/Employee/myLeave/myLeaveHistory.vue'),
+    },
   ]
 })
 
