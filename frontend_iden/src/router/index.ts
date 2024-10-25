@@ -268,6 +268,7 @@ const router = createRouter({
       'name': 'dashbaord',
       component: () => import('../views/Employee/EmDashbaord.vue'),
     },
+              //---------------- leave routes --------------------------------
     {
       path: '/employee/myleave',
       'name': 'leave',
@@ -287,6 +288,11 @@ const router = createRouter({
       path: '/employee/myleave/historyleave/detail',
       'name': 'leavehistorydetail',
       component: () => import('../views/Employee/myLeave/myHistoryDetail.vue'),
+    },
+    {
+      path: '/employee/myleave/rejectedleave',
+      'name': 'rejectedleave',
+      component: () => import('../views/Employee/myLeave/rejectLeavePage.vue'),
     },
   ]
 })
