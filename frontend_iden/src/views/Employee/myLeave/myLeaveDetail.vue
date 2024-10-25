@@ -1,8 +1,8 @@
 <template>
-  <SupervisorLayout>
-    <div class="supervisor">
+  <EmployeeLayout>
+    <div class="employee">
       <div class="sidebar">
-        <SupervisorSidebar></SupervisorSidebar>
+        <EmployeeSidebar></EmployeeSidebar>
       </div>
       <div class="container-page">
         <WebHeaderMenu />
@@ -85,14 +85,14 @@
         </main>
       </div>
     </div>
-  </SupervisorLayout>
+  </EmployeeLayout>
 </template>
   
   <script>
-import SupervisorSidebar from '@/Components/SupervisorSidebar.vue'
+import EmployeeSidebar from '@/Components/EmployeeSidebar.vue'
 import WebHeaderMenu from '@/Components/WebHeaderMenu.vue'
 export default {
-  components: { SupervisorSidebar, WebHeaderMenu },
+  components: { EmployeeSidebar, WebHeaderMenu },
   data() {
     return {
       // Data can be added if needed for dynamic rendering
@@ -103,7 +103,7 @@ export default {
   
   
   <style scoped>
-.supervisor {
+.employee {
   display: flex;
   height: 100vh;
   align-items: start;

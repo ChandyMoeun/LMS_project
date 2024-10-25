@@ -1,8 +1,8 @@
 <template>
-  <SupervisorLayout>
-    <div class="supervisor">
+  <EmployeeLayout>
+    <div class="employee">
       <div class="sidebar">
-        <SupervisorSidebar></SupervisorSidebar>
+        <EmployeeSidebar></EmployeeSidebar>
       </div>
       <div class="container-page">
         <WebHeaderMenu />
@@ -87,11 +87,11 @@
         </main>
       </div>
     </div>
-  </SupervisorLayout>
+  </EmployeeLayout>
 </template>
 
 <script setup lang="ts">
-import SupervisorSidebar from '@/Components/SupervisorSidebar.vue'
+import EmployeeLayout from '@/Components/Layouts/EmployeeLayout.vue';
 import WebHeaderMenu from '@/Components/WebHeaderMenu.vue'
 
 import { ref, onMounted } from 'vue'
@@ -188,7 +188,7 @@ const statusClass = (status) => {
 
 
 <style scoped>
-.supervisor {
+.employee {
   display: flex;
   height: 100vh;
   align-items: start;
