@@ -268,7 +268,7 @@ const router = createRouter({
       'name': 'dashbaord',
       component: () => import('../views/Employee/EmDashbaord.vue'),
     },
-              //---------------- leave routes --------------------------------
+              //----------------employees leave routes --------------------------------
     {
       path: '/employee/myleave',
       'name': 'leave',
@@ -293,6 +293,12 @@ const router = createRouter({
       path: '/employee/myleave/rejectedleave',
       'name': 'rejectedleave',
       component: () => import('../views/Employee/myLeave/rejectLeavePage.vue'),
+    },
+              //----------------employees calendar routes --------------------------------
+    {
+      path: '/employee/calendar',
+      'name': 'calendar',
+      component: () => import('../views/Employee/calendars/calendarPage.vue'),
     },
   ]
 })
