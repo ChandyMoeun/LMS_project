@@ -18,6 +18,7 @@ use App\Http\Controllers\Admin\{
     DashboardController,
     ResetPasswordController,
     NotificationController,
+    ForgotPasswordController,
 };
 use App\Http\Controllers\LeaveRequestController;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
@@ -140,4 +141,11 @@ Route::namespace('App\Http\Controllers\Admin')->name('admin.')->prefix('admin')
 
         // Example route to trigger notification after a leave request (for demonstration purposes)
         Route::get('/notify-leave/{id}', [NotificationController::class, 'notifyAfterLeaveRequest'])->name('notifications.leave');
+
+
+        //===>forgot password<=====
+        Route::get('forgot-password', [ForgotPasswordController::class, 'index'])->name('forgot-password');
+        Route::post('forgot-password', [ForgotPasswordController::class,'sendResetLinkEmail'])->name('password.email');
+        Route::get('reset-password/{token}', [ForgotPasswordController::class,'showResetForm'])->name('reset-password.form');
+        Route::post('reset-password', [ForgotPasswordController::class,'reset'])->name('reset-password');
     });

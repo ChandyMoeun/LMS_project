@@ -20,7 +20,6 @@
                                 {{ session('status') }}
                             </div>
                             @endif
-
                             <form method="POST" action="{{ route('password.email') }}">
                                 @csrf
                                 <h1 class="font-bold text-3xl mb-20 text-center">Forgot Password</h1>
