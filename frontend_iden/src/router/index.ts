@@ -300,6 +300,12 @@ const router = createRouter({
       'name': 'calendar',
       component: () => import('../views/Employee/calendars/calendarPage.vue'),
     },
+              //----------------employees attendance routes --------------------------------
+    {
+      path: '/employee/attendance',
+      'name': 'attendance',
+      component: () => import('../views/Employee/attendance/attendancePage.vue'),
+    },
   ]
 })
 

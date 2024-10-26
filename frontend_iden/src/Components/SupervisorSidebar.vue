@@ -18,7 +18,7 @@
 
     <div class="nav nav-pills flex-column mb-auto gap-2">
       <a
-        :class="['flex no-underline items-center mt-4 py-2 px-6 text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100', activeLink === '/Supervisor/dashboard' ? 'active' : '']"
+        :class="['flex no-underline items-center mt-4 py-2 px-6 text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 hover:rounded-lg hover:rounded-lg hover:text-gray-100', activeLink === '/Supervisor/dashboard' ? 'active' : '']"
         href="/Supervisor/dashboard"
         @click="setActiveLink('/Supervisor/dashboard')"
       >
@@ -46,7 +46,7 @@
       </a>
 
       <a
-        :class="['flex no-underline items-center mt-4 py-2 px-6 text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100', activeLink === '/Supervisor/calendar' ? 'active' : '']"
+        :class="['flex no-underline items-center mt-4 py-2 px-6 text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 hover:rounded-lg hover:text-gray-100', activeLink === '/Supervisor/calendar' ? 'active' : '']"
         href="/Supervisor/calendar"
         @click="setActiveLink('/Supervisor/calendar')"
       >
@@ -71,7 +71,7 @@
       </a>
 
       <a
-        :class="['flex no-underline items-center mt-4 py-2 px-6 text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100', activeLink === '/Supervisor/takeLeave' ? 'active' : '']"
+        :class="['flex no-underline items-center mt-4 py-2 px-6 text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 hover:rounded-lg hover:text-gray-100', activeLink === '/Supervisor/takeLeave' ? 'active' : '']"
         href="/Supervisor/takeLeave"
         @click="setActiveLink('/Supervisor/takeLeave')"
       >
@@ -94,7 +94,7 @@
         </svg>
         <span class="mx-3">Leave</span>
       </a>
-      <a :class="['flex no-underline items-center mt-4 py-2 px-6 text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100', activeLink === '/Supervisor/Employee' ? 'active' : '']"
+      <a :class="['flex no-underline items-center mt-4 py-2 px-6 text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 hover:rounded-lg hover:text-gray-100', activeLink === '/Supervisor/Employee' ? 'active' : '']"
             href="/Supervisor/Employee">
             <svg class="w-6 h-6 text-white-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
                 <path fill-rule="evenodd" d="M12 6a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7Zm-1.5 8a4 4 0 0 0-4 4 2 2 0 0 0 2 2h7a2 2 0 0 0 2-2 4 4 0 0 0-4-4h-3Zm6.82-3.096a5.51 5.51 0 0 0-2.797-6.293 3.5 3.5 0 1 1 2.796 6.292ZM19.5 18h.5a2 2 0 0 0 2-2 4 4 0 0 0-4-4h-1.1a5.503 5.503 0 0 1-.471.762A5.998 5.998 0 0 1 19.5 18ZM4 7.5a3.5 3.5 0 0 1 5.477-2.889 5.5 5.5 0 0 0-2.796 6.293A3.501 3.501 0 0 1 4 7.5ZM7.1 12H6a4 4 0 0 0-4 4 2 2 0 0 0 2 2h.5a5.998 5.998 0 0 1 3.071-5.238A5.505 5.505 0 0 1 7.1 12Z" clip-rule="evenodd" />
@@ -102,7 +102,7 @@
 
             <span class="mx-3">Employees</span>
       </a>
-      <a :class="['flex no-underline items-center mt-4 py-2 px-6 text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100', activeLink === '/Supervisor/Attendance' ? 'active' : '']"
+      <a :class="['flex no-underline items-center mt-4 py-2 px-6 text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 hover:rounded-lg hover:text-gray-100', activeLink === '/Supervisor/Attendance' ? 'active' : '']"
 
             href="/Supervisor/Attendance">
             <svg class="w-6 h-6 text-white-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
@@ -112,7 +112,7 @@
             <span class="mx-3">Attendances</span>
         </a>
         <!--Setting sidebar-->
-      <a :class="['flex no-underline items-center mt-4 py-2 px-6 text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100', activeLink === '/Supervisor/Settings' ? 'active' : '']"
+      <a :class="['flex no-underline items-center mt-4 py-2 px-6 text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 hover:rounded-lg hover:text-gray-100', activeLink === '/Supervisor/Settings' ? 'active' : '']"
             href="/Supervisor/Settings">
             <svg class="w-6 h-6 text-white-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13v-2a1 1 0 0 0-1-1h-.757l-.707-1.707.535-.536a1 1 0 0 0 0-1.414l-1.414-1.414a1 1 0 0 0-1.414 0l-.536.535L14 4.757V4a1 1 0 0 0-1-1h-2a1 1 0 0 0-1 1v.757l-1.707.707-.536-.535a1 1 0 0 0-1.414 0L4.929 6.343a1 1 0 0 0 0 1.414l.536.536L4.757 10H4a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1h.757l.707 1.707-.535.536a1 1 0 0 0 0 1.414l1.414 1.414a1 1 0 0 0 1.414 0l.536-.535 1.707.707V20a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1v-.757l1.707-.708.536.536a1 1 0 0 0 1.414 0l1.414-1.414a1 1 0 0 0 0-1.414l-.535-.536.707-1.707H20a1 1 0 0 0 1-1Z" />
@@ -159,7 +159,8 @@ watch(
 <style scoped>
 .active {
   background: rgba(154, 154, 198, 0.14);
-  color: white
+  color: white;
+  border-radius: 10px;
 }
 
 </style>
