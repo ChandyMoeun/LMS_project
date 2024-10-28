@@ -46,7 +46,7 @@
                     <td class="p-3 text-blue-600 text-center">{{ employee.email }}</td>
                     <td class="p-3 text-center">{{ employee.position ? employee.position.name : 'No position' }}</td>
                     <td class="text-center w-3/12">
-                    <button @click="viewEmployee(employee.id)" class="text-white px-2 py-1 border-solid border-0 border-indigo-600 rounded-lg bg-blue-600 hover:bg-blue-400 border-none"><a href="#" class="no-underline text-white">More</a></button>
+                    <button @click="viewEmployee(employee.id)" class="text-white px-2 py-1 border-solid border-0 border-indigo-600 rounded-lg bg-blue-600 hover:bg-blue-400 border-none"><a href="/employee/team/detail" class="no-underline text-white">More</a></button>
                     </td>
                 </tr>
                 </tbody>

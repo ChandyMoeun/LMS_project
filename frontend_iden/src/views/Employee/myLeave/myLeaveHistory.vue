@@ -25,7 +25,7 @@
                   <div>
                     <a
                     href="/employee/myleave/rejectedleave"
-                    class="mr-5 px-3 mt-1 py-2 bg-black text-white font-semibold rounded-lg shadow-md hover:bg-yellow-400 transition-colors no-underline"
+                    class="mr-5 px-3 mt-1 py-2 bg-gray-900 text-white font-semibold rounded-lg shadow-md hover:bg-yellow-400 transition-colors no-underline"
                     >Rejected Leave</a>
                   <a
                     href="/employee/myleave"

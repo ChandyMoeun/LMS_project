@@ -312,6 +312,11 @@ const router = createRouter({
       'name': 'team',
       component: () => import('../views/Employee/team/teamPage.vue'),
     },
+    {
+      path: '/employee/team/detail',
+      'name': 'TeamDetail',
+      component: () => import('../views/Employee/team/teamDetailPage.vue'),
+    },
   ]
 })
 
