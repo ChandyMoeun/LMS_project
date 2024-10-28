@@ -333,6 +333,11 @@ const router = createRouter({
       'name': 'resetpassword',
       component: () => import('../views/Employee/settings/resetPW/resetPw.vue'),
     },
+    {
+      path: '/employee/settings/profile',
+      'name': 'profile',
+      component: () => import('../views/Employee/settings/myprofile/myProfile.vue'),
+    },
   ]
 })
 
