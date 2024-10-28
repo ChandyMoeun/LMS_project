@@ -317,7 +317,7 @@ const router = createRouter({
       'name': 'TeamDetail',
       component: () => import('../views/Employee/team/teamDetailPage.vue'),
     },
-              //----------------employees team routes --------------------------------
+              //----------------employees setting routes --------------------------------
     {
       path: '/employee/settings',
       'name': 'setting',
@@ -327,6 +327,11 @@ const router = createRouter({
       path: '/employee/settings/balances',
       'name': 'MyBalance',
       component: () => import('../views/Employee/settings/balances/balancePage.vue'),
+    },
+    {
+      path: '/employee/settings/resetpassword',
+      'name': 'resetpassword',
+      component: () => import('../views/Employee/settings/resetPW/resetPw.vue'),
     },
   ]
 })

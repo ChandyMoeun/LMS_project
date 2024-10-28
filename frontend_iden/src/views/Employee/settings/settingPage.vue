@@ -57,7 +57,7 @@
                                 <p class="mb-3 font-normal text-gray-700">
                                 I can reset my account password by my salf.
                                 </p>
-                                <a href="#" class="no-underline text-white inline-flex items-center px-3 py-2 text-sm font-medium text-white bg-gray-900 rounded-lg hover:bg-yellow-400">
+                                <a href="/employee/settings/resetpassword" class="no-underline text-white inline-flex items-center px-3 py-2 text-sm font-medium text-white bg-gray-900 rounded-lg hover:bg-yellow-400">
                                 View more
                                 <svg
                                     class="ml-2 w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10" >
