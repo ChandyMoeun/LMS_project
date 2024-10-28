@@ -317,6 +317,17 @@ const router = createRouter({
       'name': 'TeamDetail',
       component: () => import('../views/Employee/team/teamDetailPage.vue'),
     },
+              //----------------employees team routes --------------------------------
+    {
+      path: '/employee/settings',
+      'name': 'team',
+      component: () => import('../views/Employee/settings/settingPage.vue'),
+    },
+    // {
+    //   path: '/employee/team/detail',
+    //   'name': 'TeamDetail',
+    //   component: () => import('../views/Employee/team/teamDetailPage.vue'),
+    // },
   ]
 })
 
