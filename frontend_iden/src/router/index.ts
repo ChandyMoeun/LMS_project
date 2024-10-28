@@ -320,14 +320,14 @@ const router = createRouter({
               //----------------employees team routes --------------------------------
     {
       path: '/employee/settings',
-      'name': 'team',
+      'name': 'setting',
       component: () => import('../views/Employee/settings/settingPage.vue'),
     },
-    // {
-    //   path: '/employee/team/detail',
-    //   'name': 'TeamDetail',
-    //   component: () => import('../views/Employee/team/teamDetailPage.vue'),
-    // },
+    {
+      path: '/employee/settings/balances',
+      'name': 'MyBalance',
+      component: () => import('../views/Employee/settings/balances/balancePage.vue'),
+    },
   ]
 })
 

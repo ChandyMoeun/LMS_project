@@ -129,8 +129,8 @@
   import WebHeaderMenu from '@/Components/WebHeaderMenu.vue'
   import { ref } from 'vue';
   export default {
+    components: {EmployeeSidebar, WebHeaderMenu},
   methods: {
-      components: {EmployeeSidebar, WebHeaderMenu},
         setup() {
             const user_name = ref('');
             const leave_type_id = ref('');
