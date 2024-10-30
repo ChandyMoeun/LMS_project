@@ -57,29 +57,9 @@ const router = createRouter({
 
     //..............................supervisor routes -------------------------------- 
     {
-      path: '/Supervisor/calendar',
-      'name': 'calendar',
+      path: '/Supervisor/calendars',
+      'name': 'calendars',
       component: () => import('../views/Supervisor/calenda/calendarPage.vue'),
-    },
-    {
-      path: '/Supervisor/calendar/holiday/create',
-      'name': 'holidayCreate',
-      component: () => import('../views/Supervisor/calenda/holiday/createHoliday.vue'),
-    },
-    {
-      path: '/Supervisor/calendar/workTime/create',
-      'name': 'workTimeCreate',
-      component: () => import('../views/Supervisor/calenda/work_time/addWorkTime.vue'),
-    },
-    {
-      path: '/Supervisor/calendar/workTime/edit',
-      'name': 'workTimeEdit',
-      component: () => import('../views/Supervisor/calenda/work_time/editWorkTime.vue'),
-    },
-    {
-      path: '/Supervisor/calendar/holiday/edit',
-      'name': 'holidayEdit',
-      component: () => import('../views/Supervisor/calenda/holiday/editHoliday.vue'),
     },
     {
       path: '/Supervisor/takeLeave',

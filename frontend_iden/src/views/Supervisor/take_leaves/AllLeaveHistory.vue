@@ -31,7 +31,7 @@
                 </svg>
               </router-link>
               <h1 class="font-bold text-3xl px-8 hover:text-yellow-500 w-5/12">
-                <b>Employee leaves History</b>
+                <b>Team leaves History</b>
               </h1>
             </div>
 
@@ -57,89 +57,41 @@
                 <table class="w-full divide-y divide-gray-200">
                   <thead class="bg-black">
                     <tr>
-                      <th class="py-3 px-2 text-center text-xs text-white uppercase tracking-wider">
-                        Staff ID
-                      </th>
-                      <th class="py-3 px-2 text-center text-xs text-white uppercase tracking-wider">
-                        Name
-                      </th>
-                      <th class="py-3 px-2 text-center text-xs text-white uppercase tracking-wider">
-                        Type
-                      </th>
-                      <th class="py-3 px-2 text-center text-xs text-white uppercase tracking-wider">
-                        From
-                      </th>
-                      <th class="py-3 px-2 text-center text-xs text-white uppercase tracking-wider">
-                        To
-                      </th>
-                      <th class="py-3 px-2 text-center text-xs text-white uppercase tracking-wider">
-                        Half Day
-                      </th>
-                      <th class="py-3 px-2 text-center text-xs text-white uppercase tracking-wider">
-                        Files
-                      </th>
-                      <th class="py-3 px-2 text-center text-xs text-white uppercase tracking-wider">
-                        Status
-                      </th>
-                      <th class="py-3 px-2 text-center text-xs text-white uppercase tracking-wider">
-                        Total
-                      </th>
-                      <th class="py-3 px-2 text-center text-xs text-white uppercase tracking-wider">
-                        Detail
-                      </th>
-                      <th class="py-3 px-2 text-center text-xs text-white uppercase tracking-wider">
-                        Approver
-                      </th>
+                      <th class="py-3 px-2 text-center text-xs text-white uppercase tracking-wider">Staff ID</th>
+                      <th class="py-3 px-2 text-center text-xs text-white uppercase tracking-wider">Name</th>
+                      <th class="py-3 px-2 text-center text-xs text-white uppercase tracking-wider">Type</th>
+                      <th class="py-3 px-2 text-center text-xs text-white uppercase tracking-wider">From</th>
+                      <th class="py-3 px-2 text-center text-xs text-white uppercase tracking-wider">To</th>
+                      <th class="py-3 px-2 text-center text-xs text-white uppercase tracking-wider">Half Day</th>
+                      <th class="py-3 px-2 text-center text-xs text-white uppercase tracking-wider">Files</th>
+                      <th class="py-3 px-2 text-center text-xs text-white uppercase tracking-wider">Status</th>
+                      <th class="py-3 px-2 text-center text-xs text-white uppercase tracking-wider">Total</th>
+                      <th class="py-3 px-2 text-center text-xs text-white uppercase tracking-wider">Detail</th>
+                      <th class="py-3 px-2 text-center text-xs text-white uppercase tracking-wider">Approver</th>
                     </tr>
                   </thead>
                   <tbody>
-                    <tr
-                      v-for="leaveRequest in filteredLeaveRequests"
-                      :key="leaveRequest.id"
-                      class="hover:bg-gray-50"
-                    >
-                      <td class="py-4 px-2 text-sm text-center text-black">001</td>
-                      <td class="py-4 px-2 text-sm text-center text-black">UserName</td>
-                      <td class="py-4 text-center px-2 text-sm text-black">sick leave</td>
-                      <td class="py-4 px-2 text-sm text-center text-black">10.10.2024</td>
-                      <td class="py-4 px-2 text-sm text-center text-black">10.11.2024</td>
-                      <td class="py-4 px-2 text-sm text-center text-black">Full day</td>
+                    <tr v-for="leaveRequest in filteredLeaveRequests" :key="leaveRequest.id" class="hover:bg-gray-100"> 
+                      <td class="py-4 px-2 text-sm text-center text-black">{{ leaveRequest.staff_id }}</td>
+                      <td class="py-4 px-2 text-sm text-center text-black">{{ leaveRequest.full_name }}</td>
+                      <td class="py-4 text-center px-2 text-sm text-black">{{ leaveRequest.leave_name }}</td>
+                      <td class="py-4 px-2 text-sm text-center text-black">{{ leaveRequest.from_date }}</td>
+                      <td class="py-4 px-2 text-sm text-center text-black">{{ leaveRequest.to_date }}</td>
+                      <td class="py-4 px-2 text-sm text-center text-black">{{ leaveRequest.half_day }}</td>
 
                       <!-- Display attachment -->
-                      <td class="py-4 px-6 text-sm text-center text-black">
-                        <div class="flex gap-2">
-                          <img
-                            src="#"
-                            class="max-h-5 max-w-full object-cover mb-2 cursor-pointer"
-                          />
+                      <td>
+                        <div class="flex gap-2 justify-center">
+                          <img :src="leaveRequest.file_url" class="max-h-5 cursor-pointer" />
                           <a href="#">See More</a>
                         </div>
                       </td>
-                      <td class="py-4 px-6 text-sm">
-                        <span
-                          :class="{
-                            'bg-yellow-400 text-black': 'Pending',
-                            'bg-green-500 text-white': 'Approved',
-                            'bg-red-500 text-white': 'Rejected'
-                          }"
-                          class="text-center px-2 py-1 rounded-full text-xs font-semibold"
-                        >
-                          {{ leaveRequest.status }}
-                        </span>
-                      </td>
-                      <td class="py-4 px-2 text-sm text-center text-black">2</td>
                       <td class="py-4 px-2 text-sm text-center">
-                        <a
-                          href="/Supervisor/takeLeave/view/leaveDetail"
-                          class="text-blue-700 no-underline hover:text-blue-300"
-                          >View</a
-                        >
+                        <span :class="statusClasses(leaveRequest.status)" class="px-2 py-1 rounded-full text-xs font-semibold">{{ leaveRequest.status }}</span>
                       </td>
-                      <td class="d-flex flex-col py-4 text-center text-sm text-gray-500">
-                        <span v-if="leaveRequest.approver">{{ leaveRequest.approver }}</span>
-                        <span v-if="leaveRequest.rejector">{{ leaveRequest.rejector }}</span>
-                        <span v-else>Pending</span>
-                      </td>
+                      <td class="py-4 px-2 text-sm text-center text-black">{{ leaveRequest.total_requested_days }}</td>
+                      <td class="py-4 px-2 text-sm text-center"><a href="/Supervisor/takeLeave/view/leaveDetail" class="text-blue-600 no-underline hover:text-blue-400">View</a></td>
+                      <td class="py-4 px-2 text-sm text-center">{{ leaveRequest.approver || leaveRequest.rejector }}</td>
                     </tr>
                   </tbody>
                 </table>
@@ -162,24 +114,25 @@ export default {
       searchQuery: '',
       leaveRequests: [
         {
-          id: 1,
-          staff_id: ' ',
-          full_name: ' ',
-          leave_name: ' ',
-          from_date: ' ',
-          to_date: ' ',
-          half_day: ' ',
-          status: ' rejected',
-          approver: ' ',
-          rejector: null, // Initially null, will be set upon rejection
-          total_requested_days: 2
-        }
+          id: 2,
+          staff_id: '002',
+          full_name: 'Gyver King',
+          leave_name: 'AL',
+          from_date: '2024-09-02',
+          to_date: '2024-09-04',
+          half_day: 'Full day',
+          status: 'Approved',
+          approver: 'Mr. Cat',
+          rejector: null,
+          total_requested_days: 3,
+          file_url: '#',
+        },
+        // Additional leave requests can be added here
       ]
     }
   },
   computed: {
     filteredLeaveRequests() {
-      // Simple search filter logic
       return this.leaveRequests.filter(
         (leave) =>
           leave.full_name.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
@@ -188,14 +141,12 @@ export default {
     }
   },
   methods: {
-    approveLeave(leaveRequest) {
-      // Logic for approving leave
-      leaveRequest.status = 'Approved'
-    },
-    rejectLeave(leaveRequest) {
-      // Logic for rejecting leave
-      leaveRequest.rejector = 'Your Name' // Change this dynamically based on user
-      leaveRequest.status = 'Rejected'
+    statusClasses(status) {
+      return {
+        'bg-yellow-400 text-black': status === 'Pending',
+        'bg-green-500 text-white': status === 'Approved',
+        'bg-red-500 text-white': status === 'Rejected',
+      }
     }
   }
 }

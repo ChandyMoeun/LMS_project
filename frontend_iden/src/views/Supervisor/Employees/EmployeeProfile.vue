@@ -15,7 +15,7 @@
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5H1m0 0 4 4M1 5l4-4" />
               </svg>
             </router-link>
-            <h1 class="font-bold text-3xl px-8 hover:text-yellow-500 w-5/12"><b>Employee Profile</b></h1>
+            <h1 class="font-bold text-3xl px-8 hover:text-yellow-500 w-5/12"><b>Member's Profile</b></h1>
         </div>
         <div class="container mt-20 mx-auto p-6">
           <div class="max-w-4xl mx-auto bg-white rounded-lg shadow-md">

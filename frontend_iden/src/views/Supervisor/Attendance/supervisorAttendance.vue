@@ -14,19 +14,19 @@
                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5H1m0 0 4 4M1 5l4-4"/>
                   </svg>
                 </router-link>
-              <h1 class="font-bold text-3xl px-8 hover:text-yellow-500 w-4/12"><b>Supervisor Attendance</b></h1>
+              <h1 class="font-bold text-3xl px-8 hover:text-yellow-500 w-4/12"><b>My Attendance</b></h1>
             </div>
       <div class="mt-20">
         <div class="bg-white shadow-md rounded-lg overflow-hidden">
           <div class="flex justify-between px-4 py-3 sm:px-6">
             <div>
               <h3 class="text-lg font-medium leading-6 text-yellow-400">Attendance Records</h3>
-              <p class="mt-1 text-sm text-gray-500">Detailed attendance records for all employees.</p>
+              <p class="mt-1 text-sm text-gray-500">Detailed attendance records for me.</p>
             </div>
             <!-- Search Bar -->
             <input 
               v-model="searchQuery" 
-              placeholder="Search employee by name..." 
+              placeholder="Search date..." 
               class="w-2/6 py-2 px-2 bg-blue-100 mt-3 h-9 border rounded"
             >
           </div>
@@ -89,13 +89,13 @@
     computed: {
       // Filter attendances based on the search query
       filteredAttendances() {
-        const query = this.searchQuery.trim().toLowerCase();
+        const query = this.searchQuery.trim();
         if (!query) {
           return this.attendances; // If no query, return all attendances
         }
-        return this.attendances.filter(attendance => 
-          attendance.employee.full_name.toLowerCase().includes(query)
-        );
+        return this.attendances.filter(attendance =>
+  attendance.date.includes(query)
+);
       },
     },
     methods: {
@@ -105,7 +105,7 @@
           {
             id: 1,
             employee: { full_name: 'John Doe' },
-            date: '2024-10-14',
+            date: '2024-3-14',
             status: 'present',
             clock_in: '09:00 AM',
             clock_out: '05:00 PM',
