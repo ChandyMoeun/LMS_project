@@ -24,11 +24,12 @@
                 <b>My Leave Detail</b>
               </h1>
             </div>
-            <!-- Leave Request Details -->
-
-            <div class="max-w-4xl mx-auto mt-20 p-5 bg-gray-100 rounded-lg shadow-md">
+            <div class="printpage d-flex justify-end mr-8 gap-3 mt-16">
+              <button @click="Export" class="border-none bg-blue-600 text-white px-4 py-2 rounded-lg shadow-md hover:bg-yellow-500">Export</button>
+              <button @click="printSection" class="border-none bg-gray-900 text-white px-4 py-2 rounded-lg shadow-md hover:bg-yellow-500">Print</button>
+            </div>
               <!-- Left Column: Request Details -->
-              <div class="grid grid-cols-2 gap-8">
+              <div id="detailleave" class="grid grid-cols-2 gap-8 mt-3 p-5 bg-gray-100 rounded-lg shadow-md">
                 <div>
                   <div class="mb-4">
                     <span class="font-semibold">Date:</span>
@@ -80,7 +81,6 @@
                   </div>
                 </div>
               </div>
-            </div>
           </div>
         </main>
       </div>
@@ -91,11 +91,34 @@
   <script>
 import EmployeeSidebar from '@/Components/EmployeeSidebar.vue'
 import WebHeaderMenu from '@/Components/WebHeaderMenu.vue'
+import html2pdf from 'html2pdf.js'
+
 export default {
   components: { EmployeeSidebar, WebHeaderMenu },
   data() {
     return {
       // Data can be added if needed for dynamic rendering
+    }
+  },
+  methods: {
+    printSection() {
+      const printContents = document.getElementById("detailleave").innerHTML;
+      const originalContents = document.body.innerHTML;
+      document.body.innerHTML = printContents;
+      window.print();
+      document.body.innerHTML = originalContents;
+      window.location.reload(); // Reload to reset original contents
+    },
+    Export() {
+      const element = document.getElementById("detailleave");
+      const options = {
+        margin: 1,
+        filename: 'Leave_Detail.pdf',
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { scale: 2 },
+        jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+      };
+      html2pdf().set(options).from(element).save();
     }
   }
 }
@@ -126,5 +149,21 @@ main {
   background-color: #e5e7eb;
   margin-bottom: 50px;
 }
+
+@media print {
+  /* Hide everything but the print section */
+  body * {
+    visibility: hidden;
+  }
+  #detailleave,
+  #detailleave * {
+    visibility: visible;
+  }
+  #detailleave {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+  }
+}
 </style>
-  
