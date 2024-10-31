@@ -9,14 +9,14 @@
         <main class="bg-gray sticky top-0">
           <div class="mt-16">
     <div class="d-flex text-black" style="display: flex; flex-direction: column; border-bottom: solid 1px gray;">
-      <h1 class="font-bold text-3xl px-8 hover:text-yellow-500 w-4/12"><b>Supervisor Attendance</b></h1>
+      <h1 class="font-bold text-3xl px-8 hover:text-yellow-500 w-3/12"><b>Team's Attendance</b></h1>
     </div>
     <div class="mt-20">
       <div class="bg-white shadow-md rounded-lg overflow-hidden">
         <div class="flex justify-between px-4 py-3 sm:px-6">
           <div>
-            <h3 class="text-lg font-medium leading-6 text-yellow-400">Attendance Records</h3>
-            <p class="mt-1 text-sm text-gray-500">Detailed attendance records for all employees.</p>
+            <h3 class="text-lg font-medium leading-6 text-yellow-400">Attendance Records in Team</h3>
+            <p class="mt-1 text-sm text-gray-500">Detailed attendance records for all employees who stay in my team.</p>
           </div>
           <!-- Search Bar -->
           <div class="w-5/12 flex justify-between">
@@ -84,17 +84,20 @@ export default {
     this.fetchAttendanceRecords();
   },
   computed: {
-    // Filter attendances based on the search query
-    filteredAttendances() {
-      const query = this.searchQuery.trim().toLowerCase();
-      if (!query) {
-        return this.attendances; // If no query, return all attendances
-      }
-      return this.attendances.filter(attendance => 
-        attendance.employee.full_name.toLowerCase().includes(query)
-      );
-    },
+  // Filter attendances based on the search query (either date or employee name)
+  filteredAttendances() {
+    const query = this.searchQuery.trim().toLowerCase();
+    if (!query) {
+      return this.attendances; // If no query, return all attendances
+    }
+    return this.attendances.filter(attendance => 
+      // Check if the date matches the query or if the employee's name includes the query
+      attendance.date.includes(query) ||
+      attendance.employee.full_name.toLowerCase().includes(query)
+    );
   },
+},
+
   methods: {
     fetchAttendanceRecords() {
       // Dummy data for demo purposes
@@ -102,7 +105,7 @@ export default {
         {
           id: 1,
           employee: { full_name: 'John Doe' },
-          date: '2024-10-14',
+          date: '2024-08-14',
           status: 'present',
           clock_in: '09:00 AM',
           clock_out: '05:00 PM',

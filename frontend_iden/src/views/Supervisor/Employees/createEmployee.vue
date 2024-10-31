@@ -15,7 +15,7 @@
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5H1m0 0 4 4M1 5l4-4"/>
               </svg>
             </router-link>
-            <h1 class="font-bold text-gray-900 mr-20 w-3/12 text-3xl mt-4 hover:text-yellow-400"><b>Add Employee </b></h1>
+            <h1 class="font-bold text-gray-900 mr-20 w-2/12 text-3xl mt-4 hover:text-yellow-400"><b>Add Member</b></h1>
           </div>
           <div class="bg-white shadow-md rounded my-6 mt-20 p-10">
             <form @submit.prevent="submitForm" enctype="multipart/form-data">

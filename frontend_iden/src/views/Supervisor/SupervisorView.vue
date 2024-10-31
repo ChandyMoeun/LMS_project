@@ -53,7 +53,7 @@
               <!-- Chart Container -->
               <h1 class="text-4xl text-black p-10 text-center">Employee Chart</h1>
 
-              <div class="chart-container mb-10 rounded-2xl py-5 bg-white shadow-[0_35px_60px_-15px_rgba(0,0,0,0.3)]">
+              <div class="chart-container mb-10 rounded-2xl py-2 bg-white shadow-[0_35px_60px_-15px_rgba(0,0,0,0.3)]">
                 <canvas id="employeeChart"></canvas>
               </div>
 
@@ -62,9 +62,9 @@
                 <canvas id="leaveChart"></canvas>
               </div>
             </div>
-            <!--.......................... employees take leaves ......................... -->
-            <div class="overflow-x-auto">
-              <h1 class="text-4xl p-10 text-black text-center">Leave Requests</h1>
+            <!--.......................... member requestion leaves ......................... -->
+            <div class="px-8 overflow-x-auto">
+              <h1 class="text-4xl p-10 text-black text-center">Member Requesting Leaves</h1>
               <table class="min-w-full bg-gray-100 border border-gray-100">
                 <thead>
                   <tr class="bg-black text-white text-xs">
@@ -82,33 +82,41 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <!-- Loop through each employee and generate table rows -->
-                  <tr class="hover:bg-white text-xs">
-                    <td class="py-2 px-2 text-center border-b">user ID</td>
+                  <tr class="hover:bg-white text-xs" v-for="(request, index) in leaveRequests" :key="index">
+                    <td class="py-2 px-2 text-center border-b">{{ request.id }}</td>
                     <td class="flex py-2 px-2 justify-center border-b">
-                      <img src="../../assets/image/profile-avatar.jpg" alt="Profile Image" class="w-12 h-12 rounded-full object-cover"/>
+                      <img src="../../assets/image/profile-avatar.jpg" alt="Profile Image" class="w-12 h-12 rounded-full object-cover" />
                     </td>
-                    <td class="py-2 px-2 text-center border-b">user full name</td>
-                    <td class="py-2 px-2 text-center border-b">sick leave</td>
-                    <td class="py-2 px-2 text-center border-b">position</td>
-                    <td class="py-2 px-2 text-center border-b">12,02.2024|12,03.2024</td>
-                    <td class="py-2 px-2 text-center border-b">Approver</td>
-                    <td class="py-2 px-2 text-center border-b text-xs">XXX</td> 
-                    <td class="py-2 px-2 text-center border-b text-xs">
-                      <span class="bg-yellow-400 text-white px-2 py-1 rounded-full text-xs font-semibold">Pending</span>
-                      <span class="bg-green-400 text-white px-2 py-1 rounded-full text-xs font-semibold">Approved</span>
-                      <span class="bg-red-400 text-white px-2 py-1 rounded-full text-xs font-semibold">Rejected</span >
-                    </td>
+                    <td class="py-2 px-2 text-center border-b">{{ request.name }}</td>
+                    <td class="py-2 px-2 text-center border-b">{{ request.type }}</td>
+                    <td class="py-2 px-2 text-center border-b">{{ request.position }}</td>
+                    <td class="py-2 px-2 text-center border-b">{{ request.date }}</td>
+                    <td class="py-2 px-2 text-center border-b">{{ request.approver }}</td>
+                    <td class="py-2 px-2 text-center border-b">{{ request.subApprover }}</td>
+                    
+                    <!-- Dropdown status update -->
+                    <td class="py-2 px-2 text-center border-b">
+                      
+                      <div>
+                        <span :class="statusClass(request.status)">{{ request.status }}</span>
+                      </div>
+                    </td>                    
                     <td class="py-2 px-2 text-center border-b text-xs">
                       <a href="/Supervisor/takeLeave/view/leaveDetail" class="text-blue-500 no-underline hover:text-blue-400">More</a>
                     </td>
                     <td class="action text-center align-middle">
-                      <!-- View button to toggle the visibility -->
-                      <button type="button"
-                        class="text-blue-500 hover:text-blue-400 font-semibold px-2 py-1 rounded-md"
-                        onclick="toggleButtons({{ $leaveRequest->id }})">
-                        Views
-                      </button>
+                      <span
+                        class="text-blue-500 hover:text-blue-400 font-semibold"
+                        @click="toggleDropdown(index)">
+                        View
+                      </span>
+                      <div v-if="dropdownVisible === index">
+                        <select v-model="request.status" @change="updateStatus(index)">
+                          <option value="Pending">Pending</option>
+                          <option value="Approved">Approved</option>
+                          <option value="Rejected">Rejected</option>
+                        </select>
+                      </div>
                     </td>
                   </tr>
                 </tbody>
@@ -220,6 +228,40 @@ const showToast = () => {
 onMounted(() => {
   showToast()
 })
+
+// Sample data for leave requests
+const leaveRequests = ref([
+  { id: 1, name: 'John Doe', type: 'Sick Leave', position: 'Developer', date: '12.02.2024 | 12.03.2024', approver: 'Approver1', subApprover: 'Sub1', status: 'Pending' },
+  { id: 2, name: 'Jane Doe', type: 'Annual Leave', position: 'Designer', date: '01.01.2024 | 01.02.2024', approver: 'Approver2', subApprover: 'Sub2', status: 'Approved' }
+]);
+
+const dropdownVisible = ref(null);
+
+// Method to toggle the visibility of the dropdown
+const toggleDropdown = (index) => {
+  dropdownVisible.value = dropdownVisible.value === index ? null : index;
+};
+
+// Method to handle status update
+const updateStatus = (index) => {
+  const updatedStatus = leaveRequests.value[index].status;
+  // Do something with the updated status, like sending it to a server or storing it
+  console.log(`Leave request ${leaveRequests.value[index].id} updated to: ${updatedStatus}`);
+};
+
+// Method to dynamically assign classes based on status
+const statusClass = (status) => {
+  switch (status) {
+    case 'Pending':
+      return 'bg-yellow-400 text-white px-2 py-1 rounded-full text-xs font-semibold';
+    case 'Approved':
+      return 'bg-green-400 text-white px-2 py-1 rounded-full text-xs font-semibold';
+    case 'Rejected':
+      return 'bg-red-400 text-white px-2 py-1 rounded-full text-xs font-semibold';
+    default:
+      return '';
+  }
+};
 </script>
 
 

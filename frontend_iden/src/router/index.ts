@@ -61,33 +61,13 @@ const router = createRouter({
 
     //..............................supervisor routes -------------------------------- 
     {
-      path: '/Supervisor/calendar',
-      'name': 'calendar',
+      path: '/Supervisor/calendars',
+      'name': 'calendars',
       component: () => import('../views/Supervisor/calenda/calendarPage.vue'),
       meta: {
         requiresAuth: true,
         role: 'supervisor'
       }
-    },
-    {
-      path: '/Supervisor/calendar/holiday/create',
-      'name': 'holidayCreate',
-      component: () => import('../views/Supervisor/calenda/holiday/createHoliday.vue'),
-    },
-    {
-      path: '/Supervisor/calendar/workTime/create',
-      'name': 'workTimeCreate',
-      component: () => import('../views/Supervisor/calenda/work_time/addWorkTime.vue'),
-    },
-    {
-      path: '/Supervisor/calendar/workTime/edit',
-      'name': 'workTimeEdit',
-      component: () => import('../views/Supervisor/calenda/work_time/editWorkTime.vue'),
-    },
-    {
-      path: '/Supervisor/calendar/holiday/edit',
-      'name': 'holidayEdit',
-      component: () => import('../views/Supervisor/calenda/holiday/editHoliday.vue'),
     },
     {
       path: '/Supervisor/takeLeave',
@@ -272,15 +252,89 @@ const router = createRouter({
 
     //-----------------------------------employees routes --------------------------------
     {
-      path: '/employee/leave',
+      path: '/employee/dashbaord',
+      'name': 'dashbaord',
+      component: () => import('../views/Employee/EmDashbaord.vue'),
+      meta: {
+        requiresAuth: true,
+        role: 'employee',
+      }
+    },
+              //----------------employees leave routes --------------------------------
+    {
+      path: '/employee/myleave',
       'name': 'leave',
-      component: () => import('../views/Employee/LeavPage.vue'),
+      component: () => import('../views/Employee/myLeave/myLeavePage.vue'),
+    },
+    {
+      path: '/employee/myleave/view/detail',
+      'name': 'leaveDetail',
+      component: () => import('../views/Employee/myLeave/myLeaveDetail.vue'),
+    },
+    {
+      path: '/employee/myleave/historyleave',
+      'name': 'historyleave',
+      component: () => import('../views/Employee/myLeave/myLeaveHistory.vue'),
+    },
+    {
+      path: '/employee/myleave/historyleave/detail',
+      'name': 'leavehistorydetail',
+      component: () => import('../views/Employee/myLeave/myHistoryDetail.vue'),
+    },
+    {
+      path: '/employee/myleave/rejectedleave',
+      'name': 'rejectedleave',
+      component: () => import('../views/Employee/myLeave/rejectLeavePage.vue'),
+    },
+              //----------------employees calendar routes --------------------------------
+    {
+      path: '/employee/calendar',
+      'name': 'calendar',
+      component: () => import('../views/Employee/calendars/calendarPage.vue'),
+    },
+              //----------------employees attendance routes --------------------------------
+    {
+      path: '/employee/attendance',
+      'name': 'attendance',
+      component: () => import('../views/Employee/attendance/attendancePage.vue'),
+    },
+              //----------------employees team routes --------------------------------
+    {
+      path: '/employee/team',
+      'name': 'team',
+      component: () => import('../views/Employee/team/teamPage.vue'),
+    },
+    {
+      path: '/employee/team/detail',
+      'name': 'TeamDetail',
+      component: () => import('../views/Employee/team/teamDetailPage.vue'),
+    },
+              //----------------employees setting routes --------------------------------
+    {
+      path: '/employee/settings',
+      'name': 'setting',
+      component: () => import('../views/Employee/settings/settingPage.vue'),
+    },
+    {
+      path: '/employee/settings/balances',
+      'name': 'MyBalance',
+      component: () => import('../views/Employee/settings/balances/balancePage.vue'),
+    },
+    {
+      path: '/employee/settings/resetpassword',
+      'name': 'resetpassword',
+      component: () => import('../views/Employee/settings/resetPW/resetPw.vue'),
+    },
+    {
+      path: '/employee/settings/profile',
+      'name': 'profile',
+      component: () => import('../views/Employee/settings/myprofile/myProfile.vue'),
     },
   ]
 })
 
 router.beforeEach(async (to, from, next) => {
-  const publicPages = ['/login']
+  const publicPages = ['/','/login']
   const authRequired = !publicPages.includes(to.path)
   const store = useAuthStore()
 
@@ -306,7 +360,7 @@ router.beforeEach(async (to, from, next) => {
     // Redirect authenticated users to their dashboard
     if (publicPages.includes(to.path) && store.isAuthenticated) {
       if (store.roles.includes('employee')) {
-        return next('/employee/leave')
+        return next('/employee/dashbaord')
       }
       if (store.roles.includes('supervisor')) {
         console.log(store.roles);

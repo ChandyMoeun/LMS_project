@@ -349,11 +349,9 @@
                                     @endcan
                                 </div>
                             </td>
-
                         </tr>
                         @endforeach
                         @endcan
-
                     </tbody>
                 </table>
             </div>
