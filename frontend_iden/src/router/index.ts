@@ -12,7 +12,11 @@ const router = createRouter({
     {
       path: '/Supervisor/dashboard',
       name: 'dashboard',
-      component: () => import('../views/Supervisor/SupervisorView.vue')
+      component: () => import('../views/Supervisor/SupervisorView.vue'),
+      meta: {
+        requiresAuth: true,
+        role: 'supervisor'
+      }
       
     },
     {
@@ -60,6 +64,10 @@ const router = createRouter({
       path: '/Supervisor/calendar',
       'name': 'calendar',
       component: () => import('../views/Supervisor/calenda/calendarPage.vue'),
+      meta: {
+        requiresAuth: true,
+        role: 'supervisor'
+      }
     },
     {
       path: '/Supervisor/calendar/holiday/create',
@@ -272,7 +280,7 @@ const router = createRouter({
 })
 
 router.beforeEach(async (to, from, next) => {
-  const publicPages = ['/', '/login']
+  const publicPages = ['/login']
   const authRequired = !publicPages.includes(to.path)
   const store = useAuthStore()
 
@@ -298,13 +306,14 @@ router.beforeEach(async (to, from, next) => {
     // Redirect authenticated users to their dashboard
     if (publicPages.includes(to.path) && store.isAuthenticated) {
       if (store.roles.includes('employee')) {
-        return next('/employee_dashboard')
+        return next('/employee/leave')
       }
-      if (store.roles.includes('approver')) {
+      if (store.roles.includes('supervisor')) {
         console.log(store.roles);
-        return next('/approver_dashboard')
+        return next('/Supervisor/dashboard')
       }
     }
+    
   } catch (error) {
     // If an error occurs (e.g., unauthenticated), reset the auth store
     store.isAuthenticated = false
@@ -313,17 +322,13 @@ router.beforeEach(async (to, from, next) => {
     store.roles = []
   }
 
-  // // Redirect to login if the page requires authentication and the user isn't authenticated
-  // if (authRequired && !store.isAuthenticated) {
-  //   return next('/login')
-  // }
-
-  // // Check if the user's role matches the route's required role
-  // if (to.meta.role && !store.roles.includes(to.meta.role)) {
-  //   return next('/login')
-  // }
-
-  next()
+  if (authRequired && !store.isAuthenticated) {
+    next('/login');
+  }else if (to.meta.role && !store.roles[0].includes(to.meta.role)) {
+    next('/login');
+  }else {
+    next();
+  }
 })
 
 export default { router, simpleAcl }

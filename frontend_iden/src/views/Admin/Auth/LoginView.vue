@@ -33,23 +33,27 @@
 <script>
 import axios from 'axios';
 import { ref } from 'vue';
+import { useRouter } from 'vue-router';
+
 
 export default {
   setup() {
     const email = ref('');
     const password = ref('');
 
+    const router = useRouter();
+
     const login = async () => {
       try {
-        const response = await axios.post('/api/login', {
+        const response = await axios.post('http://127.0.0.1:8000/api/login', {
           email: email.value,
           password: password.value,
         });
-        console.log(response.data);
-        // Handle successful login (redirect, save token, etc.)
+        localStorage.setItem('access_token', response.data.access_token)
+
+        router.push('/')
       } catch (error) {
         console.error(error);
-        // Handle errors (display validation messages, etc.)
       }
     };
 
