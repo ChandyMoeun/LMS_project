@@ -169,7 +169,7 @@ const router = createRouter({
       'name': 'DepartmentsView',
       component: () => import('../views/Supervisor/settings/depaetments/viewDepartment.vue'),
     },
-        //-----------------supervisor Position routes---------------- 
+        //-----------------supervisor Position route ---------------- 
     {
       path: '/Supervisor/Settings/Positions',
       'name': 'Positions',
