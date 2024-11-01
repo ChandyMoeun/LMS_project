@@ -17,7 +17,7 @@
                 <h1 class="font-bold mr-20 text-3xl px-8 w-3/12 mt-3 hover:text-yellow-400"><b>Request Leave</b></h1>
               </div>
               <div class="flex justify-end items-end mt-16 mb-3">
-                <a href="/Supervisor/requestLeave/myLeaved" class=" mr-10 px-3 py-1 bg-gray-900 text-white font-semibold rounded-lg shadow-md hover:bg-yellow-400 transition-colors no-underline">My History</a>
+                <a href="/supervisor/requestleave/myleaved" class=" mr-10 px-3 py-1 bg-gray-900 text-white font-semibold rounded-lg shadow-md hover:bg-yellow-400 transition-colors no-underline">My History</a>
               </div>
               <div class="container mt-2 px-6 py-4 bg-white shadow-md rounded-lg">
                 <form @submit.prevent="submitForm" enctype="multipart/form-data" class="flex flex-row justify-between p-3 gap-5">
@@ -89,7 +89,7 @@
                     </div>
                     <div class="mt-6">
                       <button type="submit" class="bg-gray-900 text-white font-semibold px-2 py-1 mr-3 rounded-lg shadow-md hover:bg-yellow-400 transition-colors border-none">Take Leave</button>
-                      <router-link to="/Supervisor/takeLeave" class="bg-red-600 text-white font-semibold px-2 py-1 rounded-lg shadow-md hover:bg-red-400 transition-colors no-underline">Back</router-link>
+                      <router-link to="/supervisor/takeleave" class="bg-red-600 text-white font-semibold px-2 py-1 rounded-lg shadow-md hover:bg-red-400 transition-colors no-underline">Back</router-link>
                     </div>
                   </div>
                 </form>

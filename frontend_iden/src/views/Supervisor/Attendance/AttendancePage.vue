@@ -9,7 +9,7 @@
         <main class="bg-gray sticky top-0">
           <div class="mt-16">
     <div class="d-flex text-black" style="display: flex; flex-direction: column; border-bottom: solid 1px gray;">
-      <h1 class="font-bold text-3xl px-8 hover:text-yellow-500 w-3/12"><b>Team's Attendance</b></h1>
+      <h1 class="font-bold text-3xl px-8 hover:text-yellow-500 w-4/12"><b>Team Attendance</b></h1>
     </div>
     <div class="mt-20">
       <div class="bg-white shadow-md rounded-lg overflow-hidden">
@@ -24,7 +24,7 @@
                 v-model="searchQuery" 
                 placeholder="Search employee by name..." 
                 class="w-4/6 py-2 px-2 bg-blue-100 mt-3 h-9 border rounded">
-              <a  href="/Supervisor/MyAttendance" class="bg-gray-900 d-flex items-center justify-center mt-3 h-9 w-35 text-white font-semibold no-underline rounded-lg shadow-md hover:bg-yellow-500 transition-colors">My Attendance</a>
+              <a  href="/supervisor/myattendance" class="bg-gray-900 d-flex items-center justify-center mt-3 h-9 w-35 text-white font-semibold no-underline rounded-lg shadow-md hover:bg-yellow-500 transition-colors">My Attendance</a>
            </div>
         </div>
         <div class="overflow-x-auto">

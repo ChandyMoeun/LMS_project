@@ -22,12 +22,12 @@
                 <input v-model="searchQuery" type="text" placeholder="Search employee..." title="Type in an ID, Name, or Date" class="w-2/6 py-2 px-2 h-9 border rounded rounded-lg shadow-md"/>
                 <div class="d-flex gap-2">
                   <a
-                    href="/Supervisor/takeLeave/All/leaveHistory"
+                    href="/supervisor/takeleave/all/leavehistory"
                     class="bg-gray-900 text-white font-semibold px-3 py-1 mt-1 no-underline rounded-lg shadow-md hover:bg-yellow-500 transition-colors">
                   History
                   </a>
                   <a
-                    href="/Supervisor/takeLeave/requestLeave"
+                    href="/supervisor/takeleave/requestleave"
                     class="bg-gray-900 text-white font-semibold px-3 py-1 mt-1 no-underline rounded-lg shadow-md hover:bg-yellow-500 transition-colors">
                     Request Leave
                   </a>
@@ -79,7 +79,7 @@
                       
                       <td class="py-4 px-2 text-sm text-center text-black">{{ leaveRequest.total_requested_days }}</td>
                       <td class="py-4 px-2 text-sm text-center">
-                        <a href="/Supervisor/takeLeave/view/leaveDetail" class="text-blue-700 no-underline hover:text-blue-300">View</a>
+                        <a href="/supervisor/takeleave/view/leavedetail" class="text-blue-700 no-underline hover:text-blue-300">View</a>
                       </td>
                       <td class="py-4 px-2 text-sm text-center">
                         <span v-if="leaveRequest.approver">{{ leaveRequest.approver }}</span>

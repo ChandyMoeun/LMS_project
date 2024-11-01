@@ -29,7 +29,7 @@
                   class="w-2/6 py-2 px-2 h-9 border rounded rounded-lg shadow-md"
                 />
                 <a
-                  href="/Supervisor/takeLeave/requestLeave"
+                  href="/supervisor/takeleave/requestleave"
                   class="mr-5 px-3 mt-1 py-1 bg-red-600 text-white font-semibold rounded-lg shadow-md hover:bg-yellow-400 transition-colors no-underline"
                   >Back</a
                 >
@@ -111,7 +111,7 @@
                       <td class="py-4 px-2 text-sm text-center text-black">2</td>
                       <td class="py-4 px-2 text-sm text-center">
                         <a
-                          href="/Supervisor/requestLeave/myLeaved/viewHistory"
+                          href="/supervisor/requestleave/myleaved/viewhistory"
                           class="text-blue-700 no-underline hover:text-blue-300"
                           >View</a
                         >

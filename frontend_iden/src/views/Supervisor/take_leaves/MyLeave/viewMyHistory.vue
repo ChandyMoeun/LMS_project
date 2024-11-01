@@ -12,7 +12,7 @@
               class="flex text-black"
               style="display: flex; flex-direction: column; border-bottom: solid 1px gray"
             >
-              <router-link to="/Supervisor/requestLeave/myLeaved">
+              <router-link to="/supervisor/requestleave/myleaved">
                 <svg
                   class="w-6 h-6 text-gray-800 hover:text-gray-500"
                   aria-hidden="true"
@@ -66,7 +66,7 @@
                   </div>
                   <div class="mb-4">
                     <span class="font-semibold">Reason:</span>
-                    <textarea disabled class="w-full p-2 mt-1 border rounded-md bg-gray-50">Dear Mr.Cat, I would like to ask for permission to take leave one day. Because I'm feeling sick.</textarea>
+                    <p disabled class="w-full p-2 mt-1 border rounded-md bg-gray-50">Dear Mr.Cat, I would like to ask for permission to take leave one day. Because I'm feeling sick.</p>
                   </div>
                 </div>
                 <!-- Right Column: Approval Details -->
@@ -92,7 +92,7 @@
                   </div>
                   <div class="mb-4">
                     <span class="font-semibold">Comment:</span>
-                    <textarea disabled class="w-full p-2 mt-1 border rounded-md bg-gray-50">Okay.</textarea>
+                    <p disabled class="w-full p-2 mt-1 border rounded-md bg-gray-50">Okay.</p>
                   </div>
                 </div>
               </div>
