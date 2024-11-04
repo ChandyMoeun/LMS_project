@@ -24,11 +24,7 @@
               <p class="mt-1 text-sm text-gray-500">Detailed attendance records for me.</p>
             </div>
             <!-- Search Bar -->
-            <input 
-              v-model="searchQuery" 
-              placeholder="Search date..." 
-              class="w-2/6 py-2 px-2 bg-blue-100 mt-3 h-9 border rounded"
-            >
+            <input v-model="searchQuery" placeholder="Search date..." class="w-2/6 py-2 px-2 bg-blue-100 mt-3 h-9 border rounded">
           </div>
           <div class="overflow-x-auto">
             <table class="min-w-full divide-y divide-gray-200">
@@ -87,17 +83,19 @@
       this.fetchAttendanceRecords();
     },
     computed: {
-      // Filter attendances based on the search query
-      filteredAttendances() {
-        const query = this.searchQuery.trim();
-        if (!query) {
-          return this.attendances; // If no query, return all attendances
-        }
-        return this.attendances.filter(attendance =>
-  attendance.date.includes(query)
-);
-      },
-    },
+  // Filter attendances based on the search query (either date or employee name)
+  filteredAttendances() {
+    const query = this.searchQuery.trim().toLowerCase();
+    if (!query) {
+      return this.attendances; // If no query, return all attendances
+    }
+    return this.attendances.filter(attendance => 
+      // Check if the date matches the query or if the employee's name includes the query
+      attendance.date.includes(query) ||
+      attendance.remarks.toLowerCase().includes(query)
+    );
+  },
+  },
     methods: {
       fetchAttendanceRecords() {
         // Dummy data for demo purposes

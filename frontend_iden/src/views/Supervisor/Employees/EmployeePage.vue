@@ -11,12 +11,12 @@
             <!-- Employee Management Header -->
             <div class="d-flex text-black" style="display: flex; flex-direction: column; border-bottom: solid 1px gray" >
               <h1 class="font-bold text-3xl px-8 hover:text-yellow-500 w-4/12"> <b>Team Management</b> </h1>
-              <p class="px-8">Total members:</p>
+              <p class="px-8">Total members: {{ filteredEmployees.length }}</p>
             </div>
 
             <!-- Search and Filter select position-->
             <div class="flex justify-between mt-20 mb-7">
-              <input v-model="searchQuery" @input="filterTable" placeholder="Search employee..." title="Type in an ID or Name" class="w-2/6 py-2 px-2 h-9 border rounded" />
+              <input v-model="searchQuery" type="text" placeholder="Search..." title="Type of leave or approver Name" class="w-2/6 h-9 px-2 border rounded rounded-lg shadow-md"/>
               <div class="flex items-center justify-end space-x-2 w-2/5">
                 <button class="p-2 flex items-center border-none bg-gray-900 text-white font-bold h-9 px-2 py-1 rounded focus:outline-none shadow hover:bg-yellow-500 transition-colors"
                   @click="addEmployee" >
@@ -42,7 +42,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr v-for="employee in employees_list" :key="employee.id" class="bg-gray-100 border-b border-gray-200">
+                  <tr v-for="employee in filteredEmployees" :key="employee.id" class="bg-gray-100 border-b border-gray-200">
                     <td class="p-3">{{ employee.staff_id }}</td>
                     <td class="p-3">
                       <img :src=" employee.profile ? `/images/${employee.profile}` : '/images/default_profile.png' "
@@ -80,16 +80,23 @@ export default {
   components: { SupervisorSidebar, WebHeaderMenu },
   data() {
     return {
-      employees_list: []
+      employees_list: [],
+      searchQuery: '' // Moved searchQuery into data
     }
   },
   mounted() {
-    this.fatchData() // Initialize filteredEmployees
+    this.fetchEmployee()
+  },
+  computed: {
+    // Computed property to filter employees based on searchQuery
+    filteredEmployees() {
+      return this.employees_list.filter(employee =>
+        employee.full_name.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
+        employee.staff_id.includes(this.searchQuery)
+      )
+    }
   },
   methods: {
-    fatchData() {
-      this.fetchEmployee()
-    },
     async fetchEmployee() {
       try {
         const response = await axiosInstance.get('/employee')
@@ -97,7 +104,7 @@ export default {
       } catch (error) {
         console.error(error)
       }
-    }
+    },
   }
 }
 </script>

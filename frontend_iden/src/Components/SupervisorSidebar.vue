@@ -68,7 +68,7 @@
       </a>
 
       <a
-        :class="['flex no-underline items-center mt-4 py-2 px-6 text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 hover:rounded-lg hover:text-gray-100', activeLink === '/supervisor/takelvgeave' ? 'active' : '']"
+        :class="['flex no-underline items-center mt-4 py-2 px-6 text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 hover:rounded-lg hover:text-gray-100', activeLink === '/supervisor/takeleave' ? 'active' : '']"
         href="/supervisor/takeleave"
         @click="setActiveLink('/supervisor/takeleave')"
       >

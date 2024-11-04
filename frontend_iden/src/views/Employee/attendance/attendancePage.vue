@@ -84,16 +84,17 @@
       this.fetchAttendanceRecords();
     },
     computed: {
-      // Filter attendances based on the search query
       filteredAttendances() {
-        const query = this.searchQuery.trim().toLowerCase();
-        if (!query) {
-          return this.attendances; // If no query, return all attendances
-        }
-        return this.attendances.filter(attendance => 
-          attendance.employee.remarks.toLowerCase().includes(query)|| attendance.employee.date.toLowerCase().includes(query)
-        );
-      },
+    const query = this.searchQuery.trim().toLowerCase();
+    if (!query) {
+      return this.attendances; // If no query, return all attendances
+    }
+    return this.attendances.filter(attendance => 
+      // Check if the date matches the query or if the employee's name includes the query
+      attendance.date.includes(query) ||
+      attendance.remarks.toLowerCase().includes(query)
+    );
+  },
     },
     methods: {
       fetchAttendanceRecords() {
@@ -102,7 +103,7 @@
           {
             id: 1,
             employee: { full_name: 'John Doe' },
-            date: '2024-10-14',
+            date: '2024-07-14',
             status: 'present',
             clock_in: '09:00 AM',
             clock_out: '05:00 PM',
@@ -111,7 +112,7 @@
           },
           {
             id: 2,
-            employee: { full_name: 'Jane Smith' },
+            employee: { full_name: 'John Doe' },
             date: '2024-10-14',
             status: 'present',
             clock_in: '09:30 AM',
@@ -121,7 +122,7 @@
           },
           {
             id: 3,
-            employee: { full_name: 'Sam Wilson' },
+            employee: { full_name: 'John Doe' },
             date: '2024-10-14',
             status: 'absent',
             clock_in: null,

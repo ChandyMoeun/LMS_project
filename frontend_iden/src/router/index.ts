@@ -90,11 +90,6 @@ const router = createRouter({
       component: () => import('../views/Supervisor/take_leaves/AllRejectedLeaves.vue'),
     },
     {
-      path: '/supervisor/takeleave/requestleave',
-      'name': 'requestLeave',
-      component: () => import('../views/Supervisor/take_leaves/requestLeave.vue'),
-    },
-    {
       path: '/Supervisor/requestLeave/myLeaved',
       'name': 'myLeaved',
       component: () => import('../views/Supervisor/take_leaves/MyLeave/MyHistoryLeave.vue'),
