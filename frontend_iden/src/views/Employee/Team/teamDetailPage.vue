@@ -60,27 +60,20 @@
   </template>
   
   <script>
+  import axiosInstance from '@/plugins/axios';
   import EmployeeSidebar from '@/Components/EmployeeSidebar.vue';
   import WebHeaderMenu from '@/Components/WebHeaderMenu.vue';
   export default {
     components: {EmployeeSidebar, WebHeaderMenu},
     data() {
       return {
-        employee: {
-          staff_id: '',
-          full_name: '',
-          gender: '',
-          dob: '',
-          position: { name: '' },
-          department: { name: '' },
-          roles: [],
-          profile: '',
-          joined_date: '',
-          entitled_date: '',
-          email: '',
-          manager: { full_name: '' },
-        },
+        employee_id,
+        searchQuery: ''
+  
       };
+    },
+    mounted() {
+      this.fatchData();// Initialize filteredEmployees
     },
     methods: {
       // Returns profile image URL if available
@@ -91,24 +84,18 @@
       getDefaultProfile() {
         return '/images/default_profile.png';
       },
-    },
-    mounted() {
-      // Simulated API call to fetch employee data
-      // In a real app, replace this with an actual API request, e.g., axios.get('/api/employee/{id}')
-      this.employee = {
-        staff_id: '1234',
-        full_name: 'John Doe',
-        gender: 'Male',
-        dob: '1990-01-01',
-        position: { name: 'Manager' },
-        department: { name: 'HR' },
-        roles: [{ name: 'Admin' }, { name: 'HR Manager' }],
-        profile: 'john_doe.jpg',
-        joined_date: '2020-06-15',
-        entitled_date: '2021-06-15',
-        email: 'johndoe@example.com',
-        manager: { full_name: 'Jane Smith' },
-      };
+      fatchData(){
+        this.fetchEmployee();
+      },
+  
+      async fetchEmployee() {
+        try {
+          const response = await axiosInstance.get('/employee');
+          this.employees_list = response.data
+        } catch (error) {
+          console.error(error);
+        }
+      }
     },
   };
   </script>

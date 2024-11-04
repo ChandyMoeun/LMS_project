@@ -12,6 +12,14 @@
       <h1 class="font-bold text-3xl px-8 hover:text-yellow-500 w-4/12"><b>Team Attendance</b></h1>
     </div>
     <div class="mt-20">
+      <div class="printpage d-flex justify-end mr-8 gap-3 mt-16 mb-3">
+        <button @click="Export()" class="border-none bg-blue-600 text-white px-3 py-2 rounded-lg shadow-md hover:bg-yellow-500">Export
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 ml-2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
+          </svg>
+        </button>
+        <button @click="printSection" class="border-none bg-gray-900 text-white px-4 py-2 rounded-lg shadow-md hover:bg-yellow-500">Print</button>
+      </div>
       <div class="bg-white shadow-md rounded-lg overflow-hidden">
         <div class="flex justify-between px-4 py-3 sm:px-6">
           <div>
@@ -27,7 +35,7 @@
               <a  href="/supervisor/myattendance" class="bg-gray-900 d-flex items-center justify-center mt-3 h-9 w-35 text-white font-semibold no-underline rounded-lg shadow-md hover:bg-yellow-500 transition-colors">My Attendance</a>
            </div>
         </div>
-        <div class="overflow-x-auto">
+        <div id="attendance_records" class="overflow-x-auto">
           <table class="min-w-full divide-y divide-gray-200">
             <thead class="bg-black">
               <tr>
@@ -70,6 +78,7 @@
 <script>
 import SupervisorSidebar from '@/Components/SupervisorSidebar.vue';
 import WebHeaderMenu from '@/Components/WebHeaderMenu.vue';
+import html2pdf from 'html2pdf.js';
 export default {
   components: {SupervisorSidebar, WebHeaderMenu},
   name: "AttendanceRecords",
@@ -135,6 +144,25 @@ export default {
         // Add more records as needed
       ];
     },
+    printSection() {
+      const printContents = document.getElementById("attendance_records").innerHTML;
+      const originalContents = document.body.innerHTML;
+      document.body.innerHTML = printContents;
+      window.print();
+      document.body.innerHTML = originalContents;
+      window.location.reload(); // Reload to reset original contents
+    },
+    Export() {
+      const element = document.getElementById("attendance_records");
+      const options = {
+        margin: 1,
+        filename: 'attendance_record.pdf',
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { scale: 2 },
+        jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+      };
+      html2pdf().set(options).from(element).save();
+    }
   },
 };
 </script>

@@ -52,7 +52,7 @@
                   </div>
                   <div class="mb-4">
                     <span class="font-semibold">Reason:</span>
-                    <textarea disabled class="w-full p-2 mt-1 border rounded-md bg-gray-50">Dear Mr.Cat, I would like to ask for permission to take leave one day. Because I'm feeling sick.</textarea>
+                    <p disabled class="w-full p-2 mt-1 border rounded-md bg-gray-50">Dear Mr.Cat, I would like to ask for permission to take leave one day. Because I'm feeling sick.</p>
                   </div>
                 </div>
                 <!-- Right Column: Approval Details -->
@@ -77,7 +77,7 @@
                   </div>
                   <div class="mb-4">
                     <span class="font-semibold">Comment:</span>
-                    <textarea disabled class="w-full p-2 mt-1 border rounded-md bg-gray-50">Okay.</textarea>
+                    <p disabled class="w-full p-2 mt-1 border rounded-md bg-gray-50">Okay.</p>
                   </div>
                 </div>
               </div>
