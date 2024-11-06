@@ -5,7 +5,7 @@
           <EmployeeSidebar></EmployeeSidebar>
         </div>
         <div class="container-page">
-          <WebHeaderMenu/>
+          <EmployeeNavbar/>
           <main class="bg-gray sticky mt-5">
             <div class="mt-10">
             <!-- Employee Management Header -->
@@ -36,8 +36,8 @@
                   <tr v-for="employee in filteredEmployees" :key="employee.id" class="bg-gray-100 border-b border-gray-200">
                     <td class="p-3">{{ employee.staff_id }}</td>
                     <td class="p-3">
-                      <img :src=" employee.profile ? `/images/${employee.profile}` : '/images/default_profile.png' "
-                        alt="Profile" class="w-12 h-12 rounded-full object-cover"/>
+                      <img :src="employee.profile ? `/images/${employee.profile}` : '/images/default_profile.png'"
+                          alt="Profile" class="w-12 h-12 rounded-full object-cover" />
                     </td>
                     <td class="p-3 text-center">{{ employee.full_name }}</td>
                     <td class="p-3 text-blue-600 text-center">{{ employee.email }}</td>
@@ -46,10 +46,9 @@
                     </td>
                     <td class="text-center w-3/12">
                       <button @click="viewEmployee(employee.id)"
-                        class="text-white px-2 py-1 border-solid border-0 border-indigo-600 rounded-lg bg-blue-600 hover:bg-blue-400 border-none">
-                        <a href="/supervisor/employee/profile/more" class="no-underline text-white">More</a>
+                              class="text-white px-2 py-1 border-solid border-0 border-indigo-600 rounded-lg bg-blue-600 hover:bg-blue-400 border-none">
+                        More
                       </button>
-                      <!-- <button @click="editEmployee(employee.id)" class="ml-2 text-white px-2 py-1 border-solid border-1 border-indigo-600 rounded-lg bg-gray-900 hover:bg-yellow-400">Update</button> -->
                     </td>
                   </tr>
                 </tbody>
@@ -62,67 +61,51 @@
     </EmployeeLayout>
   </template>
   
-  <script>
-    import axiosInstance from '@/plugins/axios';
-    import EmployeeSidebar from '@/Components/EmployeeSidebar.vue'
-    import WebHeaderMenu from '@/Components/WebHeaderMenu.vue'
-    export default {
-    components: {EmployeeSidebar, WebHeaderMenu},
-    data() {
-      return {
-        employees_list: [],
-        searchQuery: ''
-  
-      };
-    },
-    mounted() {
-      this.fatchData();// Initialize filteredEmployees
-    },
-    computed: {
+<script>
+import axiosInstance from '@/plugins/axios';
+import EmployeeSidebar from '@/Components/EmployeeSidebar.vue';
+import EmployeeNavbar from '@/Components/EmployeeNavbar.vue';
+
+export default {
+  components: { EmployeeSidebar, EmployeeNavbar },
+  data() {
+    return {
+      employees_list: [],
+      searchQuery: ''
+    };
+  },
+  mounted() {
+    this.fetchData(); // Fetch the initial employee data
+  },
+  computed: {
     // Computed property to filter employees based on searchQuery
     filteredEmployees() {
       return this.employees_list.filter(employee =>
         employee.full_name.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
         employee.staff_id.includes(this.searchQuery)
-      )
+      );
     }
   },
-    methods: {
-      fatchData(){
-        this.fetchEmployee();
-      },
-  
-      // filterTable() {
-      //   const query = this.searchQuery.toUpperCase();
-      //   this.filteredEmployees = this.employees.filter(employee => {
-      //     return employee.staff_id.toUpperCase().includes(query) || employee.full_name.toUpperCase().includes(query);
-      //   });
-      // },
-      // filterByPosition() {
-      //   if (this.selectedPosition === 'all') {
-      //     this.filteredEmployees = this.employees;
-      //   } else {
-      //     this.filteredEmployees = this.employees.filter(employee => {
-      //       return employee.position && employee.position.name === this.selectedPosition;
-      //     });
-      //   }
-      // },
-   
-  
-      //intergation data
-  
-      async fetchEmployee() {
-        try {
-          const response = await axiosInstance.get('/employee');
-          this.employees_list = response.data
-        } catch (error) {
-          console.error(error);
-        }
+  methods: {
+    fetchData() {
+      this.fetchEmployee();
+    },
+    viewEmployee(employeeId) {
+      // Navigate to the employee profile using Vue Router or a direct URL change
+      this.$router.push(`/employee/team/detail/${employeeId}`);
+    },
+    async fetchEmployee() {
+      try {
+        const response = await axiosInstance.get('/employee');
+        this.employees_list = response.data;
+      } catch (error) {
+        console.error('Error fetching employee data:', error);
       }
     }
-  };
-  </script>
-  
+  }
+};
+</script>
+
   <style scoped>
   .employee{
     display: flex;

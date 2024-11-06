@@ -47,10 +47,7 @@ const activeTab = computed(() => {
 // })
 </script>
 <template>
-  <header
-    class="flex justify-between items-center py-3 px-12 fixed w-10/12 z-50"
-    style="background: #ffda03"
-  >
+  <header class="flex justify-between items-center py-3 px-12 fixed w-10/12 z-50" style="background: #ffda03">
     <div class="flex items-center">
       <button @click="sidebarOpen = true" class="text-gray-500 focus:outline-none lg:hidden">
         <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">

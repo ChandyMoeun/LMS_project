@@ -5,70 +5,70 @@
           <EmployeeSidebar></EmployeeSidebar>
         </div>
         <div class="container-page">
-          <WebHeaderMenu/>
+          <EmployeeNavbar/>
           <main class="sticky top-0">
             <div class="mt-15">
-      <!-- Header -->
-      <div class="text-black border-b-2 border-gray-300 px-8 h-15 items-center" style="border-bottom: solid 1px gray">
-        <h1 class="font-bold text-3xl mb-3 hover:text-yellow-400 w-2/12">Calendar</h1>
-      </div>
-  <!-- FullCalendar Display -->
-      <div class="container mt-20 mx-auto">
-        <div class="bg-white shadow-lg rounded-lg overflow-hidden">
-          <div class="p-4">
-            <div id="calendar" class="h-96"></div> <!-- Calendar will be rendered here -->
+            <!-- Header -->
+            <div class="text-black" style="border-bottom: solid 1px gray">
+              <h1 class="font-bold text-3xl mb-3 hover:text-yellow-500 w-2/12">Calendar</h1>
+            </div>
+            <!-- FullCalendar Display -->
+            <div class="container mt-16 mx-auto">
+              <div class="bg-white shadow-lg rounded-lg overflow-hidden">
+                <div class="p-4">
+                  <div id="calendar" class="h-96"></div> <!-- Calendar will be rendered here -->
+                </div>
+              </div>
+            </div>
+        
+            <!-- Workdays and Times Table -->
+            <div class="bg-white shadow-md rounded-lg p-6 mt-14">
+              <h2 class="text-2xl font-bold mb-4">Workdays and Times</h2>
+              <table class="min-w-full divide-y divide-gray-200">
+                <thead class="bg-gray-50">
+                  <tr>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Work Day</th>
+                    <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Start Time</th>
+                    <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">End Time</th>
+                    <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Day Type</th>
+                  </tr>
+                </thead>
+                <tbody class="bg-white divide-y divide-gray-200">
+                  <tr v-for="work in work_days" :key="work.id" class="hover:bg-gray-100">
+                    <td class="py-4 px-6 border-b border-gray-200">{{ work.work_day }}</td>
+                    <td class="py-4 px-6 border-b text-center border-gray-200">{{ work.start_time }}</td>
+                    <td class="py-4 px-6 border-b text-center border-gray-200">{{ work.end_time }}</td>
+                    <td class="py-4 px-6 border-b text-center border-gray-200">{{ work.day_type }}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+        
+            <!-- Holidays Table -->
+            <div class="bg-white shadow-md rounded-lg p-6 mt-14">
+              <h2 class="text-2xl font-bold mb-4">Holidays</h2>
+              <table class="min-w-full divide-y divide-gray-200">
+                <thead class="bg-gray-50">
+                  <tr>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Holiday Name</th>
+                    <th class="px-6 w-2/12 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">From</th>
+                    <th class="px-6 w-2/12 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">To</th>
+                    <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Holiday Type</th>
+                    <th class="px-6 text-center py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Description</th>
+                  </tr>
+                </thead>
+                <tbody class="bg-white divide-y divide-gray-200">
+                  <tr class="hover:bg-gray-100">
+                    <td class="py-4 px-6 border-b border-gray-200">New Year</td>
+                    <td class="py-4 px-6 border-b text-center border-gray-200">12.04.2024</td>
+                    <td class="py-4 px-6 border-b text-center border-gray-200">15.04.2024</td>
+                    <td class="py-4 px-6 border-b text-center border-gray-200">National</td>
+                    <td class="py-4 px-6 border-b text-center border-gray-200">Enjoy your days guys</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
-        </div>
-      </div>
-  
-      <!-- Workdays and Times Table -->
-      <div class="bg-white shadow-md rounded-lg p-6 mt-14">
-        <h2 class="text-2xl font-bold mb-4">Workdays and Times</h2>
-        <table class="min-w-full divide-y divide-gray-200">
-          <thead class="bg-gray-50">
-            <tr>
-              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Work Day</th>
-              <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Start Time</th>
-              <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">End Time</th>
-              <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Day Type</th>
-            </tr>
-          </thead>
-          <tbody class="bg-white divide-y divide-gray-200">
-            <tr v-for="work in work_days" :key="work.id" class="hover:bg-gray-100">
-              <td class="py-4 px-6 border-b border-gray-200">{{ work.work_day }}</td>
-              <td class="py-4 px-6 border-b text-center border-gray-200">{{ work.start_time }}</td>
-              <td class="py-4 px-6 border-b text-center border-gray-200">{{ work.end_time }}</td>
-              <td class="py-4 px-6 border-b text-center border-gray-200">{{ work.day_type }}</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-  
-      <!-- Holidays Table -->
-      <div class="bg-white shadow-md rounded-lg p-6 mt-14">
-        <h2 class="text-2xl font-bold mb-4">Holidays</h2>
-        <table class="min-w-full divide-y divide-gray-200">
-          <thead class="bg-gray-50">
-            <tr>
-              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Holiday Name</th>
-              <th class="px-6 w-2/12 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">From</th>
-              <th class="px-6 w-2/12 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">To</th>
-              <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Holiday Type</th>
-              <th class="px-6 text-center py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Description</th>
-            </tr>
-          </thead>
-          <tbody class="bg-white divide-y divide-gray-200">
-            <tr class="hover:bg-gray-100">
-              <td class="py-4 px-6 border-b border-gray-200">New Year</td>
-              <td class="py-4 px-6 border-b text-center border-gray-200">12.04.2024</td>
-              <td class="py-4 px-6 border-b text-center border-gray-200">15.04.2024</td>
-              <td class="py-4 px-6 border-b text-center border-gray-200">National</td>
-              <td class="py-4 px-6 border-b text-center border-gray-200">Enjoy your days guys</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div> 
           </main>
         </div>
       </div>
@@ -78,13 +78,13 @@
   <script>
   import axiosInstance from '@/plugins/axios';
   import EmployeeSidebar from '@/Components/EmployeeSidebar.vue';
-  import WebHeaderMenu from '@/Components/WebHeaderMenu.vue';
+  import EmployeeNavbar from '@/Components/EmployeeNavbar.vue';
   import { onMounted } from "vue";
   import { Calendar } from "@fullcalendar/core"; // Import FullCalendar core
   import dayGridPlugin from "@fullcalendar/daygrid"; // Import DayGrid plugin
   
   export default {
-    components: {EmployeeSidebar, WebHeaderMenu},
+    components: {EmployeeSidebar, EmployeeNavbar},
     data() {
       return {
         canCreateCalendar: true,

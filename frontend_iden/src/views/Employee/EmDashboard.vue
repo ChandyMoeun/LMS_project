@@ -5,7 +5,7 @@
         <EmployeeSidebar></EmployeeSidebar>
       </div>
       <div class="container-page">
-        <WebHeaderMenu />
+        <EmployeeNavbar />
         <main class="bg-gray sticky top-0">
           <div class="container pb-30">
                 <!-- Header -->
@@ -13,30 +13,21 @@
               <h1 class="font-bold text-3xl px-8 hover:text-yellow-400 w-4/12">Employee Dashboard</h1>
             </div>
             <!----------- alert code -------------------->
-            <div class="button">
-              <!-- Toast Alert Box -->
-              <div class="button">
-                <div v-show="isToastVisible"
-                  class="toast-box"
+                        <!----------- alert code -------------------->
+                        <div v-show="isToastVisible" class="toast-box"
                   style=" position: absolute; top: 7%; right: 2%; display: flex; align-items: flex-end; flex-direction: column; overflow: hidden; padding: 2px; width: 23%;">
-                  <div
-                    role="alert"
-                    class="mb-4 relative flex w-full p-3 pr-5 text-sm text-white bg-black rounded-md items-center">
+                  <div role="alert" class="mb-4 relative flex w-full p-3 pr-5 text-sm text-white bg-black rounded-md items-center">
                     {{ alertMessage }}
                   </div>
                 </div>
-              </div>
-            </div>
             <!----------- //end alert code //--------------------> 
 
             <!--............................// Chart js // total employee leave balance chart ..............................  -->
-            <div class="chartjs px-8 py-10">
-              <!-- Chart Container -->
+             <!-- Chart Container -->
               <h1 class="text-4xl text-black p-10 text-center">My Leave Balance</h1>  
-              <div class="chart-container flex justify-center mb-10 rounded-2xl py3 bg-white shadow-[0_35px_60px_-15px_rgba(0,0,0,0.3)]">
+              <div class="chart-container flex justify-center mb-10 rounded-2xl bg-white shadow-[0_35px_60px_-15px_rgba(0,0,0,0.3)]">
                 <canvas id="myLeaveBalance" style="width:100%; max-width:800px; height:100vh; max-height:70vh;"></canvas>
               </div>
-            </div>
             <!--............................list of my requesting leaves ..............................  -->
             <div class="px-8 overflow-x-auto">
               <h1 class="text-4xl p-10 text-black text-center">My Requesting Leaves</h1>
@@ -92,7 +83,7 @@
 
 <script setup lang="ts">
 import EmployeeLayout from '@/Components/Layouts/EmployeeLayout.vue';
-import WebHeaderMenu from '@/Components/WebHeaderMenu.vue'
+import EmployeeNavbar from '@/Components/EmployeeNavbar.vue'
 
 import { ref, onMounted } from 'vue'
 import Chart from 'chart.js/auto'

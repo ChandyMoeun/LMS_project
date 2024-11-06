@@ -28,10 +28,7 @@
           </div>
           <!-- Search Bar -->
           <div class="w-5/12 flex justify-between">
-              <input 
-                v-model="searchQuery" 
-                placeholder="Search employee by name..." 
-                class="w-4/6 py-2 px-2 bg-blue-100 mt-3 h-9 border rounded">
+              <input v-model="searchQuery" placeholder="Search employee by name..." class="w-4/6 py-2 px-2 bg-blue-100 mt-3 h-9 border rounded">
               <a  href="/supervisor/myattendance" class="bg-gray-900 d-flex items-center justify-center mt-3 h-9 w-35 text-white font-semibold no-underline rounded-lg shadow-md hover:bg-yellow-500 transition-colors">My Attendance</a>
            </div>
         </div>

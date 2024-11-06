@@ -5,9 +5,9 @@
           <EmployeeSidebar></EmployeeSidebar>
         </div>
         <div class="container-page">
-          <WebHeaderMenu />
-          <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-200">
-              <div class="flex text-black my-5"
+          <EmployeeNavbar />
+          <main class="bg-gray-200">
+              <div class="text-black"
                 style="display: flex; flex-direction: column; border-bottom: solid 1px gray" >
                 <router-link to="/employee/settings">
                   <svg
@@ -18,11 +18,11 @@
                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5H1m0 0 4 4M1 5l4-4" />
                   </svg>
                 </router-link>
-                <h1 class="font-bold mr-20 text-3xl px-8 w-2/6 mt-3 hover:text-yellow-500">
+                <h1 class="font-bold text-3xl px-8 w-2/6 mt-3 hover:text-yellow-400">
                   <b>Change My Password</b>
                 </h1>
               </div>
-              <div class="password-change-container bg-white border rounded-lg shadow">
+              <div class="password-change-container bg-white border mt-10 rounded-lg shadow">
                   <form @submit.prevent="changePassword" class="p-5">
                       <input 
                         type="password" 
@@ -68,9 +68,9 @@
     
   <script>
   import EmployeeSidebar from '@/Components/EmployeeSidebar.vue'
-  import WebHeaderMenu from '@/Components/WebHeaderMenu.vue'
+  import EmployeeNavbar from '@/Components/EmployeeNavbar.vue'
   export default {
-    components: { EmployeeSidebar, WebHeaderMenu },
+    components: { EmployeeSidebar, EmployeeNavbar },
     data() {
       return {
         currentPassword: '',

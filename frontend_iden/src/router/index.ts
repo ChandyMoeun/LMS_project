@@ -239,7 +239,7 @@ const router = createRouter({
       component: () => import('../views/Employee/team/teamPage.vue'),
     },
     {
-      path: '/employee/team/detail',
+      path: '/employee/team/detail/:id',
       'name': 'TeamDetail',
       component: () => import('../views/Employee/team/teamDetailPage.vue'),
     },

@@ -5,8 +5,8 @@
           <EmployeeSidebar></EmployeeSidebar>
         </div>
         <div class="container-page">
-          <WebHeaderMenu />
-              <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-200">
+          <EmployeeNavbar />
+              <main class="bg-gray-200">
                 <div class="container mx-auto flex flex-col gap-15 p-4 px-1 justify-evenly">
                     <!-- Page Title -->
                     <div style="display: flex; color: black; flex-direction: column; border-bottom: solid 1px gray">
@@ -14,7 +14,6 @@
                         <b>Setting</b>
                         </h1>
                     </div>
-  
                     <div class="flex flex-wrap justify-between">
                         <!-- Card for Leave balances -->
                         <div class="flex h-52 w-2/6 p-3 flex-col">
@@ -77,9 +76,9 @@
   
   <script>
   import EmployeeSidebar from '@/Components/EmployeeSidebar.vue'
-  import WebHeaderMenu from '@/Components/WebHeaderMenu.vue'
+  import EmployeeNavbar from '@/Components/EmployeeNavbar.vue'
   export default {
-    components: { EmployeeSidebar, WebHeaderMenu },
+    components: { EmployeeSidebar, EmployeeNavbar },
     name: 'SettingsPage',
     data() {
       return {

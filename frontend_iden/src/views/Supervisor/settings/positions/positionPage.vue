@@ -51,10 +51,11 @@
 </template>
   
   <script>
+  import axios from 'axios';
   import SupervisorSidebar from '@/Components/SupervisorSidebar.vue';
   import WebHeaderMenu from '@/Components/WebHeaderMenu.vue';
   export default {
-    components: { SupervisorSidebar, WebHeaderMenu },
+    components: { SupervisorSidebar, WebHeaderMenu},
     data() {
       return {
         positions: [], // Array to hold positions data
@@ -62,37 +63,17 @@
       };
     },
     mounted() {
-      this.getPositions(); // Fetch positions when component is mounted
+      this.getPositionList(); // Fetch positions when component is mounted
     },
     methods: {
-      getPositions(page = 1) {
-        // Fetch positions from API
-        axios.get(`/api/positions?page=${page}`)
-          .then(response => {
-            this.positions = response.data.data;
-            this.paginationData = response.data.meta;
-          })
-          .catch(error => {
-            console.error("Error fetching positions", error);
-          });
-      },
-      createNewPosition() {
-        // this.$router.push({ path: '/Supervisor/Settings/Positions/Create' });
-
-      },
-      methods: {
-    goToUpdatePage() {
-      // This will navigate to the desired route
-      this.$router.push('/Supervisor/Settings/Positions/Update');
-    }
-      },
-     
-      deletePosition(id) {
-          // Handle deletion logic
-          alert(`Position with ID ${id} deleted`);
-          // Further logic to delete the position from data
-          this.department.positions = this.department.positions.filter(position => position.id !== id);
+      async getPositionList() {
+        try {
+          const response = await axios.get('http://localhost:8000/api/position/list');
+          console.log(response)
+        } catch (error) {
+          console.error('Error fetching positions:');
         }
+      }
     }
   };
   </script>
