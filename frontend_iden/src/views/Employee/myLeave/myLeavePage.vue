@@ -129,6 +129,9 @@
 import { ref } from 'vue';
 import EmployeeSidebar from '@/Components/EmployeeSidebar.vue';
 import WebHeaderMenu from '@/Components/WebHeaderMenu.vue';
+import { useLeaveRequestStore } from '@/stores/leave-request';
+
+
 
 const user_name = ref('');
 const leave_type_id = ref('');
