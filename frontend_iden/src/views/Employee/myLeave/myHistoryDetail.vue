@@ -5,28 +5,13 @@
           <EmployeeSidebar></EmployeeSidebar>
         </div>
         <div class="container-page">
-          <WebHeaderMenu />
+          <EmployeeNavbar />
           <main class="bg-gray sticky top-0">
             <div class="mt-10 pb-20">
-              <div
-                class="flex text-black"
-                style="display: flex; flex-direction: column; border-bottom: solid 1px gray"
-              >
+              <div class="flex text-black" style="display: flex; flex-direction: column; border-bottom: solid 1px gray">
                 <router-link to="/employee/myleave/historyleave">
-                  <svg
-                    class="w-6 h-6 text-gray-800 hover:text-gray-500"
-                    aria-hidden="true"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 14 10"
-                  >
-                    <path
-                      stroke="currentColor"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      d="M13 5H1m0 0 4 4M1 5l4-4"
-                    />
+                  <svg class="w-6 h-6 text-gray-800 hover:text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5H1m0 0 4 4M1 5l4-4"/>
                   </svg>
                 </router-link>
                 <h1 class="font-bold mr-20 text-3xl px-8 w-4/12 mt-3 hover:text-yellow-400">
@@ -106,9 +91,9 @@
     
   <script>
     import EmployeeSidebar from '@/Components/EmployeeSidebar.vue'
-    import WebHeaderMenu from '@/Components/WebHeaderMenu.vue'
+    import EmployeeNavbar from '@/Components/EmployeeNavbar.vue'
     export default {
-      components: { EmployeeSidebar, WebHeaderMenu },
+      components: { EmployeeSidebar, EmployeeNavbar },
       data() {
         return {
           // Data can be added if needed for dynamic rendering

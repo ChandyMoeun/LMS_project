@@ -5,7 +5,7 @@
         <EmployeeSidebar />
       </div>
       <div class="container-page">
-        <WebHeaderMenu />
+        <EmployeeNavbar />
         <main class="bg-gray sticky top-0">
           <div class="mt-5 pb-20">
             <div class="flex text-black" style="display: flex; flex-direction: column; border-bottom: solid 1px gray;">
@@ -128,7 +128,7 @@
 <script setup>
 import { ref } from 'vue';
 import EmployeeSidebar from '@/Components/EmployeeSidebar.vue';
-import WebHeaderMenu from '@/Components/WebHeaderMenu.vue';
+import EmployeeNavbar from '@/Components/EmployeeNavbar.vue';
 
 const user_name = ref('');
 const leave_type_id = ref('');

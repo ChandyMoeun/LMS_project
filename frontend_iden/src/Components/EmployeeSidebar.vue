@@ -18,9 +18,9 @@
 
     <div class="nav nav-pills flex-column mb-auto gap-2">
       <a
-        :class="['flex no-underline items-center mt-4 py-2 px-6 text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 hover:rounded-lg hover:text-gray-100', activeLink === '/employee/dashbaord' ? 'active' : '']"
-        href="/employee/dashbaord"
-        @click="setActiveLink('/employee/dashbaord')"
+        :class="['flex no-underline items-center mt-4 py-2 px-6 text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 hover:rounded-lg hover:text-gray-100', activeLink === '/employee/dashboard' ? 'active' : '']"
+        href="/employee/dashboard"
+        @click="setActiveLink('/employee/dashboard')"
       >
         <svg
           class="h-6 w-6"

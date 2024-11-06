@@ -5,7 +5,7 @@
           <EmployeeSidebar></EmployeeSidebar>
         </div>
         <div class="container-page">
-          <WebHeaderMenu />
+          <EmployeeNavbar />
           <main class="bg-gray sticky top-0">
             <div class="mt-10">
               <!-- Admin Requests leave -->
@@ -89,9 +89,9 @@
   
   <script>
   import EmployeeSidebar from '@/Components/EmployeeSidebar.vue'
-  import WebHeaderMenu from '@/Components/WebHeaderMenu.vue'
+  import EmployeeNavbar from '@/Components/EmployeeNavbar.vue'
   export default {
-    components: { EmployeeSidebar, WebHeaderMenu },
+    components: { EmployeeSidebar, EmployeeNavbar },
     data() {
       return {
         searchQuery: '',

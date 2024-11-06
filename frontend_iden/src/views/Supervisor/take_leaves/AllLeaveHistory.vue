@@ -40,15 +40,9 @@
                 <b>All Approveed leaves</b>
               </h5>
               <div class="flex justify-between items-end mb-3">
-                <input
-                  v-model="searchQuery"
-                  type="text"
-                  placeholder="Search..."
-                  title="Type of leave or aprover Name"
-                  class="w-2/6 h-9 px-2 border rounded rounded-lg shadow-md"
-                />
+                <input v-model="searchQuery" type="text" placeholder="Search..." title="Type of leave or aprover Name" class="w-2/6 h-9 px-2 border rounded rounded-lg shadow-md"/>
                 <a
-                  href="/Supervisor/takeLeave/All/leaveHistory/rejectHistory"
+                  href="/supervisor/takeleave/all/leavehistory/rejecthistory"
                   class="mr-10 px-3 py-1 bg-gray-900 text-white font-semibold rounded-lg shadow-md hover:bg-yellow-400 transition-colors no-underline"
                   >All rejected leaves</a
                 >
@@ -65,6 +59,7 @@
                       <th class="py-3 px-2 text-center text-xs text-white uppercase tracking-wider">Half Day</th>
                       <th class="py-3 px-2 text-center text-xs text-white uppercase tracking-wider">Files</th>
                       <th class="py-3 px-2 text-center text-xs text-white uppercase tracking-wider">Status</th>
+                      <th class="py-3 px-2 text-center text-xs text-white uppercase tracking-wider">approve on</th>
                       <th class="py-3 px-2 text-center text-xs text-white uppercase tracking-wider">Total</th>
                       <th class="py-3 px-2 text-center text-xs text-white uppercase tracking-wider">Detail</th>
                       <th class="py-3 px-2 text-center text-xs text-white uppercase tracking-wider">Approver</th>
@@ -89,9 +84,10 @@
                       <td class="py-4 px-2 text-sm text-center">
                         <span :class="statusClasses(leaveRequest.status)" class="px-2 py-1 rounded-full text-xs font-semibold">{{ leaveRequest.status }}</span>
                       </td>
+                      <td class="py-4 px-2 text-sm text-center text-black">{{ leaveRequest.approve_date }}</td>
                       <td class="py-4 px-2 text-sm text-center text-black">{{ leaveRequest.total_requested_days }}</td>
-                      <td class="py-4 px-2 text-sm text-center"><a href="/Supervisor/takeLeave/view/leaveDetail" class="text-blue-600 no-underline hover:text-blue-400">View</a></td>
-                      <td class="py-4 px-2 text-sm text-center">{{ leaveRequest.approver || leaveRequest.rejector }}</td>
+                      <td class="py-4 px-2 text-sm text-center"><a href="/supervisor/takeleave/view/leavedetail" class="text-blue-600 no-underline hover:text-blue-400">View</a></td>
+                      <td class="py-4 px-2 text-sm text-center">{{ leaveRequest.approver}}</td>
                     </tr>
                   </tbody>
                 </table>
@@ -123,8 +119,8 @@ export default {
           half_day: 'Full day',
           status: 'Approved',
           approver: 'Mr. Cat',
-          rejector: null,
           total_requested_days: 3,
+          approve_date: '2024-09-01',
           file_url: '#',
         },
         // Additional leave requests can be added here

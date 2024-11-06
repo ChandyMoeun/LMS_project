@@ -102,7 +102,7 @@
                       </div>
                     </td>                    
                     <td class="py-2 px-2 text-center border-b text-xs">
-                      <a href="/Supervisor/takeLeave/view/leaveDetail" class="text-blue-500 no-underline hover:text-blue-400">More</a>
+                      <a href="/supervisor/takeleave/view/leavedetail" class="text-blue-500 no-underline hover:text-blue-400">More</a>
                     </td>
                     <td class="action text-center align-middle">
                       <span

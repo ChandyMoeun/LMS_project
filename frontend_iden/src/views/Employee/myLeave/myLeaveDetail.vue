@@ -5,12 +5,10 @@
         <EmployeeSidebar></EmployeeSidebar>
       </div>
       <div class="container-page">
-        <WebHeaderMenu />
+        <EmployeeNavbar />
         <main class="bg-gray sticky top-0">
           <div class="mt-10 pb-20">
-            <div
-              class="flex text-black"
-              style="display: flex; flex-direction: column; border-bottom: solid 1px gray" >
+            <div class="flex text-black" style="display: flex; flex-direction: column; border-bottom: solid 1px gray" >
               <router-link to="/employee/myleave">
                 <svg
                   class="w-6 h-6 text-gray-800 hover:text-gray-500"
@@ -52,7 +50,7 @@
                   </div>
                   <div class="mb-4">
                     <span class="font-semibold">Reason:</span>
-                    <textarea disabled class="w-full p-2 mt-1 border rounded-md bg-gray-50">Dear Mr.Cat, I would like to ask for permission to take leave one day. Because I'm feeling sick.</textarea>
+                    <p disabled class="w-full p-2 mt-1 border rounded-md bg-gray-50">Dear Mr.Cat, I would like to ask for permission to take leave one day. Because I'm feeling sick.</p>
                   </div>
                 </div>
                 <!-- Right Column: Approval Details -->
@@ -77,7 +75,7 @@
                   </div>
                   <div class="mb-4">
                     <span class="font-semibold">Comment:</span>
-                    <textarea disabled class="w-full p-2 mt-1 border rounded-md bg-gray-50">Okay.</textarea>
+                    <p disabled class="w-full p-2 mt-1 border rounded-md bg-gray-50">Okay.</p>
                   </div>
                 </div>
               </div>
@@ -90,11 +88,11 @@
   
   <script>
 import EmployeeSidebar from '@/Components/EmployeeSidebar.vue'
-import WebHeaderMenu from '@/Components/WebHeaderMenu.vue'
+import EmployeeNavbar from '@/Components/EmployeeNavbar.vue'
 import html2pdf from 'html2pdf.js'
 
 export default {
-  components: { EmployeeSidebar, WebHeaderMenu },
+  components: { EmployeeSidebar, EmployeeNavbar },
   data() {
     return {
       // Data can be added if needed for dynamic rendering

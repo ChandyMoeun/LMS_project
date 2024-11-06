@@ -11,7 +11,7 @@
             <div
               class="flex text-black"
               style="display: flex; flex-direction: column; border-bottom: solid 1px gray" >
-              <router-link to="/Supervisor/takeLeave">
+              <router-link to="/supervisor/takeleave">
                 <svg
                   class="w-6 h-6 text-gray-800 hover:text-gray-500"
                   aria-hidden="true"
