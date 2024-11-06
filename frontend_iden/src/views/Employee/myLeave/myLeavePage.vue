@@ -5,7 +5,7 @@
         <EmployeeSidebar />
       </div>
       <div class="container-page">
-        <WebHeaderMenu />
+        <EmployeeNavbar />
         <main class="bg-gray sticky top-0">
           <div class="mt-5 pb-20">
             <div class="flex text-black" style="display: flex; flex-direction: column; border-bottom: solid 1px gray;">
@@ -128,10 +128,14 @@
 <script setup>
 import { ref } from 'vue';
 import EmployeeSidebar from '@/Components/EmployeeSidebar.vue';
+<<<<<<< HEAD
 import WebHeaderMenu from '@/Components/WebHeaderMenu.vue';
 import { useLeaveRequestStore } from '@/stores/leave-request';
 
 
+=======
+import EmployeeNavbar from '@/Components/EmployeeNavbar.vue';
+>>>>>>> develop
 
 const user_name = ref('');
 const leave_type_id = ref('');

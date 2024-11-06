@@ -6,52 +6,33 @@
       </div>
       <div class="container-page">
         <WebHeaderMenu />
-        <main class="bg-gray sticky mt-10 ">
-            <div style="display: flex; color: black; flex-direction: column; border-bottom: solid 1px gray">
-                <router-link to="/Supervisor/Settings">
-                    <svg class="w-6 h-6 text-gray-800 dark:text-white hover:text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5H1m0 0l4 4M1 5l4-4" />
-                    </svg>
-                </router-link>
-                <h1 class="font-bold text-3xl mt-3 hover:text-yellow-400 px-8 w-1/6"><b>Permission</b></h1>
+        <main class="bg-gray sticky mt-10">
+          <div style="display: flex; color: black; flex-direction: column; border-bottom: solid 1px gray">
+            <router-link to="/supervisor/settings">
+              <svg class="w-6 h-6 text-gray-800 dark:text-white hover:text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5H1m0 0l4 4M1 5l4-4" />
+              </svg>
+            </router-link>
+            <h1 class="font-bold text-3xl mt-3 hover:text-yellow-400 px-8 w-1/6"><b>Permissions</b></h1>
+          </div>
+          <div class="mt-20">
+            <div class="bg-white shadow-md rounded my-3">
+              <table class="text-left w-full">
+                <thead class="bg-black ">
+                  <tr>
+                    <th class="py-3 px-6 font-bold text-sm text-white ">Permission Name</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr v-for="permission in permissions" :key="permission.id" class="hover:bg-grey-lighter">
+                    <td class="py-3 px-6 border-b border-grey-100"> permission
+                      {{ permission.name }}
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
-        
-            <div class="container mx-auto mt-20 px-6 py-2">
-                <div class="text-right">
-                    <a href="/Supervisor/Settings/Permissions/Create" class="bg-gray-900 mr-8 text-white font-bold px-2 py-2 no-underline rounded shadow hover:bg-yellow-400 transition-colors">New Permission</a>
-                </div>
-        
-                <div class="bg-white shadow-md rounded my-6">
-                    <table class="text-left w-full border-collapse">
-                        <thead class="bg-black ">
-                            <tr>
-                            <th class="py-3 px-6 bg-grey-lightest font-bold text-sm text-white border-b border-grey-light">Permission Name</th>
-                            <th class="py-3 px-6 bg-grey-lightest font-bold text-sm text-white border-b border-grey-light text-right">Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <!-- <tr v-for="permission in permissions" :key="permission.id" class="hover:bg-grey-lighter">
-                                <tr :key="permission.id" class="hover:bg-grey-lighter">
-                                <td class="py-4 px-6 border-b border-grey-light"> permission
-                                    {{ permission.name }}
-                                </td>
-                                <td class="py-4 px-6 border-b border-grey-light text-right">
-                                    <a href="#" class="text-grey-lighter font-bold py-1 px-3 rounded text-xs bg-green hover:bg-green-dark text-blue-400">Edit</a>
-                
-                                    
-                                </td>
-                            </tr> -->
-                            <tr>
-                                <td class="py-4 px-6 border-b border-grey-light">Role access</td>
-                                <td class="py-4 px-3 border-b text-right">
-                                    <a href="/Supervisor/Settings/Permissions/Update" class="text-grey-lighter font-bold py-1 no-underline px-2 text-xs text-blue-400">Edit</a>
-                                    <a href="#" class=" font-bold py-1 px-2 no-underline text-xs text-red-400 ">delete</a>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+          </div>
         </main>
       </div>
     </div>
@@ -65,42 +46,14 @@ export default {
   components: { SupervisorSidebar, WebHeaderMenu },
   data() {
     return {
-      permissions: [], // List of permissions fetched from API
-      canCreatePermission: false, // Permission flags from API or session data
-      canEditPermission: false,
-      canDeletePermission: false
+      permissions: [
+        { id: 1, name: 'Create Permission' },
+        { id: 2, name: 'Edit Permission' },
+        { id: 3, name: 'Delete Permission' },
+        { id: 4, name: 'View Permission' },
+      ], 
     }
   },
-  mounted() {
-    this.loadPermissions()
-    this.checkPermissions()
-  },
-  methods: {
-    loadPermissions() {
-      // Fetch permissions data from API
-      // Example: axios.get('/api/permissions').then(response => { this.permissions = response.data; });
-    },
-    checkPermissions() {
-      // Fetch user permission capabilities from API or local state
-      // Example: axios.get('/api/user-permissions').then(response => {
-      //   this.canCreatePermission = response.data.create;
-      //   this.canEditPermission = response.data.edit;
-      //   this.canDeletePermission = response.data.delete;
-      // });
-    },
-    createPermission() {
-      // Redirect to permission creation page
-      this.$router.push({ name: 'PermissionCreate' })
-    },
-    editPermission(permissionId) {
-      // Redirect to the permission edit page
-      this.$router.push({ name: 'PermissionEdit', params: { id: permissionId } })
-    },
-    deletePermission(permissionId) {
-      // Make an API call to delete the permission
-      // Example: axios.delete(`/api/permissions/${permissionId}`).then(() => this.loadPermissions());
-    }
-  }
 }
 </script>
   
