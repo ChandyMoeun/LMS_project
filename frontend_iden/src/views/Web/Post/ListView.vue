@@ -43,8 +43,9 @@
             :key="department.id"
             class="hover:bg-white text-xs"
           >
-            <td class="py-2 px-2 text-center border-b">{{ department.name }}</td>
-            <td class="py-2 px-2 text-center border-b">{{ department.manager_id }}</td>
+            <td class="py-2 px-2 text-center border-b">{{ department.name}}</td>
+            <td class="py-2 px-2 text-center border-b">{{ department.manager_name }}</td>
+            <!-- <td v-for="position in department" :key="position.id" class="py-2 px-2 text-center border-b">{{ department}}</td> -->
           </tr>
         </tbody>
       </table>

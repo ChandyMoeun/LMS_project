@@ -139,9 +139,10 @@ const router = createRouter({
       component: () => import('../views/Supervisor/settings/depaetments/departmentPage.vue'),
     },
     {
-      path: '/supervisor/settings/departments/view',
+      path: '/supervisor/settings/departments/view/:departmentId',
       'name': 'DepartmentsView',
       component: () => import('../views/Supervisor/settings/depaetments/viewDepartment.vue'),
+      props: true,
     },
     {
       path: '/supervisor/settings/leavebalance',
