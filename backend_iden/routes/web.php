@@ -1,5 +1,4 @@
 <?php
-
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\{
     ProfileController,
@@ -37,7 +36,6 @@ Route::get('/', function () {
     return view('auth.login');
 });
 
-
 Route::get('/test-mail', function () {
 
     $message = "Testing mail";
@@ -46,15 +44,12 @@ Route::get('/test-mail', function () {
         $message->to('ajayydavex@gmail.com')
             ->subject('Testing mail');
     });
-
     dd('sent');
 });
-
 
 Route::get('/dashboard', function () {
     return view('front.dashboard');
 })->middleware(['front'])->name('dashboard');
-
 
 require __DIR__ . '/front_auth.php';
 
@@ -63,15 +58,10 @@ Route::get('/admin/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('admin.dashboard');
 
-
 Route::get('/admin/dashboard', [DashboardController::class, 'index'])
     ->middleware(['auth'])
     ->name('admin.dashboard');
 require __DIR__ . '/auth.php';
-
-
-
-
 
 Route::namespace('App\Http\Controllers\Admin')->name('admin.')->prefix('admin')
     ->group(function () {
@@ -79,7 +69,6 @@ Route::namespace('App\Http\Controllers\Admin')->name('admin.')->prefix('admin')
         Route::resource('permissions', 'PermissionController');
         Route::resource('users', 'UserController');
         Route::resource('employee', 'EmployeeController');
-
 
         //=====>Calendar Group<=====
         Route::resource('calendar_group', 'CalendarGroupController');

@@ -64,7 +64,7 @@
             </div>
             <!--.......................... member requestion leaves ......................... -->
             <div class="px-8 overflow-x-auto">
-              <h1 class="text-4xl p-10 text-black text-center">Member Requesting Leaves</h1>
+              <h1 class="text-4xl mb-4 text-black text-center">Member Requesting Leaves</h1>
               <table class="min-w-full bg-gray-100 border border-gray-100">
                 <thead>
                   <tr class="bg-black text-white text-xs">
