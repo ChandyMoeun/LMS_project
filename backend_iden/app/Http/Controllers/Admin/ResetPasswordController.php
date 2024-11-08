@@ -1,18 +1,12 @@
 <?php
-
 namespace App\Http\Controllers\Admin;
-
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Employee;
 use Illuminate\Support\Facades\Hash;
 
-class ResetPasswordController extends Controller
-
-{
-
-    public function index()
-    {
+class ResetPasswordController extends Controller {
+    public function index() {
         // Fetch all employees
         $employees = Employee::all();
 
@@ -23,15 +17,13 @@ class ResetPasswordController extends Controller
      * Show the form to reset an employee's password.
      */
     // Display form for resetting the password
-    public function resetForm($id)
-    {
+    public function resetForm($id) {
         $employee = Employee::findOrFail($id); // Find the employee by ID
         return view('employee.resetpassword.form', compact('employee'));
     }
 
     // Handle password reset request
-    public function reset(Request $request, $id)
-    {
+    public function reset(Request $request, $id) {
         $request->validate([
             'password' => 'required|string|min:8|confirmed',
             'password_confirmation' => 'required|same:password',

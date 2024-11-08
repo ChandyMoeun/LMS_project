@@ -9,18 +9,18 @@
             <h1 class="font-bold text-3xl mt-3 hover:text-yellow-400 w-2/12"><b>Leave Types</b></h1>
         </div>
         <div class="container mx-auto px-6 py-1">
-            <!-- Create new LeaveType -->
-            <div class="flex justify-end">
-                @can('LeaveType create')
-                <a href="{{ route('admin.leavetype.create') }}"
-                    class="bg-black text-white font-bold mt-3 px-2 py-1 rounded focus:outline-none shadow hover:bg-yellow-400 transition-colors">
-                    Add New Type
-                </a>
-                @endcan
-            </div>
             <!--leave type-->
             <div class="container mx-auto mt-5">
-                <h6 class="text-center text-2xl font-bold mb-6">All Leave Types</h6>
+                <!-- Create new LeaveType -->
+                <h6 class="text-center text-2xl font-bold">All Leave Types</h6>
+                <div class="flex mb-3 justify-end">
+                    @can('LeaveType create')
+                    <a href="{{ route('admin.leavetype.create') }}"
+                        class="bg-black text-white font-bold px-2 py-1 mr-8 rounded focus:outline-none shadow hover:bg-yellow-400 transition-colors">
+                        Add New Type
+                    </a>
+                    @endcan
+                </div>
                 <table class="min-w-full divide-y mb-5 divide-gray-200" style=" box-shadow:rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;">
                     <thead class="bg-black">
                         <tr>
@@ -35,7 +35,7 @@
                     <tbody class="bg-white divide-y divide-gray-200">
                         @foreach($leaveTypes as $leaveType)
                         <tr class="hover:bg-gray-100">
-                            <td class="py-4 px-6 border-b border-gray-200">
+                            <td class="py-1 px-6 border-b border-gray-200">
                                 {{ $leaveType->employee->name }}
                                 <br>
                                 <p><span><strong class="text-blue-500">{{ $leaveType->employee->staff_id}}</strong></span> | <span> <strong class="text-blue-500">{{ $leaveType->employee->full_name}}</strong></span> | <span><strong class="text-blue-500">{{ $leaveType->employee->gender}}</strong></span></p>
@@ -46,11 +46,11 @@
                                 @if(!$loop->last), @endif
                                 @endforeach
                             </td>
-                            <td class="py-4 px-6 border-b border-gray-200">{{ $leaveType->leave_name }}</td>
-                            <td class="py-4 px-6 text-center border-b border-gray-200">{{ $leaveType->requires_attachment ? 'Yes' : 'No' }}</td>
-                            <td class="py-4 px-6 text-center border-b border-gray-200">{{ $leaveType->auto_increase_entitlement ? 'Yes' : 'No' }}</td>
-                            <td class="py-4 px-6 text-center border-b border-gray-200">{{ $leaveType->increase_rate }} days/year</td>
-                            <td class="py-4 px-6 border-b border-gray-200 text-right">
+                            <td class="py-1 px-6 border-b border-gray-200">{{ $leaveType->leave_name }}</td>
+                            <td class="py-1 px-6 text-center border-b border-gray-200">{{ $leaveType->requires_attachment ? 'Yes' : 'No' }}</td>
+                            <td class="py-1 px-6 text-center border-b border-gray-200">{{ $leaveType->auto_increase_entitlement ? 'Yes' : 'No' }}</td>
+                            <td class="py-1 px-6 text-center border-b border-gray-200">{{ $leaveType->increase_rate }} days/year</td>
+                            <td class="py-1 px-6 border-b border-gray-200 text-right">
                                 @can('LeaveType edit')
                                 <a href="{{ route('admin.leavetype.edit', $leaveType->id) }}" class="text-white font-bold py-1 px-3 rounded text-xs bg-black hover:bg-yellow-400">Edit</a>
                                 @endcan
