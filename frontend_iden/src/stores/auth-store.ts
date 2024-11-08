@@ -6,11 +6,13 @@ export const useAuthStore = defineStore('auth', () => {
   const isAuthenticated = ref()
   const permissions = ref()
   const roles = ref()
+  const member = ref()
 
   return {
     user,
     roles,
     permissions,
-    isAuthenticated
+    isAuthenticated,
+    member,
   }
 })

@@ -264,6 +264,18 @@ const router = createRouter({
       'name': 'profile',
       component: () => import('../views/Employee/settings/myprofile/myProfile.vue'),
     },
+
+    // test ===
+    {
+      path: '/test',
+      'name': 'test',
+      component: () => import('../views/Web/Post/ListView.vue'),
+    },
+    {
+      path: '/post',
+      'name': 'post',
+      component: () => import('../views/Web/Post/leaveRequest.vue'),
+    },
   ]
 })
 
@@ -275,6 +287,7 @@ router.beforeEach(async (to, from, next) => {
   try {
     // Attempt to fetch the current user's details
     const { data } = await axiosInstance.get('/me')
+    store.member = data.team_members,
     // Update the auth store with the fetched data
     store.isAuthenticated = true
     store.user = data.data

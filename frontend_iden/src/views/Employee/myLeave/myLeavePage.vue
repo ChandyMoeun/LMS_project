@@ -128,7 +128,14 @@
 <script setup>
 import { ref } from 'vue';
 import EmployeeSidebar from '@/Components/EmployeeSidebar.vue';
+<<<<<<< HEAD
+import WebHeaderMenu from '@/Components/WebHeaderMenu.vue';
+import { useLeaveRequestStore } from '@/stores/leave-request';
+
+
+=======
 import EmployeeNavbar from '@/Components/EmployeeNavbar.vue';
+>>>>>>> develop
 
 const user_name = ref('');
 const leave_type_id = ref('');

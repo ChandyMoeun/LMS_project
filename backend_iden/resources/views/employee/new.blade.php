@@ -14,7 +14,7 @@
           @csrf
           @method('post')
 
-          <div style="display: flex; justify-content: center; padding: 2%; margin-bottom: 5%;">
+          <div style="display: flex; justify-content: center;">
             <!-- Hidden file input -->
             <input type="file" id="profileImageInput" name="profile" class="hidden" accept="image/*" onchange="previewImage(event)" />
             <!-- Image element -->
@@ -22,7 +22,7 @@
               id="profileImage"
               src="https://via.placeholder.com/120"
               alt="Profile"
-              class="rounded-full w-20 h-20 cursor-pointer"
+              class="rounded-full w-20 h-20 mb-3 cursor-pointer"
               onclick="document.getElementById('profileImageInput').click()" />
           </div>
 
@@ -134,11 +134,11 @@
           </div>
 
           <!-- Role Assignment -->
-          <h3 class="text-xl my-4 text-gray-600">Role</h3>
+          <h3 class="text-xl my-2 text-gray-600">Role</h3>
           <div class="grid grid-cols-3 gap-4">
             @foreach($roles as $role)
             <div class="flex flex-col justify-center">
-              <label class="inline-flex items-center mt-3">
+              <label class="inline-flex items-center">
                 <input type="checkbox" class="form-checkbox h-5 w-5 text-blue-600" name="roles[]" value="{{ $role->id }}"><span class="ml-2 text-gray-700">{{ $role->name }}</span>
               </label>
             </div>
@@ -146,7 +146,7 @@
           </div>
 
           <!-- Submit Button -->
-          <div class="text-center mt-16 mb-16">
+          <div class="text-center mt-7 mb-10">
             <button type="submit" class="w-5px mt-5 bg-red-500 text-white font-bold py-2 px-4 hover:bg-red-400 focus:outline-none focus:bg-red-700 transition-colors" style="border-radius: 5px"><a href="/admin/employee" style="text-decoration: none; color: white;">Cancel</a></button>
             <button type="submit" class="w-5px mt-5 bg-black text-white font-bold py-2 px-4 hover:bg-yellow-400 focus:outline-none focus:bg-blue-700 transition-colors" style="border-radius: 5px">Add</button>
           </div>
