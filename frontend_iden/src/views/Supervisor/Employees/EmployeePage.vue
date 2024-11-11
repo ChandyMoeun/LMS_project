@@ -41,7 +41,7 @@
                     <th class="p-3 text-center">Action</th>
                   </tr>
                 </thead>
-                <tbody>
+                <tbody  v-if="employees_list.length">
                   <tr v-for="employee in filteredEmployees" :key="employee.id" class="bg-gray-100 border-b border-gray-200">
                     <td class="p-3">{{ employee.staff_id }}</td>
                     <td class="p-3">
@@ -60,6 +60,11 @@
                       </button>
                       <!-- <button @click="editEmployee(employee.id)" class="ml-2 text-white px-2 py-1 border-solid border-1 border-indigo-600 rounded-lg bg-gray-900 hover:bg-yellow-400">Update</button> -->
                     </td>
+                  </tr>
+                </tbody>
+                <tbody v-else>
+                  <tr>
+                    <td colspan="7" class="px-6 py-4 text-center text-sm text-gray-600">No Employee found.</td>
                   </tr>
                 </tbody>
               </table>
