@@ -13,7 +13,7 @@
       <div>
         <label for="half_day_type">Half Day Type:</label>
         <select id="half_day_type" v-model="leaveRequest.half_day_type">
-          <option value="full">Full Day</option>
+          <option value="full_day">Full Day</option>
           <option value="AM">Morning (Half Day)</option>
           <option value="PM">Afternoon (Half Day)</option>
         </select>
@@ -63,7 +63,7 @@ const leaveRequestStore = useLeaveRequestStore();
 const leaveRequest = ref({
   employee_id: null,
   leaveType_id: null,
-  half_day_type: 'full', // Default to full day
+  half_day_type: 'full_day', // Default to full day
   start_time: '',
   end_time: '',
   total_requested_days: 1,

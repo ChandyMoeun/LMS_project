@@ -110,9 +110,10 @@ const router = createRouter({
       component: () => import('../views/Supervisor/Employees/createEmployee.vue'),
     },
     {
-      path: '/supervisor/employee/profile/more',
+      path: '/supervisor/employee/profile/more/:id',
       'name': 'EmployeeProfile',
       component: () => import('../views/Supervisor/Employees/EmployeeProfile.vue'),
+      props: true,
     }, 
     {
       path: '/supervisor/attendance',
@@ -243,6 +244,7 @@ const router = createRouter({
       path: '/employee/team/detail/:id',
       'name': 'TeamDetail',
       component: () => import('../views/Employee/team/teamDetailPage.vue'),
+      props: true,
     },
               //----------------employees setting routes --------------------------------
     {
@@ -289,6 +291,8 @@ router.beforeEach(async (to, from, next) => {
     // Attempt to fetch the current user's details
     const { data } = await axiosInstance.get('/me')
     store.member = data.team_members,
+    store.teamCount=data.team_count,
+    
     // Update the auth store with the fetched data
     store.isAuthenticated = true
     store.user = data.data

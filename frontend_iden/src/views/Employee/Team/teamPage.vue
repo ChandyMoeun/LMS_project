@@ -1,26 +1,35 @@
 <template>
-    <EmployeeLayout>
-      <div class="employee">
-        <div class="sidebar">
-          <EmployeeSidebar></EmployeeSidebar>
-        </div>
-        <div class="container-page">
-          <EmployeeNavbar/>
-          <main class="bg-gray sticky mt-5">
-            <div class="mt-10">
+  <EmployeeLayout>
+    <div class="employee">
+      <div class="sidebar">
+        <EmployeeSidebar></EmployeeSidebar>
+      </div>
+      <div class="container-page">
+        <EmployeeNavbar />
+        <main class="bg-gray sticky mt-5">
+          <div class="mt-10">
             <!-- Employee Management Header -->
-            <div class="d-flex text-black" style="display: flex; flex-direction: column; border-bottom: solid 1px gray" >
-              <h1 class="font-bold text-3xl px-8 hover:text-yellow-500 w-4/12"> <b>Team Management</b> </h1>
-              <p class="px-8">Total members: {{ filteredEmployees.length }}</p>
+            <div
+              class="d-flex text-black"
+              style="display: flex; flex-direction: column; border-bottom: solid 1px gray"
+            >
+              <h1 class="font-bold text-3xl px-8 hover:text-yellow-500 w-4/12">
+                <b>Team Management</b>
+              </h1>
+              <p v-if="teamCount > 0" class="px-8">Total members: {{ teamCount }}</p>
             </div>
-
             <!-- Search and Filter -->
             <div class="flex justify-between mt-20 mb-7">
-              <input v-model="searchQuery" type="text" placeholder="Search..." title="Type of leave or approver Name" class="w-2/6 h-9 px-2 border rounded rounded-lg shadow-md"/>
+              <input
+                v-model="searchQuery"
+                type="text"
+                placeholder="Search..."
+                title="Type of leave or approver Name"
+                class="w-2/6 h-9 px-2 border rounded shadow-md"
+              />
             </div>
-
             <!-- Employee Table -->
-            <div class="overflow-x-auto">
+            <div v-if="team.length > 0" class="overflow-x-auto">
               <table class="w-full bg-white shadow-md rounded">
                 <thead>
                   <tr class="header bg-black text-white">
@@ -32,102 +41,113 @@
                     <th class="p-3 text-center">Action</th>
                   </tr>
                 </thead>
-                <tbody>
-                  <tr v-for="employee in filteredEmployees" :key="employee.id" class="bg-gray-100 border-b border-gray-200">
-                    <td class="p-3">{{ employee.staff_id }}</td>
-                    <td class="p-3">
-                      <img :src="employee.profile ? `/images/${employee.profile}` : '/images/default_profile.png'"
-                          alt="Profile" class="w-12 h-12 rounded-full object-cover" />
-                    </td>
-                    <td class="p-3 text-center">{{ employee.full_name }}</td>
-                    <td class="p-3 text-blue-600 text-center">{{ employee.email }}</td>
-                    <td class="p-3 text-center">
-                      {{ employee.position ? employee.position.name : 'No position' }}
-                    </td>
+                <tbody >
+                  <tr
+                    v-for="member in team"
+                    :key="member.id"
+                    class="bg-gray-100 border-b border-gray-200"
+                  >
+                    <td class="p-3">{{ member.staff_id }}</td>
+                    <img
+                      :src="
+                        member.profile && member.profile
+                          ? `http://127.0.0.1:8000/images/${member.profile}`
+                          : '/images/default-profile.jpg'
+                      "
+                      alt="Profile Picture"
+                      class="w-14 h-14 rounded-full"
+                    />
+                    <td class="p-3 text-center">{{ member.full_name }}</td>
+                    <td class="p-3 text-blue-600 text-center">{{ member.email }}</td>
+                    <td class="p-3 text-center">{{ member.position.name }}</td>
                     <td class="text-center w-3/12">
-                      <button @click="viewEmployee(employee.id)"
-                              class="text-white px-2 py-1 border-solid border-0 border-indigo-600 rounded-lg bg-blue-600 hover:bg-blue-400 border-none">
+                      <router-link
+                        :to="{ name: 'TeamDetail', params: { id: member.id } }"
+                        class="inline-block px-4 py-2 text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition duration-200 shadow-sm no-underline"
+                      >
                         More
-                      </button>
+                      </router-link>
                     </td>
                   </tr>
                 </tbody>
+                <!-- Loading State -->
               </table>
             </div>
+            <div v-else class="flex justify-center items-center min-h-screen">
+              <p class="text-xl font-semibold text-gray-600">Loading employee data...</p>
+            </div>
           </div>
-          </main>
-        </div>
+        </main>
       </div>
-    </EmployeeLayout>
-  </template>
-  
+    </div>
+  </EmployeeLayout>
+</template>
+
 <script>
-import axiosInstance from '@/plugins/axios';
-import EmployeeSidebar from '@/Components/EmployeeSidebar.vue';
-import EmployeeNavbar from '@/Components/EmployeeNavbar.vue';
+import EmployeeSidebar from '@/Components/EmployeeSidebar.vue'
+import EmployeeNavbar from '@/Components/EmployeeNavbar.vue'
+import axiosInstance from '@/plugins/axios' // Adjust the path if needed
+import { useAuthStore } from '@/stores/get-team' // Pinia store
 
 export default {
   components: { EmployeeSidebar, EmployeeNavbar },
   data() {
     return {
-      employees_list: [],
-      searchQuery: ''
-    };
-  },
-  mounted() {
-    this.fetchData(); // Fetch the initial employee data
-  },
-  computed: {
-    // Computed property to filter employees based on searchQuery
-    filteredEmployees() {
-      return this.employees_list.filter(employee =>
-        employee.full_name.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
-        employee.staff_id.includes(this.searchQuery)
-      );
+      team: [], // Local state to store team members
+      teamCount: 0 // Local state to store team count
     }
   },
+  mounted() {
+    this.fetchTeamMembers() // Call the fetch method when the component is mounted
+  },
   methods: {
-    fetchData() {
-      this.fetchEmployee();
-    },
-    viewEmployee(employeeId) {
-      // Navigate to the employee profile using Vue Router or a direct URL change
-      this.$router.push(`/employee/team/detail/${employeeId}`);
-    },
-    async fetchEmployee() {
+    async fetchTeamMembers() {
+      const store = useAuthStore() // Access the store
       try {
-        const response = await axiosInstance.get('/employee');
-        this.employees_list = response.data;
+        // Fetch team members from the backend
+        const { data } = await axiosInstance.get('/team') // Replace with your API endpoint
+
+        // Update local state and Pinia store
+        this.team = data.teams // Update component's team
+        this.teamCount = data.team_count // Update component's team count
+
+        store.team = data.teams // Optionally, store data in Pinia if needed globally
+        store.teamCount = data.team_count // Store the count in Pinia
+
+        console.log('Fetched team members:', this.team) // Log the fetched data
       } catch (error) {
-        console.error('Error fetching employee data:', error);
+        console.error('Error fetching team members:', error)
+        // Reset data on error
+        this.team = []
+        this.teamCount = 0
       }
     }
   }
-};
+}
 </script>
 
-  <style scoped>
-  .employee{
-    display: flex;
-    height: 100vh;
-    align-items: start;
-    width: 100%;
-    background-color: #E5E7EB;
-  }
-  .sidebar{
-    width: 17%;
-    height: auto;
-    background-color: #141c2e;
-    color: white;
-  }
-  .container-page {
-    width: 83%;
-  }
-  main{
-    padding: 50px 50px 0px 50px;
-    height: auto;
-    width: 100%;
-    background-color: #E5E7EB;
-    margin-bottom: 50px;
-  }
-  </style>
+<style scoped>
+.employee {
+  display: flex;
+  height: 100vh;
+  align-items: start;
+  width: 100%;
+  background-color: #e5e7eb;
+}
+.sidebar {
+  width: 17%;
+  height: auto;
+  background-color: #141c2e;
+  color: white;
+}
+.container-page {
+  width: 83%;
+}
+main {
+  padding: 50px 50px 0px 50px;
+  height: auto;
+  width: 100%;
+  background-color: #e5e7eb;
+  margin-bottom: 50px;
+}
+</style>

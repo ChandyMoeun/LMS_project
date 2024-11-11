@@ -7,6 +7,8 @@ export const useAuthStore = defineStore('auth', () => {
   const permissions = ref()
   const roles = ref()
   const member = ref()
+  const teamCount = ref(0);
+  
 
   return {
     user,
@@ -14,5 +16,7 @@ export const useAuthStore = defineStore('auth', () => {
     permissions,
     isAuthenticated,
     member,
+    teamCount,
+  
   }
 })
