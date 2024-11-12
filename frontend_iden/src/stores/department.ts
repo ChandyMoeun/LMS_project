@@ -1,41 +1,47 @@
 import { defineStore } from 'pinia'
 import axiosInstance from '@/plugins/axios'
 
-export const useDepartmentStore = defineStore('department', {
+export const useAttendanceStore = defineStore('attendance', {
   state: () => ({
-    departments: [] as Array<{ id: number; name: string; manager_id: number }>
+    attendance: [] as Array<{ id: number; date: string; status: string; remarks?: string }>,
   }),
-  actions: {
-    async fetchDepartments() {
-      try {
-        const response = await axiosInstance.get('departments', {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem('access_token')}`
-          }
-        })
-        this.departments = response.data.data
 
-        // Log the data to the console
-        console.log('Fetched departments:', this.departments)
+  actions: {
+    // Fetch attendance records
+    async fetchAttendance() {
+      try {
+        const response = await axiosInstance.get('/attendance/history', {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('access_token')}`, // Use the token for authentication
+          },
+        })
+
+        // Store the attendance records
+        this.attendance = response.data.attendance_records // Adjust the response based on your API's structure
+        
+        // Log the data to the console for debugging
+        console.log('Fetched attendance records:', this.attendance)
       } catch (error) {
-        console.error('Error fetching departments:', error)
+        console.error('Error fetching attendance:', error)
       }
     },
-    async fetchDepartmentId(departmentId: number) {
+
+    // Fetch a specific attendance record by ID
+    async fetchAttendanceById(attendanceId: number) {
       try {
-        const response = await axiosInstance.get(`departments/${departmentId}`, {
+        const response = await axiosInstance.get(`/attendance/${attendanceId}`, {
           headers: {
-            Authorization: `Bearer ${localStorage.getItem('access_token')}`
-          }
+            Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+          },
         })
 
-        // Assuming the response contains a single department object
-        this.departments = [response.data] // Wrap in an array if you're treating it as an array
-
+        // Assuming the response contains a single attendance object
+        this.attendance = [response.data] // Wrap the result in an array if needed
+        
         // Log the data to the console
-        console.log('Fetched department:', this.departments)
+        console.log('Fetched attendance:', this.attendance)
       } catch (error) {
-        console.error('Error fetching department:', error)
+        console.error('Error fetching attendance by ID:', error)
       }
     }
   }
