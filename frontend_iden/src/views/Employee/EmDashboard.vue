@@ -6,31 +6,30 @@
       </div>
       <div class="container-page">
         <EmployeeNavbar />
-        <main class="bg-gray sticky top-0">
-          <div class="container pb-30">
+        <main class="sticky top-0">
+          <div class="px-10 container pb-30">
                 <!-- Header -->
             <div class="mt-5 text-black" style="border-bottom: solid 1px gray">
               <h1 class="font-bold text-3xl px-8 hover:text-yellow-400 w-4/12">Employee Dashboard</h1>
             </div>
             <!----------- alert code -------------------->
-                        <!----------- alert code -------------------->
-                        <div v-show="isToastVisible" class="toast-box"
-                  style=" position: absolute; top: 7%; right: 2%; display: flex; align-items: flex-end; flex-direction: column; overflow: hidden; padding: 2px; width: 23%;">
-                  <div role="alert" class="mb-4 relative flex w-full p-3 pr-5 text-sm text-white bg-black rounded-md items-center">
-                    {{ alertMessage }}
-                  </div>
-                </div>
+            <div v-show="isToastVisible" class="toast-box"
+              style=" position: absolute; top: 7%; right: 2%; display: flex; align-items: flex-end; flex-direction: column; overflow: hidden; padding: 2px; width: 23%;">
+              <div role="alert" class="mb-4 relative flex w-full p-3 pr-5 text-sm text-white bg-black rounded-md items-center">
+                {{ alertMessage }}
+              </div>
+            </div>
             <!----------- //end alert code //--------------------> 
 
             <!--............................// Chart js // total employee leave balance chart ..............................  -->
-             <!-- Chart Container -->
-              <h1 class="text-4xl text-black p-10 text-center">My Leave Balance</h1>  
-              <div class="chart-container flex justify-center mb-10 rounded-2xl bg-white shadow-[0_35px_60px_-15px_rgba(0,0,0,0.3)]">
-                <canvas id="myLeaveBalance" style="width:100%; max-width:800px; height:100vh; max-height:70vh;"></canvas>
-              </div>
+            <!-- Chart Container -->
+            <h1 class="text-4xl text-black p-10 text-center">My Leave Balance</h1>  
+            <div class="chart-container py-5 flex justify-center mb-10 rounded-2xl bg-white shadow-[rgba(13,_38,_76,_0.19)_0px_9px_20px]">
+              <canvas id="myLeaveBalance" style="width:100%; max-width:800px; height:70vh; max-height:60vh;"></canvas>
+            </div>
             <!--............................list of my requesting leaves ..............................  -->
-            <div class="px-8 overflow-x-auto">
-              <h1 class="text-4xl p-10 text-black text-center">My Requesting Leaves</h1>
+            <h1 class="text-4xl p-10 text-gray-900 text-center hover:text-yellow-400"><strong> My Requesting Leaves</strong></h1>
+            <div class="shadow-[0px_4px_16px_rgba(17,17,26,0.1),_0px_8px_24px_rgba(17,17,26,0.1),_0px_16px_56px_rgba(17,17,26,0.1)] overflow-x-auto">
               <table class="min-w-full bg-gray-100 border border-gray-100">
                 <thead>
                   <tr class="bg-black text-white text-xs">
@@ -58,15 +57,9 @@
                     <td class="py-2 px-2 text-center border-b">{{ request.date }}</td>
                     <td class="py-2 px-2 text-center border-b">{{ request.approver }}</td>
                     <td class="py-2 px-2 text-center border-b">{{ request.subApprover }}</td>
-                    
-                    <!-- Dropdown status update -->
                     <td class="py-2 px-2 text-center border-b">
-                      
-                      <div>
-                        <span :class="statusClass(request.status)">{{ request.status }}</span>
-                      </div>
+                      <span :class="statusClass(request.status)">{{ request.status }}</span>
                     </td>
-                    
                     <td class="py-2 px-2 text-center border-b text-xs">
                       <a href="/employee/myleave/view/detail" class="text-blue-500 no-underline hover:text-blue-400">More</a>
                     </td>
@@ -84,7 +77,6 @@
 <script setup lang="ts">
 import EmployeeLayout from '@/Components/Layouts/EmployeeLayout.vue';
 import EmployeeNavbar from '@/Components/EmployeeNavbar.vue'
-
 import { ref, onMounted } from 'vue'
 import Chart from 'chart.js/auto'
 
@@ -177,20 +169,16 @@ const statusClass = (status) => {
 };
 </script>
 
-
 <style scoped>
 .employee {
   display: flex;
   height: 100vh;
   align-items: start;
   width: 100%;
-  background-color: #e5e7eb;
 }
 .sidebar {
   width: 17%;
   height: auto;
-  background-color: #141c2e;
-  color: white;
 }
 .container-page {
   width: 83%;
@@ -199,7 +187,7 @@ main {
   padding: 50px 50px 0px 50px;
   height: auto;
   width: 100%;
-  background-color: #e5e7eb;
+  background-color: #EEEDED;
   margin-bottom: 50px;
 }
 </style>

@@ -28,8 +28,8 @@
                   </div>
                   <!-- Search Bar -->
                   <div class="w-5/12 flex justify-between">
-                      <input v-model="searchQuery" placeholder="Search employee by name..." class="w-4/6 py-2 px-2 bg-blue-100 mt-3 h-9 border rounded">
-                      <a  href="/supervisor/myattendance" class="bg-gray-900 d-flex items-center justify-center mt-3 h-9 w-35 text-white font-semibold no-underline rounded-lg shadow-md hover:bg-yellow-500 transition-colors">My Attendance</a>
+                    <input v-model="searchQuery" placeholder="Search employee by name..." class="w-4/6 py-2 px-2 bg-blue-100 mt-3 h-9 border rounded">
+                    <a  href="/supervisor/myattendance" class="bg-gray-900 d-flex items-center justify-center mt-3 h-9 w-35 text-white font-semibold no-underline rounded-lg shadow-md hover:bg-yellow-500 transition-colors">My Attendance</a>
                   </div>
                 </div>
                 <div id="attendance_records" class="overflow-x-auto">
@@ -47,11 +47,7 @@
                     </thead>
                     <tbody class="bg-white divide-y divide-gray-200">
                       <!-- Loop through filtered attendances -->
-                      <tr 
-                        v-for="attendance in filteredAttendances" 
-                        :key="attendance.id" 
-                        class="hover:bg-gray-100 transition duration-150 ease-in-out"
-                      >
+                      <tr v-for="attendance in filteredAttendances" :key="attendance.id" class="hover:bg-gray-100 transition duration-150 ease-in-out" >
                         <td class="px-6 py-4 text-left text-sm font-medium text-black font-bold">{{ attendance.employee.full_name }}</td>
                         <td class="px-6 py-4 text-center text-sm text-gray-600">{{ attendance.date }}</td>
                         <td class="px-6 py-4 text-center text-sm text-gray-600">{{ attendance.status }}</td>
@@ -90,23 +86,21 @@ export default {
     this.fetchAttendanceRecords();
   },
   computed: {
-  // Filter attendances based on the search query (either date or employee name)
-  filteredAttendances() {
-    const query = this.searchQuery.trim().toLowerCase();
-    if (!query) {
-      return this.attendances; // If no query, return all attendances
-    }
-    return this.attendances.filter(attendance => 
-      // Check if the date matches the query or if the employee's name includes the query
-      attendance.date.includes(query) ||
-      attendance.employee.full_name.toLowerCase().includes(query)
-    );
+    // Filter attendances based on the search query (either date or employee name)
+    filteredAttendances() {
+      const query = this.searchQuery.trim().toLowerCase();
+      if (!query) {
+        return this.attendances; // If no query, return all attendances
+      }
+      return this.attendances.filter(attendance => 
+        // Check if the date matches the query or if the employee's name includes the query
+        attendance.date.includes(query) ||
+        attendance.employee.full_name.toLowerCase().includes(query)
+      );
+    },
   },
-},
-
   methods: {
     fetchAttendanceRecords() {
-      // Dummy data for demo purposes
       this.attendances = [
         {
           id: 1,
@@ -138,7 +132,6 @@ export default {
           hours_worked: '0',
           remarks: 'Sick leave',
         },
-        // Add more records as needed
       ];
     },
     printSection() {
@@ -164,30 +157,25 @@ export default {
 };
 </script>
 
-
 <style scoped>
-.supervisor{
-  display: flex;
-  height: 100vh;
-  align-items: start;
-  width: 100%;
-  background-color: #E5E7EB;
-}
-.sidebar{
-  width: 17%;
-  height: auto;
-  background-color: #141c2e;
-  color: white;
-}
-.container-page {
-  width: 83%;
-}
-main{
-  padding: 50px 50px 0px 50px;
-  height: auto;
-  width: 100%;
-  background-color: #E5E7EB;
-  margin-bottom: 50px;
-}
-
+  .supervisor {
+    display: flex;
+    height: 100vh;
+    align-items: start;
+    width: 100%;
+  }
+  .sidebar {
+    width: 17%;
+    height: auto;
+  }
+  .container-page {
+    width: 83%;
+  }
+  main {
+    padding: 50px 50px 0px 50px;
+    height: auto;
+    width: 100%;
+    background-color: #EEEDED;
+    margin-bottom: 50px;
+  }
 </style>

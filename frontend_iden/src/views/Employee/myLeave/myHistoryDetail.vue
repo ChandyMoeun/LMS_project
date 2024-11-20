@@ -6,8 +6,8 @@
         </div>
         <div class="container-page">
           <EmployeeNavbar />
-          <main class="bg-gray sticky top-0">
-            <div class="mt-10 pb-20">
+          <main>
+            <div class="mt-10 pb-20 px-10">
               <div class="flex text-black" style="display: flex; flex-direction: column; border-bottom: solid 1px gray">
                 <router-link to="/employee/myleave/historyleave">
                   <svg class="w-6 h-6 text-gray-800 hover:text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
@@ -19,7 +19,6 @@
                 </h1>
               </div>
               <!-- Leave Request Details -->
-  
               <div class="max-w-4xl mx-auto mt-20 p-5 bg-gray-100 rounded-lg shadow-md">
                 <!-- Left Column: Request Details -->
                 <div class="grid grid-cols-2 gap-8">
@@ -70,10 +69,7 @@
                     </div>
                     <div class="mb-4">
                       <span class="font-semibold">Approval by:</span>
-                      <p class="mt-1 flex items-center">
-                        <img class="h-6 w-6 rounded-full mr-2" src="https://via.placeholder.com/40" alt="Profile"/>
-                        Cat
-                      </p>
+                      <p class="mt-1 flex items-center"> <img class="h-6 w-6 rounded-full mr-2" src="https://via.placeholder.com/40" alt="Profile"/> Cat </p>
                     </div>
                     <div class="mb-4">
                       <span class="font-semibold">Comment:</span>
@@ -103,28 +99,24 @@
   </script>
       
   <style scoped>
-    .employee {
-      display: flex;
-      height: 100vh;
-      align-items: start;
-      width: 100%;
-      background-color: #e5e7eb;
-    }
-    .sidebar {
-      width: 17%;
-      height: auto;
-      background-color: #141c2e;
-      color: white;
-    }
-    .container-page {
-      width: 83%;
-    }
-    main {
-      padding: 50px 50px 0px 50px;
-      height: auto;
-      width: 100%;
-      background-color: #e5e7eb;
-      margin-bottom: 50px;
-    }
+.employee {
+  display: flex;
+  height: 100vh;
+  align-items: start;
+  width: 100%;
+}
+.sidebar {
+  width: 17%;
+  height: auto;
+}
+.container-page {
+  width: 83%;
+}
+main {
+  padding: 50px 50px 0px 50px;
+  height: auto;
+  width: 100%;
+  background-color: #EEEDED;
+  margin-bottom: 50px;
+}
   </style>
-    

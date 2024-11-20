@@ -6,13 +6,10 @@
       </div>
       <div class="container-page">
         <WebHeaderMenu />
-        <main class="bg-gray sticky top-0">
+        <main class="sticky top-0">
           <div class="mt-10">
             <!-- Admin Requests leave -->
-            <div
-              class="d-flex text-black"
-              style="display: flex; flex-direction: column; border-bottom: solid 1px gray"
-            >
+            <div class="d-flex text-black" style="display: flex; flex-direction: column; border-bottom: solid 1px gray" >
               <h1 class="font-bold text-3xl px-8 hover:text-yellow-500 w-3/12">
                 <b>My History</b>
               </h1>
@@ -21,18 +18,9 @@
 
             <div class="container mx-auto mt-16 px-6 py-4">
               <div class="flex justify-between mb-3">
-                <input
-                  v-model="searchQuery"
-                  type="text"
-                  placeholder="Search..."
-                  title="Type of leave or aprover Name"
-                  class="w-2/6 py-2 px-2 h-9 border rounded rounded-lg shadow-md"
-                />
-                <a
-                  href="/Supervisor/takeLeave"
-                  class="mr-5 px-3 mt-1 py-1 bg-red-600 text-white font-semibold rounded-lg shadow-md hover:bg-yellow-400 transition-colors no-underline"
-                  >Back</a
-                >
+                <input v-model="searchQuery" type="text" placeholder="Search..." title="Type of leave or aprover Name"
+                  class="w-2/6 py-2 px-2 h-9 border rounded rounded-lg shadow-md" />
+                <a href="/Supervisor/takeLeave" class="mr-5 px-3 mt-1 py-1 bg-red-600 text-white font-semibold rounded-lg shadow-md hover:bg-yellow-400 transition-colors no-underline">Back</a >
               </div>
               <div class="bg-white shadow-lg rounded-lg overflow-x-auto">
                 <table class="w-full divide-y divide-gray-200">
@@ -53,18 +41,13 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr
-                      v-for="leaveRequest in filteredLeaveRequests"
-                      :key="leaveRequest.id"
-                      class="hover:bg-gray-50"
-                    >
-                    <td class="py-4 px-2 text-sm text-center text-black">{{ leaveRequest.staff_id }}</td>
+                    <tr v-for="leaveRequest in filteredLeaveRequests" :key="leaveRequest.id" class="hover:bg-gray-50" >
+                      <td class="py-4 px-2 text-sm text-center text-black">{{ leaveRequest.staff_id }}</td>
                       <td class="py-4 px-2 text-sm text-center text-black">{{ leaveRequest.full_name }}</td>
                       <td class="py-4 text-center px-2 text-sm text-black">{{ leaveRequest.leave_name }}</td>
                       <td class="py-4 px-2 text-sm text-center text-black">{{ leaveRequest.from_date }}</td>
                       <td class="py-4 px-2 text-sm text-center text-black">{{ leaveRequest.to_date }}</td>
                       <td class="py-4 px-2 text-sm text-center text-black">{{ leaveRequest.half_day }}</td>
-
                       <!-- Display attachment -->
                       <td class="py-4 px-6 text-sm text-center text-black">
                         <div class="flex gap-2 justify-center">
@@ -78,11 +61,7 @@
                       <td class="py-4 px-2 text-sm text-center text-black">{{ leaveRequest.accept_date }}</td>
                       <td class="py-4 px-2 text-sm text-center text-black">{{ leaveRequest.total_requested_days }}</td>
                       <td class="py-4 px-2 text-sm text-center">
-                        <a
-                          href="/supervisor/requestleave/myleaved/viewhistory"
-                          class="text-blue-700 no-underline hover:text-blue-300"
-                          >View</a
-                        >
+                        <a href="/supervisor/requestleave/myleaved/viewhistory" class="text-blue-700 no-underline hover:text-blue-300">View</a>
                       </td>
                       <td class="d-flex flex-col py-4 text-center text-sm text-gray-500">
                         <span v-if="leaveRequest.approver">{{ leaveRequest.approver }}</span>
@@ -163,29 +142,25 @@ export default {
 }
 </script>
 
-
 <style scoped>
-.supervisor {
-  display: flex;
-  height: 100vh;
-  align-items: start;
-  width: 100%;
-  background-color: #e5e7eb;
-}
-.sidebar {
-  width: 17%;
-  height: auto;
-  background-color: #141c2e;
-  color: white;
-}
-.container-page {
-  width: 83%;
-}
-main {
-  padding: 50px 50px 0px 50px;
-  height: auto;
-  width: 100%;
-  background-color: #e5e7eb;
-  margin-bottom: 50px;
-}
+  .supervisor {
+    display: flex;
+    height: 100vh;
+    align-items: start;
+    width: 100%;
+  }
+  .sidebar {
+    width: 17%;
+    height: auto;
+  }
+  .container-page {
+    width: 83%;
+  }
+  main {
+    padding: 50px 50px 0px 50px;
+    height: auto;
+    width: 100%;
+    background-color: #EEEDED;
+    margin-bottom: 50px;
+  }
 </style>

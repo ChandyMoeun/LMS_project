@@ -4,12 +4,8 @@
     <div class="flex items-center text-black font-bold">
       <Icon icon="skill-icons:devto-dark" style="font-size: 45px" />
       <div class="ml-5 flex font-semibold">
-        <div
-          v-for="(item, index) in menu"
-          :key="index"
-          v-permission="item.meta.permission"
-          class="p-3 rounded hover:text-blue cursor-pointer"
-        >
+        <div v-for="(item, index) in menu" :key="index"
+          v-permission="item.meta.permission" class="p-3 rounded hover:text-blue cursor-pointer">
           {{ item.title }}
         </div>
       </div>

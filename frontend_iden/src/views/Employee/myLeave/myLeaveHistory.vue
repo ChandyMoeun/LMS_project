@@ -6,8 +6,8 @@
       </div>
       <div class="container-page">
         <EmployeeNavbar />
-        <main class="bg-gray sticky top-0">
-          <div class="mt-10">
+        <main>
+          <div class="mt-10 px-10">
             <!-- Admin Requests leave -->
             <div class="d-flex text-black" style="display: flex; flex-direction: column; border-bottom: solid 1px gray">
               <h1 class="font-bold text-3xl px-8 hover:text-yellow-500 w-3/12">
@@ -44,11 +44,7 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr
-                      v-for="leaveRequest in filteredLeaveRequests"
-                      :key="leaveRequest.id"
-                      class="hover:bg-gray-50"
-                    >
+                    <tr v-for="leaveRequest in filteredLeaveRequests" :key="leaveRequest.id" class="hover:bg-gray-50">
                     <td class="py-4 px-2 text-sm text-center text-black">{{ leaveRequest.staff_id }}</td>
                       <td class="py-4 px-2 text-sm text-center text-black">{{ leaveRequest.full_name }}</td>
                       <td class="py-4 text-center px-2 text-sm text-black">{{ leaveRequest.leave_name }}</td>
@@ -150,20 +146,16 @@ export default {
 }
 </script>
 
-
 <style scoped>
 .employee {
   display: flex;
   height: 100vh;
   align-items: start;
   width: 100%;
-  background-color: #e5e7eb;
 }
 .sidebar {
   width: 17%;
   height: auto;
-  background-color: #141c2e;
-  color: white;
 }
 .container-page {
   width: 83%;
@@ -172,7 +164,7 @@ main {
   padding: 50px 50px 0px 50px;
   height: auto;
   width: 100%;
-  background-color: #e5e7eb;
+  background-color: #EEEDED;
   margin-bottom: 50px;
 }
 </style>

@@ -6,13 +6,10 @@
       </div>
       <div class="container-page">
         <EmployeeNavbar />
-        <main class="bg-gray sticky mt-5">
-          <div class="mt-10">
+        <main class="sticky mt-5">
+          <div class="px-10 mt-10">
             <!-- Employee Management Header -->
-            <div
-              class="d-flex text-black"
-              style="display: flex; flex-direction: column; border-bottom: solid 1px gray"
-            >
+            <div class="d-flex text-black" style="display: flex; flex-direction: column; border-bottom: solid 1px gray" >
               <h1 class="font-bold text-3xl px-8 hover:text-yellow-500 w-4/12">
                 <b>Team Management</b>
               </h1>
@@ -20,13 +17,7 @@
             </div>
             <!-- Search and Filter -->
             <div class="flex justify-between mt-20 mb-7">
-              <input
-                v-model="searchQuery"
-                type="text"
-                placeholder="Search..."
-                title="Type of leave or approver Name"
-                class="w-2/6 h-9 px-2 border rounded shadow-md"
-              />
+              <input v-model="searchQuery" type="text" placeholder="Search..." title="Type of leave or approver Name" class="w-2/6 h-9 px-2 border rounded shadow-md" />
             </div>
             <!-- Employee Table -->
             <div v-if="team.length > 0" class="overflow-x-auto">
@@ -42,29 +33,16 @@
                   </tr>
                 </thead>
                 <tbody >
-                  <tr
-                    v-for="member in team"
-                    :key="member.id"
-                    class="bg-gray-100 border-b border-gray-200"
-                  >
+                  <tr v-for="member in team" :key="member.id" class="bg-gray-100 border-b border-gray-200" >
                     <td class="p-3">{{ member.staff_id }}</td>
-                    <img
-                      :src="
-                        member.profile && member.profile
-                          ? `http://127.0.0.1:8000/images/${member.profile}`
-                          : '/images/default-profile.jpg'
-                      "
-                      alt="Profile Picture"
-                      class="w-14 h-14 rounded-full"
-                    />
+                    <img :src=" member.profile && member.profile ? `http://127.0.0.1:8000/images/${member.profile}` : '/images/default-profile.jpg' "
+                      alt="Profile Picture" class="w-14 h-14 rounded-full" />
                     <td class="p-3 text-center">{{ member.full_name }}</td>
                     <td class="p-3 text-blue-600 text-center">{{ member.email }}</td>
                     <td class="p-3 text-center">{{ member.position.name }}</td>
                     <td class="text-center w-3/12">
-                      <router-link
-                        :to="{ name: 'TeamDetail', params: { id: member.id } }"
-                        class="inline-block px-4 py-2 text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition duration-200 shadow-sm no-underline"
-                      >
+                      <router-link :to="{ name: 'TeamDetail', params: { id: member.id } }"
+                        class="inline-block px-4 py-2 text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition duration-200 shadow-sm no-underline">
                         More
                       </router-link>
                     </td>
@@ -132,13 +110,10 @@ export default {
   height: 100vh;
   align-items: start;
   width: 100%;
-  background-color: #e5e7eb;
 }
 .sidebar {
   width: 17%;
   height: auto;
-  background-color: #141c2e;
-  color: white;
 }
 .container-page {
   width: 83%;
@@ -147,7 +122,7 @@ main {
   padding: 50px 50px 0px 50px;
   height: auto;
   width: 100%;
-  background-color: #e5e7eb;
+  background-color: #EEEDED;
   margin-bottom: 50px;
 }
 </style>

@@ -21,7 +21,6 @@ import SupervisorSidebar from '@/Components/SupervisorSidebar.vue'
 .supervisor {
   display: flex;
   height: 100vh;
-  /* flex-direction: column; */
   justify-content: space-between;
   align-items: center;
   background-color: #f5f5f5;
@@ -29,18 +28,14 @@ import SupervisorSidebar from '@/Components/SupervisorSidebar.vue'
 }
 .sidebar {
   width: 300px;
-  /* height: 100vh; */
-  /* background-color: #040405; */
   color: white;
-  /* padding: 10px; */
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 }
 main {
-  /* padding: 20px; */
   height: 100vh;
   width: 100%;
-  background-color: rgb(231, 215, 215);
+  background-color: #EEEDED;
 }
 </style>

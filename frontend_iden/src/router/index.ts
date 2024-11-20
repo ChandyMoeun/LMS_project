@@ -17,7 +17,6 @@ const router = createRouter({
         requiresAuth: true,
         role: 'supervisor'
       }
-      
     },
     {
       path: '/login',

@@ -6,8 +6,8 @@
       </div>
       <div class="container-page">
         <EmployeeNavbar />
-        <main class="bg-gray sticky top-0">
-          <div class="mt-5 pb-20">
+        <main>
+          <div class="mt-5 pb-20 px-10">
             <div class="flex text-black" style="display: flex; flex-direction: column; border-bottom: solid 1px gray;">
               <h1 class="font-bold mr-20 text-3xl px-8 w-3/12 mt-3 hover:text-yellow-400">
                 <b>Request Leave</b>
@@ -85,8 +85,8 @@
                 </div>
               </form>
             </div>
-            <div class="px-8 overflow-x-auto">
-                <h1 class="text-4xl p-10 text-black text-center">My Requesting Leaves</h1>
+            <h1 class="text-4xl p-7 text-black text-center">My Requesting Leaves</h1>
+            <div class="shadow-[0px_4px_16px_rgba(17,17,26,0.1),_0px_8px_24px_rgba(17,17,26,0.1),_0px_16px_56px_rgba(17,17,26,0.1)] overflow-x-auto">
                 <table class="min-w-full bg-gray-100 border border-gray-100">
                   <thead>
                     <tr class="bg-black text-white text-xs">
@@ -129,7 +129,6 @@
 import { ref } from 'vue';
 import EmployeeSidebar from '@/Components/EmployeeSidebar.vue';
 import EmployeeNavbar from '@/Components/EmployeeNavbar.vue';
-
 const user_name = ref('');
 const leave_type_id = ref('');
 const from_date = ref('');
@@ -146,14 +145,12 @@ const eligibleForAnnualLeave = ref(true);
   ]);
   
   const dropdownVisible = ref(null);
-  
   // Method to handle status update
   const updateStatus = (index) => {
     const updatedStatus = leaveRequests.value[index].status;
     // Do something with the updated status, like sending it to a server or storing it
     console.log(`Leave request ${leaveRequests.value[index].id} updated to: ${updatedStatus}`);
   };
-  
   // Method to dynamically assign classes based on status
   const statusClass = (status) => {
     switch (status) {
@@ -170,27 +167,24 @@ const eligibleForAnnualLeave = ref(true);
 </script>
     
 <style scoped>
-  .employee {
-    display: flex;
-    height: 100vh;
-    align-items: start;
-    width: 100%;
-    background-color: #e5e7eb;
-  }
-  .sidebar {
-    width: 17%;
-    height: auto;
-    background-color: #141c2e;
-    color: white;
-  }
-  .container-page {
-    width: 83%;
-  }
-  main {
-    padding: 50px 50px 0px 50px;
-    height: auto;
-    width: 100%;
-    background-color: #e5e7eb;
-    margin-bottom: 50px;
-  }
+.employee {
+  display: flex;
+  height: 100vh;
+  align-items: start;
+  width: 100%;
+}
+.sidebar {
+  width: 17%;
+  height: auto;
+}
+.container-page {
+  width: 83%;
+}
+main {
+  padding: 50px 50px 0px 50px;
+  height: auto;
+  width: 100%;
+  background-color: #EEEDED;
+  margin-bottom: 50px;
+}
 </style>
