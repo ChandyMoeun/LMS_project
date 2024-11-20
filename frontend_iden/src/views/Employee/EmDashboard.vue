@@ -1,12 +1,12 @@
 <template>
   <EmployeeLayout>
-    <div class="employee">
-      <div class="sidebar">
+    <div class="employee flex h-screen items-start w-full">
+      <div class="sidebar w-[17%] h-auto">
         <EmployeeSidebar></EmployeeSidebar>
       </div>
-      <div class="container-page">
+      <div class="container-page w-[83%]">
         <EmployeeNavbar />
-        <main class="sticky top-0">
+        <main class="p-[50px] pt-[50px] pb-0 h-auto w-full bg-[#EEEDED] mb-[50px]">
           <div class="px-10 container pb-30">
                 <!-- Header -->
             <div class="mt-5 text-black" style="border-bottom: solid 1px gray">

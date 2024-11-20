@@ -1,13 +1,13 @@
 <template>
   <SupervisorLayout>
-    <div class="supervisor">
-      <div class="sidebar">
+    <div class="supervisor flex h-screen items-start w-full">
+      <div class="sidebar w-[17%] h-auto">
         <SupervisorSidebar></SupervisorSidebar>
       </div>
-      <div class="container-page">
-        <WebHeaderMenu/>
-        <main class="sticky top-0">
-          <div class="mt-15">
+      <div class="container-page w-[83%]">
+        <WebHeaderMenu />
+        <main class="p-[50px] pt-[50px] pb-0 h-auto w-full bg-[#EEEDED] mb-[50px]">
+          <div class="mt-15 px-10">
             <!-- Header -->
             <div class="text-black border-b-2 border-gray-300 px-8 h-15 items-center" style="border-bottom: solid 1px gray">
               <h1 class="font-bold text-3xl mb-3 hover:text-yellow-400 w-2/12">Calendar</h1>
@@ -163,26 +163,6 @@ export default {
 </script>
 
 <style>
-  .supervisor {
-    display: flex;
-    height: 100vh;
-    align-items: start;
-    width: 100%;
-  }
-  .sidebar {
-    width: 17%;
-    height: auto;
-  }
-  .container-page {
-    width: 83%;
-  }
-  main {
-    padding: 50px 50px 0px 50px;
-    height: auto;
-    width: 100%;
-    background-color: #EEEDED;
-    margin-bottom: 50px;
-  }
 .fc-col-header-cell {
   background-color: #FFDA03;
 }

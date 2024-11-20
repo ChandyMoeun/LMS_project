@@ -15,27 +15,4 @@
 <script setup lang="ts">
 import EmployeeLayout from '@/Components/Layouts/EmployeeLayout.vue'
 import SupervisorSidebar from '@/Components/SupervisorSidebar.vue'
-</script>
-
-<style scoped>
-.supervisor {
-  display: flex;
-  height: 100vh;
-  justify-content: space-between;
-  align-items: center;
-  background-color: #f5f5f5;
-  width: 100%;
-}
-.sidebar {
-  width: 300px;
-  color: white;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-main {
-  height: 100vh;
-  width: 100%;
-  background-color: #EEEDED;
-}
-</style>
+</script>      

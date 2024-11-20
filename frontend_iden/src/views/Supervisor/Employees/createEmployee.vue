@@ -1,21 +1,21 @@
 <template>
   <SupervisorLayout>
-    <div class="supervisor">
-      <div class="sidebar">
+    <div class="supervisor flex h-screen items-start w-full">
+      <div class="sidebar w-[17%] h-auto">
         <SupervisorSidebar></SupervisorSidebar>
       </div>
-      <div class="container-page">
-        <WebHeaderMenu/>
-        <main class="bg-gray sticky top-0">
-          <div class="mt-10">
-            <div class="container flex-1 overflow-x-hidden overflow-y-auto bg-gray-200">
+      <div class="container-page w-[83%]">
+        <WebHeaderMenu />
+        <main class="p-[50px] pt-[50px] pb-0 h-auto w-full bg-[#EEEDED] mb-[50px]">
+          <div class="mt-10 px-10">
+            <div class="container flex-1 overflow-x-hidden overflow-y-auto">
               <div class="d-flex text-black" style="display: flex; flex-direction: column; border-bottom: solid 1px gray;">
                 <router-link to="/Supervisor/Employee">
                   <svg class="w-6 h-6 text-gray-800 hover:text-gray-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5H1m0 0 4 4M1 5l4-4"/>
                   </svg>
                 </router-link>
-                <h1 class="font-bold text-gray-900 mr-20 w-2/12 text-3xl mt-4 hover:text-yellow-400"><b>Add Member</b></h1>
+                <h1 class="font-bold text-gray-900 px-8 mr-20 w-3/12 text-3xl mt-4 hover:text-yellow-400"><b>Add Member</b></h1>
               </div>
               <div class="bg-white shadow-md rounded my-6 mt-20 p-10">
                 <form @submit.prevent="submitForm" enctype="multipart/form-data">
@@ -99,7 +99,7 @@
                       </label>
                     </div>
                   </div>
-                  <div class="flex justify-center text-center mt-16 gap-3 mb-16">
+                  <div class="flex justify-center text-center mt-7 gap-3 mb-7">
                     <button @click="cancel" class="w-1/12 mt-5 bg-red-500 border-none rounded-lg text-white font-bold py-1 px-2 hover:bg-red-400 transition-colors">Cancel</button>
                     <button @ckick="submitForm" type="submit" class="w-1/12 mt-5 bg-gray-900 border-none rounded-lg text-white font-bold py-2 px-4 hover:bg-yellow-500 transition-colors">Add</button>
                   </div>
@@ -172,26 +172,3 @@ export default {
     },
   };
 </script>
-
-<style scoped>
-  .supervisor {
-    display: flex;
-    height: 100vh;
-    align-items: start;
-    width: 100%;
-  }
-  .sidebar {
-    width: 17%;
-    height: auto;
-  }
-  .container-page {
-    width: 83%;
-  }
-  main {
-    padding: 50px 50px 0px 50px;
-    height: auto;
-    width: 100%;
-    background-color: #EEEDED;
-    margin-bottom: 50px;
-  }
-</style>

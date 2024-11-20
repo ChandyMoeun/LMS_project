@@ -1,20 +1,18 @@
 <template>
   <SupervisorLayout>
-    <div class="supervisor">
-      <div class="sidebar">
+    <div class="supervisor flex h-screen items-start w-full">
+      <div class="sidebar w-[17%] h-auto">
         <SupervisorSidebar></SupervisorSidebar>
       </div>
-      <div class="container-page">
+      <div class="container-page w-[83%]">
         <WebHeaderMenu />
-            <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-200">
-              <div class="container mx-auto flex flex-col gap-15 p-4 px-1 justify-evenly">
+            <main class="flex-1 overflow-x-hidden overflow-y-auto p-[50px] pt-[50px] pb-0 h-auto w-full bg-[#EEEDED] mb-[50px]">
+              <div class="container mx-auto flex flex-col gap-15 p-4 px-10 justify-evenly">
                 <!-- Page Title -->
                 <div style="display: flex; color: black; flex-direction: column; border-bottom: solid 1px gray">
-                  <h1 class="w-10 font-bold text-3xl mt-5 hover:text-yellow-400">
-                    <b>Setting</b>
-                  </h1>
+                  <h1 class="w-10 font-bold text-3xl mt-3 px-8 hover:text-yellow-400"><b>Setting</b></h1>
                 </div>
-                <div class="flex flex-wrap justify-center">
+                <div class="flex flex-wrap justify-start">
                   <!-- Card for Departments -->
                   <div class="flex h-52 w-2/6 p-3 flex-col">
                     <div class="h-48 p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100">
@@ -136,26 +134,3 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-  .supervisor {
-    display: flex;
-    height: 100vh;
-    align-items: start;
-    width: 100%;
-  }
-  .sidebar {
-    width: 17%;
-    height: auto;
-  }
-  .container-page {
-    width: 83%;
-  }
-  main {
-    padding: 50px 50px 0px 50px;
-    height: auto;
-    width: 100%;
-    background-color: #EEEDED;
-    margin-bottom: 50px;
-  }
-</style>

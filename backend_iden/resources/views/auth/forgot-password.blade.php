@@ -1,5 +1,5 @@
 <x-guest-layout>
-<!DOCTYPE html>
+    <!DOCTYPE html>
     <html lang="en">
 
     <head>
@@ -35,9 +35,9 @@
                                     <button type="submit" class="w-5px mt-5 bg-blue-500 text-white font-bold py-2 px-4 hover:bg-yellow-400 focus:outline-none focus:bg-blue-700 transition-colors" style=" border-radius: 5px">Next</button>
                                 </div>
                                 @error('email')
-                                    <div class="alert alert-danger" role="alert">
-                                        {{ $message }}
-                                    </div>
+                                <div class="alert alert-danger" role="alert">
+                                    {{ $message }}
+                                </div>
                                 @enderror
                             </form>
                         </div>
@@ -49,5 +49,4 @@
     </body>
 
     </html>
-
 </x-guest-layout>

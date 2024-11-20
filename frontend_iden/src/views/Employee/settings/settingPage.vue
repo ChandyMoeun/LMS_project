@@ -1,16 +1,16 @@
 <template>
-    <EmployeeLayout>
-      <div class="employee">
-        <div class="sidebar">
-          <EmployeeSidebar></EmployeeSidebar>
-        </div>
-        <div class="container-page">
-          <EmployeeNavbar />
-          <main>
+  <EmployeeLayout>
+    <div class="employee flex h-screen items-start w-full">
+      <div class="sidebar w-[17%] h-auto">
+        <EmployeeSidebar></EmployeeSidebar>
+      </div>
+      <div class="container-page w-[83%]">
+        <EmployeeNavbar />
+        <main class="p-[50px] pt-[50px] pb-0 h-auto w-full bg-[#EEEDED] mb-[50px]">
             <div class="container mx-auto flex flex-col gap-15 p-4 px-10 justify-evenly">
               <!-- Page Title -->
               <div style="display: flex; color: black; flex-direction: column; border-bottom: solid 1px gray">
-                <h1 class="w-10 font-bold text-3xl mt-5 hover:text-yellow-400">
+                <h1 class="w-10 font-bold text-3xl px-8 mt-5 hover:text-yellow-400">
                   <b>Setting</b>
                 </h1>
               </div>
@@ -77,26 +77,3 @@
     }
   }
   </script>
-  
-  <style scoped>
-.employee {
-  display: flex;
-  height: 100vh;
-  align-items: start;
-  width: 100%;
-}
-.sidebar {
-  width: 17%;
-  height: auto;
-}
-.container-page {
-  width: 83%;
-}
-main {
-  padding: 50px 50px 0px 50px;
-  height: auto;
-  width: 100%;
-  background-color: #EEEDED;
-  margin-bottom: 50px;
-}
-  </style>

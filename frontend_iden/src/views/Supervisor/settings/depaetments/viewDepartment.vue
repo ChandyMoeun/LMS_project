@@ -1,12 +1,12 @@
 <template>
   <SupervisorLayout>
-    <div class="supervisor">
-      <div class="sidebar">
+    <div class="supervisor flex h-screen items-start w-full">
+      <div class="sidebar w-[17%] h-auto">
         <SupervisorSidebar></SupervisorSidebar>
       </div>
-      <div class="container-page">
+      <div class="container-page w-[83%]">
         <WebHeaderMenu />
-        <main class="bg-gray-200 sticky flex-1 overflow-x-hidden overflow-y-auto mt-10 p-5">
+        <main class="flex-1 overflow-x-hidden overflow-y-auto mt-10 p-5 p-[50px] pt-[50px] pb-0 h-auto w-full bg-[#EEEDED] mb-[50px]">
           <div class="container mx-auto px-6 py-2">
             <div class="mb-5" style=" display: flex; color: black; flex-direction: column; border-bottom: solid 1px gray;">
               <a href="/supervisor/settings/departments">
@@ -83,26 +83,3 @@ export default {
   }
 }
 </script>
-  
-<style scoped>
-  .supervisor {
-    display: flex;
-    height: 100vh;
-    align-items: start;
-    width: 100%;
-  }
-  .sidebar {
-    width: 17%;
-    height: auto;
-  }
-  .container-page {
-    width: 83%;
-  }
-  main {
-    padding: 50px 50px 0px 50px;
-    height: auto;
-    width: 100%;
-    background-color: #EEEDED;
-    margin-bottom: 50px;
-  }
-</style>

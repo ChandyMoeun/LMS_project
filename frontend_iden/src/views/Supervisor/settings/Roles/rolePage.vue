@@ -7,6 +7,7 @@
       <div class="container-page">
         <WebHeaderMenu />
         <main class="sticky mt-5">
+          <div class="px-10">
             <div style="display: flex; color: black; flex-direction: column; border-bottom: solid 1px gray">
               <router-link to="/supervisor/settings">
                 <svg class="w-6 h-6 text-gray-800 dark:text-white hover:text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
@@ -38,6 +39,7 @@
                 </table>
               </div>
             </div>
+          </div>
         </main>
       </div>
     </div>

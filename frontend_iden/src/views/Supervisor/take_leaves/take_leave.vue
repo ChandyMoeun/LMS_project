@@ -1,20 +1,15 @@
 <template>
   <SupervisorLayout>
-    <div class="supervisor">
-      <div class="sidebar">
+    <div class="supervisor flex h-screen items-start w-full">
+      <div class="sidebar w-[17%] h-auto">
         <SupervisorSidebar></SupervisorSidebar>
       </div>
-      <div class="container-page">
+      <div class="container-page w-[83%]">
         <WebHeaderMenu />
-        <main class="sticky top-0">
-          <div class="mt-10">
-            <!-- Admin Requests leave -->
-            <div
-              class="d-flex text-black"
-              style="display: flex; flex-direction: column; border-bottom: solid 1px gray">
-              <h1 class="font-bold text-3xl px-8 hover:text-yellow-500 w-3/12">
-                <b>Request Leave</b>
-              </h1>
+        <main class="p-[50px] pt-[50px] pb-0 h-auto w-full bg-[#EEEDED] mb-[50px]">
+          <div class="mt-10 px-10">
+            <div class="d-flex text-black" style="display: flex; flex-direction: column; border-bottom: solid 1px gray">
+              <h1 class="font-bold text-3xl px-8 hover:text-yellow-500 w-3/12"> <b>Request Leave</b> </h1>
             </div>
             <div class="mt-10 px-6 py-4 bg-white shadow-md rounded-lg">
               <form @submit.prevent="submitForm" enctype="multipart/form-data" class="flex flex-row justify-between p-3 gap-5">
@@ -22,7 +17,7 @@
                   <div>
                     <label for="employee_id" class="block text-sm font-medium text-black">Select Employee</label>
                     <select v-model="employee_id" id="employee_id" class="mt-1 block w-full rounded-md border-gray-300 py-2 shadow-sm">
-                      <option value="">Select an Employee</option>
+                      <option>Select an Employee</option>
                       <option v-for="employee in employees" :key="employee.id" :value="employee.id">
                         {{ employee.full_name }} | Role: {{ employee.roles.map(role => role.name).join(', ') }}
                       </option>
@@ -31,7 +26,7 @@
                   <div class="mt-4">
                     <label for="leave_type_id" class="block text-sm font-medium text-black">Leave Type</label>
                     <select v-model="leave_type_id" id="leave_type_id" class="mt-1 block w-full rounded-md border-gray-300 py-2 shadow-sm" required>
-                      <option value="" disabled>Select Leave Type</option>
+                      <option disabled>Select Leave Type</option>
                       <option v-for="leaveType in leaveTypes" :key="leaveType.id" :value="leaveType.id" 
                         :disabled="leaveType.leave_name === 'Annual leave' && !eligibleForAnnualLeave">
                         {{ leaveType.leave_name }} ({{ leaveType.id }})
@@ -88,38 +83,18 @@
                 </div>
               </form>
             </div>
-            <div class="container mx-auto mt-10 px-6 py-4">
-              <div class="d-flex justify-center text-black mb-10">
+            <div class="container mx-auto mt-17 py-4">
+              <div class="d-flex justify-center text-black mb-3">
                 <h1 class="font-bold text-3xl hover:text-yellow-500">Team's Leave</h1>
               </div>
               <div class="flex justify-between mb-2">
                 <input v-model="searchQuery" type="text" placeholder="Search employee..." title="Type in an ID, Name, or Date" class="w-2/6 px-2 h-10 border rounded rounded-lg shadow-md"/>
-                <div class="d-flex printpage d-flex justify-end mr-8 gap-3 mb-3">
-                  <a
-                    href="/supervisor/takeleave/all/leavehistory"
-                    class="bg-gray-900 text-white font-semibold px-3 py-1 mt-1 no-underline rounded-lg shadow-md hover:bg-yellow-500 transition-colors">
-                  History
-                  </a>
-                  <a
-                    href="/supervisor/requestleave/myleaved"
-                    class="bg-gray-900 text-white font-semibold px-3 py-1 mt-1 no-underline rounded-lg shadow-md hover:bg-yellow-500 transition-colors">
-                    My History
-                  </a>
-                  <button @click="Export()" class="border-none bg-blue-600 text-white px-1 py-2 rounded-lg shadow-md hover:bg-yellow-500">Export
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 ml-2">
-                      <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
-                    </svg>
-                  </button>
-                  <button @click="printSection" class="border-none bg-gray-900 text-white px-3 py-2 rounded-lg shadow-md hover:bg-yellow-500">
-                    Print
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                      <path stroke-linecap="round" stroke-linejoin="round" d="M6.72 13.829c-.24.03-.48.062-.72.096m.72-.096a42.415 42.415 0 0 1 10.56 0m-10.56 0L6.34 18m10.94-4.171c.24.03.48.062.72.096m-.72-.096L17.66 18m0 0 .229 2.523a1.125 1.125 0 0 1-1.12 1.227H7.231c-.662 0-1.18-.568-1.12-1.227L6.34 18m11.318 0h1.091A2.25 2.25 0 0 0 21 15.75V9.456c0-1.081-.768-2.015-1.837-2.175a48.055 48.055 0 0 0-1.913-.247M6.34 18H5.25A2.25 2.25 0 0 1 3 15.75V9.456c0-1.081.768-2.015 1.837-2.175a48.041 48.041 0 0 1 1.913-.247m10.5 0a48.536 48.536 0 0 0-10.5 0m10.5 0V3.375c0-.621-.504-1.125-1.125-1.125h-8.25c-.621 0-1.125.504-1.125 1.125v3.659M18 10.5h.008v.008H18V10.5Zm-3 0h.008v.008H15V10.5Z" />
-                    </svg>
-                    </button>
+                <div class="d-flex printpage d-flex justify-end mr-4 gap-3 mb-3">
+                  <a href="/supervisor/takeleave/all/leavehistory" class="bg-gray-900 text-white font-semibold px-3 py-2 mt-1 no-underline rounded-lg shadow-md hover:bg-yellow-500 transition-colors"> History </a>
+                  <a href="/supervisor/requestleave/myleaved" class="bg-gray-900 text-white font-semibold px-3 py-2 mt-1 no-underline rounded-lg shadow-md hover:bg-yellow-500 transition-colors"> My History </a>
                 </div>
-
               </div> 
-              <div id="team_leave" class="bg-white shadow-lg rounded-lg overflow-x-auto">
+              <div class="bg-white shadow-lg rounded-lg overflow-x-auto">
                 <table class="w-full divide-y divide-gray-200">
                   <thead class="bg-black">
                     <tr>
@@ -145,7 +120,6 @@
                       <td class="py-4 px-2 text-sm text-center text-black">{{ leaveRequest.from_date }}</td>
                       <td class="py-4 px-2 text-sm text-center text-black">{{ leaveRequest.to_date }}</td>
                       <td class="py-4 px-2 text-sm text-center text-black">{{ leaveRequest.half_day }}</td>
-                      <!-- Display attachment -->
                       <td class="py-4 px-6 text-sm text-center text-black">
                         <div class="flex gap-2">
                           <img :src="leaveRequest.file_url" class="max-h-5 max-w-full object-cover mb-2 cursor-pointer"/>
@@ -153,19 +127,15 @@
                         </div>
                       </td>
                       <td class="py-4 px-6 text-sm d-flex justify-center">
-                       <span
-                       :class="{
+                        <span :class="{
                             'bg-yellow-400 text-black': leaveRequest.status === 'Pending',
                             'bg-green-500 text-white': leaveRequest.status === 'Approved',
                             'bg-red-500 text-white': leaveRequest.status === 'Rejected'
-                          }" class="text-center px-3 py-2 rounded-full text-xs font-semibold">
-                        {{ leaveRequest.status }}
+                          }" class="text-center px-3 py-2 rounded-full text-xs font-semibold"> {{ leaveRequest.status }}
                         </span>
                       </td>
                       <td class="py-4 px-2 text-sm text-center text-black">{{ leaveRequest.total_requested_days }}</td>
-                      <td class="py-4 px-2 text-sm text-center">
-                        <a href="/supervisor/takeleave/view/leavedetail" class="text-blue-700 no-underline hover:text-blue-300">View</a>
-                      </td>
+                      <td class="py-4 px-2 text-sm text-center"><a href="/supervisor/takeleave/view/leavedetail" class="text-blue-700 no-underline hover:text-blue-300">View</a></td>
                       <td class="py-4 px-2 text-sm text-center">
                         <span v-if="leaveRequest.approver">{{ leaveRequest.approver }}</span>
                         <span v-if="leaveRequest.rejector">{{ leaveRequest.rejector }}</span>
@@ -188,47 +158,28 @@
     </div>
   </SupervisorLayout>
 </template>
-
 <script>
 import SupervisorSidebar from '@/Components/SupervisorSidebar.vue'
 import WebHeaderMenu from '@/Components/WebHeaderMenu.vue'
-  import { ref } from 'vue';
-  import axios from 'axios';
 export default {
   components: {SupervisorSidebar, WebHeaderMenu},
   data() {
     return {
       searchQuery: '',
-    leaveRequests: [
-    {
-          id: 1,
-          staff_id: '001',
-          full_name: 'John Doe',
-          leave_name: 'Sick Leave',
-          from_date: '2024-10-10',
-          to_date: '2024-10-11',
-          half_day: 'Full day',
-          status: 'Pending',
-          approver: null,
-          rejector: null,
-          total_requested_days: 2,
-          file_url: '#', // Add URL for file if available
-        },
-        {
-          id: 2,
-          staff_id: '002',
-          full_name: 'Gyver King',
-          leave_name: 'AL',
-          from_date: '2024-09-02',
-          to_date: '2024-09-04',
-          half_day: 'Full day',
-          status: 'Pending',
-          approver: null,
-          rejector: null,
-          total_requested_days: 3,
-          file_url: '#',
-        },
-      // Add more records as needed
+      leaveRequests: [ {
+        id: 1,
+        staff_id: '001',
+        full_name: 'John Doe',
+        leave_name: 'Sick Leave',
+        from_date: '2024-10-10',
+        to_date: '2024-10-11',
+        half_day: 'Full day',
+        status: 'Pending',
+        approver: null,
+        rejector: null,
+        total_requested_days: 2,
+        file_url: '#', 
+      },
     ],
     }
   },
@@ -238,7 +189,7 @@ export default {
     return this.leaveRequests.filter((leave) => 
       leave.full_name.toLowerCase().includes(query) ||
       leave.staff_id.includes(query) ||
-      leave.from_date.includes(query) // Filter by from_date
+      leave.from_date.includes(query) 
     );
   }
 },
@@ -248,109 +199,11 @@ methods: {
     },
     rejectLeave(leaveRequest) {
       leaveRequest.status = 'Rejected';
-      leaveRequest.rejector = 'Your Name'; // Adjust dynamically
+      leaveRequest.rejector = 'Your Name'; 
     },
     viewFile(leaveRequest) {
-      // Logic to view the attached file
       alert(`Viewing file for ${leaveRequest.full_name}`);
     },
   },
-  setup() {
-      const employee_id = ref('');
-      const leave_type_id = ref('');
-      const from_date = ref('');
-      const to_date = ref('');
-      const leave_duration = ref('full_day');
-      const half_day_type = ref('');
-      const reason = ref('');
-      const duration = ref(1);
-      const totalLeave = ref(0);
-      const leaveTypeDetailsVisible = ref(false);
-      const employees = ref([]); // Fetch this data from your API or props
-      const leaveTypes = ref([]); // Fetch this data from your API or props
-      const eligibleForAnnualLeave = ref(true); // Set this based on your business logic
-      const handleFileUpload = (event) => {
-        const files = event.target.files;
-        // Handle file upload
-      };
-      const submitForm = () => {
-        const formData = new FormData();
-        formData.append('employee_id', employee_id.value);
-        formData.append('leave_type_id', leave_type_id.value);
-        formData.append('from_date', from_date.value);
-        formData.append('to_date', to_date.value);
-        formData.append('leave_duration', leave_duration.value);
-        formData.append('half_day_type', half_day_type.value);
-        formData.append('reason', reason.value);
-        formData.append('duration', duration.value);
-        // Add other form fields and handle attachments
-        axios.post('/admin/leave/store', formData)
-          .then(response => {
-            console.log('Leave submitted:', response.data);
-          })
-          .catch(error => {
-            console.error('Error submitting leave:', error);
-          });
-      };
-      return {
-        employee_id,
-        leave_type_id,
-        from_date,
-        to_date,
-        leave_duration,
-        half_day_type,
-        reason,
-        duration,
-        totalLeave,
-        leaveTypeDetailsVisible,
-        employees,
-        leaveTypes,
-        eligibleForAnnualLeave,
-        handleFileUpload,
-        submitForm
-      };
-    },
-    printSection() {
-      const printContents = document.getElementById("team_leave").innerHTML;
-      const originalContents = document.body.innerHTML;
-      document.body.innerHTML = printContents;
-      window.print();
-      document.body.innerHTML = originalContents;
-      window.location.reload(); // Reload to reset original contents
-    },
-    Export() {
-      const element = document.getElementById("team_leave");
-      const options = {
-        margin: 1,
-        filename: 'attendance_record.pdf',
-        image: { type: 'jpeg', quality: 0.98 },
-        html2canvas: { scale: 2 },
-        jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
-      };
-      html2pdf().set(options).from(element).save();
-    }
 }
 </script>
-
-<style scoped>
-  .supervisor {
-    display: flex;
-    height: 100vh;
-    align-items: start;
-    width: 100%;
-  }
-  .sidebar {
-    width: 17%;
-    height: auto;
-  }
-  .container-page {
-    width: 83%;
-  }
-  main {
-    padding: 50px 50px 0px 50px;
-    height: auto;
-    width: 100%;
-    background-color: #EEEDED;
-    margin-bottom: 50px;
-  }
-</style>

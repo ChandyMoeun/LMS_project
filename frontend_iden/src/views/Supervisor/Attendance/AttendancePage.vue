@@ -1,13 +1,13 @@
 <template>
   <SupervisorLayout>
-    <div class="supervisor">
-      <div class="sidebar">
+    <div class="supervisor flex h-screen items-start w-full">
+      <div class="sidebar w-[17%] h-auto">
         <SupervisorSidebar></SupervisorSidebar>
       </div>
-      <div class="container-page">
-        <WebHeaderMenu/>
-        <main class="bg-gray sticky top-0">
-          <div class="mt-16">
+      <div class="container-page w-[83%]">
+        <WebHeaderMenu />
+        <main class="p-[50px] pt-[50px] pb-0 h-auto w-full bg-[#EEEDED] mb-[50px]">
+          <div class="mt-16 px-10">
             <div class="d-flex text-black" style="display: flex; flex-direction: column; border-bottom: solid 1px gray;">
               <h1 class="font-bold text-3xl px-8 hover:text-yellow-500 w-4/12"><b>Team Attendance</b></h1>
             </div>
@@ -156,26 +156,3 @@ export default {
   },
 };
 </script>
-
-<style scoped>
-  .supervisor {
-    display: flex;
-    height: 100vh;
-    align-items: start;
-    width: 100%;
-  }
-  .sidebar {
-    width: 17%;
-    height: auto;
-  }
-  .container-page {
-    width: 83%;
-  }
-  main {
-    padding: 50px 50px 0px 50px;
-    height: auto;
-    width: 100%;
-    background-color: #EEEDED;
-    margin-bottom: 50px;
-  }
-</style>

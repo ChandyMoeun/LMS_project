@@ -1,12 +1,12 @@
 <template>
   <EmployeeLayout>
-    <div class="employee">
-      <div class="sidebar">
-        <EmployeeSidebar />
+    <div class="employee flex h-screen items-start w-full">
+      <div class="sidebar w-[17%] h-auto">
+        <EmployeeSidebar></EmployeeSidebar>
       </div>
-      <div class="container-page">
+      <div class="container-page w-[83%]">
         <EmployeeNavbar />
-        <main class="flex-1 overflow-x-hidden overflow-y-auto">
+        <main class="flex-1 overflow-x-hidden overflow-y-auto p-[50px] pt-[50px] pb-0 h-auto w-full bg-[#EEEDED] mb-[50px]">
           <div class="px-10">
             <div class="text-black mt-10" style="display: flex; flex-direction: column; border-bottom: solid 1px gray">
               <router-link to="/employee/settings">
@@ -108,26 +108,3 @@ export default {
   },
 };
 </script>
-
-<style scoped>
-.employee {
-  display: flex;
-  height: 100vh;
-  align-items: start;
-  width: 100%;
-}
-.sidebar {
-  width: 17%;
-  height: auto;
-}
-.container-page {
-  width: 83%;
-}
-main {
-  padding: 50px 50px 0px 50px;
-  height: auto;
-  width: 100%;
-  background-color: #EEEDED;
-  margin-bottom: 50px;
-}
-</style>
