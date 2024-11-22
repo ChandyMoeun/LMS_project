@@ -78,39 +78,19 @@
                       </a>
                     </div>
                   </div>
-                  
-                  <!-- Card for Permissions -->
+                  <!-- Card for My Profile -->
                   <div class="flex h-52 w-2/6 p-3 flex-col">
-                    <div class="h-48 p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100">
-                      <h5 class="mb-2 text-black text-2xl font-bold"> Permissions </h5>
-                      <p class="mb-3 font-normal text-gray-700"> View user permissions within the system. </p>
-                      <a href="/supervisor/settings/permissions" class="no-underline text-white inline-flex items-center px-3 py-2 text-sm font-medium text-white bg-gray-900 rounded-lg hover:bg-yellow-400">
-                        View more
-                        <svg
-                          class="ml-2 w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10" >
-                          <path
-                          stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9" />
-                        </svg>
-                      </a>
-                    </div>
+                  <div class="h-48 p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100">
+                    <h5 class="mb-2 text-black text-2xl font-bold"> My Profile </h5>
+                    <p class="mb-3 font-normal text-gray-700"> view my profile account page. </p>
+                    <a href="/supervisor/settings/myprofile" class="no-underline text-white inline-flex items-center px-3 py-2 text-sm font-medium text-white bg-gray-900 rounded-lg hover:bg-yellow-400">
+                      View more
+                      <svg class="ml-2 w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10" >
+                          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9" />
+                      </svg>
+                    </a>
                   </div>
-                  
-                  <div class="flex h-52 w-2/6 p-3 flex-col">
-                    <div class="h-48 p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100">
-                      <h5 class="mb-2 text-black text-2xl font-bold"> Roles </h5>
-                      <p class="mb-3 font-normal text-gray-700">
-                        View user roles in the organization.
-                      </p>
-                      <a href="/Supervisor/settings/role" class="no-underline text-white inline-flex items-center px-3 py-2 text-sm font-medium text-white bg-gray-900 rounded-lg hover:bg-yellow-400">
-                        View more
-                        <svg
-                          class="ml-2 w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10" >
-                          <path
-                          stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9" />
-                        </svg>
-                      </a>
-                    </div>
-                  </div>
+                </div>
                 </div>
               </div>
             </main>

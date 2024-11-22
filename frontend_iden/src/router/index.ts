@@ -156,28 +156,18 @@ const router = createRouter({
       component: () => import('../views/Supervisor/settings/positions/positionPage.vue'),
     },
     
-
     //-----------------supervisor Leave Type routes---------------- 
     {
       path: '/supervisor/settings/leavetype',
       'name': 'LeaveType',
       component: () => import('../views/Supervisor/settings/leave_types/leaveType.vue'),
     },
-
-    //-----------------supervisor Permissions routes---------------- 
+    //-----------------supervisor profile routes---------------- 
     {
-      path: '/supervisor/settings/permissions',
-      'name': 'Permissions',
-      component: () => import('../views/Supervisor/settings/Permissions/permissionsPage.vue'),
+      path: '/supervisor/settings/myprofile',
+      'name': 'my profile',
+      component: () => import('../views/Supervisor/settings/my_profile/myProfile.vue'),
     },
-
-    //-----------------supervisor Role routes---------------- 
-    {
-      path: '/supervisor/settings/role',
-      'name': 'Role',
-      component: () => import('../views/Supervisor/settings/Roles/rolePage.vue'),
-    },
-
     //-----------------supervisor Reset Password routes---------------- 
     {
       path: '/supervisor/settings/resetpassword',

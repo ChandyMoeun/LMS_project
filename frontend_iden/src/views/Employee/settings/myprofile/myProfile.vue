@@ -5,7 +5,7 @@
         <EmployeeSidebar></EmployeeSidebar>
       </div>
       <div class="container-page w-[83%]">
-        <EmployeeNavbar />
+        <EmployeeNavbar/>
         <main class="flex-1 overflow-x-hidden overflow-y-auto p-[50px] pt-[50px] pb-0 h-auto w-full bg-[#EEEDED] mb-[50px]">
           <div class="px-10">
             <div class="text-black mt-10" style="display: flex; flex-direction: column; border-bottom: solid 1px gray">
@@ -20,14 +20,16 @@
               <div class="bg-white shadow-md rounded my-6 p-5">
                 <form @submit.prevent="handleSubmit" enctype="multipart/form-data">
                   <div class="flex text-gray-500 mb-5 justify-center">
-                    <div class="bg-white rounded-lg">
-                      <div class="text-center uppercase text-bold">
-                        <label for="thumbnailprev" class="cursor-pointer">Change</label>
-                        <input type="file" id="thumbnailprev" class="hidden" @change="updatePreview" />
+                      <div class="bg-white rounded-lg">
+                          <div class="text-center uppercase font-bold mb-2">
+                              <label for="thumbnailprev" class="cursor-pointer text-blue-600 hover:text-blue-400">
+                              Change Profile Picture
+                              </label>
+                              <input type="file" id="thumbnailprev" class="hidden" @change="updatePreview" accept="image/*" />
+                          </div>
+                          <!-- Display the profile image -->
+                          <img :src="previewUrl || profileUrl" alt="Profile Image" class="shadow-lg rounded-full mt-4 border-none h-40 w-40 object-cover mx-auto"/>
                       </div>
-                      <!-- Display the profile image -->
-                      <img :src="previewUrl || profileUrl" alt="Profile Image" class="shadow-lg rounded-full max-w-full mt-4 mr-6 h-auto border-none h-40 w-40 object-cover" />
-                    </div>
                   </div>
                   <div class="flex flex-col space-y-2">
                     <label for="full_name" class="text-gray-700 select-none font-medium">Full Name</label>
@@ -76,8 +78,8 @@ export default {
         this.form.email = userData.email;
         // Construct the profile image URL
         if (userData.profile) {
-          this.profileUrl = `http://127.0.0.1:8000/images/${user.profile}`;
-        }
+          this.profileUrl = `http://127.0.0.1:8000/images/${userData.profile}`;
+          }
       } catch (error) {
         console.error("Error fetching user data:", error);
       }
