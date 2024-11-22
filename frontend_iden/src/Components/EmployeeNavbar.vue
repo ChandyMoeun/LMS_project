@@ -73,7 +73,7 @@ const activeTab = computed(() => {
       <div class="flex items-center space-x-4">
         
         <!-- Notification Bell Icon -->
-        <div class="relative">
+        <div class="relative flex items-center gap-3 pr-5">
           <svg
             class="w-6 h-6 text-gray-800 dark:text-white"
             aria-hidden="true"

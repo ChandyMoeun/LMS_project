@@ -10,7 +10,7 @@
             <div class="mt-15 px-10">
               <!-- Header -->
               <div class="text-black" style="border-bottom: solid 1px gray">
-                <h1 class="font-bold text-3xl mb-3 hover:text-yellow-500 w-2/12">Calendar</h1>
+                <h1 class="font-bold text-3xl mb-3 px-8 hover:text-yellow-500 w-2/12">Calendar</h1>
               </div>
               <!-- FullCalendar Display -->
               <div class="container mt-16 mx-auto">

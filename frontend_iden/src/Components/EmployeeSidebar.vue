@@ -7,7 +7,7 @@
     </div>
 
     <div class="nav nav-pills flex-column mb-auto gap-2">
-      <a :class="['flex no-underline items-center mt-4 py-2 px-6 text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 hover:rounded-lg hover:text-gray-100', activeLink === '/employee/dashboard' ? 'active' : '']"
+      <a :class="['flex no-underline items-center mt-4 py-2 px-6 text-gray-500 pr-30 hover:bg-opacity-25 hover:rounded-lg hover:text-gray-100', activeLink === '/employee/dashboard' ? 'active' : '']"
         href="/employee/dashboard" @click="setActiveLink('/employee/dashboard')" >
         <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" >
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z"></path>
@@ -16,7 +16,7 @@
         <span class="mx-3">Dashboard</span>
       </a>
 
-      <a :class="['flex no-underline items-center mt-4 py-2 px-6 text-gray-500 hover:rounded-lg hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100', activeLink === '/employee/calendar' ? 'active' : '']"
+      <a :class="['flex no-underline items-center mt-4 py-2 px-6 text-gray-500 hover:rounded-lg hover:bg-opacity-25 hover:text-gray-100', activeLink === '/employee/calendar' ? 'active' : '']"
         href="/employee/calendar" @click="setActiveLink('/employee/calendar')">
         <svg class="w-6 h-6 text-white-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24" >
           <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -25,7 +25,7 @@
         <span class="mx-3">Calendar</span>
       </a>
 
-      <a :class="['flex no-underline items-center mt-4 py-2 px-6 text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 hover:rounded-lg hover:text-gray-100', activeLink === '/employee/myleave' ? 'active' : '']"
+      <a :class="['flex no-underline items-center mt-4 py-2 px-6 text-gray-500 hover:bg-opacity-25 hover:rounded-lg hover:text-gray-100', activeLink === '/employee/myleave' ? 'active' : '']"
         href="/employee/myleave" @click="setActiveLink('/employee/myleave')" >
         <svg class="w-6 h-6 text-white-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24" >
           <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -33,14 +33,14 @@
         </svg>
         <span class="mx-3">Leave</span>
       </a>
-      <a :class="['flex no-underline items-center mt-4 py-2 px-6 text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 hover:rounded-lg hover:text-gray-100', activeLink === '/employee/team' ? 'active' : '']"
+      <a :class="['flex no-underline items-center mt-4 py-2 px-6 text-gray-500 hover:bg-opacity-25 hover:rounded-lg hover:text-gray-100', activeLink === '/employee/team' ? 'active' : '']"
         href="/employee/team">
         <svg class="w-6 h-6 text-white-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
           <path fill-rule="evenodd" d="M12 6a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7Zm-1.5 8a4 4 0 0 0-4 4 2 2 0 0 0 2 2h7a2 2 0 0 0 2-2 4 4 0 0 0-4-4h-3Zm6.82-3.096a5.51 5.51 0 0 0-2.797-6.293 3.5 3.5 0 1 1 2.796 6.292ZM19.5 18h.5a2 2 0 0 0 2-2 4 4 0 0 0-4-4h-1.1a5.503 5.503 0 0 1-.471.762A5.998 5.998 0 0 1 19.5 18ZM4 7.5a3.5 3.5 0 0 1 5.477-2.889 5.5 5.5 0 0 0-2.796 6.293A3.501 3.501 0 0 1 4 7.5ZM7.1 12H6a4 4 0 0 0-4 4 2 2 0 0 0 2 2h.5a5.998 5.998 0 0 1 3.071-5.238A5.505 5.505 0 0 1 7.1 12Z" clip-rule="evenodd" />
         </svg>
         <span class="mx-3">Team</span>
       </a>
-      <a :class="['flex no-underline items-center mt-4 py-2 px-6 text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 hover:rounded-lg hover:text-gray-100', activeLink === '/employee/attendance' ? 'active' : '']"
+      <a :class="['flex no-underline items-center mt-4 py-2 px-6 text-gray-500 hover:bg-opacity-25 hover:rounded-lg hover:text-gray-100', activeLink === '/employee/attendance' ? 'active' : '']"
         href="/employee/attendance">
         <svg class="w-6 h-6 text-white-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
           <path fill-rule="evenodd" d="M18 14a1 1 0 1 0-2 0v2h-2a1 1 0 1 0 0 2h2v2a1 1 0 1 0 2 0v-2h2a1 1 0 1 0 0-2h-2v-2Z" clip-rule="evenodd" />
@@ -49,7 +49,7 @@
         <span class="mx-3">Attendances</span>
         </a>
         <!--Setting sidebar-->
-      <a :class="['flex no-underline items-center mt-4 py-2 px-6 text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 hover:rounded-lg hover:text-gray-100', activeLink === '/employee/settings' ? 'active' : '']"
+      <a :class="['flex no-underline items-center mt-4 py-2 px-6 text-gray-500 hover:bg-opacity-25 hover:rounded-lg hover:text-gray-100', activeLink === '/employee/settings' ? 'active' : '']"
         href="/employee/settings">
         <svg class="w-6 h-6 text-white-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
           <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13v-2a1 1 0 0 0-1-1h-.757l-.707-1.707.535-.536a1 1 0 0 0 0-1.414l-1.414-1.414a1 1 0 0 0-1.414 0l-.536.535L14 4.757V4a1 1 0 0 0-1-1h-2a1 1 0 0 0-1 1v.757l-1.707.707-.536-.535a1 1 0 0 0-1.414 0L4.929 6.343a1 1 0 0 0 0 1.414l.536.536L4.757 10H4a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1h.757l.707 1.707-.535.536a1 1 0 0 0 0 1.414l1.414 1.414a1 1 0 0 0 1.414 0l.536-.535 1.707.707V20a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1v-.757l1.707-.708.536.536a1 1 0 0 0 1.414 0l1.414-1.414a1 1 0 0 0 0-1.414l-.535-.536.707-1.707H20a1 1 0 0 0 1-1Z" />
@@ -91,8 +91,8 @@ watch(
 
 <style scoped>
 .active {
-  background: rgba(154, 154, 198, 0.14);
-  color: white;
+  background: #EEEDED;
+  color: black;
   border-radius: 10px;
 }
 </style>

@@ -9,11 +9,11 @@
         <main class="p-[50px] pt-[50px] pb-0 h-auto w-full bg-[#EEEDED] mb-[50px]">
           <div class="px-10 container pb-30">
                 <!-- Header -->
-            <div class="mt-5 text-black" style="border-bottom: solid 1px gray">
+            <div class="mt-5 mb-5 text-black" style="border-bottom: solid 1px gray">
               <h1 class="font-bold text-3xl px-8 hover:text-yellow-400 w-4/12">Employee Dashboard</h1>
             </div>
             <!----------- alert code -------------------->
-            <div v-show="isToastVisible" class="toast-box"
+            <div v-show="isToastVisible" class="toast-box mt-5"
               style=" position: absolute; top: 7%; right: 2%; display: flex; align-items: flex-end; flex-direction: column; overflow: hidden; padding: 2px; width: 23%;">
               <div role="alert" class="mb-4 relative flex w-full p-3 pr-5 text-sm text-white bg-black rounded-md items-center">
                 {{ alertMessage }}
@@ -23,12 +23,12 @@
 
             <!--............................// Chart js // total employee leave balance chart ..............................  -->
             <!-- Chart Container -->
-            <h1 class="text-4xl text-black p-10 text-center">My Leave Balance</h1>  
+            <h1 class="text-4xl text-black my-10 text-center"><strong> My Leave Balance</strong></h1>  
             <div class="chart-container py-5 flex justify-center mb-10 rounded-2xl bg-white shadow-[rgba(13,_38,_76,_0.19)_0px_9px_20px]">
               <canvas id="myLeaveBalance" style="width:100%; max-width:800px; height:70vh; max-height:60vh;"></canvas>
             </div>
             <!--............................list of my requesting leaves ..............................  -->
-            <h1 class="text-4xl p-10 text-gray-900 text-center hover:text-yellow-400"><strong> My Requesting Leaves</strong></h1>
+            <h1 class="text-4xl p-10 text-gray-900 text-center"><strong> My Requesting Leaves</strong></h1>
             <div class="shadow-[0px_4px_16px_rgba(17,17,26,0.1),_0px_8px_24px_rgba(17,17,26,0.1),_0px_16px_56px_rgba(17,17,26,0.1)] overflow-x-auto">
               <table class="min-w-full bg-gray-100 border border-gray-100">
                 <thead>
