@@ -85,33 +85,33 @@
                 </div>
               </form>
             </div>
-            <h1 class="text-4xl p-7 text-black text-center">My Requesting Leaves</h1>
+            <h1 class="text-4xl mt-5 p-7 text-black text-center">My Requesting Leaves</h1>
             <div class="shadow-[0px_4px_16px_rgba(17,17,26,0.1),_0px_8px_24px_rgba(17,17,26,0.1),_0px_16px_56px_rgba(17,17,26,0.1)] overflow-x-auto">
                 <table class="min-w-full bg-gray-100 border border-gray-100">
                   <thead>
                     <tr class="bg-black text-white text-xs">
-                      <th class="py-2 px-2 text-center border-b">ID</th>
-                      <th class="py-2 px-2 text-center border-b">Name</th>
-                      <th class="py-2 px-2 text-center border-b">Type</th>
-                      <th class="py-2 px-2 text-center border-b">From | To</th>
-                      <th class="py-2 px-2 text-center border-b">Approver</th>
-                      <th class="py-2 px-2 text-center border-b">Sub-approver</th>
-                      <th class="py-2 px-2 text-center border-b">Status</th>
-                      <th class="py-2 px-2 text-center border-b">Detail</th>
+                      <th class="py-3 px-2 text-center border-b">ID</th>
+                      <th class="py-3 px-2 text-center border-b">Name</th>
+                      <th class="py-3 px-2 text-center border-b">Type</th>
+                      <th class="py-3 px-2 text-center border-b">From | To</th>
+                      <th class="py-3 px-2 text-center border-b">Approver</th>
+                      <th class="py-3 px-2 text-center border-b">Sub-approver</th>
+                      <th class="py-3 px-2 text-center border-b">Status</th>
+                      <th class="py-3 px-2 text-center border-b">Detail</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr v-for="(request, index) in leaveRequests" :key="index" class="hover:bg-white text-xs">
-                      <td class="py-2 px-2 text-center border-b">{{ request.id }}</td>
-                      <td class="py-2 px-2 text-center border-b">{{ request.name }}</td>
-                      <td class="py-2 px-2 text-center border-b">{{ request.type }}</td>
-                      <td class="py-2 px-2 text-center border-b">{{ request.date }}</td>
-                      <td class="py-2 px-2 text-center border-b">{{ request.approver }}</td>
-                      <td class="py-2 px-2 text-center border-b">{{ request.subApprover }}</td>
-                      <td class="py-2 px-2 text-center border-b">
+                      <td class="py-3 px-2 text-center border-b">{{ request.id }}</td>
+                      <td class="py-3 px-2 text-center border-b">{{ request.name }}</td>
+                      <td class="py-3 px-2 text-center border-b">{{ request.type }}</td>
+                      <td class="py-3 px-2 text-center border-b">{{ request.date }}</td>
+                      <td class="py-3 px-2 text-center border-b">{{ request.approver }}</td>
+                      <td class="py-3 px-2 text-center border-b">{{ request.subApprover }}</td>
+                      <td class="py-3 px-2 text-center border-b">
                         <span :class="statusClass(request.status)">{{ request.status }}</span>
                       </td>
-                      <td class="py-2 px-2 text-center border-b text-xs">
+                      <td class="py-3 px-2 text-center border-b text-xs">
                         <a href="/employee/myleave/view/detail" class="text-blue-500 no-underline hover:text-blue-400">More</a>
                       </td>
                     </tr>

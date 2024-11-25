@@ -7,15 +7,15 @@
       <div class="container-page w-[83%]">
         <WebHeaderMenu />
         <main class="flex-1 overflow-x-hidden overflow-y-auto mt-10p-[50px] pt-[50px] pb-0 h-auto w-full bg-[#EEEDED] mb-[50px]">
-          <div class="px-10">
+          <div class="px-20">
             <div style=" display: flex; color: black; flex-direction: column; border-bottom: solid 1px gray; " >
               <a href="/supervisor/settings">
-                <svg class="w-6 h-4 text-gray-800 dark:text-white hover:text-gray-500"
+                <svg class="w-6 h-4 text-gray-800 dark:text-white mt-5 hover:text-gray-500"
                   aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10" >
                   <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5H1m0 0 4 4M1 5l4-4" /> 
                 </svg>
               </a>
-              <h1 class="font-bold text-gray-900 text-3xl mt-3 px-8 hover:text-yellow-400 w-3/12">
+              <h1 class="font-bold text-gray-900 text-3xl mt-2 px-8 hover:text-yellow-400 w-3/12">
                 <b>All Positions</b>
               </h1>
             </div>

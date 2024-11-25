@@ -21,7 +21,6 @@
               </div>
             </div>
             <!----------- //end alert code //-------------------->
-
             <div class="d-flex justify-center flex-row h-[27vh]" style=" border-bottom: #b0b0b0 1px solid;">
               <div class="mb-2 d-flex justify-center ml-30" style="border-right: #b0b0b0 1px solid; width: 55%;">
                 <div class="mt-4 w-70 h-35 d-flex text-black flex-row" style="background: #f8c828; 
@@ -44,7 +43,6 @@
                 </div>
               </div>
             </div>
-
             <!--............................// Chart js //..............................  -->
             <div class="chartjs mb-10 py-10 mt-10">
               <!-- Chart Container -->

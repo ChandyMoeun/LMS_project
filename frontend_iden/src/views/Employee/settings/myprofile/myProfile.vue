@@ -19,7 +19,7 @@
             <div class="container mx-auto px-6 py-8">
               <div class="bg-white shadow-md rounded my-6 p-5">
                 <form @submit.prevent="handleSubmit" enctype="multipart/form-data">
-                  <div class="flex text-gray-500 mb-5 justify-center">
+                  <div class="flex text-gray-500 mb-3 justify-center">
                       <div class="bg-white rounded-lg">
                           <div class="text-center uppercase font-bold mb-2">
                               <label for="thumbnailprev" class="cursor-pointer text-blue-600 hover:text-blue-400">
@@ -35,7 +35,7 @@
                     <label for="full_name" class="text-gray-700 select-none font-medium">Full Name</label>
                     <input id="full_name" type="text" v-model="form.full_name" class="px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-200" />
                   </div>
-                  <div class="flex flex-col space-y-2">
+                  <div class="flex flex-col mt-3 space-y-2">
                     <label for="email" class="text-gray-700 select-none font-medium">Email</label>
                     <input id="email" type="email" v-model="form.email" class="px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-200" />
                   </div>
