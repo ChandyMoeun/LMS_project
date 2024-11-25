@@ -141,7 +141,6 @@ const leaveRequests = ref([
 ]);
 
 const dropdownVisible = ref(null);
-
 // Method to toggle the visibility of the dropdown
 const toggleDropdown = (index) => {
   dropdownVisible.value = dropdownVisible.value === index ? null : index;
