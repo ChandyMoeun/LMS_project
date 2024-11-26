@@ -167,26 +167,3 @@ const statusClass = (status) => {
   }
 };
 </script>
-
-<style scoped>
-.employee {
-  display: flex;
-  height: 100vh;
-  align-items: start;
-  width: 100%;
-}
-.sidebar {
-  width: 17%;
-  height: auto;
-}
-.container-page {
-  width: 83%;
-}
-main {
-  padding: 50px 50px 0px 50px;
-  height: auto;
-  width: 100%;
-  background-color: #EEEDED;
-  margin-bottom: 50px;
-}
-</style>

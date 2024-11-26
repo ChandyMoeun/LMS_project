@@ -100,30 +100,3 @@ onMounted(async () => {
   teamMember.value = teamStore.teamMembers // Assign the fetched member to `teamMember`
 })
 </script>
-
-
-<style scoped>
-.supervisor {
-  display: flex;
-  height: 100vh;
-  align-items: start;
-  width: 100%;
-  background-color: #e5e7eb;
-}
-.sidebar {
-  width: 17%;
-  height: auto;
-  background-color: #141c2e;
-  color: white;
-}
-.container-page {
-  width: 83%;
-}
-main {
-  padding: 50px 50px 0px 50px;
-  height: auto;
-  width: 100%;
-  background-color: #e5e7eb;
-  margin-bottom: 50px;
-}
-</style>

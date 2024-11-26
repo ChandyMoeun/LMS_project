@@ -17,9 +17,7 @@
             class="mt-3 w-full"
             :disabled="isSubmitting"
             type="primary"
-            native-type="submit"
-            >Submit</el-button
-          >
+            native-type="submit">Submit</el-button>
         </div>
       </el-form>
     </el-card>
