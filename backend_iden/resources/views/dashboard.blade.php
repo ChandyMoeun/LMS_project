@@ -188,7 +188,7 @@
                             </td>
                             <td class="py-2 px-2 text-center border-b">{{ $leaveRequest->employee->full_name ?? 'N/A' }}</td>
                             <td class="py-2 px-2 text-center border-b">{{$leaveRequest->leaveType->leave_name ?? 'N/A'}}</td>
-                            <td class="py-2 px-2 text-center border-b">position</td>
+                            <td class="py-2 px-2 text-center border-b">{{$leaveRequest->employee->position->name ?? 'N/A'}}</td>
                             <td class="py-2 px-2 text-center border-b">{{ \Carbon\Carbon::parse($leaveRequest->from_date)->format('Y-m-d') }}|{{ $leaveRequest->to_date ? \Carbon\Carbon::parse($leaveRequest->to_date)->format('Y-m-d') : '-' }}</td>
                             <td class="py-2 px-2 text-center border-b">@if($leaveRequest->status === 'approved')
                                 {{ $leaveRequest->approver->full_name ?? 'no name' }}
@@ -351,11 +351,9 @@
                                     @endcan
                                 </div>
                             </td>
-
                         </tr>
                         @endforeach
                         @endcan
-
                     </tbody>
                 </table>
             </div>

@@ -58,8 +58,7 @@
                 <a href="position">
                   <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Position</h5>
                 </a>
-                <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">You can see the leave that you are rejected
-                  here and you also can change to approve.</p>
+                <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">Manage positions and organizational roles.</p>
                 <a href="position" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-black rounded-lg hover:bg-yellow-400">
                   View more
                   <svg class="rtl:rotate-180 ml-2 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
@@ -75,8 +74,7 @@
                 <a href="{{ route('admin.permissions.index') }}">
                   <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Permission</h5>
                 </a>
-                <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">You can see the leave that you are rejected
-                  here and you also can change to approve.</p>
+                <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">Manage user permissions within the system.</p>
                 <a href="{{ route('admin.permissions.index') }}" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-black rounded-lg hover:bg-yellow-400">
                   View more
                   <svg class="rtl:rotate-180 ml-2 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
@@ -91,8 +89,7 @@
                 <a href="{{ route('admin.roles.index') }}">
                   <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Role</h5>
                 </a>
-                <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">You can see the leave that you are rejected
-                  here and you also can change to approve.</p>
+                <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">Manage user roles in the organization.</p>
                 <a href="{{ route('admin.roles.index') }}" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-black rounded-lg hover:bg-yellow-400">
                   View more
                   <svg class="rtl:rotate-180 ml-2 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">

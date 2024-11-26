@@ -11,7 +11,7 @@
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5H1m0 0 4 4M1 5l4-4" />
                     </svg>
                 </a>
-                <h1 class="font-bold text-3xl w-3/12 mt-5 hover:text-yellow-400"><b>Employee Profile </b></h1>
+                <h1 class="font-bold text-3xl w-3/12 mt-5 hover:text-yellow-400"><b> {{$employee->full_name}} Profile </b></h1>
             </div>
             <div class="container mx-auto p-6">
                 <div class="max-w-4xl mx-auto bg-white rounded-lg shadow-md">

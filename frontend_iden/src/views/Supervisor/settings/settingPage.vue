@@ -21,13 +21,30 @@
                     <div class="h-48 p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100">
                       <h5 class="mb-2 text-black text-2xl font-bold"> Departments </h5>
                       <p class="mb-3 font-normal text-gray-700">
-                        Create, update, and delete departments.
+                        View departments.
                       </p>
-                      <a href="/Supervisor/Settings/Departments" class="no-underline text-white inline-flex items-center px-3 py-2 text-sm font-medium text-white bg-gray-900 rounded-lg hover:bg-yellow-400">
+                      <a href="/supervisor/settings/departments" class="no-underline text-white inline-flex items-center px-3 py-2 text-sm font-medium text-white bg-gray-900 rounded-lg hover:bg-yellow-400">
                           View more
                         <svg
                          class="ml-2 w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10" >
                          <path
+                          stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9" />
+                        </svg>
+                      </a>
+                    </div>
+                  </div>
+                  <!-- Card for leave balance -->
+                  <div class="flex h-52 w-2/6 p-3 flex-col">
+                    <div class="h-48 p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100">
+                      <h5 class="mb-2 text-black text-2xl font-bold"> Leave Balance </h5>
+                      <p class="mb-3 font-normal text-gray-700">
+                        View my leave balance in the organization.
+                      </p>
+                      <a href="/supervisor/settings/leavebalance" class="no-underline text-white inline-flex items-center px-3 py-2 text-sm font-medium text-white bg-gray-900 rounded-lg hover:bg-yellow-400">
+                        View more
+                        <svg
+                          class="ml-2 w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10" >
+                          <path
                           stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9" />
                         </svg>
                       </a>
@@ -38,9 +55,9 @@
                     <div class="h-48 p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100">
                       <h5 class="mb-2 text-black text-2xl font-bold"> Leave Types </h5>
                       <p class="mb-3 font-normal text-gray-700">
-                        Define the types of leave employees can take.
+                        View the types of leave employees can take.
                       </p>
-                      <a href="/Supervisor/Settings/LeaveType" class="no-underline text-white inline-flex items-center px-3 py-2 text-sm font-medium text-white bg-gray-900 rounded-lg hover:bg-yellow-400">
+                      <a href="/supervisor/settings/leavetype" class="no-underline text-white inline-flex items-center px-3 py-2 text-sm font-medium text-white bg-gray-900 rounded-lg hover:bg-yellow-400">
                         View more
                         <svg
                           class="ml-2 w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10" >
@@ -55,9 +72,9 @@
                     <div class="h-48 p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100">
                       <h5 class="mb-2 text-black text-2xl font-bold"> Reset Password </h5>
                       <p class="mb-3 font-normal text-gray-700">
-                        Admins and managers can reset employee passwords.
+                        I can reset my account password by my salf.
                       </p>
-                      <a href="/Supervisor/Settings/ResetPassword" class="no-underline text-white inline-flex items-center px-3 py-2 text-sm font-medium text-white bg-gray-900 rounded-lg hover:bg-yellow-400">
+                      <a href="/supervisor/settings/resetpassword" class="no-underline text-white inline-flex items-center px-3 py-2 text-sm font-medium text-white bg-gray-900 rounded-lg hover:bg-yellow-400">
                         View more
                         <svg
                           class="ml-2 w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10" >
@@ -72,9 +89,9 @@
                     <div class="h-48 p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100">
                       <h5 class="mb-2 text-black text-2xl font-bold"> Position </h5>
                       <p class="mb-3 font-normal text-gray-700">
-                        Manage positions and organizational roles.
+                        View positions and organizational roles.
                       </p>
-                        <a href="/Supervisor/Settings/Positions" class="no-underline text-white inline-flex items-center px-3 py-2 text-sm font-medium text-white bg-gray-900 rounded-lg hover:bg-yellow-400">
+                        <a href="/supervisor/settings/positions" class="no-underline text-white inline-flex items-center px-3 py-2 text-sm font-medium text-white bg-gray-900 rounded-lg hover:bg-yellow-400">
                           View more
                           <svg
                            class="ml-2 w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10" >
@@ -90,9 +107,9 @@
                     <div class="h-48 p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100">
                       <h5 class="mb-2 text-black text-2xl font-bold"> Permissions </h5>
                       <p class="mb-3 font-normal text-gray-700">
-                        Manage user permissions within the system.
+                        View user permissions within the system.
                       </p>
-                      <a href="/Supervisor/Settings/Permissions" class="no-underline text-white inline-flex items-center px-3 py-2 text-sm font-medium text-white bg-gray-900 rounded-lg hover:bg-yellow-400">
+                      <a href="/supervisor/settings/permissions" class="no-underline text-white inline-flex items-center px-3 py-2 text-sm font-medium text-white bg-gray-900 rounded-lg hover:bg-yellow-400">
                         View more
                         <svg
                           class="ml-2 w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10" >
@@ -102,14 +119,14 @@
                       </a>
                     </div>
                   </div>
-                  <!-- Card for Roles -->
+                  
                   <div class="flex h-52 w-2/6 p-3 flex-col">
                     <div class="h-48 p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100">
                       <h5 class="mb-2 text-black text-2xl font-bold"> Roles </h5>
                       <p class="mb-3 font-normal text-gray-700">
-                        Manage user roles in the organization.
+                        View user roles in the organization.
                       </p>
-                      <a href="/Supervisor/Settings/Role" class="no-underline text-white inline-flex items-center px-3 py-2 text-sm font-medium text-white bg-gray-900 rounded-lg hover:bg-yellow-400">
+                      <a href="/Supervisor/settings/role" class="no-underline text-white inline-flex items-center px-3 py-2 text-sm font-medium text-white bg-gray-900 rounded-lg hover:bg-yellow-400">
                         View more
                         <svg
                           class="ml-2 w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10" >

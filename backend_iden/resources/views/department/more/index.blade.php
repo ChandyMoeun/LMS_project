@@ -25,12 +25,12 @@
                     <input class="form-input w-32 h-9 sm:w-64 rounded-md pl-10 pr-4 focus:border-indigo-600" type="text"
                         placeholder="Search department name...">
                 </div>
-                <div class="text-right">
+                <div class="mt-2">
                     <a href="{{ route('admin.position.create') }}" class="bg-black text-white font-bold px-5 py-1 rounded focus:outline-none shadow hover:bg-yellow-400 transition-colors">New Position</a>
                 </div>
             </div>
 
-            <div class=" d-flex juatify-center bg-white shadow-md rounded my-6">
+            <div class=" d-flex juatify-center bg-white shadow-md rounded my-3">
                 <table class="text-left w-full border-collapse">
                     <thead>
                         <tr>

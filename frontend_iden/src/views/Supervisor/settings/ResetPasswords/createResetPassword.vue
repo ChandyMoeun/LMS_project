@@ -6,67 +6,67 @@
       </div>
       <div class="container-page">
         <WebHeaderMenu />
-        <main class="bg-gray sticky mt-5">
-            <div style="display: flex; color: black; flex-direction: column; border-bottom: solid 1px gray">
-                <router-link to="/Supervisor/Settings/ResetPassword">
-                <svg class="w-6 h-4 text-gray-800 hover:text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+        <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-200">
+              <div class="flex text-black my-5"
+                style="display: flex; flex-direction: column; border-bottom: solid 1px gray" >
+                <router-link to="/supervisor/settings">
+                  <svg
+                    class="w-6 h-6 text-gray-800 hover:text-gray-500"
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none" viewBox="0 0 14 10" >
                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5H1m0 0 4 4M1 5l4-4" />
-                </svg>
+                  </svg>
                 </router-link>
-                <h1 class="font-bold text-3xl mt-3 hover:text-yellow-400 w-4/12"><b>Reset Password for {{ employee.full_name }}</b></h1>
-            </div>
-    
-            <!-- Display success message -->
-            <div v-if="successMessage" id="alert" class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4">
-                {{ successMessage }}
-            </div>
-        
-            <!-- Display validation errors -->
-            <div v-if="errorMessages.length" class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4">
-                <ul>
-                <li v-for="error in errorMessages" :key="error">{{ error }}</li>
-                </ul>
-            </div>
-        
-            <!-- Reset password form -->
-            <form @submit.prevent="submitForm" class="bg-white mt-20 p-5 shadow-md rounded-lg overflow-hidden">
-                <div class="mb-4">
-                <label for="password" class="block text-sm font-bold mb-2">New Password</label>
-                <input
-                    type="password"
-                    v-model="form.password"
-                    id="password"
-                    class="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
-                    required
-                />
-                <span v-if="form.password.length < 8" class="text-red-500 text-sm">Password must be at least 8 characters long.</span>
-                </div>
-        
-                <div class="mb-4">
-                <label for="password_confirmation" class="block text-sm font-bold mb-2">Confirm Password</label>
-                <input
-                    type="password"
-                    v-model="form.password_confirmation"
-                    id="password_confirmation"
-                    class="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
-                    required
-                />
-                <span v-if="form.password !== form.password_confirmation" class="text-red-500 text-sm">Password confirmation does not match.</span>
-                </div>
-        
-                <div class="flex justify-center">
-                <button type="submit" class="bg-yellow-500 border-none hover:bg-black text-white font-bold py-2 px-3 rounded">
-                    Reset Now
-                </button>
-                </div>
-            </form>
-        </main>
+                <h1 class="font-bold mr-20 text-3xl px-8 w-2/6 mt-3 hover:text-yellow-500">
+                  <b>Change My Password</b>
+                </h1>
+              </div>
+              <div class="password-change-container bg-white border rounded-lg shadow">
+                  <form @submit.prevent="changePassword" class="p-5">
+                      <input 
+                        type="password" 
+                        v-model="currentPassword" 
+                        placeholder="Current password" 
+                        required 
+                        class="password-input"
+                      />
+                      <span v-if="currentPasswordError" class="error">{{ currentPasswordError }}</span>
+  
+                      <input 
+                        type="password" 
+                        v-model="newPassword" 
+                        placeholder="New password" 
+                        required 
+                        class="password-input"
+                      />
+                      <span v-if="newPasswordError" class="error">{{ newPasswordError }}</span>
+  
+                      <input 
+                        type="password" 
+                        v-model="confirmPassword" 
+                        placeholder="Repeat the new password" 
+                        required 
+                        class="password-input"
+                      />
+                      <span v-if="confirmPasswordError" class="error">{{ confirmPasswordError }}</span>
+  
+                      <button 
+                        type="submit" 
+                        :disabled="!isFormValid" 
+                        class="change-password-button bg-gray-900 hover:bg-yellow-500 py-2"
+                      >
+                          <i class="fa fa-key" aria-hidden="true"></i> Change Now
+                      </button>
+                  </form>
+              </div>
+          </main>
       </div>
     </div>
   </SupervisorLayout>
 </template>
   
-  <script>
+<script>
 import SupervisorSidebar from '@/Components/SupervisorSidebar.vue'
 import WebHeaderMenu from '@/Components/WebHeaderMenu.vue'
 import axios from 'axios'
@@ -74,56 +74,66 @@ import { ref, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 
 export default {
-  components: { SupervisorSidebar, WebHeaderMenu },
-  setup() {
-    const route = useRoute()
-    const router = useRouter()
-    const employee = ref({})
-    const form = ref({
-      password: '',
-      password_confirmation: ''
-    })
-    const successMessage = ref('')
-    const errorMessages = ref([])
-
-    const fetchEmployee = async () => {
-      try {
-        const response = await axios.get(`/api/employee/${route.params.id}`) // Replace with actual API
-        employee.value = response.data
-      } catch (error) {
-        console.error('Error fetching employee data:', error)
+    components: { SupervisorSidebar, WebHeaderMenu },
+    data() {
+      return {
+        currentPassword: '',
+        newPassword: '',
+        confirmPassword: '',
+        currentPasswordError: '',
+        newPasswordError: '',
+        confirmPasswordError: '',
+        correctCurrentPassword: 'known_password'  // Replace with the actual current password or use an API call for validation
+      };
+    },
+    computed: {
+      isFormValid() {
+        return (
+          this.currentPassword &&
+          this.currentPassword === this.correctCurrentPassword &&
+          this.newPassword &&
+          this.newPassword.length >= 8 &&
+          this.newPassword === this.confirmPassword
+        );
       }
-    }
-
-    const submitForm = async () => {
-      try {
-        const response = await axios.post(
-          `/api/employee/${employee.value.id}/reset-password`,
-          form.value
-        ) // Replace with actual API
-        successMessage.value = 'Password has been reset successfully!'
-        form.value.password = ''
-        form.value.password_confirmation = ''
-        setTimeout(() => {
-          successMessage.value = ''
-          router.push({ name: 'resetPasswordIndex' })
-        }, 4000) // Hide message after 4 seconds
-      } catch (error) {
-        errorMessages.value = error.response.data.errors
+    },
+    watch: {
+      currentPassword(value) {
+        if (!value) {
+          this.currentPasswordError = 'Current password is required';
+        } else if (value !== this.correctCurrentPassword) {
+          this.currentPasswordError = 'Current password is incorrect';
+        } else {
+          this.currentPasswordError = '';
+        }
+      },
+      newPassword(value) {
+        if (value.length < 8) {
+          this.newPasswordError = 'New password must be at least 8 characters';
+        } else {
+          this.newPasswordError = '';
+        }
+      },
+      confirmPassword(value) {
+        this.confirmPasswordError = 
+          value !== this.newPassword ? 'Passwords do not match' : '';
       }
-    }
-
-    onMounted(fetchEmployee)
-
-    return {
-      employee,
-      form,
-      successMessage,
-      errorMessages,
-      submitForm
+    },
+    methods: {
+      changePassword() {
+        if (this.isFormValid) {
+          // Handle the password change logic here, possibly calling an API to update the password
+          alert('Password changed successfully!');
+          this.resetForm();
+        }
+      },
+      resetForm() {
+        this.currentPassword = '';
+        this.newPassword = '';
+        this.confirmPassword = '';
+      }
     }
   }
-}
 </script>
   
   <style scoped>
@@ -150,5 +160,28 @@ main {
   background-color: #e5e7eb;
   margin-bottom: 50px;
 }
+.password-input {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+  }
+  .change-password-button {
+    width: 10%;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  .change-password-button:disabled {
+    cursor: not-allowed;
+  }
+  .error {
+    color: red;
+    font-size: 0.875rem;
+    margin-bottom: 10px;
+    display: block;
+  }
 </style>
   
