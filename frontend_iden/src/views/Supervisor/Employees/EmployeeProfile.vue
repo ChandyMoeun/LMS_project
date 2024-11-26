@@ -13,7 +13,7 @@
                 class="d-flex text-black"
                 style="display: flex; flex-direction: column; border-bottom: solid 1px gray"
               >
-                <router-link to="/Supervisor/Employee">
+                <a href="/supervisor/employee">
                   <svg
                     class="w-6 h-6 mb-3 text-gray-800 hover:text-gray-500"
                     xmlns="http://www.w3.org/2000/svg"
@@ -28,18 +28,18 @@
                       d="M13 5H1m0 0 4 4M1 5l4-4"
                     />
                   </svg>
-                </router-link>
+                </a>
                 <h1 class="font-bold text-3xl px-8 hover:text-yellow-500 w-5/12">
                   <b>Member's Profile</b>
                 </h1>
               </div>
               <div class="container mt-10 mx-auto p-6">
-                <div v-if="member" class="max-w-4xl mx-auto bg-white rounded-lg shadow-md">
+                <div v-if="teamMember" class="max-w-4xl mx-auto bg-white rounded-lg shadow-md">
                   <div class="d-flex justify-content-center pt-5">
                     <img
                       :src="
-                        member.profile && member.profile
-                          ? `http://127.0.0.1:8000/images/${member.profile}`
+                        teamMember.profile && teamMember.profile
+                          ? `http://127.0.0.1:8000/images/${teamMember.profile}`
                           : '/images/default-profile.jpg'
                       "
                       alt="Profile Picture"
@@ -49,23 +49,22 @@
                   </div>
                   <div class="d-flex justify-around gap-4 p-6">
                     <!-- Left column -->
-                    <div>
-                      <p><strong>Staff ID: </strong>{{ member.staff_id }}</p>
-                      <p><strong>Name: </strong>{{ member.full_name }}</p>
-                      <p><strong>Gender: </strong>{{ member.gender }}</p>
-                      <p><strong>Date of Birth: </strong>{{ member.dob }}</p>
-                      <p><strong>Position: </strong>{{ member.position.name }}</p>
-                      <p><strong>Department: </strong>{{ member.department.name }}</p>
+                    <div v-if="teamMember">
+                      <p><strong>Staff ID: </strong>{{ teamMember.staff_id }}</p>
+                      <p><strong>Name: </strong>{{ teamMember.full_name }}</p>
+                      <p><strong>Gender: </strong>{{ teamMember.gender }}</p>
+                      <p><strong>Date of Birth: </strong>{{ teamMember.dob }}</p>
+                      <p><strong>Position: </strong>{{ teamMember.position.name }}</p>
+                      <p><strong>Department: </strong>{{ teamMember.department.name }}</p>
                     </div>
 
                     <!-- Right column -->
                     <div>
-                      <p><strong>Date Joined: </strong>{{ member.joined_date }}</p>
-                      <p><strong>Confirm Date: </strong>{{ member.entitled_date }}</p>
+                      <p><strong>Date Joined: </strong>{{ teamMember.joined_date }}</p>
+                      <p><strong>Confirm Date: </strong>{{ teamMember.entitled_date }}</p>
                       <p><strong>Phone: </strong> 015637286</p>
                       <p><strong>Telegram Number: </strong> 015637286</p>
-                      <p><strong>Email: </strong>{{ member.email }}</p>
-                      <p><strong>Line Manager: </strong>{{ member.manager.full_name }}</p>
+                      <p><strong>Email: </strong>{{ teamMember.email }}</p>
                     </div>
                   </div>
                 </div>
@@ -78,23 +77,29 @@
   </SupervisorLayout>
 </template>
 
-<script>
+<script setup>
 import SupervisorSidebar from '@/Components/SupervisorSidebar.vue'
 import WebHeaderMenu from '@/Components/WebHeaderMenu.vue'
-import { useAuthStore } from '@/stores/get-member'
-export default {
-  components: { SupervisorSidebar, WebHeaderMenu },
+import { useTeamStore } from '@/stores/get-member'
+import { onMounted, ref } from 'vue'
+import { useRoute } from 'vue-router'
 
-  props: ['id'],
-  setup(props) {
-    const authStore = useAuthStore()
+// const reloadPage = () => {
+//   window.location.reload() // Reload the entire page
+// }
+// Import components
+const teamStore = useTeamStore()
+const route = useRoute() // Access the route to get the ID
 
-    // Find the member by ID from the store
-    const member = authStore.member.find((m) => m.id === Number(props.id))
+// Define `teamMember` to hold the fetched data
+const teamMember = ref(null)
 
-    return { member }
-  }
-}
+// Fetch the team member when the component is mounted
+onMounted(async () => {
+  const memberId = route.params.id // Get the ID from the route
+  await teamStore.fetchTeamMemberById(memberId) // Call the store action
+  teamMember.value = teamStore.teamMembers // Assign the fetched member to `teamMember`
+})
 </script>
 
 

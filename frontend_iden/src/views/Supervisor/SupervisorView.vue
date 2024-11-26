@@ -12,12 +12,25 @@
             <div class="button" style="margin: 50px">
               <!-- Toast Alert Box -->
               <div class="button" style="margin: 50px">
-                <div v-show="isToastVisible"
+                <div
+                  v-show="isToastVisible"
                   class="toast-box"
-                  style=" position: absolute; top: 5%; right: 2%; display: flex; align-items: flex-end; flex-direction: column; overflow: hidden; padding: 2px; width: 23%;">
+                  style="
+                    position: absolute;
+                    top: 5%;
+                    right: 2%;
+                    display: flex;
+                    align-items: flex-end;
+                    flex-direction: column;
+                    overflow: hidden;
+                    padding: 2px;
+                    width: 23%;
+                  "
+                >
                   <div
                     role="alert"
-                    class="mb-4 relative flex w-full p-3 pr-5 text-sm text-white bg-black rounded-md items-center">
+                    class="mb-4 relative flex w-full p-3 pr-5 text-sm text-white bg-black rounded-md items-center"
+                  >
                     {{ alertMessage }}
                   </div>
                 </div>
@@ -25,11 +38,43 @@
             </div>
             <!----------- //end alert code //-------------------->
 
-            <div style=" border-bottom: #b0b0b0 1px solid; display: flex; justify-content: center; flex-direction: row; height: 30vh; width: 100%; ">
-              <div style=" margin-bottom: 10px; border-right: #b0b0b0 1px solid; width: 55%; display: flex; justify-content: center; ">
-                <div style=" margin-top: 30px; margin-left: 70px; width: 50%; height: 75%; display: flex; background: #f8c828; color: black; flex-direction: row;
-                    box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px; " >
-                  <img src="../../assets/image/employees.png" style=" width: 100px; height: 50%; display: flex; align-self: center;"/>
+            <div
+              style="
+                border-bottom: #b0b0b0 1px solid;
+                display: flex;
+                justify-content: center;
+                flex-direction: row;
+                height: 30vh;
+                width: 100%;
+              "
+            >
+              <div
+                style="
+                  margin-bottom: 10px;
+                  border-right: #b0b0b0 1px solid;
+                  width: 55%;
+                  display: flex;
+                  justify-content: center;
+                "
+              >
+                <div
+                  style="
+                    margin-top: 30px;
+                    margin-left: 70px;
+                    width: 50%;
+                    height: 75%;
+                    display: flex;
+                    background: #f8c828;
+                    color: black;
+                    flex-direction: row;
+                    box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px,
+                      rgba(0, 0, 0, 0.05) 0px 4px 6px -2px;
+                  "
+                >
+                  <img
+                    src="../../assets/image/employees.png"
+                    style="width: 100px; height: 50%; display: flex; align-self: center"
+                  />
                   <div class="ml-1">
                     <h4 class="font-bold mt-6"><b>Employees</b></h4>
                     <p>All :555</p>
@@ -37,9 +82,30 @@
                 </div>
               </div>
               <div style="margin-bottom: 10px; width: 55%; display: flex; justify-content: center">
-                <div style=" margin-top: 30px; margin-right: 70px; width: 50%; height: 75%; display: flex; flex-direction: row; background: #f8c828; color: black;
-                    box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px; ">
-                  <img src="../../assets/image/Leave.png" style=" margin-left: 25px; width: 75px; height: 9vh; display: flex; align-self: center; "/>
+                <div
+                  style="
+                    margin-top: 30px;
+                    margin-right: 70px;
+                    width: 50%;
+                    height: 75%;
+                    display: flex;
+                    flex-direction: row;
+                    background: #f8c828;
+                    color: black;
+                    box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px,
+                      rgba(0, 0, 0, 0.05) 0px 4px 6px -2px;
+                  "
+                >
+                  <img
+                    src="../../assets/image/Leave.png"
+                    style="
+                      margin-left: 25px;
+                      width: 75px;
+                      height: 9vh;
+                      display: flex;
+                      align-self: center;
+                    "
+                  />
                   <div>
                     <h4 class="font-bold mt-6 ml-3"><b>Leaveds</b></h4>
                     <p class="ml-1"><em>This week : 555</em></p>
@@ -53,12 +119,15 @@
               <!-- Chart Container -->
               <h1 class="text-4xl text-black p-10 text-center">Employee Chart</h1>
 
-              <div class="chart-container mb-10 rounded-2xl py-2 bg-white shadow-[0_35px_60px_-15px_rgba(0,0,0,0.3)]">
+              <div
+                class="chart-container mb-10 rounded-2xl py-2 bg-white shadow-[0_35px_60px_-15px_rgba(0,0,0,0.3)]"
+              >
                 <canvas id="employeeChart"></canvas>
               </div>
 
               <div
-                class="chart-container mb-10 h-60vh rounded-2xl px-10 py-5 bg-white shadow-[0_35px_60px_-15px_rgba(0,0,0,0.3)]">
+                class="chart-container mb-10 h-60vh rounded-2xl px-10 py-5 bg-white shadow-[0_35px_60px_-15px_rgba(0,0,0,0.3)]"
+              >
                 <canvas id="leaveChart"></canvas>
               </div>
             </div>
@@ -82,36 +151,66 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr class="hover:bg-white text-xs" v-for="(request, index) in leaveRequests" :key="index">
-                    <td class="py-2 px-2 text-center border-b">{{ request.id }}</td>
+                  <tr
+                    class="hover:bg-white text-xs"
+                    v-for="leaveRequests in leaveRequestStore.leaveRequests"
+                    :key="leaveRequests.id"
+                  >
+                    <td class="py-2 px-2 text-center border-b">{{ leaveRequests.staff_id }}</td>
                     <td class="flex py-2 px-2 justify-center border-b">
-                      <img src="../../assets/image/profile-avatar.jpg" alt="Profile Image" class="w-12 h-12 rounded-full object-cover" />
+                      <img
+                        :src="
+                          leaveRequests.profile && leaveRequests.profile
+                            ? `http://127.0.0.1:8000/images/${leaveRequests.profile}`
+                            : '/images/default-profile.jpg'
+                        "
+                        alt="Profile Picture"
+                        class="w-12 h-12 rounded-full object-cover"
+                      />
                     </td>
-                    <td class="py-2 px-2 text-center border-b">{{ request.name }}</td>
-                    <td class="py-2 px-2 text-center border-b">{{ request.type }}</td>
-                    <td class="py-2 px-2 text-center border-b">{{ request.position }}</td>
-                    <td class="py-2 px-2 text-center border-b">{{ request.date }}</td>
-                    <td class="py-2 px-2 text-center border-b">{{ request.approver }}</td>
-                    <td class="py-2 px-2 text-center border-b">{{ request.subApprover }}</td>
-                    
+                    <td class="py-2 px-2 text-center border-b">
+                      {{ leaveRequests.employee_name }}
+                    </td>
+                    <td class="py-2 px-2 text-center border-b">{{ leaveRequests.leave_type }}</td>
+                    <td class="py-2 px-2 text-center border-b">{{ leaveRequests.position }}</td>
+                    <td class="py-2 px-2 text-center border-b">
+                      <span v-if="leaveRequests.start_time && leaveRequests.end_time"
+                        >{{ leaveRequests.start_time }} | {{ leaveRequests.end_time }}</span
+                      >
+                      <span v-else
+                        >{{ leaveRequests.from_date }} | {{ leaveRequests.to_date }}</span
+                      >
+                    </td>
+                    <td class="py-2 px-2 text-center border-b">
+                      <span v-if="leaveRequests.approved_by">{{ leaveRequests.approved_by }}</span>
+                      <span v-else>No approver</span>
+                    </td>
+                    <td class="py-2 px-2 text-center border-b">N/A</td>
+
                     <!-- Dropdown status update -->
                     <td class="py-2 px-2 text-center border-b">
-                      
                       <div>
-                        <span :class="statusClass(request.status)">{{ request.status }}</span>
+                        <span :class="statusClass(leaveRequests.status)">{{
+                          leaveRequests.status
+                        }}</span>
                       </div>
-                    </td>                    
+                    </td>
                     <td class="py-2 px-2 text-center border-b text-xs">
-                      <a href="/supervisor/takeleave/view/leavedetail" class="text-blue-500 no-underline hover:text-blue-400">More</a>
+                      <a
+                        href="/supervisor/takeleave/view/leavedetail"
+                        class="text-blue-500 no-underline hover:text-blue-400"
+                        >More</a
+                      >
                     </td>
                     <td class="action text-center align-middle">
                       <span
                         class="text-blue-500 hover:text-blue-400 font-semibold"
-                        @click="toggleDropdown(index)">
+                        @click="toggleDropdown(leaveRequests.status)"
+                      >
                         View
                       </span>
-                      <div v-if="dropdownVisible === index">
-                        <select v-model="request.status" @change="updateStatus(index)">
+                      <div v-if="dropdownVisible === leaveRequests.status">
+                        <select v-model="leaveRequests.status" @change="updateStatus(leaveRequests.status)">
                           <option value="Pending">Pending</option>
                           <option value="Approved">Approved</option>
                           <option value="Rejected">Rejected</option>
@@ -132,9 +231,27 @@
 <script setup lang="ts">
 import SupervisorSidebar from '@/Components/SupervisorSidebar.vue'
 import WebHeaderMenu from '@/Components/WebHeaderMenu.vue'
+import { useLeaveRequestStore } from '@/stores/request-leave'
 
 import { ref, onMounted } from 'vue'
 import Chart from 'chart.js/auto'
+
+const leaveRequestStore = useLeaveRequestStore()
+
+// Function to fetch leave requests (example for leaveRequestStore)
+const fetchTeamLeaveRequests = async () => {
+  try {
+    await leaveRequestStore.fetchTeamLeaveRequests()
+    console.log('Fetched leave requests:', leaveRequestStore.leaveRequests)
+  } catch (error) {
+    console.error('Error fetching leave requests:', error)
+  }
+}
+
+// Fetch leave requests on component mount
+onMounted(() => {
+  fetchTeamLeaveRequests()
+})
 
 // Function to create Employee Chart
 const createEmployeeChart = () => {
@@ -230,38 +347,34 @@ onMounted(() => {
 })
 
 // Sample data for leave requests
-const leaveRequests = ref([
-  { id: 1, name: 'John Doe', type: 'Sick Leave', position: 'Developer', date: '12.02.2024 | 12.03.2024', approver: 'Approver1', subApprover: 'Sub1', status: 'Pending' },
-  { id: 2, name: 'Jane Doe', type: 'Annual Leave', position: 'Designer', date: '01.01.2024 | 01.02.2024', approver: 'Approver2', subApprover: 'Sub2', status: 'Approved' }
-]);
 
-const dropdownVisible = ref(null);
+const dropdownVisible = ref(null)
 
 // Method to toggle the visibility of the dropdown
 const toggleDropdown = (index) => {
-  dropdownVisible.value = dropdownVisible.value === index ? null : index;
-};
+  dropdownVisible.value = dropdownVisible.value === index ? null : index
+}
 
 // Method to handle status update
 const updateStatus = (index) => {
-  const updatedStatus = leaveRequests.value[index].status;
+  const updatedStatus = leaveRequests.value[index].status
   // Do something with the updated status, like sending it to a server or storing it
-  console.log(`Leave request ${leaveRequests.value[index].id} updated to: ${updatedStatus}`);
-};
+  console.log(`Leave request ${leaveRequests.value[index].id} updated to: ${updatedStatus}`)
+}
 
 // Method to dynamically assign classes based on status
 const statusClass = (status) => {
   switch (status) {
     case 'Pending':
-      return 'bg-yellow-400 text-white px-2 py-1 rounded-full text-xs font-semibold';
+      return 'bg-yellow-400 text-white px-2 py-1 rounded-full text-xs font-semibold'
     case 'Approved':
-      return 'bg-green-400 text-white px-2 py-1 rounded-full text-xs font-semibold';
+      return 'bg-green-400 text-white px-2 py-1 rounded-full text-xs font-semibold'
     case 'Rejected':
-      return 'bg-red-400 text-white px-2 py-1 rounded-full text-xs font-semibold';
+      return 'bg-red-400 text-white px-2 py-1 rounded-full text-xs font-semibold'
     default:
-      return '';
+      return ''
   }
-};
+}
 </script>
 
 

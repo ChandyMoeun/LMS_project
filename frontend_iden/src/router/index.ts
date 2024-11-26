@@ -75,9 +75,10 @@ const router = createRouter({
       component: () => import('../views/Supervisor/take_leaves/take_leave.vue'),
     },
     {
-      path: '/supervisor/takeleave/view/leavedetail',
+      path: '/supervisor/takeleave/view/leavedetail/:id',
       'name': 'viewLeaveDetail',
       component: () => import('../views/Supervisor/take_leaves/viewleaveDetail.vue'),
+      props:true,
     },
     {
       path: '/supervisor/takeleave/all/leavehistory',

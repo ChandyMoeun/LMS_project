@@ -31,7 +31,7 @@ interface LeaveRequestData {
   from_date: string;
   to_date: string;
   status: string;
-  pending_hr_approval: number;
+  pending_hr_approval: boolean;
   reason: string;
 }
 
@@ -41,6 +41,7 @@ export const useLeaveRequestStore = defineStore('leaveRequest', {
     requestStatus: null as 'success' | 'error' | null,
   }),
   actions: {
+    // Submit a new leave request
     async submitLeaveRequest(leaveRequestData: LeaveRequestData) {
       this.requestStatus = null; // Reset status at the start
 
@@ -51,7 +52,7 @@ export const useLeaveRequestStore = defineStore('leaveRequest', {
           },
         });
 
-        // Add the new leave request to the state if needed
+        // Add the new leave request to the state
         this.leaveRequests.push(response.data);
 
         // Set the request status to success
@@ -59,23 +60,58 @@ export const useLeaveRequestStore = defineStore('leaveRequest', {
       } catch (error) {
         console.error('Error submitting leave request:', error);
 
-        // Capture any specific error message from the server
+        // Set the request status to error
         this.requestStatus = 'error';
       }
     },
 
-    async fetchLeaveRequests() {
+    // // Fetch all leave requests
+    // async fetchLeaveRequests() {
+    //   try {
+    //     const response = await axiosInstance.get('/leave_requests', {
+    //       headers: {
+    //         Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+    //       },
+    //     });
+
+    //     // Update state with fetched leave requests
+    //     this.leaveRequests = response.data;
+    //   } catch (error) {
+    //     console.error('Error fetching leave requests:', error);
+    //   }
+    // },
+
+    // Fetch leave requests by ID
+    async fetchLeaveRequestsById(id: number) {
       try {
-        const response = await axiosInstance.get('/leave_requests', {
+        const response = await axiosInstance.get(`/leave_requests/team/${id}`, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem('access_token')}`,
           },
         });
 
         // Update state with fetched leave requests
-        this.leaveRequests = response.data;
+        this.leaveRequests = response.data.data;
+        console.log('Fetched leave requests by ID:', this.leaveRequests);
       } catch (error) {
-        console.error('Error fetching leave requests:', error);
+        console.error('Error fetching leave requests by ID:', error);
+      }
+    },
+
+    // Fetch leave requests for the team
+    async fetchTeamLeaveRequests() {
+      try {
+        const response = await axiosInstance.get('/leave_requests/team', {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+          },
+        });
+
+        // Update state with fetched team leave requests
+        this.leaveRequests = response.data.data;
+        console.log('Fetched team leave requests:', this.leaveRequests);
+      } catch (error) {
+        console.error('Error fetching team leave requests:', error);
       }
     },
   },

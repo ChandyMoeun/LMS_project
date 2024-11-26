@@ -16,7 +16,7 @@
               <h1 class="font-bold text-3xl px-8 hover:text-yellow-500 w-4/12">
                 <b>Team Management</b>
               </h1>
-              <p class="px-8">Total members: {{ teamCount }}</p>
+              <p class="px-8">Total members: {{ teamStore.teamCount  }}</p>
             </div>
 
             <!-- Search and Filter select position-->
@@ -54,7 +54,7 @@
 
             <!-- Employee Table -->
             <div class="overflow-x-auto">
-              <table v-if="authStore.member" class="w-full bg-white shadow-md rounded">
+              <table v-if="teamStore" class="w-full bg-white shadow-md rounded">
                 <thead>
                   <tr class="header bg-black text-white">
                     <th class="p-3 text-left">Staff_id</th>
@@ -67,8 +67,8 @@
                 </thead>
                 <tbody>
                   <tr
-                    v-for="(member, index) in authStore.member"
-                    :key="index"
+                    v-for="member in teamStore.teamMembers"
+                    :key="member.id"
                     class="bg-gray-100 border-b border-gray-200"
                   >
                     <td class="p-3">{{ member.staff_id }}</td>
@@ -107,54 +107,46 @@
   </SupervisorLayout>
 </template>
 
-<script>
-// import axiosInstance from '@/plugins/axios'
+<script setup>
+import { onMounted, ref, computed } from 'vue'
+import { useTeamStore } from '@/stores/get-member'
+import axiosInstance from '@/plugins/axios'
 import SupervisorSidebar from '@/Components/SupervisorSidebar.vue'
 import WebHeaderMenu from '@/Components/WebHeaderMenu.vue'
-import { useAuthStore } from '@/stores/get-member'
 
-export default {
-  components: { SupervisorSidebar, WebHeaderMenu },
-  data() {
-    return {
-      employees_list: [],
-      searchQuery: '' // Moved searchQuery into data
-    }
-  },
-  mounted() {
-    this.fetchEmployee()
-  },
-  computed: {
-    // Computed property to filter employees based on searchQuery
-    filteredEmployees() {
-      return this.employees_list.filter(
-        (employee) =>
-          employee.full_name.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
-          employee.staff_id.includes(this.searchQuery)
-      )
-    }
-  },
-  methods: {
-    async fetchEmployee() {
-      try {
-        const response = await axiosInstance.get('/employee')
-        this.employees_list = response.data
-      } catch (error) {
-        console.error(error)
-      }
-    }
-  },
-  setup() {
-    const authStore = useAuthStore()
+// Initialize the team store
+const teamStore = useTeamStore()
 
-    // Fetch member data when component is mounted
-    // onMounted(() => {
-    //   authStore.fetchMember() // Call the fetchMember method from the store
-    // })
+// Reactive reference for the search query
+const searchQuery = ref('')
 
-    return { authStore, teamCount: authStore.teamCount }
+// Fetch employee data from the API
+const employeesList = ref([])
+
+// Fetch employees from the backend
+const fetchEmployee = async () => {
+  try {
+    const response = await axiosInstance.get('/employee')
+    employeesList.value = response.data
+  } catch (error) {
+    console.error(error)
   }
 }
+
+// Fetch team members when the component is mounted
+onMounted(async () => {
+  await teamStore.fetchTeamMembers()
+  await fetchEmployee() // Fetch employee data as well
+})
+
+// Computed property to filter employees based on the search query
+const filteredEmployees = computed(() => {
+  return employeesList.value.filter(
+    (employee) =>
+      employee.full_name.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
+      employee.staff_id.includes(searchQuery.value)
+  )
+})
 </script>
 
 <style scoped>

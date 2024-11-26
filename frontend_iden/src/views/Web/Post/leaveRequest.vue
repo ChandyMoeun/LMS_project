@@ -66,7 +66,7 @@ const leaveRequest = ref({
   half_day_type: 'full_day', // Default to full day
   start_time: '',
   end_time: '',
-  total_requested_days: 1,
+  total_requested_days: '',
   status: 'pending', // Default to pending
   from_date: '',
   to_date: '',
