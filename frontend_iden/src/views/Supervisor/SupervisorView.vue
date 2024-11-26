@@ -28,7 +28,7 @@
                   <img src="../../assets/image/employees.png" style=" width: 100px; height: 50%; display: flex; align-self: center;"/>
                   <div class="ml-1">
                     <h4 class="font-bold mt-6"><b>Employees</b></h4>
-                    <p>All :555</p>
+                    <p>All : </p>
                   </div>
                 </div>
               </div>

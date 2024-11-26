@@ -39,9 +39,7 @@ export default {
   setup() {
     const email = ref('');
     const password = ref('');
-
     const router = useRouter();
-
     const login = async () => {
       try {
         const response = await axios.post('http://127.0.0.1:8000/api/login', {

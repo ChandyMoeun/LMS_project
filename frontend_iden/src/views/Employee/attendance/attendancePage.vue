@@ -41,7 +41,6 @@
                         <th class="px-6 py-3 text-center text-xs font-medium text-white uppercase tracking-wider">Remarks</th>
                       </tr>
                     </thead>
-                    
                     <tbody v-if="attendances.length" class="bg-white divide-y divide-gray-200">
                       <!-- Loop through filtered attendances -->
                       <tr v-for="attendance in filteredAttendances" :key="attendance.id" 

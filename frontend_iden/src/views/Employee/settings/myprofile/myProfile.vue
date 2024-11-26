@@ -24,7 +24,6 @@
                         <label for="thumbnailprev" class="cursor-pointer text-blue-600 hover:text-blue-400"> Change Profile Picture </label>
                         <input type="file" id="thumbnailprev" class="hidden" @change="updatePreview" accept="image/*" />
                       </div>
-                      <!-- Display the profile image -->
                       <img :src="previewUrl || profileUrl" alt="Profile Image" class="shadow-lg rounded-full mt-4 border-none h-40 w-40 object-cover mx-auto"/>
                     </div>
                   <div class="flex flex-col space-y-2">
