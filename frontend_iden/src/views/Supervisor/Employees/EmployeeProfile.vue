@@ -1,13 +1,13 @@
 <template>
   <SupervisorLayout>
-    <div class="supervisor">
-      <div class="sidebar">
+    <div class="supervisor flex h-screen items-start w-full">
+      <div class="sidebar w-[17%] h-auto">
         <SupervisorSidebar></SupervisorSidebar>
       </div>
-      <div class="container-page">
+      <div class="container-page w-[83%]">
         <WebHeaderMenu />
-        <main class="bg-gray sticky top-0">
-          <div class="mt-5">
+        <main class="p-[50px] pt-[50px] pb-0 h-auto w-full bg-[#EEEDED] mb-[50px]">
+          <div class="mt-5 px-10">
             <div class="container">
               <div
                 class="d-flex text-black"
@@ -57,7 +57,6 @@
                       <p><strong>Position: </strong>{{ teamMember.position.name }}</p>
                       <p><strong>Department: </strong>{{ teamMember.department.name }}</p>
                     </div>
-
                     <!-- Right column -->
                     <div>
                       <p><strong>Date Joined: </strong>{{ teamMember.joined_date }}</p>

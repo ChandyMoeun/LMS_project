@@ -1,18 +1,17 @@
 <template>
   <SupervisorLayout>
-    <div class="supervisor">
-      <div class="sidebar">
+    <div class="supervisor flex h-screen items-start w-full">
+      <div class="sidebar w-[17%] h-auto">
         <SupervisorSidebar></SupervisorSidebar>
       </div>
-      <div class="container-page">
-        <WebHeaderMenu/>
-        <main class="sticky top-0">
-          <div class="mt-15">
+      <div class="container-page w-[83%]">
+        <WebHeaderMenu />
+        <main class="p-[50px] pt-[50px] pb-0 h-auto w-full bg-[#EEEDED] mb-[50px]">
+          <div class="mt-15 px-10">
             <!-- Header -->
             <div class="text-black border-b-2 border-gray-300 px-8 h-15 items-center" style="border-bottom: solid 1px gray">
               <h1 class="font-bold text-3xl mb-3 hover:text-yellow-400 w-2/12">Calendar</h1>
             </div>
-
             <!-- FullCalendar Display -->
             <div class="container mt-20 mx-auto">
               <div class="bg-white shadow-lg rounded-lg overflow-hidden">
@@ -21,7 +20,6 @@
                 </div>
               </div>
             </div>
-
             <!-- Workdays and Times Table -->
             <div class="bg-white shadow-md rounded-lg p-6 mt-14">
               <h2 class="text-2xl font-bold mb-4">Workdays and Times</h2>
@@ -44,7 +42,6 @@
                 </tbody>
               </table>
             </div>
-
             <!-- Holidays Table -->
             <div class="bg-white shadow-md rounded-lg p-6 mt-14">
               <h2 class="text-2xl font-bold mb-4">Holidays</h2>
@@ -96,13 +93,10 @@ export default {
           end: '2024-08-01',
           className: 'bg-gradient-danger',
         },
-        // Add other events here...
       ],
       work_days: [],
-
     };
   },
-
   mounted() {
     this.fetchWorkDays();
   },
@@ -121,7 +115,6 @@ export default {
   setup() {
     onMounted(() => {
       const calendarEl = document.getElementById("calendar");
-
       const calendar = new Calendar(calendarEl, {
         plugins: [dayGridPlugin],
         initialView: "dayGridMonth",
@@ -139,7 +132,6 @@ export default {
             end: '2024-08-01',
             className: 'bg-gradient-danger'
           },
-          // Add other events here...
         ],
         views: {
           month: {
@@ -164,47 +156,18 @@ export default {
           },
         },
       });
-
       calendar.render();
     });
   },
 };
-
 </script>
 
-
 <style>
-.supervisor{
-  display: flex;
-  height: 100vh;
-  align-items: start;
-  width: 100%;
-  background-color: #E5E7EB;
-}
-.sidebar{
-  width: 17%;
-  height: auto;
-  background-color: #141c2e;
-  color: white;
-}
-.container-page {
-  width: 83%;
-}
-main{
-  padding: 50px 50px 0px 50px;
-  height: auto;
-  width: 100%;
-  background-color: #E5E7EB;
-  margin-bottom: 50px;
-}
-/* Custom styles for the FullCalendar header */
 .fc-col-header-cell {
   background-color: #FFDA03;
 }
-
 .fc .fc-daygrid-day-number, .fc .fc-col-header-cell-cushion {
     color: #000000;
     text-decoration: none;
 }
-
 </style>

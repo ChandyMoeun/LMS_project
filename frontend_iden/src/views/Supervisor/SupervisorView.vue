@@ -1,140 +1,58 @@
 <template>
   <SupervisorLayout>
-    <div class="supervisor">
-      <div class="sidebar">
+    <div class="supervisor flex h-screen items-start w-full">
+      <div class="sidebar w-[17%] h-auto">
         <SupervisorSidebar></SupervisorSidebar>
       </div>
-      <div class="container-page">
+      <div class="container-page w-[83%]">
         <WebHeaderMenu />
-        <main class="bg-gray sticky top-0">
-          <div class="container pb-20">
+        <main class="p-[50px] pt-[50px] pb-0 h-auto w-full bg-[#EEEDED] mb-[50px]">
+          <div class="mt-5 px-10">
             <!----------- alert code -------------------->
-            <div class="button" style="margin: 50px">
-              <!-- Toast Alert Box -->
-              <div class="button" style="margin: 50px">
-                <div
-                  v-show="isToastVisible"
-                  class="toast-box"
-                  style="
-                    position: absolute;
-                    top: 5%;
-                    right: 2%;
-                    display: flex;
-                    align-items: flex-end;
-                    flex-direction: column;
-                    overflow: hidden;
-                    padding: 2px;
-                    width: 23%;
-                  "
-                >
-                  <div
-                    role="alert"
-                    class="mb-4 relative flex w-full p-3 pr-5 text-sm text-white bg-black rounded-md items-center"
-                  >
-                    {{ alertMessage }}
-                  </div>
-                </div>
+            <div v-show="isToastVisible" class="toast-box button"
+              style="margin: 50px; position: absolute; top: 5%; right: 2%; display: flex; align-items: flex-end; flex-direction: column; overflow: hidden; width: 17%;">
+              <div role="alert" class="mb-4 relative flex w-full p-3 pr-5 text-sm text-white bg-black rounded-md items-center">
+                {{ alertMessage }}
               </div>
             </div>
             <!----------- //end alert code //-------------------->
-
-            <div
-              style="
-                border-bottom: #b0b0b0 1px solid;
-                display: flex;
-                justify-content: center;
-                flex-direction: row;
-                height: 30vh;
-                width: 100%;
-              "
-            >
-              <div
-                style="
-                  margin-bottom: 10px;
-                  border-right: #b0b0b0 1px solid;
-                  width: 55%;
-                  display: flex;
-                  justify-content: center;
-                "
-              >
-                <div
-                  style="
-                    margin-top: 30px;
-                    margin-left: 70px;
-                    width: 50%;
-                    height: 75%;
-                    display: flex;
-                    background: #f8c828;
-                    color: black;
-                    flex-direction: row;
-                    box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px,
-                      rgba(0, 0, 0, 0.05) 0px 4px 6px -2px;
-                  "
-                >
-                  <img
-                    src="../../assets/image/employees.png"
-                    style="width: 100px; height: 50%; display: flex; align-self: center"
-                  />
+            <div class="d-flex justify-center flex-row h-[27vh]" style=" border-bottom: #b0b0b0 1px solid;">
+              <div class="mb-2 d-flex justify-center ml-30" style="border-right: #b0b0b0 1px solid; width: 55%;">
+                <div class="mt-4 w-70 h-35 d-flex text-black flex-row" style="background: #f8c828; 
+                  box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px; " >
+                  <img src="../../assets/image/employees.png" style=" width: 100px; height: 50%; display: flex; align-self: center;"/>
                   <div class="ml-1">
                     <h4 class="font-bold mt-6"><b>Employees</b></h4>
-                    <p>All :555</p>
+                    <p>All : </p>
                   </div>
                 </div>
               </div>
-              <div style="margin-bottom: 10px; width: 55%; display: flex; justify-content: center">
-                <div
-                  style="
-                    margin-top: 30px;
-                    margin-right: 70px;
-                    width: 50%;
-                    height: 75%;
-                    display: flex;
-                    flex-direction: row;
-                    background: #f8c828;
-                    color: black;
-                    box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px,
-                      rgba(0, 0, 0, 0.05) 0px 4px 6px -2px;
-                  "
-                >
-                  <img
-                    src="../../assets/image/Leave.png"
-                    style="
-                      margin-left: 25px;
-                      width: 75px;
-                      height: 9vh;
-                      display: flex;
-                      align-self: center;
-                    "
-                  />
+              <div class="d-flex justify-center mr-30" style="width: 55%;">
+                <div class="mt-4 w-70 h-35 d-flex text-black flex-row" style="background: #f8c828; 
+                  box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px; " >
+                  <img src="../../assets/image/Leave.png" style=" margin-left: 14px; width: 70px; height: 40%; display: flex; align-self: center; "/>
                   <div>
-                    <h4 class="font-bold mt-6 ml-3"><b>Leaveds</b></h4>
-                    <p class="ml-1"><em>This week : 555</em></p>
+                    <h4 class="font-bold mt-6 ml-5"><b>Leaveds</b></h4>
+                    <p class="ml-5">This week : 555</p>
                   </div>
                 </div>
               </div>
             </div>
-
-            <!--............................// Chart js // total employee chart ..............................  -->
-            <div class="chartjs mb-10 py-10">
+            <!--............................// Chart js //..............................  -->
+            <div class="chartjs mb-10 py-10 mt-10">
               <!-- Chart Container -->
               <h1 class="text-4xl text-black p-10 text-center">Employee Chart</h1>
-
-              <div
-                class="chart-container mb-10 rounded-2xl py-2 bg-white shadow-[0_35px_60px_-15px_rgba(0,0,0,0.3)]"
-              >
+              <div class="chart-container mb-10 rounded-2xl py-2 bg-white shadow-[0_35px_60px_-15px_rgba(0,0,0,0.3)]">
                 <canvas id="employeeChart"></canvas>
               </div>
-
-              <div
-                class="chart-container mb-10 h-60vh rounded-2xl px-10 py-5 bg-white shadow-[0_35px_60px_-15px_rgba(0,0,0,0.3)]"
-              >
+              <div class="chart-container mb-10 h-60vh rounded-2xl px-10 py-5 bg-white shadow-[0_35px_60px_-15px_rgba(0,0,0,0.3)]">
                 <canvas id="leaveChart"></canvas>
               </div>
             </div>
             <!--.......................... member requestion leaves ......................... -->
-            <div class="px-8 overflow-x-auto">
-              <h1 class="text-4xl mb-4 text-black text-center">Member Requesting Leaves</h1>
-              <table class="min-w-full bg-gray-100 border border-gray-100">
+            <h1 class="text-4xl mb-4 text-black text-center">Member Requesting Leaves</h1>
+            <div class="shadow-[0px_4px_16px_rgba(17,17,26,0.1),_0px_8px_24px_rgba(17,17,26,0.1),_0px_16px_56px_rgba(17,17,26,0.1)] overflow-x-auto">
+              <table class="min-w-full bg-white border border-gray-100">
                 <thead>
                   <tr class="bg-black text-white text-xs">
                     <th class="py-2 px-2 text-center border-b">ID</th>
@@ -151,22 +69,14 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr
-                    class="hover:bg-white text-xs"
-                    v-for="leaveRequests in leaveRequestStore.leaveRequests"
-                    :key="leaveRequests.id"
-                  >
+                  <tr class="hover:bg-white text-xs"
+                    v-for="leaveRequests in leaveRequestStore.leaveRequests" :key="leaveRequests.id">
                     <td class="py-2 px-2 text-center border-b">{{ leaveRequests.staff_id }}</td>
                     <td class="flex py-2 px-2 justify-center border-b">
-                      <img
-                        :src="
-                          leaveRequests.profile && leaveRequests.profile
+                      <img :src=" leaveRequests.profile && leaveRequests.profile
                             ? `http://127.0.0.1:8000/images/${leaveRequests.profile}`
-                            : '/images/default-profile.jpg'
-                        "
-                        alt="Profile Picture"
-                        class="w-12 h-12 rounded-full object-cover"
-                      />
+                            : '/images/default-profile.jpg' "
+                        alt="Profile Picture" class="w-12 h-12 rounded-full object-cover"/>
                     </td>
                     <td class="py-2 px-2 text-center border-b">
                       {{ leaveRequests.employee_name }}
@@ -174,39 +84,25 @@
                     <td class="py-2 px-2 text-center border-b">{{ leaveRequests.leave_type }}</td>
                     <td class="py-2 px-2 text-center border-b">{{ leaveRequests.position }}</td>
                     <td class="py-2 px-2 text-center border-b">
-                      <span v-if="leaveRequests.start_time && leaveRequests.end_time"
-                        >{{ leaveRequests.start_time }} | {{ leaveRequests.end_time }}</span
-                      >
-                      <span v-else
-                        >{{ leaveRequests.from_date }} | {{ leaveRequests.to_date }}</span
-                      >
+                      <span v-if="leaveRequests.start_time && leaveRequests.end_time"> 
+                        {{ leaveRequests.start_time }} | {{ leaveRequests.end_time }}</span>
+                      <span v-else >
+                        {{ leaveRequests.from_date }} | {{ leaveRequests.to_date }}</span>
                     </td>
                     <td class="py-2 px-2 text-center border-b">
                       <span v-if="leaveRequests.approved_by">{{ leaveRequests.approved_by }}</span>
                       <span v-else>No approver</span>
                     </td>
                     <td class="py-2 px-2 text-center border-b">N/A</td>
-
                     <!-- Dropdown status update -->
                     <td class="py-2 px-2 text-center border-b">
-                      <div>
-                        <span :class="statusClass(leaveRequests.status)">{{
-                          leaveRequests.status
-                        }}</span>
-                      </div>
+                        <span :class="statusClass(leaveRequests.status)">{{ leaveRequests.status }}</span>
                     </td>
                     <td class="py-2 px-2 text-center border-b text-xs">
-                      <a
-                        href="/supervisor/takeleave/view/leavedetail"
-                        class="text-blue-500 no-underline hover:text-blue-400"
-                        >More</a
-                      >
+                      <a href="/supervisor/takeleave/view/leavedetail" class="text-blue-500 no-underline hover:text-blue-400">More</a>
                     </td>
                     <td class="action text-center align-middle">
-                      <span
-                        class="text-blue-500 hover:text-blue-400 font-semibold"
-                        @click="toggleDropdown(leaveRequests.status)"
-                      >
+                      <span class="text-blue-500 hover:text-blue-400 font-semibold" @click="toggleDropdown(leaveRequests.status)">
                         View
                       </span>
                       <div v-if="dropdownVisible === leaveRequests.status">
@@ -227,17 +123,13 @@
     </div>
   </SupervisorLayout>
 </template>
-
 <script setup lang="ts">
 import SupervisorSidebar from '@/Components/SupervisorSidebar.vue'
 import WebHeaderMenu from '@/Components/WebHeaderMenu.vue'
 import { useLeaveRequestStore } from '@/stores/request-leave'
-
 import { ref, onMounted } from 'vue'
 import Chart from 'chart.js/auto'
-
 const leaveRequestStore = useLeaveRequestStore()
-
 // Function to fetch leave requests (example for leaveRequestStore)
 const fetchTeamLeaveRequests = async () => {
   try {
@@ -260,12 +152,10 @@ const createEmployeeChart = () => {
     type: 'doughnut',
     data: {
       labels: ['IT', 'Production', 'Finance', 'Creative'],
-      datasets: [
-        {
+      datasets: [ {
           backgroundColor: ['#b91d47', '#00aba9', '#2b5797', '#e8c3b9'],
           data: [24, 10, 2, 4]
-        }
-      ]
+      } ]
     },
     options: {
       responsive: true,
@@ -282,7 +172,6 @@ const createEmployeeChart = () => {
     }
   })
 }
-
 // Function to create Leave Chart
 const createLeaveChart = () => {
   const ctx = document.getElementById('leaveChart').getContext('2d')
@@ -290,14 +179,12 @@ const createLeaveChart = () => {
     type: 'bar',
     data: {
       labels: ['Creative', 'Content Creator', 'Production', 'IT'],
-      datasets: [
-        {
+      datasets: [ {
           label: 'Employees leaving',
           backgroundColor: 'rgba(151,187,205,0.5)',
           borderColor: 'rgba(151,187,205,1)',
           data: [1, 2, 4, 1]
-        }
-      ]
+        } ]
     },
     options: {
       responsive: true,
@@ -322,32 +209,23 @@ const createLeaveChart = () => {
     }
   })
 }
-
-// Mount the charts once the component is mounted
 onMounted(() => {
   createEmployeeChart()
   createLeaveChart()
 })
-
-// Reactive state for toast visibility and message
 const isToastVisible = ref(false)
 const alertMessage = ref('Welcome To Dashboard! How are you?')
-
-// Function to show the alert
 const showToast = () => {
   isToastVisible.value = true
   setTimeout(() => {
     isToastVisible.value = false
-  }, 4000) // Hide after 4 seconds
+  }, 4000) 
 }
-
-// Automatically show the alert on component mount
 onMounted(() => {
   showToast()
 })
 
 // Sample data for leave requests
-
 const dropdownVisible = ref(null)
 
 // Method to toggle the visibility of the dropdown
@@ -376,30 +254,3 @@ const statusClass = (status) => {
   }
 }
 </script>
-
-
-<style scoped>
-.supervisor {
-  display: flex;
-  height: 100vh;
-  align-items: start;
-  width: 100%;
-  background-color: #e5e7eb;
-}
-.sidebar {
-  width: 17%;
-  height: auto;
-  background-color: #141c2e;
-  color: white;
-}
-.container-page {
-  width: 83%;
-}
-main {
-  padding: 50px 50px 0px 50px;
-  height: auto;
-  width: 100%;
-  background-color: #e5e7eb;
-  margin-bottom: 50px;
-}
-</style>

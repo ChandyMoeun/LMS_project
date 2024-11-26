@@ -16,8 +16,7 @@
                 </router-link>
                 <h1 class="font-bold mr-20 text-3xl px-8 w-3/12 mt-3 hover:text-yellow-400"><b>Request Leave</b></h1>
               </div>
-              
-              
+              <h1>hello guy </h1>
             </div> 
           </main>
         </div>
@@ -29,27 +28,24 @@
  
   </script>
   <style scoped>
-  .supervisor{
+  .supervisor {
     display: flex;
     height: 100vh;
     align-items: start;
     width: 100%;
-    background-color: #E5E7EB;
   }
-  .sidebar{
+  .sidebar {
     width: 17%;
     height: auto;
-    background-color: #141c2e;
-    color: white;
   }
   .container-page {
     width: 83%;
   }
-  main{
+  main {
     padding: 50px 50px 0px 50px;
     height: auto;
     width: 100%;
-    background-color: #E5E7EB;
+    background-color: #EEEDED;
     margin-bottom: 50px;
   }
   </style>

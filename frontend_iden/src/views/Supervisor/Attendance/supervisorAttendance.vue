@@ -1,13 +1,13 @@
 <template>
   <SupervisorLayout>
-    <div class="supervisor">
-      <div class="sidebar">
-        <SupervisorSidebar />
+    <div class="supervisor flex h-screen items-start w-full">
+      <div class="sidebar w-[17%] h-auto">
+        <SupervisorSidebar></SupervisorSidebar>
       </div>
-      <div class="container-page">
+      <div class="container-page w-[83%]">
         <WebHeaderMenu />
-        <main class="bg-gray sticky top-0">
-          <div class="mt-16">
+        <main class="p-[50px] pt-[50px] pb-0 h-auto w-full bg-[#EEEDED] mb-[50px]">
+          <div class="mt-16 px-10">
             <div class="d-flex text-black" style="display: flex; flex-direction: column; border-bottom: solid 1px gray;">
               <router-link to="/supervisor/attendance">
                 <svg class="w-6 h-6 text-gray-800 hover:text-gray-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
@@ -18,8 +18,7 @@
             </div>
             <div class="mt-20">
               <div class="printpage d-flex justify-end mr-8 gap-3 mt-16 mb-3">
-                <button @click="exportPDF" class="border-none bg-blue-600 text-white px-3 py-2 rounded-lg shadow-md hover:bg-yellow-500">
-                  Export
+                <button @click="exportPDF" class="border-none bg-blue-600 text-white px-3 py-2 rounded-lg shadow-md hover:bg-yellow-500"> Export
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 ml-2">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
                   </svg>
@@ -28,10 +27,8 @@
               </div>
               <div class="bg-white shadow-md rounded-lg overflow-hidden">
                 <div class="flex justify-between px-4 py-3 sm:px-6">
-                  <div>
-                    <h3 class="text-lg font-medium leading-6 text-yellow-400">Attendance Records</h3>
-                    <p class="mt-1 text-sm text-gray-500">Detailed attendance records for me.</p>
-                  </div>
+                  <h3 class="text-lg font-medium leading-6 text-yellow-400">Attendance Records</h3>
+                  <p class="mt-1 text-sm text-gray-500">Detailed attendance records for me.</p>
                   <div class="w-5/12 flex justify-between">
                     <input v-model="searchQuery" placeholder="Search employee by name..." class="w-4/6 py-2 px-2 bg-blue-100 mt-3 h-9 border rounded" />
                     <a href="/supervisor/myattendance" class="bg-gray-900 d-flex items-center justify-center mt-3 h-9 w-35 text-white font-semibold no-underline rounded-lg shadow-md hover:bg-yellow-500 transition-colors">My Attendance</a>
@@ -130,29 +127,3 @@ export default {
   },
 };
 </script>
-
-<style scoped>
-.supervisor {
-  display: flex;
-  height: 100vh;
-  align-items: start;
-  width: 100%;
-  background-color: #E5E7EB;
-}
-.sidebar {
-  width: 17%;
-  height: auto;
-  background-color: #141c2e;
-  color: white;
-}
-.container-page {
-  width: 83%;
-}
-main {
-  padding: 50px 50px 0px 50px;
-  height: auto;
-  width: 100%;
-  background-color: #E5E7EB;
-  margin-bottom: 50px;
-}
-</style>
