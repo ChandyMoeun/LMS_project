@@ -127,4 +127,6 @@ class Employee extends Authenticatable
 
         return false; // If no join date, the employee is not eligible
     }
+
+    
 }

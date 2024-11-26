@@ -27,7 +27,7 @@
           </div>
 
           <div class="flex justify-end items-center mb-4 mr-7">
-            <a href="{{ route('admin.forgot-password') }}" class="text-blue-500 text-sm">Forgot password?</a>
+            <a href="{{ route('password.request') }}" class="text-blue-500 text-sm">Forgot password?</a>
           </div>
 
           <button type="submit" class="w-5px mt-5 bg-blue-500 text-white font-bold py-2 px-4 hover:bg-yellow-400 focus:outline-none focus:bg-blue-700 transition-colors" style=" border-radius: 5px">Sign in</button>

@@ -313,15 +313,15 @@ router.beforeEach(async (to, from, next) => {
     store.roles = []
   }
 
-  // // Redirect to login if the page requires authentication and the user isn't authenticated
-  // if (authRequired && !store.isAuthenticated) {
-  //   return next('/login')
-  // }
+  // Redirect to login if the page requires authentication and the user isn't authenticated
+  if (authRequired && !store.isAuthenticated) {
+    return next('/login')
+  }
 
-  // // Check if the user's role matches the route's required role
-  // if (to.meta.role && !store.roles.includes(to.meta.role)) {
-  //   return next('/login')
-  // }
+  // Check if the user's role matches the route's required role
+  if (to.meta.role && !store.roles.includes(to.meta.role)) {
+    return next('/login')
+  }
 
   next()
 })

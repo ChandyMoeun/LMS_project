@@ -3,28 +3,25 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-use App\Models\Position;
 use Illuminate\Http\Request;
+use App\Models\Leave_type; // Assuming you have a Leave_type model
+use App\Models\LeaveType;
 
-class PositionController extends Controller
+class LeaveTypeController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function getLeaveType()
     {
-         // Get all positions with their associated department name
-        $positions = Position::with('department')->get();
+        // Fetch all leave types
+        $leaveTypes = LeaveType::all();
 
-        // Map through the positions to create a simplified response
-        $response = $positions->map(function ($position) {
-            return [
-                'position' => $position->name, // Assuming the position name field is 'name'
-                'department' => $position->department->name // Assuming the department name field is 'name'
-            ];
-        });
-
-        return response()->json($response);
+        // Return the leave types as JSON
+        return response()->json([
+            'success' => true,
+            'data' => $leaveTypes,
+        ]);
     }
 
     /**

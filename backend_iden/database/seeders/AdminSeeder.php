@@ -52,7 +52,7 @@ class AdminSeeder extends Seeder
 
         // Create Roles
         $admin_role = Role::create(['name' => 'admin', 'guard_name' => 'web']);
-        $writer_role = Role::create(['name' => 'user', 'guard_name' => 'web']);
+        $writer_role = Role::create(['name' => 'supervisor', 'guard_name' => 'web']);
         
 
         // Create Permissions

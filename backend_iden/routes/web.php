@@ -20,8 +20,11 @@ use App\Http\Controllers\Admin\{
     NotificationController,
     ForgotPasswordController,
 };
+use App\Http\Controllers\EmailController;
 use App\Http\Controllers\LeaveRequestController;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
+use Illuminate\Support\Facades\Mail;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -43,13 +46,15 @@ Route::get('/test-mail', function () {
 
     $message = "Testing mail";
 
-    \Mail::raw('Hi, welcome!', function ($message) {
-        $message->to('ajayydavex@gmail.com')
+    Mail::raw('Hi, welcome!', function ($message) {
+        $message->to('emcha7231@gmail.com')
             ->subject('Testing mail');
     });
 
     dd('sent');
 });
+
+Route::get('send-mail',[EmailController::class,'sendWelcomeEmail']);
 
 
 Route::get('/dashboard', function () {
@@ -144,8 +149,5 @@ Route::namespace('App\Http\Controllers\Admin')->name('admin.')->prefix('admin')
 
 
         //===>forgot password<=====
-        Route::get('forgot-password', [ForgotPasswordController::class, 'index'])->name('forgot-password');
-        Route::post('forgot-password', [ForgotPasswordController::class,'sendResetLinkEmail'])->name('password.email');
-        Route::get('reset-password/{token}', [ForgotPasswordController::class,'showResetForm'])->name('reset-password.form');
-        Route::post('reset-password', [ForgotPasswordController::class,'reset'])->name('reset-password');
+       
     });

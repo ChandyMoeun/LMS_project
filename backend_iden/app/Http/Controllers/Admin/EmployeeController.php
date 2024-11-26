@@ -119,8 +119,9 @@ class EmployeeController extends Controller
             'dob' => 'required|date',
             'joined_date' => 'required|date',
             'entitled_date' => 'required|date|after_or_equal:joined_date',
-            'position_id' => 'required|exists:positions,id',
-            'department_id' => 'required|exists:departments,id'
+            'position_id' => 'nullable|exists:positions,id',
+            'department_id' => 'nullable|exists:departments,id',
+
         ]);
 
         $employee = new Employee();
@@ -182,8 +183,8 @@ class EmployeeController extends Controller
             'password' => 'nullable|confirmed|min:6',
             'dob' => 'required|date',
             'joined_date' => 'required|date',
-            'position_id' => 'required|exists:positions,id',
-            'department_id' => 'required|exists:departments,id',
+            'position_id' => 'nullable|exists:positions,id',
+            'department_id' => 'nullable|exists:departments,id',
             'roles' => 'array'
         ]);
 

@@ -29,8 +29,8 @@
                             <p><strong>Name:</strong> {{$employee->full_name}}</p>
                             <p><strong>Gender:</strong> {{$employee->gender}}</p>
                             <p><strong>Date of Birth:</strong> {{$employee->dob}}</p>
-                            <p><strong>Position:</strong> {{$employee->position->name}}</p>
-                            <p><strong>Department:</strong> {{$employee->department->name}}</p>
+                            <p><strong>Position:</strong> {{$employee->position->name ?? 'N/A'}}</p>
+                            <p><strong>Department:</strong> {{$employee->department->name ?? 'N/A'}}</p>
                             <p><strong>Roles:</strong>
                                 @foreach($employee->roles as $role)
                                 {{ $role->name }}@if(!$loop->last), @endif
