@@ -14,7 +14,7 @@
             </div>
             <!----------- alert code -------------------->
             <div v-show="isToastVisible" class="toast-box mt-5"
-              style=" position: absolute; top: 7%; right: 2%; display: flex; align-items: flex-end; flex-direction: column; overflow: hidden; padding: 2px; width: 23%;">
+              style=" position: absolute; top: 7%; right: 2%; display: flex; align-items: flex-end; flex-direction: column; overflow: hidden; padding: 2px; width: 17%;">
               <div role="alert" class="mb-4 relative flex w-full p-3 pr-5 text-sm text-white bg-black rounded-md items-center">
                 {{ alertMessage }}
               </div>
@@ -24,8 +24,8 @@
             <!--............................// Chart js // total employee leave balance chart ..............................  -->
             <!-- Chart Container -->
             <h1 class="text-4xl text-black my-10 text-center"><strong> My Leave Balance</strong></h1>  
-            <div class="chart-container py-5 flex justify-center mb-10 rounded-2xl bg-white shadow-[rgba(13,_38,_76,_0.19)_0px_9px_20px]">
-              <canvas id="myLeaveBalance" style="width:100%; max-width:800px; height:70vh; max-height:60vh;"></canvas>
+            <div class="chart-container py-2 flex justify-center mb-10 rounded-2xl bg-white shadow-[rgba(13,_38,_76,_0.19)_0px_9px_20px]">
+              <canvas id="myLeaveBalance" style="width:100%; height:60vh; max-height:60vh;"></canvas>
             </div>
             <!--............................list of my requesting leaves ..............................  -->
             <h1 class="text-4xl p-10 text-gray-900 text-center"><strong> My Requesting Leaves</strong></h1>
@@ -101,14 +101,6 @@ const employeeLeaveBalance = () => {
         data: yValues
       }]
     },
-    options: {
-      plugins: {
-        title: {
-          display: true,
-          text: "My Leave Balance Chart"
-        }
-      }
-    }
   });
 }
 
