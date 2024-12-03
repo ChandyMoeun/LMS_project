@@ -1,30 +1,31 @@
 <template>
-  <div class="d-flex justify-center mt-40">
-    <main class="d-flex w-5/6 px-10 flex bg-white rounded-lg shadow-lg overflow-hidden bg-gray-#F9F9F9">
-      <!-- Left section with image -->
-      <div class=" flex d-flex flex-col justify-center" style="width: 50%; ">
-        <img src="../../../assets/image/login.png" alt="Login Illustration" class="object-cover">
-        <p class=" flex mb-5 justify-center text-sm" style="color: #B7B7B7;">Sign in here to join iDEN leave management system.</p>
+  <div class="flex justify-center">
+    <el-card class="w-5/6 mt-20">
+      <div class="flex">
+        <!-- Left section with image -->
+        <div class=" flex flex-col justify-center" style="width: 50%; ">
+          <img src="../../../assets/image/login.png" alt="Login Illustration" class="object-cover">
+          <p class=" flex mb-5 justify-center text-sm" style="color: #B7B7B7;">Sign in here to join iDEN leave management system.</p>
+        </div>
+
+        <div class=" flex flex-col w-3/6 px-5">
+          <h4 class="font-bold text-4xl w-2/6 hover:text-yellow-300 mt-5 mb-3 text-center">SIGN IN</h4>
+          <el-form @submit="onSubmit">
+            <el-form-item :error="emailError">
+              <el-input placeholder="Email Address" v-model="email" size="large" />
+            </el-form-item>
+
+            <el-form-item :error="nameError" class="mt-8">
+              <el-input placeholder="Password" v-model="password" size="large" type="password" />
+            </el-form-item>
+              <div class="flex justify-end items-center mb-4 mr-7">
+                <a href="#" class="text-blue-500 text-sm">Forgot password?</a>
+              </div>
+              <el-button size="large" class="mt-3 w-1/6 " :disabled="isSubmitting" type="primary" native-type="submit">Submit</el-button>
+          </el-form>
+        </div>
       </div>
-      <!-- Right section with form -->
-      <div class="w-1/2 p-3 flex flex-col justify-center">
-        <h1 class="font-bold text-4xl mr-5 mb-6 text-center"><B>SIGN IN</B></h1>
-        <form>
-          <div class="mb-4 mr-3">
-            <label for="email" class="block text-gray-700">Email</label>
-            <input type="email" name="email" id="email" class="border border-gray-300 rounded w-full py-2 px-3 mt-2 focus:outline-none focus:border-blue-400" placeholder="Enter your email" required autofocus>
-          </div>
-          <div class="mb-4 mr-3">
-            <label for="password" class="block text-gray-700">Password</label>
-            <input type="password" name="password" id="password" class="border border-gray-300 rounded w-full py-2 px-3 mt-2 focus:outline-none focus:border-blue-400" placeholder="Enter your password" required autocomplete="current-password">
-          </div>
-          <div class="flex justify-end items-center mb-4 mr-7">
-            <a href="#" class="text-blue-500 text-sm">Forgot password?</a>
-          </div>
-          <button type="submit" class="bg-blue-500 text-white border-none font-bold py-2 px-3 mb-5 hover:bg-yellow-400 focus:outline-none focus:bg-blue-700 transition-colors" style=" border-radius: 5px">Sign in</button>
-        </form>
-      </div>
-    </main>
+    </el-card>
   </div>
 </template>
 
