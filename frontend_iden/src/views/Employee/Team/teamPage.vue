@@ -55,7 +55,7 @@
                           : '/images/default-profile.jpg'
                       "
                       alt="Profile Picture"
-                      class="w-14 h-14 rounded-full"
+                      class="w-12 h-12 rounded-full"
                     />
                     <td class="p-3 text-center">{{ member.full_name }}</td>
                     <td class="p-3 text-blue-600 text-center">{{ member.email }}</td>

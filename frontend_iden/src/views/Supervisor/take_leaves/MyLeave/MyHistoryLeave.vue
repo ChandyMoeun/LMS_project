@@ -38,32 +38,74 @@
                 <table class="w-full divide-y divide-gray-200">
                   <thead class="bg-black">
                     <tr>
-                      <th class="py-3 px-2 text-center text-xs text-white uppercase tracking-wider">Staff ID</th>
-                      <th class="py-3 px-2 text-center text-xs text-white uppercase tracking-wider">Name</th>
-                      <th class="py-3 px-2 text-center text-xs text-white uppercase tracking-wider">Type</th>
-                      <th class="py-3 px-2 text-center text-xs text-white uppercase tracking-wider">From</th>
-                      <th class="py-3 px-2 text-center text-xs text-white uppercase tracking-wider">To</th>
-                      <th class="py-3 px-2 text-center text-xs text-white uppercase tracking-wider">Half Day</th>
-                      <th class="py-3 px-2 text-center text-xs text-white uppercase tracking-wider">Files</th>
-                      <th class="py-3 px-2 text-center text-xs text-white uppercase tracking-wider">Status</th>
-                      <th class="py-3 px-2 text-center text-xs text-white uppercase tracking-wider">approve on</th>
-                      <th class="py-3 px-2 text-center text-xs text-white uppercase tracking-wider">Total</th>
-                      <th class="py-3 px-2 text-center text-xs text-white uppercase tracking-wider">Detail</th>
-                      <th class="py-3 px-2 text-center text-xs text-white uppercase tracking-wider">Acceptor</th>
+                      <th class="py-3 px-2 text-center text-xs text-white uppercase tracking-wider">
+                        Staff ID
+                      </th>
+                      <th class="py-3 px-2 text-center text-xs text-white uppercase tracking-wider">
+                        Name
+                      </th>
+                      <th class="py-3 px-2 text-center text-xs text-white uppercase tracking-wider">
+                        Type
+                      </th>
+                      <th class="py-3 px-2 text-center text-xs text-white uppercase tracking-wider">
+                        From
+                      </th>
+                      <th class="py-3 px-2 text-center text-xs text-white uppercase tracking-wider">
+                        To
+                      </th>
+                      <th class="py-3 px-2 text-center text-xs text-white uppercase tracking-wider">
+                        Half Day
+                      </th>
+                      <th class="py-3 px-2 text-center text-xs text-white uppercase tracking-wider">
+                        Files
+                      </th>
+                      <th class="py-3 px-2 text-center text-xs text-white uppercase tracking-wider">
+                        Status
+                      </th>
+                      <th class="py-3 px-2 text-center text-xs text-white uppercase tracking-wider">
+                        approve on
+                      </th>
+                      <th class="py-3 px-2 text-center text-xs text-white uppercase tracking-wider">
+                        Total
+                      </th>
+                      <th class="py-3 px-2 text-center text-xs text-white uppercase tracking-wider">
+                        Detail
+                      </th>
+                      <th class="py-3 px-2 text-center text-xs text-white uppercase tracking-wider">
+                        Acceptor
+                      </th>
                     </tr>
                   </thead>
-                  <tbody>
+                  <tbody
+                    v-for="leaveRequest in leaveRequestStore.leaveRequests"
+                    :key="leaveRequest.id"
+                  >
                     <tr
-                      v-for="leaveRequest in filteredLeaveRequests"
-                      :key="leaveRequest.id"
+                      v-if="
+                        (leaveRequest.employee_id === user.id &&
+                          leaveRequest.status === 'approved') ||
+                        leaveRequest.status === 'rejected'
+                      "
                       class="hover:bg-gray-50"
                     >
-                    <td class="py-4 px-2 text-sm text-center text-black">{{ leaveRequest.staff_id }}</td>
-                      <td class="py-4 px-2 text-sm text-center text-black">{{ leaveRequest.full_name }}</td>
-                      <td class="py-4 text-center px-2 text-sm text-black">{{ leaveRequest.leave_name }}</td>
-                      <td class="py-4 px-2 text-sm text-center text-black">{{ leaveRequest.from_date }}</td>
-                      <td class="py-4 px-2 text-sm text-center text-black">{{ leaveRequest.to_date }}</td>
-                      <td class="py-4 px-2 text-sm text-center text-black">{{ leaveRequest.half_day }}</td>
+                      <td class="py-4 px-2 text-sm text-center text-black">
+                        {{ leaveRequest.staff_id }}
+                      </td>
+                      <td class="py-4 px-2 text-sm text-center text-black">
+                        {{ leaveRequest.employee_name }}
+                      </td>
+                      <td class="py-4 text-center px-2 text-sm text-black">
+                        {{ leaveRequest.leave_type }}
+                      </td>
+                      <td class="py-4 px-2 text-sm text-center text-black">
+                        {{ leaveRequest.from_date }}
+                      </td>
+                      <td class="py-4 px-2 text-sm text-center text-black">
+                        {{ leaveRequest.to_date }}
+                      </td>
+                      <td class="py-4 px-2 text-sm text-center text-black">
+                        {{ leaveRequest.half_day_type }}
+                      </td>
 
                       <!-- Display attachment -->
                       <td class="py-4 px-6 text-sm text-center text-black">
@@ -73,10 +115,28 @@
                         </div>
                       </td>
                       <td class="py-4 px-2 text-sm text-center">
-                        <span :class="statusClasses(leaveRequest.status)" class="px-2 py-1 rounded-full text-xs font-semibold">{{ leaveRequest.status }}</span>
+                        <div>
+                          <span
+                            :class="{
+                              'bg-yellow-400 text-black': leaveRequest.status === 'pending',
+                              'bg-green-500 text-white': leaveRequest.status === 'approved',
+                              'bg-red-500 text-white': leaveRequest.status === 'rejected'
+                            }"
+                            class="text-center px-3 py-2 rounded-full text-xs font-semibold"
+                          >
+                            {{ leaveRequest.status }}
+                          </span>
+                        </div>
                       </td>
-                      <td class="py-4 px-2 text-sm text-center text-black">{{ leaveRequest.accept_date }}</td>
-                      <td class="py-4 px-2 text-sm text-center text-black">{{ leaveRequest.total_requested_days }}</td>
+                      <td class="py-4 px-2 text-sm text-center text-black">
+                        <span v-if="leaveRequest.status === 'approve'">{{
+                          leaveRequest.created_at
+                        }}</span>
+                        <span v-else>{{ leaveRequest.updated_at }}</span>
+                      </td>
+                      <td class="py-4 px-2 text-sm text-center text-black">
+                        {{ leaveRequest.total_requested_days }}
+                      </td>
                       <td class="py-4 px-2 text-sm text-center">
                         <a
                           href="/supervisor/requestleave/myleaved/viewhistory"
@@ -85,8 +145,11 @@
                         >
                       </td>
                       <td class="d-flex flex-col py-4 text-center text-sm text-gray-500">
-                        <span v-if="leaveRequest.approver">{{ leaveRequest.approver }}</span>
-                        <span v-else>{{ leaveRequest.rejector }}</span>
+                        <span v-if="leaveRequest.approved_by">{{ leaveRequest.approved_by }}</span>
+                        <span v-else-if="leaveRequest.rejected_by">{{
+                          leaveRequest.rejected_by
+                        }}</span>
+                        <span v-else>No approver</span>
                       </td>
                     </tr>
                   </tbody>
@@ -100,67 +163,43 @@
   </SupervisorLayout>
 </template>
 
-<script>
+<script setup>
+import { ref, computed, onMounted } from 'vue'
 import SupervisorSidebar from '@/Components/SupervisorSidebar.vue'
 import WebHeaderMenu from '@/Components/WebHeaderMenu.vue'
-export default {
-  components: { SupervisorSidebar, WebHeaderMenu },
-  data() {
-    return {
-      searchQuery: '',
-      leaveRequests: [
-        {
-          id: 1,
-          staff_id: '001 ',
-          full_name: 'Jiang Cheng ',
-          leave_name: 'Sick Leve',
-          from_date: '2024-09-02',
-          to_date: '2024-09-04',
-          half_day: 'Full day',
-          status: ' Rejected',
-          approver: null,
-          rejector: 'Mr.cat', // Initially null, will be set upon rejection
-          total_requested_days: 2,
-          accept_date: '2024-09-01',
-          file_url: '#',
-        },
-        {
-          id: 2,
-          staff_id: '002',
-          full_name: 'Gyver King',
-          leave_name: 'AL',
-          from_date: '2024-09-02',
-          to_date: '2024-09-04',
-          half_day: 'Full day',
-          status: 'Approved',
-          approver: 'Mr. Cat',
-          rejector: null,
-          total_requested_days: 3,
-          accept_date: '2024-09-01',
-          file_url: '#',
-        },
-      ]
-    }
-  },
-  computed: {
-    filteredLeaveRequests() {
-      // Simple search filter logic
-      return this.leaveRequests.filter(
-        (leave) =>
-          leave.full_name.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
-          leave.staff_id.includes(this.searchQuery)
-      )
-    }
-  },
-  methods: {
-    statusClasses(status) {
-      return {
-        'bg-red-500 text-white': status === 'Rejected',
-        'bg-green-500 text-white': status === 'Approved',
-      }
-    }
+import { useLeaveRequestStore } from '@/stores/request-leave'
+import { userAuthStore } from '@/stores/get-me' // Import the Auth store
+
+const authStore = userAuthStore()
+const user = authStore.user
+console.log(user)
+
+const searchQuery = ref('')
+const leaveRequestStore = useLeaveRequestStore()
+
+// Function to fetch leave requests (example for leaveRequestStore)
+const fetchTeamLeaveRequests = async () => {
+  try {
+    await leaveRequestStore.fetchTeamLeaveRequests()
+    console.log('Fetched leave requests:', leaveRequestStore.leaveRequests)
+  } catch (error) {
+    console.error('Error fetching leave requests:', error)
   }
 }
+
+// Fetch leave requests on component mount
+onMounted(() => {
+  fetchTeamLeaveRequests()
+})
+
+// Computed property for filtering leave requests
+const filteredLeaveRequests = computed(() => {
+  return leaveRequests.value.filter(
+    (leave) =>
+      leave.full_name.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
+      leave.staff_id.includes(searchQuery.value)
+  )
+})
 </script>
 
 

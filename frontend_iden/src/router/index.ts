@@ -204,9 +204,10 @@ const router = createRouter({
       component: () => import('../views/Employee/myLeave/myLeavePage.vue'),
     },
     {
-      path: '/employee/myleave/view/detail',
+      path: '/employee/myleave/view/detail/:id',
       'name': 'leaveDetail',
       component: () => import('../views/Employee/myLeave/myLeaveDetail.vue'),
+      props: true,
     },
     {
       path: '/employee/myleave/historyleave',
@@ -214,9 +215,10 @@ const router = createRouter({
       component: () => import('../views/Employee/myLeave/myLeaveHistory.vue'),
     },
     {
-      path: '/employee/myleave/historyleave/detail',
+      path: '/employee/myleave/historyleave/detail/:id',
       'name': 'leavehistorydetail',
       component: () => import('../views/Employee/myLeave/myHistoryDetail.vue'),
+      props: true,
     },
     {
       path: '/employee/myleave/rejectedleave',

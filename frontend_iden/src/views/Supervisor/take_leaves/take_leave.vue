@@ -24,28 +24,6 @@
                 class="flex flex-row justify-between p-3 gap-5"
               >
                 <div class="w-6/12">
-                  <!-- <div class="mt-3">
-                    <label for="employee_id">Employee ID:</label>
-                    <input
-                      id="employee_id"
-                      v-model="leaveRequest.employee_id"
-                      type="number"
-                      placeholder="Employee ID"
-                      required
-                      class="mt-1 block w-full rounded-md border-gray-300 py-2 shadow-sm"
-                    />
-                  </div> -->
-                  <!-- <div class="mt-3">
-                    <label for="leaveType_id">Leave Type ID:</label>
-                    <input
-                      id="leaveType_id"
-                      v-model="leaveRequest.leaveType_id"
-                      type="number"
-                      placeholder="Leave Type ID"
-                      required
-                      class="mt-1 block w-full rounded-md border-gray-300 py-2 shadow-sm"
-                    />
-                  </div> -->
                   <div class="mt-3">
                     <label for="leaveType_id" class="block text-sm font-medium text-gray-700"
                       >Leave Type:</label
@@ -163,72 +141,59 @@
                         class="mt-1 block w-full rounded-md border-gray-300 py-2 shadow-sm"
                       />
                     </div>
-                  </div>
+                    <!-- select time show from_date -->
+                    <div v-if="duration === 'time'" class="mt-3">
+                      <label for="from_date" class="block text-sm font-medium text-gray-700">
+                        From Date
+                      </label>
+                      <input
+                        type="date"
+                        id="from_date"
+                        v-model="leaveRequest.from_date"
+                        class="mt-1 block w-full rounded-md border-gray-300 py-2 shadow-sm"
+                      />
+                    </div>
 
-                  <!-- <div>
-                    <label for="start_time">Start Time:</label>
-                    <input
-                      id="start_time"
-                      v-model="leaveRequest.start_time"
-                      type="time"
-                      required
-                      class="mt-1 block w-full rounded-md border-gray-300 py-2 shadow-sm"
-                    />
+                    <!-- select time show to_date -->
+                    <div v-if="duration === 'time'" class="mt-3">
+                      <label for="to_date" class="block text-sm font-medium text-gray-700">
+                        To Date
+                      </label>
+                      <input
+                        type="date"
+                        id="to_date"
+                        v-model="leaveRequest.to_date"
+                        class="mt-1 block w-full rounded-md border-gray-300 py-2 shadow-sm"
+                      />
+                    </div>
+                    <!-- select half day show from_date -->
+                    <div v-if="duration === 'half_day'" class="mt-3">
+                      <label for="from_date" class="block text-sm font-medium text-gray-700">
+                        From Date
+                      </label>
+                      <input
+                        type="date"
+                        id="from_date"
+                        v-model="leaveRequest.from_date"
+                        class="mt-1 block w-full rounded-md border-gray-300 py-2 shadow-sm"
+                      />
+                    </div>
+
+                    <!-- select half day show to_date -->
+                    <div v-if="duration === 'half_day'" class="mt-3">
+                      <label for="to_date" class="block text-sm font-medium text-gray-700">
+                        To Date
+                      </label>
+                      <input
+                        type="date"
+                        id="to_date"
+                        v-model="leaveRequest.to_date"
+                        class="mt-1 block w-full rounded-md border-gray-300 py-2 shadow-sm"
+                      />
+                    </div>
                   </div>
-                  <div>
-                    <label for="end_time">End Time:</label>
-                    <input
-                      id="end_time"
-                      v-model="leaveRequest.end_time"
-                      type="time"
-                      required
-                      class="mt-1 block w-full rounded-md border-gray-300 py-2 shadow-sm"
-                    />
-                  </div>
-                  <div>
-                    <label for="from_date">From Date:</label>
-                    <input
-                      id="from_date"
-                      v-model="leaveRequest.from_date"
-                      type="date"
-                      required
-                      class="mt-1 block w-full rounded-md border-gray-300 py-2 shadow-sm"
-                    />
-                  </div>
-                  <div>
-                    <label for="to_date">To Date:</label>
-                    <input
-                      id="to_date"
-                      v-model="leaveRequest.to_date"
-                      type="date"
-                      required
-                      class="mt-1 block w-full rounded-md border-gray-300 py-2 shadow-sm"
-                    />
-                  </div> -->
                 </div>
                 <div class="w-6/12">
-                  <!-- <div class="mt-4">
-                    <label for="total_requested_days">Total Requested Days:</label>
-                    <input
-                      id="total_requested_days"
-                      v-model="leaveRequest.total_requested_days"
-                      type="number"
-                      min="1"
-                      required
-                      class="mt-1 block w-full rounded-md border-gray-300 py-2 shadow-sm"
-                    />
-                  </div> -->
-                  <!-- <div>
-                    <label for="status">Status:</label>
-                    <input
-                      id="status"
-                      v-model="leaveRequest.status"
-                      type="text"
-                      required
-                      class="mt-1 block w-full rounded-md border-gray-300 py-2 shadow-sm"
-                    />
-                  </div> -->
-
                   <div>
                     <label for="reason">Reason:</label>
                     <textarea
@@ -293,7 +258,7 @@
                     type="submit"
                     class="mt-6 bg-gray-900 text-white font-semibold px-2 py-1 mr-3 rounded-lg shadow-md hover:bg-yellow-400 transition-colors border-none"
                   >
-                    Take Leave
+                    Request Leave
                   </button>
                 </div>
               </form>
@@ -415,9 +380,9 @@
                       <td class="py-4 px-6 text-sm d-flex justify-center">
                         <span
                           :class="{
-                            'bg-yellow-400 text-black': request.status === 'Pending',
-                            'bg-green-500 text-white': request.status === 'Approved',
-                            'bg-red-500 text-white': request.status === 'Rejected'
+                            'bg-yellow-400 text-black': request.status === 'pending',
+                            'bg-green-500 text-white': request.status === 'approved',
+                            'bg-red-500 text-white': request.status === 'rejected'
                           }"
                           class="text-center px-3 py-2 rounded-full text-xs font-semibold"
                         >
@@ -438,20 +403,34 @@
                       </td>
                       <td class="py-4 px-2 text-sm text-center">
                         <span v-if="request.approved_by">{{ request.approved_by }}</span>
-                        <span v-if="request.rejected_by">{{ request.rejected_by }}</span>
-                        <span v-else>Pending</span>
+                        <span v-else-if="request.rejected_by">{{ request.rejected_by }}</span>
+                        <span v-else>No approver</span>
                       </td>
                       <td class="text-sm px-2 font-medium text-center">
                         <div class="flex justify-center mt-2 space-x-2">
                           <button
                             class="bg-gray-900 text-white px-2 py-1 rounded-md shadow-md hover:bg-yellow-500 transition-all duration-300 ease-in-out font-semibold border-none"
-                            @click="approveLeave(request)"
+                            :disabled="
+                              request.status === 'approved' || request.status === 'rejected'
+                            "
+                            :class="{
+                              'opacity-50 cursor-not-allowed':
+                                request.status === 'approved' || request.status === 'rejected'
+                            }"
+                            @click="approveRequest(request.id)"
                           >
                             Approve
                           </button>
                           <button
                             class="bg-red-500 text-white px-2 py-1 rounded-md shadow-md hover:bg-red-400 transition-all duration-300 ease-in-out font-semibold border-none"
-                            @click="rejectLeave(request)"
+                            :disabled="
+                              request.status === 'approved' || request.status === 'rejected'
+                            "
+                            :class="{
+                              'opacity-50 cursor-not-allowed':
+                                request.status === 'approved' || request.status === 'rejected'
+                            }"
+                            @click="rejectRequest(request.id, 'Not enough leave balance')"
                           >
                             Reject
                           </button>
@@ -475,6 +454,7 @@ import SupervisorSidebar from '@/Components/SupervisorSidebar.vue'
 import WebHeaderMenu from '@/Components/WebHeaderMenu.vue'
 import { useLeaveRequestStore } from '@/stores/request-leave'
 import { useLeaveTypeStore } from '@/stores/leave-type' // Import the store
+// import axios from 'axios'
 
 // Components registration (for the template section)
 defineProps({ components: { SupervisorSidebar, WebHeaderMenu } })
@@ -520,6 +500,7 @@ const handleSubmit = async () => {
   try {
     await leaveRequestStore.submitLeaveRequest(leaveRequest.value)
     requestStatus.value = leaveRequestStore.requestStatus // Update local status
+    window.location.reload()
   } catch (error) {
     requestStatus.value = 'error' // Handle error
     console.error('Error submitting leave request:', error)
@@ -563,9 +544,28 @@ function formatFileSize(size) {
   if (size < 1024 * 1024) return `${(size / 1024).toFixed(2)} KB`
   return `${(size / (1024 * 1024)).toFixed(2)} MB`
 }
+
+// Fetch leaveRequests from the store
+// const leaveRequests = leaveRequestStore.request
+
+const approveRequest = async (id) => {
+  try {
+    await leaveRequestStore.approveLeaveRequest(id) // Call the approve action from Pinia store
+    window.location.reload()
+  } catch (error) {
+    console.error('Error approving leave request:', error)
+  }
+}
+
+const rejectRequest = async (id) => {
+  try {
+    await leaveRequestStore.rejectLeaveRequest(id) // Call the reject action from Pinia store
+    window.location.reload()
+  } catch (error) {
+    console.error('Error rejecting leave request:', error)
+  }
+}
 </script>
-
-
 
 <style scoped>
 .supervisor {
