@@ -7,7 +7,7 @@
       <div class="container-page w-[83%]">
         <EmployeeNavbar />
         <main class="p-[50px] mt-5 pt-[50px] pb-0 h-auto w-full bg-[#EEEDED] mb-[50px]">
-          <div class="px-10 mt-10">
+          <div class="px-10">
             <!-- Employee Management Header -->
             <div class="d-flex text-black" style="display: flex; flex-direction: column; border-bottom: solid 1px gray" >
               <h1 class="font-bold text-3xl px-8 hover:text-yellow-500 w-4/12">
