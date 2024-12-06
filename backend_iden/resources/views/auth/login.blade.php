@@ -27,11 +27,7 @@
           </div>
 
           <div class="flex justify-end items-center mb-4 mr-7">
-<<<<<<< HEAD
             <a href="{{ route('password.request') }}" class="text-blue-500 text-sm">Forgot password?</a>
-=======
-            <a href="#" class="text-blue-500 text-sm">Forget password?</a>
->>>>>>> 5ce1d579b0da3562bffe1fe7d8af000a810725ee
           </div>
 
           <button type="submit" class="w-5px mt-5 bg-blue-500 text-white font-bold py-2 px-4 hover:bg-yellow-400 focus:outline-none focus:bg-blue-700 transition-colors" style=" border-radius: 5px">Sign in</button>

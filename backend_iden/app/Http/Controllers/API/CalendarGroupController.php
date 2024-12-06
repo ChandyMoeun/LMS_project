@@ -4,8 +4,8 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\CalendarGroup;
-
+use App\Models\Calendar_work_day;
+use App\Models\Calendar_holiday;
 class CalendarGroupController extends Controller
 {
     /**
@@ -14,8 +14,14 @@ class CalendarGroupController extends Controller
     public function index()
     {
         // Retrieve all CalendarGroup records with their related Holiday and WorkDay
-        $calendarGroups = CalendarGroup::with(['holiday', 'workDay'])->get();
+        $calendarGroups = Calendar_work_day::with(['holiday', 'workDay'])->get();
         return response()->json($calendarGroups);
+    }
+
+
+    public function calendarGroup(){
+        $calendarGroup = Calendar_holiday::all();
+        return response()->json($calendarGroup);
     }
 
     /**
