@@ -56,6 +56,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/leave_requests', [LeaveRequestController::class, 'store']);
     Route::get('/leave_requests/team', [LeaveRequestController::class, 'getTeamLeaveRequests']);
     Route::get('/leave_requests/team/{id}', [LeaveRequestController::class, 'getTeamLeaveRequestsById']);
+    // Route::get('/my_leave', [LeaveRequestController::class, 'getMyLeaves']);
 
 
 
@@ -63,13 +64,15 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('leave_types', [LeaveTypeController::class, 'getLeaveType']);
 
     // ======>Approve and reject leave requests<=====
-    Route::post('/leave_requests/{id}/approve', [LeaveRequestController::class, 'approve']);
-    Route::post('/leave_requests/{id}/reject', [LeaveRequestController::class, 'reject']);
+    Route::post('/leave_requests/{id}/approve_request', [LeaveRequestController::class, 'approveLeaveRequest']);
+    Route::post('/leave_requests/{id}/reject_request', [LeaveRequestController::class, 'reject']);
 
     //=======>Calendar_groups<=========
-    Route::get('/calendar_groups/{id}', [CalendarGroupController::class, 'index']);
+    Route::get('/calendar_holiday', [CalendarGroupController::class, 'calendarGroup']);
     Route::get('/calendar_work', [CalendarWorkDayController::class, 'index']);
 });
+
+Route::middleware('auth:sanctum')->group(function () {});
 
 //========>Attendance<========
 
