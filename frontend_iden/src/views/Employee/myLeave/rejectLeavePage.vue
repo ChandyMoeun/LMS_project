@@ -1,6 +1,6 @@
 <template>
   <EmployeeLayout>
-    <div class="employee flex h-screen items-start w-full">
+  <div class="employee flex h-screen items-start w-full">
       <div class="sidebar w-[17%] h-auto">
         <EmployeeSidebar></EmployeeSidebar>
       </div>
@@ -38,14 +38,14 @@
                         <th class="py-3 px-2 text-center text-xs text-white uppercase tracking-wider"> Approver </th>
                       </tr>
                     </thead>
-                    <tbody>
-                      <tr v-for="leaveRequest in filteredLeaveRequests" :key="leaveRequest.id" class="hover:bg-gray-50" >
-                        <td class="py-4 px-2 text-sm text-center text-black">001</td>
-                        <td class="py-4 px-2 text-sm text-center text-black">UserName</td>
-                        <td class="py-4 text-center px-2 text-sm text-black">sick leave</td>
-                        <td class="py-4 px-2 text-sm text-center text-black">10.10.2024</td>
-                        <td class="py-4 px-2 text-sm text-center text-black">10.11.2024</td>
-                        <td class="py-4 px-2 text-sm text-center text-black">Full day</td>
+                    <tbody v-for="leaveRequest in leaveRequestStore.leaveRequests" :key="leaveRequest.id" >
+                      <tr v-if=" leaveRequest.status === 'rejected' && leaveRequest.employee_id === user.id" class="hover:bg-gray-50" >
+                        <td class="py-4 px-2 text-sm text-center text-black">{{ leaveRequest.staff_id }}</td>
+                        <td class="py-4 px-2 text-sm text-center text-black">{{ leaveRequest.employee_name }}</td>
+                        <td class="py-4 text-center px-2 text-sm text-black">{{ leaveRequest.leave_type }}</td>
+                        <td class="py-4 px-2 text-sm text-center text-black">{{ from_date }}</td>
+                        <td class="py-4 px-2 text-sm text-center text-black">{{ to_date }}</td>
+                        <td class="py-4 px-2 text-sm text-center text-black"> {{ leaveRequest.half_day_type }} </td>
                         <!-- Display attachment -->
                         <td class="py-4 px-6 text-sm text-center text-black">
                           <div class="flex gap-2">
@@ -54,84 +54,131 @@
                           </div>
                         </td>
                         <td class="py-4 px-6 text-sm">
-                          <span :class="{
-                              'bg-yellow-400 text-black': 'Pending',
-                              'bg-green-500 text-white': 'Approved',
-                              'bg-red-500 text-white': 'Rejected'
+                          <span
+                            :class="{
+                              'bg-yellow-400 text-black': leaveRequest.status === 'pending',
+                              'bg-green-500 text-white': leaveRequest.status === 'approved',
+                              'bg-red-500 text-white': leaveRequest.status === 'rejected'
                             }"
-                            class="text-center px-2 py-1 rounded-full text-xs font-semibold" >
+                            class="text-center px-2 py-1 rounded-full text-xs font-semibold">
                             {{ leaveRequest.status }}
                           </span>
-                        </td>
-                        <td class="py-4 px-2 text-sm text-center text-black">2</td>
-                        <td class="py-4 px-2 text-sm text-center">
-                          <a href="/employee/myleave/historyleave/detail"
-                            class="text-blue-700 no-underline hover:text-blue-300">
-                            View
-                          </a>
-                        </td>
-                        <td class="d-flex flex-col py-4 text-center text-sm text-gray-500">
-                          <span v-if="leaveRequest.approver">{{ leaveRequest.approver }}</span>
-                          <span v-if="leaveRequest.rejector">{{ leaveRequest.rejector }}</span>
-                          <span v-else>Pending</span>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
+                      </td>
+                      <td class="py-4 px-2 text-sm text-center text-black">2</td>
+                      <td class="py-4 px-2 text-sm text-center">
+                        <router-link
+                          :to="{ name: 'leavehistorydetail', params: { id: leaveRequest.id } }"
+                          class="text-blue-700 no-underline hover:text-blue-300" > View
+                        </router-link>
+                      </td>
+                      <td class="d-flex flex-col py-4 text-center text-sm text-gray-500">
+                        <span v-if="leaveRequest.approved_by">{{ leaveRequest.approved_by }}</span>
+                        <span v-else-if="leaveRequest.rejected_by">{{
+                          leaveRequest.rejected_by
+                        }}</span>
+                        <span v-else>No approver</span>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
               </div>
             </div>
-          </main>
-        </div>
+          </div>
+        </main>
       </div>
-    </EmployeeLayout>
-  </template>
+    </div>
+  </EmployeeLayout>
+</template>
   
-  <script>
-  import EmployeeSidebar from '@/Components/EmployeeSidebar.vue'
-  import EmployeeNavbar from '@/Components/EmployeeNavbar.vue'
-  export default {
-    components: { EmployeeSidebar, EmployeeNavbar },
-    data() {
-      return {
-        searchQuery: '',
-        leaveRequests: [
-          {
-            id: 1,
-            staff_id: ' ',
-            full_name: ' ',
-            leave_name: ' ',
-            from_date: ' ',
-            to_date: ' ',
-            half_day: ' ',
-            status: ' rejected',
-            approver: ' ',
-            rejector: null, // Initially null, will be set upon rejection
-            total_requested_days: 2
-          }
-        ]
-      }
-    },
-    computed: {
-      filteredLeaveRequests() {
-        // Simple search filter logic
-        return this.leaveRequests.filter(
-          (leave) =>
-            leave.full_name.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
-            leave.staff_id.includes(this.searchQuery)
-        )
-      }
-    },
-    methods: {
-      approveLeave(leaveRequest) {
-        // Logic for approving leave
-        leaveRequest.status = 'Approved'
-      },
-      rejectLeave(leaveRequest) {
-        // Logic for rejecting leave
-        leaveRequest.rejector = 'Your Name' // Change this dynamically based on user
-        leaveRequest.status = 'Rejected'
-      }
-    }
+<script setup>
+import { ref, computed, onMounted } from 'vue'
+import EmployeeSidebar from '@/Components/EmployeeSidebar.vue'
+import EmployeeNavbar from '@/Components/EmployeeNavbar.vue'
+
+import { useLeaveRequestStore } from '@/stores/request-leave'
+import { userAuthStore } from '@/stores/get-me' // Import the Auth store
+
+const authStore = userAuthStore()
+const user = authStore.user
+console.log(user)
+const searchQuery = ref('')
+const leaveRequestStore = useLeaveRequestStore()
+
+// Function to fetch leave requests (example for leaveRequestStore)
+const fetchTeamLeaveRequests = async () => {
+  try {
+    await leaveRequestStore.fetchTeamLeaveRequests()
+    console.log('Fetched leave requests:', leaveRequestStore.leaveRequests)
+  } catch (error) {
+    console.error('Error fetching leave requests:', error)
   }
-  </script>
+}
+
+// Fetch leave requests on component mount
+onMounted(() => {
+  fetchTeamLeaveRequests()
+})
+
+// Reactive properties
+
+const leaveRequests = ref([
+  {
+    id: 1,
+    staff_id: ' ',
+    full_name: ' ',
+    leave_name: ' ',
+    from_date: ' ',
+    to_date: ' ',
+    half_day: ' ',
+    status: 'Rejected',
+    approver: ' ',
+    rejector: null, // Initially null, will be set upon rejection
+    total_requested_days: 2
+  }
+])
+
+// Computed property for filtered leave requests
+const filteredLeaveRequests = computed(() =>
+  leaveRequests.value.filter(
+    (leave) =>
+      leave.full_name.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
+      leave.staff_id.includes(searchQuery.value)
+  )
+)
+
+// Methods for approving and rejecting leave requests
+const approveLeave = (leaveRequest) => {
+  leaveRequest.status = 'Approved'
+}
+
+const rejectLeave = (leaveRequest) => {
+  leaveRequest.rejector = 'Your Name' // Change this dynamically based on user
+  leaveRequest.status = 'Rejected'
+}
+</script>
+  
+  <style scoped>
+.employee {
+  display: flex;
+  height: 100vh;
+  align-items: start;
+  width: 100%;
+  background-color: #e5e7eb;
+}
+.sidebar {
+  width: 17%;
+  height: auto;
+  background-color: #141c2e;
+  color: white;
+}
+.container-page {
+  width: 83%;
+}
+main {
+  padding: 50px 50px 0px 50px;
+  height: auto;
+  width: 100%;
+  background-color: #e5e7eb;
+  margin-bottom: 50px;
+}
+</style>

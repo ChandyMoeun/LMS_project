@@ -39,7 +39,7 @@
                     <th class="py-4 px-6 w-3/12 font-bold text-sm text-white text-center border-b border-gray-200" > Actions </th>
                   </tr>
                 </thead>
-                <tbody v-if="Departments">
+                <tbody v-if="filteredDepartments">
                   <tr v-for="department in filteredDepartments" :key="department.id" class="hover:bg-gray-100">
                     <td class="py-4 px-4 border-b border-gray-200">{{ department.name }}</td>
                     <td class="py-4 text-center px-4 border-b border-gray-200">

@@ -23,7 +23,7 @@
                   <img src="../../assets/image/employees.png" style=" width: 100px; height: 50%; display: flex; align-self: center;"/>
                   <div class="ml-1">
                     <h4 class="font-bold mt-6"><b>Employees</b></h4>
-                    <p>All : </p>
+                    <p>All :{{ teamStore.teamCount }}</p>
                   </div>
                 </div>
               </div>
@@ -32,8 +32,10 @@
                   box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px; " >
                   <img src="../../assets/image/Leave.png" style=" margin-left: 14px; width: 70px; height: 40%; display: flex; align-self: center; "/>
                   <div>
-                    <h4 class="font-bold mt-6 ml-5"><b>Leaveds</b></h4>
-                    <p class="ml-5">This week : 555</p>
+                    <h4 class="font-bold mt-6 ml-3"><b>Leaveds</b></h4>
+                    <p class="ml-1">
+                      <em>This week : {{ leaveRequestCountThisWeek }}</em>
+                    </p>
                   </div>
                 </div>
               </div>
@@ -62,15 +64,13 @@
                     <th class="py-2 px-2 text-center border-b">Position</th>
                     <th class="py-2 px-2 text-center border-b">From | To</th>
                     <th class="py-2 px-2 text-center border-b">Approver</th>
-                    <th class="py-2 px-2 text-center border-b">Sub-approver</th>
                     <th class="py-2 px-2 text-center border-b">Status</th>
                     <th class="py-2 px-2 text-center border-b">Detail</th>
                     <th class="py-2 px-2 text-center border-b">Action</th>
                   </tr>
                 </thead>
-                <tbody>
-                  <tr class="hover:bg-white text-xs"
-                    v-for="leaveRequests in leaveRequestStore.leaveRequests" :key="leaveRequests.id">
+                <tbody v-for="leaveRequests in leaveRequestStore.leaveRequests" :key="leaveRequests.id">
+                  <tr class="hover:bg-white text-xs">
                     <td class="py-2 px-2 text-center border-b">{{ leaveRequests.staff_id }}</td>
                     <td class="flex py-2 px-2 justify-center border-b">
                       <img :src=" leaveRequests.profile && leaveRequests.profile
@@ -84,33 +84,73 @@
                     <td class="py-2 px-2 text-center border-b">{{ leaveRequests.leave_type }}</td>
                     <td class="py-2 px-2 text-center border-b">{{ leaveRequests.position }}</td>
                     <td class="py-2 px-2 text-center border-b">
-                      <span v-if="leaveRequests.start_time && leaveRequests.end_time"> 
-                        {{ leaveRequests.start_time }} | {{ leaveRequests.end_time }}</span>
-                      <span v-else >
-                        {{ leaveRequests.from_date }} | {{ leaveRequests.to_date }}</span>
+                      <!-- Display start and end time if both are available -->
+                      <span v-if="leaveRequests.start_time && leaveRequests.end_time">
+                        {{ leaveRequests.start_time }} | {{ leaveRequests.end_time }}
+                      </span>
+                      <!-- Display half day type if it's either 'morning' or 'afternoon' -->
+                      <span
+                        v-else-if="
+                          leaveRequests.half_day_type === 'morning' ||
+                          leaveRequests.half_day_type === 'afternoon' 
+                          " > half_day
+                      </span>
+                      <!-- Fallback: Display from and to dates -->
+                      <span v-else>
+                        {{ leaveRequests.from_date }} | {{ leaveRequests.to_date }}
+                      </span>
                     </td>
                     <td class="py-2 px-2 text-center border-b">
                       <span v-if="leaveRequests.approved_by">{{ leaveRequests.approved_by }}</span>
                       <span v-else>No approver</span>
                     </td>
-                    <td class="py-2 px-2 text-center border-b">N/A</td>
                     <!-- Dropdown status update -->
                     <td class="py-2 px-2 text-center border-b">
-                        <span :class="statusClass(leaveRequests.status)">{{ leaveRequests.status }}</span>
+                      <div>
+                        <span
+                          :class="{
+                            'bg-yellow-400 text-black': leaveRequests.status === 'pending',
+                            'bg-green-500 text-white': leaveRequests.status === 'approved',
+                            'bg-red-500 text-white': leaveRequests.status === 'rejected'
+                          }"
+                          class="text-center px-3 py-2 rounded-full text-xs font-semibold" >
+                          {{ leaveRequests.status }}
+                        </span>
+                      </div>
                     </td>
                     <td class="py-2 px-2 text-center border-b text-xs">
-                      <a href="/supervisor/takeleave/view/leavedetail" class="text-blue-500 no-underline hover:text-blue-400">More</a>
+                      <router-link
+                        :to="{ name: 'viewLeaveDetail', params: { id: leaveRequests.id } }"
+                        class="text-blue-700 no-underline hover:text-blue-300" > View </router-link>
                     </td>
-                    <td class="action text-center align-middle">
-                      <span class="text-blue-500 hover:text-blue-400 font-semibold" @click="toggleDropdown(leaveRequests.status)">
-                        View
-                      </span>
-                      <div v-if="dropdownVisible === leaveRequests.status">
-                        <select v-model="leaveRequests.status" @change="updateStatus(leaveRequests.status)">
-                          <option value="Pending">Pending</option>
-                          <option value="Approved">Approved</option>
-                          <option value="Rejected">Rejected</option>
-                        </select>
+                    <td class="text-sm px-2 font-medium text-center">
+                      <div class="flex justify-center mt-2 space-x-2">
+                        <button
+                          class="bg-gray-900 text-white px-2 py-1 rounded-md shadow-md hover:bg-yellow-500 transition-all duration-300 ease-in-out font-semibold border-none"
+                          :disabled="
+                            leaveRequests.status === 'approved' ||
+                            leaveRequests.status === 'rejected'
+                          "
+                          :class="{
+                            'opacity-50 cursor-not-allowed':
+                              leaveRequests.status === 'approved' ||
+                              leaveRequests.status === 'rejected'
+                          }"
+                          @click="approveRequest(leaveRequests.id)" > Approve
+                        </button>
+                        <button
+                          class="bg-red-500 text-white px-2 py-1 rounded-md shadow-md hover:bg-red-400 transition-all duration-300 ease-in-out font-semibold border-none"
+                          :disabled="
+                            leaveRequests.status === 'approved' ||
+                            leaveRequests.status === 'rejected'
+                          "
+                          :class="{
+                            'opacity-50 cursor-not-allowed':
+                              leaveRequests.status === 'approved' ||
+                              leaveRequests.status === 'rejected'
+                          }"
+                          @click="rejectRequest(leaveRequests.id, 'Not enough leave balance')"> Reject
+                        </button>
                       </div>
                     </td>
                   </tr>
@@ -129,7 +169,22 @@ import WebHeaderMenu from '@/Components/WebHeaderMenu.vue'
 import { useLeaveRequestStore } from '@/stores/request-leave'
 import { ref, onMounted } from 'vue'
 import Chart from 'chart.js/auto'
+import { useTeamStore } from '@/stores/get-member'
+
+const teamStore = useTeamStore()
 const leaveRequestStore = useLeaveRequestStore()
+
+// Declare reactive state variables with proper types
+const leaveRequestCountThisWeek = ref(0) // leaveRequestCountThisWeek is a number
+const requestStatus = ref<'success' | 'error' | null>(null) // requestStatus can be 'success', 'error', or null
+// Fetch team leave requests when the component is mounted
+onMounted(async () => {
+  await leaveRequestStore.fetchTeamLeaveRequests()
+  // After fetching, sync the count and status to the reactive variables
+  leaveRequestCountThisWeek.value = leaveRequestStore.leaveRequestCountThisWeek
+  requestStatus.value = leaveRequestStore.requestStatus
+})
+
 // Function to fetch leave requests (example for leaveRequestStore)
 const fetchTeamLeaveRequests = async () => {
   try {
@@ -144,6 +199,24 @@ const fetchTeamLeaveRequests = async () => {
 onMounted(() => {
   fetchTeamLeaveRequests()
 })
+
+const approveRequest = async (id: any) => {
+  try {
+    await leaveRequestStore.approveLeaveRequest(id) // Call the approve action from Pinia store
+    window.location.reload()
+  } catch (error) {
+    console.error('Error approving leave request:', error)
+  }
+}
+
+const rejectRequest = async (id: any) => {
+  try {
+    await leaveRequestStore.rejectLeaveRequest(id) // Call the reject action from Pinia store
+    window.location.reload()
+  } catch (error) {
+    console.error('Error rejecting leave request:', error)
+  }
+}
 
 // Function to create Employee Chart
 const createEmployeeChart = () => {
@@ -225,32 +298,7 @@ onMounted(() => {
   showToast()
 })
 
-// Sample data for leave requests
-const dropdownVisible = ref(null)
-
-// Method to toggle the visibility of the dropdown
-const toggleDropdown = (index) => {
-  dropdownVisible.value = dropdownVisible.value === index ? null : index
-}
-
-// Method to handle status update
-const updateStatus = (index) => {
-  const updatedStatus = leaveRequests.value[index].status
-  // Do something with the updated status, like sending it to a server or storing it
-  console.log(`Leave request ${leaveRequests.value[index].id} updated to: ${updatedStatus}`)
-}
-
-// Method to dynamically assign classes based on status
-const statusClass = (status) => {
-  switch (status) {
-    case 'Pending':
-      return 'bg-yellow-400 text-white px-2 py-1 rounded-full text-xs font-semibold'
-    case 'Approved':
-      return 'bg-green-400 text-white px-2 py-1 rounded-full text-xs font-semibold'
-    case 'Rejected':
-      return 'bg-red-400 text-white px-2 py-1 rounded-full text-xs font-semibold'
-    default:
-      return ''
-  }
-}
+onMounted(async () => {
+  await teamStore.fetchTeamMembers() // Fetch employee data as well
+})
 </script>

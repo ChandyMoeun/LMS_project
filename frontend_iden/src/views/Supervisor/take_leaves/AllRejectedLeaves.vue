@@ -12,10 +12,11 @@
             <div class="d-flex text-black" style="display: flex; flex-direction: column; border-bottom: solid 1px gray" >
               <h1 class="font-bold text-3xl px-8 hover:text-yellow-500 w-3/12"><b>Rejected</b></h1>
               <p class="px-8">Number of rejected:</p>
-            </div> 
+            </div>
             <div class="container mx-auto mt-16 px-6 py-4">
               <div class="flex justify-between mb-3">
-                <input v-model="searchQuery" type="text" placeholder="Search..." title="Type of leave or aprover Name" class="w-2/6 py-2 px-2 h-9 border rounded rounded-lg shadow-md"/>
+                <input v-model="searchQuery" type="text" placeholder="Search..." title="Type of leave or aprover Name"
+                  class="w-2/6 py-2 px-2 h-9 border rounded rounded-lg shadow-md" />
                 <a href="/supervisor/takeleave/all/leavehistory"
                   class="mr-5 px-3 mt-1 py-1 bg-red-600 text-white font-semibold rounded-lg shadow-md hover:bg-yellow-400 transition-colors no-underline">
                   Back
@@ -25,49 +26,57 @@
                 <table class="w-full divide-y divide-gray-200">
                   <thead class="bg-black">
                     <tr>
-                      <th class="py-3 px-2 text-center text-xs text-white uppercase tracking-wider"> Staff ID </th>
-                      <th class="py-3 px-2 text-center text-xs text-white uppercase tracking-wider"> Name </th>
-                      <th class="py-3 px-2 text-center text-xs text-white uppercase tracking-wider"> Type </th>
-                      <th class="py-3 px-2 text-center text-xs text-white uppercase tracking-wider"> From </th>
-                      <th class="py-3 px-2 text-center text-xs text-white uppercase tracking-wider"> To </th>
-                      <th class="py-3 px-2 text-center text-xs text-white uppercase tracking-wider"> Half Day </th>
-                      <th class="py-3 px-2 text-center text-xs text-white uppercase tracking-wider"> Files </th>
-                      <th class="py-3 px-2 text-center text-xs text-white uppercase tracking-wider"> Status </th>
-                      <th class="py-3 px-2 text-center text-xs text-white uppercase tracking-wider"> Reject on </th>
-                      <th class="py-3 px-2 text-center text-xs text-white uppercase tracking-wider"> Total </th>
-                      <th class="py-3 px-2 text-center text-xs text-white uppercase tracking-wider"> Detail </th>
-                      <th class="py-3 px-2 text-center text-xs text-white uppercase tracking-wider"> Rejecter </th>
+                      <th class="py-3 px-2 text-center text-xs text-white uppercase tracking-wider">Staff ID </th>
+                      <th class="py-3 px-2 text-center text-xs text-white uppercase tracking-wider">Name </th>
+                      <th class="py-3 px-2 text-center text-xs text-white uppercase tracking-wider">Type </th>
+                      <th class="py-3 px-2 text-center text-xs text-white uppercase tracking-wider">From </th>
+                      <th class="py-3 px-2 text-center text-xs text-white uppercase tracking-wider">To </th>
+                      <th class="py-3 px-2 text-center text-xs text-white uppercase tracking-wider">Half Day </th>
+                      <th class="py-3 px-2 text-center text-xs text-white uppercase tracking-wider">Files </th>
+                      <th class="py-3 px-2 text-center text-xs text-white uppercase tracking-wider">Status </th>
+                      <th class="py-3 px-2 text-center text-xs text-white uppercase tracking-wider">Reject on </th>
+                      <th class="py-3 px-2 text-center text-xs text-white uppercase tracking-wider">Total </th>
+                      <th class="py-3 px-2 text-center text-xs text-white uppercase tracking-wider">Detail </th>
+                      <th class="py-3 px-2 text-center text-xs text-white uppercase tracking-wider">Rejecter </th>
                     </tr>
                   </thead>
-                  <tbody>
-                    <tr v-for="leaveRequest in filteredLeaveRequests" :key="leaveRequest.id" class="hover:bg-gray-50" >
-                      <td class="py-4 px-2 text-sm text-center text-black">{{ leaveRequest.staff_id }}</td>
-                      <td class="py-4 px-2 text-sm text-center text-black">{{ leaveRequest.full_name }}</td>
-                      <td class="py-4 px-2 text-sm text-center text-black">{{ leaveRequest.leave_name }}</td>
-                      <td class="py-4 px-2 text-sm text-center text-black">{{ leaveRequest.from_date }}</td>
-                      <td class="py-4 px-2 text-sm text-center text-black">{{ leaveRequest.to_date }}</td>
-                      <td class="py-4 px-2 text-sm text-center text-black">{{ leaveRequest.half_day }}</td>
+                  <tbody v-for="leaveRequest in leaveRequestStore.leaveRequests"
+                    :key="leaveRequest.id" >
+                    <tr v-if="leaveRequest.status === 'rejected'" class="hover:bg-gray-50">
+                      <td class="py-4 px-2 text-sm text-center text-black">{{ leaveRequest.staff_id }} </td>
+                      <td class="py-4 px-2 text-sm text-center text-black">{{ leaveRequest.employee_name }} </td>
+                      <td class="py-4 px-2 text-sm text-center text-black">{{ leaveRequest.leave_type }} </td>
+                      <td class="py-4 px-2 text-sm text-center text-black">{{ leaveRequest.from_date }} </td>
+                      <td class="py-4 px-2 text-sm text-center text-black">{{ leaveRequest.to_date }} </td>
+                      <td class="py-4 px-2 text-sm text-center text-black">{{ leaveRequest.half_day_type }}  </td>
                       <!-- Display attachment -->
                       <td class="py-4 px-6 text-sm text-center text-black">
                         <div class="flex gap-2">
-                          <img :src="leaveRequest.file_url" class="max-h-5 max-w-full object-cover mb-2 cursor-pointer"/>
-                          <a href="#" @click.prevent="viewFile(leaveRequest)">See More</a>
+                          <img :src="leaveRequest.file_url"  href="#" @click.prevent="viewFile(leaveRequest)"> See More </a>
                         </div>
                       </td>
                       <td class="py-4 px-6 text-sm d-flex justify-center">
-                        <span :class="{ 'bg-red-500 text-white': leaveRequest.status === 'Rejected' }" class="text-center px-3 py-2 rounded-full text-xs font-semibold">
-                        {{ leaveRequest.status }}
-                        </span>
+                        <div>
+                          <span
+                            :class="{
+                              'bg-yellow-400 text-black': leaveRequest.status === 'pending',
+                              'bg-green-500 text-white': leaveRequest.status === 'approved',
+                              'bg-red-500 text-white': leaveRequest.status === 'rejected'
+                            }"
+                            class="text-center px-3 py-2 rounded-full text-xs font-semibold">
+                            {{ leaveRequest.status }}
+                          </span>
+                        </div>
                       </td>
-                      <td class="py-4 px-2 text-sm text-center text-black">{{ leaveRequest.rejector_dade }}</td>
-                        <td class="py-4 px-2 text-sm text-center text-black">{{ leaveRequest.total_requested_days }}</td>
-                        <td class="py-4 px-2 text-sm text-center">
-                          <a href="/supervisor/takeleave/view/leavedetail" class="text-blue-700 no-underline hover:text-blue-300">View</a>
-                        </td>
-                        <td class="d-flex flex-col py-4 text-center text-sm text-gray-500">
-                          <span>{{ leaveRequest.rejector }}</span>
-                        </td>
-                      </tr>
+                      <td class="py-4 px-2 text-sm text-center text-black"> {{ leaveRequest.updated_at }}</td>
+                      <td class="py-4 px-2 text-sm text-center text-black"> {{ leaveRequest.total_requested_days }}</td>
+                      <td class="py-4 px-2 text-sm text-center">
+                        <a href="/supervisor/takeleave/view/leavedetail" class="text-blue-700 no-underline hover:text-blue-300">View</a>
+                      </td>
+                      <td class="d-flex flex-col py-4 text-center text-sm text-gray-500">
+                        <span>{{ leaveRequest.rejected_by }}</span>
+                      </td>
+                    </tr>
                   </tbody>
                 </table>
               </div>
@@ -79,67 +88,37 @@
   </SupervisorLayout>
 </template>
 
-<script>
+<script setup>
+import { ref, computed, onMounted } from 'vue'
 import SupervisorSidebar from '@/Components/SupervisorSidebar.vue'
 import WebHeaderMenu from '@/Components/WebHeaderMenu.vue'
-export default {
-  components: { SupervisorSidebar, WebHeaderMenu },
-  data() {
-    return {
-      searchQuery: '',
-      leaveRequests: [
-    {
-          id: 1,
-          staff_id: '001',
-          full_name: 'John Doe',
-          leave_name: 'Sick Leave',
-          from_date: '2024-10-10',
-          to_date: '2024-10-11',
-          half_day: 'Full day',
-          status: 'Rejected',
-          rejector: 'Mr.cat',
-          total_requested_days: 2,
-          rejector_dade: '2024-09-01',
-          file_url: '#', // Add URL for file if available
-        },
-        {
-          id: 2,
-          staff_id: '002',
-          full_name: 'Gyver King',
-          leave_name: 'AL',
-          from_date: '2024-09-02',
-          to_date: '2024-09-04',
-          half_day: 'Full day',
-          status: 'Rejected',
-          rejector: 'Mr.cat',
-          total_requested_days: 3,
-          rejector_dade: '2024-09-01',
-          file_url: '#',
-        },
-      // Add more records as needed
-    ],
-    }
-  },
-  computed: {
-  filteredLeaveRequests() {
-    const query = this.searchQuery.toLowerCase();
-    return this.leaveRequests.filter((leave) => 
+import { useLeaveRequestStore } from '@/stores/request-leave'
+
+// Search query for filtering leave requests
+const searchQuery = ref('')
+const leaveRequestStore = useLeaveRequestStore()
+// Function to fetch leave requests (example for leaveRequestStore)
+const fetchTeamLeaveRequests = async () => {
+  try {
+    await leaveRequestStore.fetchTeamLeaveRequests()
+    console.log('Fetched leave requests:', leaveRequestStore.leaveRequests)
+  } catch (error) {
+    console.error('Error fetching leave requests:', error)
+  }
+}
+// Fetch leave requests on component mount
+onMounted(() => {
+  fetchTeamLeaveRequests()
+})
+
+// Computed property for filtered leave requests
+const filteredLeaveRequests = computed(() => {
+  const query = searchQuery.value.toLowerCase()
+  return leaveRequests.value.filter(
+    (leave) =>
       leave.full_name.toLowerCase().includes(query) ||
       leave.staff_id.includes(query) ||
       leave.from_date.includes(query) // Filter by from_date
-    );
-  }
-},
-  methods: {
-    approveLeave(leaveRequest) {
-      // Logic for approving leave
-      leaveRequest.status = 'Approved'
-    },
-    rejectLeave(leaveRequest) {
-      // Logic for rejecting leave
-      leaveRequest.rejector = 'Your Name' // Change this dynamically based on user
-      leaveRequest.status = 'Rejected'
-    }
-  }
-}
+  )
+})
 </script>

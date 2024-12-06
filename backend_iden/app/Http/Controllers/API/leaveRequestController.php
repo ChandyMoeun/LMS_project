@@ -49,6 +49,10 @@ class leaveRequestController extends Controller
 
         $departmentId = $manager->department_id;
 
+        // Get the current week range
+        $startOfWeek = \Carbon\Carbon::now()->startOfWeek(); // Start of the current week
+        $endOfWeek = \Carbon\Carbon::now()->endOfWeek(); // End of the current week
+
         // Fetch leave requests for employees in the manager's department
         $leaveRequests = LeaveRequest::whereHas('employee', function ($query) use ($departmentId) {
             $query->where('department_id', $departmentId); // Filter by department ID
@@ -57,11 +61,19 @@ class leaveRequestController extends Controller
             ->latest() // Sort by 'created_at' descending
             ->get();
 
+        // Count leave requests for the current week
+        $leaveRequestCountThisWeek = LeaveRequest::whereHas('employee', function ($query) use ($departmentId) {
+            $query->where('department_id', $departmentId); // Filter by department ID
+        })
+            ->whereBetween('from_date', [$startOfWeek, $endOfWeek]) // Filter by current week
+            ->count();
+
         // Format the leave requests for a cleaner response
         $formattedLeaveRequests = $leaveRequests->map(function ($leaveRequest) {
             return [
                 'id' => $leaveRequest->id,
                 'employee_name' => $leaveRequest->employee->full_name,
+                'employee_id' => $leaveRequest->employee->id,
                 'profile' => $leaveRequest->employee->profile,
                 'staff_id' => $leaveRequest->employee->staff_id,
                 'leave_type' => $leaveRequest->leaveType ? $leaveRequest->leaveType->leave_name : 'N/A', // Handle null leaveType
@@ -79,17 +91,16 @@ class leaveRequestController extends Controller
                 'created_at' => \Carbon\Carbon::parse($leaveRequest->created_at)->format('Y-m-d | H:i:s'),
                 'updated_at' => \Carbon\Carbon::parse($leaveRequest->updated_at)->format('Y-m-d | H:i:s'),
                 'approved_by' => $leaveRequest->approver ? $leaveRequest->approver->full_name : null, // Get the approver's name
-                'rejected_by' => $leaveRequest->rejected ? $leaveRequest->rejected->full_name : null, // Get rejector's name
+                'rejected_by' => $leaveRequest->rejector ? $leaveRequest->rejector->full_name : null, // Get rejector's name
             ];
         });
 
         return response()->json([
-            'message' => 'Leave requests for manager’s department retrieved successfully.',
+            'message' => 'Leave requests for manager\'s department retrieved successfully.',
             'data' => $formattedLeaveRequests,
+            'leave_request_count_this_week' => $leaveRequestCountThisWeek, // Add count of leave requests for the current week
         ]);
     }
-
-
 
     // Get by id
     public function getTeamLeaveRequestsById($id)
@@ -114,6 +125,7 @@ class leaveRequestController extends Controller
         $formattedLeaveRequest = [
             'id' => $leaveRequest->id,
             'employee_name' => $leaveRequest->employee->full_name,
+            'employee_id' => $leaveRequest->employee->id,
             'staff_id' => $leaveRequest->employee->staff_id,
             'leave_type' => $leaveRequest->leaveType->leave_name,
             'from_date' => \Carbon\Carbon::parse($leaveRequest->from_date)->format('Y-m-d'),
@@ -124,7 +136,7 @@ class leaveRequestController extends Controller
             'attachment' => $leaveRequest->attachment,
             'reason' => $leaveRequest->reason,
             'approved_by' => $leaveRequest->approver ? $leaveRequest->approver->full_name : null, // Get the approver's name
-            'rejected_by' => $leaveRequest->rejected ? $leaveRequest->rejected->full_name : null, // Get rejector's name
+            'rejected_by' => $leaveRequest->rejector ? $leaveRequest->rejector->full_name : null, // Get rejector's name
             'profile' => $leaveRequest->employee->profile ? $leaveRequest->employee->profile : null, // Get profile ID by employee_id
             'created_at' => \Carbon\Carbon::parse($leaveRequest->created_at)->format('Y-m-d | H:i:s'),
             'updated_at' => \Carbon\Carbon::parse($leaveRequest->updated_at)->format('Y-m-d | H:i:s'),
@@ -242,76 +254,42 @@ class leaveRequestController extends Controller
     }
 
 
+    // ===>get My leave<===
+
+
+
     // ======>Approve the specified leave request<========
-    public function approve($id)
+    public function approveLeaveRequest($id)
     {
-        $leaveRequest = LeaveRequest::find($id);
+        $leaveRequest = LeaveRequest::findOrFail($id);
 
-        if (!$leaveRequest) {
-            return response()->json(['message' => 'Leave request not found.'], 404);
-        }
-
-        // Ensure the leave request hasn't already been approved
-        if ($leaveRequest->status === 'approved') {
-            return response()->json(['message' => 'Leave request is already approved.'], 400);
-        }
-
-        // Subtract leave days from the employee's balance
-        $employee = Employee::find($leaveRequest->employee_id);
-        // $totalRequestedDays = $this->calculateLeaveDays($leaveRequest);
-
-        // if ($employee->leave_balance < $totalRequestedDays) {
-        //     return response()->json(['message' => 'Insufficient leave balance.'], 400);
-        // }
-
-        // $employee->leave_balance -= $totalRequestedDays;
-        $employee->save();
-
-        // Update leave request status and approver
+        $approver = Auth::user()->id;
         $leaveRequest->status = 'approved';
-        $leaveRequest->approved_by = Auth::id(); // Set the ID of the user who approved
-        $leaveRequest->rejected_by = null; // Clear rejected_by if previously set
+        $leaveRequest->approved_by = $approver;
         $leaveRequest->save();
 
         return response()->json([
-            'message' => 'Leave request approved successfully.',
-            'data' => [
-                'leave_request' => $leaveRequest,
-                'approved_by' => $leaveRequest->approver->full_name, // Return the approver's name
-
-            ]
-        ], 200);
+            'message' => 'Leave request approved successfully',
+            'approver' => Auth::user()->full_name,  // Return the approver's name in the response
+        ]);
     }
+
 
     // ========>Reject the specified leave request<========
-    public function reject($id)
+    public function reject($id, Request $request)
     {
-        $leaveRequest = LeaveRequest::find($id);
-
-        if (!$leaveRequest) {
-            return response()->json(['message' => 'Leave request not found.'], 404);
-        }
-
-        // Ensure the leave request hasn't already been rejected
-        if ($leaveRequest->status === 'rejected') {
-            return response()->json(['message' => 'Leave request is already rejected.'], 400);
-        }
-
-        // Update leave request status and rejector
+        $leaveRequest = LeaveRequest::findOrFail($id);
+        $rejector = Auth::user()->id;
         $leaveRequest->status = 'rejected';
-        $leaveRequest->rejected_by = Auth::id(); // Set the ID of the user who rejected
-        $leaveRequest->approved_by = null; // Clear approved_by if previously set
+        // $leaveRequest->rejection_reason = $request->input('reason');
+        $leaveRequest->rejected_by = $rejector;
         $leaveRequest->save();
 
         return response()->json([
-            'message' => 'Leave request rejected successfully.',
-            'data' => [
-                'leave_request' => $leaveRequest,
-                'rejected_by' => $leaveRequest->rejector->full_name // Return the rejector's name
-            ]
-        ], 200);
+            'message' => 'Leave request rejected successfully',
+            'rejector' => Auth::user()->full_name,
+        ]);
     }
-
     /**
      * Helper method to calculate total leave days.
      */
@@ -325,7 +303,7 @@ class leaveRequestController extends Controller
             return 0.5; // Half-day leave counts as 0.5 day
         }
 
-        return $fromDate->diffInDays($toDate) + 1; // Full-day leave
+        return $fromDate->diffInDays($toDate); // Full-day leave
     }
 
     /**
