@@ -1,55 +1,35 @@
 <template>
-  <WebLayout>
-    <div class="container mt-4 p-4 bg-white shadow rounded">
-      <div class="text-center mb-4">
-        <p class="fs-4 fw-bold">Your journey to excellence starts here.</p>
-        <p>Join Us Today and Get Started</p>
-      </div>
-      <div class="table-responsive">
-        <table class="table table-striped">
-          <thead>
-            <tr>
-              <th scope="col">ID</th>
-              <th scope="col">Title</th>
-              <th scope="col">Description</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="post in store.posts" :key="post.id">
-              <th scope="row">{{ post.id }}</th>
-              <td>{{ post.title }}</td>
-              <td>{{ post.description }}</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </WebLayout>
-  <!-- {{ store.posts }} -->
-  {{ posts }}
+  <div>
+    <h1>Team Members</h1>
+    <ul>
+      <li
+        v-for="member in teamStore.teamMembers"
+        :key="member.id"
+        @click="viewTeamMember(member.id)"
+      >
+        {{ member.full_name }} - {{ member.position?.name }}
+      </li>
+    </ul>
+  </div>
 </template>
 
-<script>
-import WebLayout from '@/Components/Layouts/WebLayout.vue'
-import { usePostStore } from '@/stores/post-list'
+<script setup>
+import { onMounted } from 'vue';
+import { useTeamStore } from '@/stores/get-member';
 
-export default {
-  name: 'PostList',
-  components: {
-    WebLayout
-  },
-  data() {
-    return {
-      store: usePostStore(),
-    }
-  },
-  mounted() {
-    this.fetchPosts()
-  },
-  methods: {
-    fetchPosts() {
-      this.store.fetchPosts()
-    }
-  }
-}
+const teamStore = useTeamStore();
+
+// Fetch all team members on component mount
+onMounted(() => {
+  teamStore.fetchTeamMembers();
+});
+
+// Trigger fetching details of a specific team member
+const viewTeamMember = (id) => {
+  teamStore.fetchTeamMemberById(id);
+};
+
+// Destructure the state from the store
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const { teamMembers } = teamStore;
 </script>

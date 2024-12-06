@@ -12,6 +12,7 @@ const isAuthenticated = authStore.isAuthenticated
 const showDropdown = ref(false)
 const route = useRoute()
 const router = useRouter()
+const index = ref<string>('1')
 
 function toggleDropdown() {
   showDropdown.value = !showDropdown.value
@@ -26,11 +27,17 @@ function logOut() {
   router.push('/login')
 }
 
-// const tabs = [
-//   { name: 'Dashboard', path: '/employee_dashboard' },
-  
-// ]
+const tabs = [
+  { id: 1, name: 'Dashboard', path: '/supervisor_dashboard' },
+]
 
+const activeTab = computed(() => {
+  return tabs.findIndex((tab) => route.path.includes(tab.path))
+  // user,
+  // roles,
+  // permissions,
+  // isAuthenticated
+})
 
 // watchEffect(() => {
 //   if (activeTab.value === -1) {
@@ -40,107 +47,44 @@ function logOut() {
 </script>
 
 <template>
-  <nav
-    class="flex-no-wrap bg-yellow to-red-500 relative flex w-full items-center justify-between shadow-lg lg:flex-wrap lg:justify-start lg:py-4"
-  >
+  <header class="flex justify-between items-center py-1 px-12 fixed w-10/12 z-50" style="background: #ffda03">
     <div class="flex w-full items-center justify-between px-4 py-1">
-      <!-- Logo -->
-      <div class="flex">
-        <router-link
-          to="/"
-          class="flex items-center text-white hover:text-gray-300 focus:text-gray-300 lg:mb-0 lg:mt-0"
-        >
-          <img
-            src="../assets/image/logo1.png"
-            style="height: 50px"
-            alt="TE Logo"
-            loading="lazy"
-          />
-        </router-link>
-      </div>
-      <div class="flex-6 p-4 flex items-center justify-center w-50% h-60px">
-        <!-- Tab Navigation -->
-        <div class="tab-container">
-          <!-- <input type="radio" name="tab" id="tab1" class="tab tab--1" :checked="activeTab === 0" /> -->
-          <!-- <router-link class="tab_label" to="/employee_dashboard">Dashboard</router-link> -->
-
-          <!-- <input type="radio" name="tab" id="tab2" class="tab tab--2" :checked="activeTab === 1" />
-          <router-link class="tab_label" to="/baggages">My Baggages</router-link>
-           -->
-          <!-- <div class="indicator" :style="{ left: `${10 + activeTab * 150}px` }"></div> -->
-        </div>
-      </div>
+      <div class="relative mx-4 lg:mx-0">
+        <span class="absolute inset-y-0 left-0 pl-3 flex items-center">
+          <svg class="h-5 w-5 text-gray-500" viewBox="0 0 24 24" fill="none">
+            <path d="M21 21L15 15M17 10C17 13.866 13.866 17 10 17C6.13401 17 3 13.866 3 10C3 6.13401 6.13401 3 10 3C13.866 3 17 6.13401 17 10Z"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ></path>
+          </svg>
+        </span>
+        <input class="form-input w-32 h-9 sm:w-64 rounded-md pl-10 pr-4 focus:border-indigo-600" type="text" placeholder="Search"/>
+      </div>     
       <!-- Right elements -->
-      <div class="flex items-center space-x-4">
-        <!-- Shopping Cart Icon -->
-        <a class="text-white hover:text-gray-300" href="#">
-          <span class="w-5 h-5">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              fill="currentColor"
-              class="w-7 h-7"
-            >
-              <path
-                d="M2.25 2.25a.75.75 0 000 1.5h1.386c.17 0 .318.114.362.278l2.558 9.592a3.752 3.752 0 00-2.806 3.63c0 .414.336.75.75.75h15.75a.75.75 0 000-1.5H5.378A2.25 2.25 0 017.5 15h11.218a.75.75 0 00.674-.421 60.358 60.358 0 002.96-7.228.75.75 0 00-.525-.965A60.864 60.864 0 005.68 4.509l-.232-.867A1.875 1.875 0 003.636 2.25H2.25zM3.75 20.25a1.5 1.5 0 113 0 1.5 1.5 0 01-3 0zM16.5 20.25a1.5 1.5 0 113 0 1.5 1.5 0 01-3 0z"
-              />
-            </svg>
-          </span>
-        </a>
+      <div class="flex items-center space-x-4">       
         <!-- Notification Bell Icon -->
-        <div class="relative">
-          <a class="text-white hover:text-gray-300" href="#">
-            <span class="w-5 h-5">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                fill="currentColor"
-                class="w-7 h-7"
-              >
-                <path
-                  fill-rule="evenodd"
-                  d="M5.25 9a6.75 6.75 0 0113.5 0v.75c0 2.123.8 4.057 2.118 5.52a.75.75 0 01-.297 1.206c-1.544.57-3.16.99-4.831 1.243a3.75 3.75 0 11-7.48 0 24.585 24.585 0 01-4.831-1.244.75.75 0 01-.298-1.205A8.217 8.217 0 005.25 9.75V9zm4.502 8.9a2.25 2.25 0 104.496 0 25.057 25.057 0 01-4.496 0z"
-                  clip-rule="evenodd"
-                />
-              </svg>
-            </span>
-            <span
-              class="absolute -mt-8 ms-3.5 rounded-full bg-danger px-[0.35em] py-[0.15em] text-[0.6rem] font-bold leading-none text-white"
-              >1</span
-            >
-          </a>
+        <div class="relative flex items-center gap-3 pr-5">
+          <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 21">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M10 3.464V1.1m0 2.365a5.338 5.338 0 0 1 5.133 5.368v1.8c0 2.386 1.867 2.982 1.867 4.175C17 15.4 17 16 16.462 16H3.538C3 16 3 15.4 3 14.807c0-1.193 1.867-1.789 1.867-4.175v-1.8A5.338 5.338 0 0 1 10 3.464ZM1.866 8.832a8.458 8.458 0 0 1 2.252-5.714m14.016 5.714a8.458 8.458 0 0 0-2.252-5.714M6.54 16a3.48 3.48 0 0 0 6.92 0H6.54Z"/>
+          </svg>
+          <span>Welcome, <strong>{{ user.full_name }}</strong></span>
         </div>
         <!-- User Avatar -->
         <div class="relative">
-          <a
-            class="flex items-center whitespace-nowrap transition duration-150 ease-in-out"
-            href="#"
-            @click="toggleDropdown"
-            role="button"
-            aria-expanded="false"
-          >
+          <a class="flex items-center whitespace-nowrap transition duration-150 ease-in-out"
+            href="#" @click="toggleDropdown" role="button" aria-expanded="false">
             <img
               :src="`http://127.0.0.1:8000/images/${user.profile}`"
-              class="rounded-full h-12 w-12 border-2 border-white shadow-lg"
+              class="rounded-full h-12 w-12 border-2 border-white w-12 h-11 shadow-lg"
               alt=""
               loading="lazy"
             />
           </a>
           <!-- Dropdown menu -->
           <transition name="fade">
-            <div
-              v-if="showDropdown"
-              class="absolute right-0 z-50 mt-2 w-35 rounded-lg bg-white shadow-lg dark:bg-neutral-800"
-            >
-              <div
-                class="block w-full px-4 py-2 text-sm text-neutral-700 hover:bg-zinc-100 hover:text-red dark:text-white dark:hover:bg-neutral-700 cursor-pointer"
-              >
-                My profile
-              </div>
-              <div
-                class="block w-full px-4 py-2 text-sm text-neutral-700 hover:bg-zinc-100 hover:text-red dark:text-white dark:hover:bg-neutral-700 cursor-pointer"
-                @click="logOut"
-              >
+            <div v-if="showDropdown"
+              class="absolute right-7 z-50 mt-10 w-45 text-center rounded-lg bg-gray-100 shadow-lg dark:bg-neutral-800">
+              <a href="/employee/settings/profile" class="block no-underline w-full px-4 py-2 text-sm text-neutral-700 hover:bg-blue-600 hover:text-white dark:text-white dark:hover:bg-neutral-700 cursor-pointer">My profile</a>
+              <div class="block w-full px-4 py-2 text-sm text-neutral-700 hover:bg-blue-600 hover:text-white dark:text-white dark:hover:bg-neutral-700 cursor-pointer" @click="logOut" >
                 Log out
               </div>
             </div>
@@ -148,7 +92,7 @@ function logOut() {
         </div>
       </div>
     </div>
-  </nav>
+  </header>
 </template>
 
 <style scoped>
@@ -200,18 +144,17 @@ nav {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 0 20px;
-  text-align: center;
-  border-radius: 8px;
-  transition: all 0.2s ease-out;
+  border: 0;
+  font-size: 1rem;
+  opacity: 0.8;
   cursor: pointer;
+  text-decoration: none;
+  color: inherit;
 }
-
-.tab_label:hover {
-  background: rgba(255, 255, 255, 0.2);
-}
-
-.tab:checked + .tab_label {
+input {
   color: white;
+}
+a:hover {
+  color: #f1f1f1;
 }
 </style>

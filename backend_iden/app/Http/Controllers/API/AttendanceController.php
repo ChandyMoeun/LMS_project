@@ -7,12 +7,11 @@ use Illuminate\Http\Request;
 use App\Models\Attendance;
 use App\Models\Employee;
 use Carbon\Carbon;
-use Auth;
-
+use Illuminate\Support\Facades\Auth;
 
 class AttendanceController extends Controller
 {
-    
+
     // Clock-in functionality
     public function clockIn(Request $request)
     {
@@ -90,14 +89,30 @@ class AttendanceController extends Controller
         $employee = Auth::user();
 
         // Fetch all attendance records for the authenticated employee, ordered by date (latest first)
+        // Eager load the employee relationship to get the employee's name
         $attendanceHistory = Attendance::where('employee_id', $employee->id)
+            ->with('employee') // Eager load the employee
             ->orderBy('date', 'desc')
-            ->get();
+            ->get(['id', 'date', 'status', 'clock_in', 'clock_out', 'hours_worked', 'remarks', 'employee_id']); // Select only the necessary fields
+
+        // Format the attendance records to be easy to loop through
+        $formattedRecords = $attendanceHistory->map(function ($record) {
+            return [
+                'id' => $record->id,
+                'date' => $record->date,
+                'status' => $record->status,
+                'clock_in' => Carbon::parse($record->clock_in)->format('H:i:s'),
+                'clock_out' => Carbon::parse($record->clock_out)->format('H:i:s'),
+                'hours_worked' => $record->hours_worked,
+                'remarks' => $record->remarks,
+                'employee_name' => $record->employee->full_name, // Get the employee name from the relationship
+            ];
+        });
 
         // Return the attendance records in a JSON response
         return response()->json([
             'status' => 'success',
-            'attendance_records' => $attendanceHistory,
+            'attendance_records' => $formattedRecords,
         ], 200);
     }
 }

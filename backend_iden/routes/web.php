@@ -1,5 +1,4 @@
 <?php
-
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\{
     ProfileController,
@@ -18,9 +17,13 @@ use App\Http\Controllers\Admin\{
     DashboardController,
     ResetPasswordController,
     NotificationController,
+    ForgotPasswordController,
 };
+use App\Http\Controllers\EmailController;
 use App\Http\Controllers\LeaveRequestController;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
+use Illuminate\Support\Facades\Mail;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -37,24 +40,23 @@ Route::get('/', function () {
     return view('auth.login');
 });
 
-
 Route::get('/test-mail', function () {
 
     $message = "Testing mail";
 
-    \Mail::raw('Hi, welcome!', function ($message) {
-        $message->to('ajayydavex@gmail.com')
+    Mail::raw('Hi, welcome!', function ($message) {
+        $message->to('emcha7231@gmail.com')
             ->subject('Testing mail');
     });
-
     dd('sent');
 });
+
+Route::get('send-mail',[EmailController::class,'sendWelcomeEmail']);
 
 
 Route::get('/dashboard', function () {
     return view('front.dashboard');
 })->middleware(['front'])->name('dashboard');
-
 
 require __DIR__ . '/front_auth.php';
 
@@ -63,15 +65,10 @@ Route::get('/admin/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('admin.dashboard');
 
-
 Route::get('/admin/dashboard', [DashboardController::class, 'index'])
     ->middleware(['auth'])
     ->name('admin.dashboard');
 require __DIR__ . '/auth.php';
-
-
-
-
 
 Route::namespace('App\Http\Controllers\Admin')->name('admin.')->prefix('admin')
     ->group(function () {
@@ -79,7 +76,6 @@ Route::namespace('App\Http\Controllers\Admin')->name('admin.')->prefix('admin')
         Route::resource('permissions', 'PermissionController');
         Route::resource('users', 'UserController');
         Route::resource('employee', 'EmployeeController');
-
 
         //=====>Calendar Group<=====
         Route::resource('calendar_group', 'CalendarGroupController');
@@ -112,6 +108,10 @@ Route::namespace('App\Http\Controllers\Admin')->name('admin.')->prefix('admin')
         // ======dashboard<=====
         Route::post('dashboard/{leaveRequest}/approve', [DashboardController::class, 'approve'])->name('dashboard.approve');
         Route::post('dashboard/{leaveRequest}/reject', [DashboardController::class, 'reject'])->name('dashboard.reject');
+        Route::get('dashboard', [LeaveController::class, 'LeaveRequestDashboard'])->name('dashboard');
+        // Route::get('/dashboard', [EmployeeController::class, 'EmployeeDashboard'])->name('dashboard');
+
+
 
         Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
         Route::put('/profile-update', [ProfileController::class, 'update'])->name('profile.update');
