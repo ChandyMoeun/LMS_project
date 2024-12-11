@@ -36,7 +36,8 @@
                       <th class="py-3 px-2 text-center text-xs text-white uppercase tracking-wider"> Acceptor </th>
                     </tr>
                   </thead>
-                  <tbody v-for="leaveRequest in leaveRequestStore.leaveRequests" :key="leaveRequest.id" >
+                  <!-- <tbody v-for="leaveRequest in leaveRequestStore.leaveRequests" :key="leaveRequest.id" > -->
+                    <tbody v-for="leaveRequest in filteredLeaveRequests" :key="leaveRequest.id">
                     <tr v-if=" (leaveRequest.employee_id === user.id && leaveRequest.status === 'approved') || leaveRequest.status === 'rejected'" class="hover:bg-gray-50" >
                       <td class="py-4 px-2 text-sm text-center text-black">{{ leaveRequest.staff_id }}</td>
                       <td class="py-4 px-2 text-sm text-center text-black">{{ leaveRequest.employee_name }}</td>
@@ -113,15 +114,17 @@ const fetchTeamLeaveRequests = async () => {
 
 // Fetch leave requests on component mount
 onMounted(() => {
-  fetchTeamLeaveRequests()
-})
+  fetchTeamLeaveRequests();
+});
 
-// Computed property for filtering leave requests
+// Computed property for filtered leave requests
 const filteredLeaveRequests = computed(() => {
-  return leaveRequests.value.filter(
+  const query = searchQuery.value.toLowerCase();
+  return leaveRequestStore.leaveRequests.filter(
     (leave) =>
-      leave.full_name.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
-      leave.staff_id.includes(searchQuery.value)
-  )
-})
+      leave.employee_name.toLowerCase().includes(query) ||
+      leave.staff_id.includes(query) ||
+      leave.from_date.includes(query)
+  );
+});
 </script>
