@@ -148,22 +148,26 @@
                 <table class="w-full divide-y divide-gray-200">
                   <thead class="bg-black">
                     <tr>
-                      <th class="py-3 px-2 text-center text-xs text-white uppercase tracking-wider"> Staff ID </th>
-                      <th class="py-3 px-2 text-center text-xs text-white uppercase tracking-wider"> Name </th>
-                      <th class="py-3 px-2 text-center text-xs text-white uppercase tracking-wider"> Type </th>
-                      <th class="py-3 px-2 text-center text-xs text-white uppercase tracking-wider"> From </th>
-                      <th class="py-3 px-2 text-center text-xs text-white uppercase tracking-wider"> To </th>
-                      <th class="py-3 px-2 text-center text-xs text-white uppercase tracking-wider"> Half Day </th>
-                      <th class="py-3 px-2 text-center text-xs text-white uppercase tracking-wider"> Files </th>
-                      <th class="py-3 px-2 text-center text-xs text-white uppercase tracking-wider"> Status </th>
-                      <th class="py-3 px-2 text-center text-xs text-white uppercase tracking-wider"> Total </th>
-                      <th class="py-3 px-2 text-center text-xs text-white uppercase tracking-wider"> Detail </th>
-                      <th class="py-3 px-2 text-center text-xs text-white uppercase tracking-wider"> Approver </th>
-                      <th class="py-3 px-2 text-center text-xs text-white uppercase tracking-wider"> Actions </th>
+                      <th class="py-3 px-2 text-center text-xs text-white uppercase tracking-wider">Staff ID</th>
+                      <th class="py-3 px-2 text-center text-xs text-white uppercase tracking-wider">Name</th>
+                      <th class="py-3 px-2 text-center text-xs text-white uppercase tracking-wider">Type</th>
+                      <th class="py-3 px-2 text-center text-xs text-white uppercase tracking-wider">From</th>
+                      <th class="py-3 px-2 text-center text-xs text-white uppercase tracking-wider">To</th>
+                      <th class="py-3 px-2 text-center text-xs text-white uppercase tracking-wider">Half Day</th>
+                      <th class="py-3 px-2 text-center text-xs text-white uppercase tracking-wider">Files</th>
+                      <th class="py-3 px-2 text-center text-xs text-white uppercase tracking-wider">Status</th>
+                      <th class="py-3 px-2 text-center text-xs text-white uppercase tracking-wider">Total</th>
+                      <th class="py-3 px-2 text-center text-xs text-white uppercase tracking-wider">Detail</th>
+                      <th class="py-3 px-2 text-center text-xs text-white uppercase tracking-wider">Approver</th>
+                      <th class="py-3 px-2 text-center text-xs text-white uppercase tracking-wider">Actions</th>
                     </tr>
                   </thead>
                   <tbody>
-                    <tr v-for="request in leaveRequestStore.leaveRequests" :key="request.id" class="hover:bg-gray-50">
+                    <tr
+                      v-for="request in filteredLeaveRequests"
+                      :key="request.id"
+                      class="hover:bg-gray-50"
+                    >
                       <td class="py-4 px-2 text-sm text-center text-black">{{ request.staff_id }}</td>
                       <td class="py-4 px-2 text-sm text-center text-black">{{ request.employee_name }}</td>
                       <td class="py-4 px-2 text-sm text-center text-black">{{ request.leave_type }}</td>
@@ -176,14 +180,13 @@
                         <span v-else>{{ request.to_date }}</span>
                       </td>
                       <td class="py-4 px-2 text-sm text-center text-black">
-                        <span v-if="request.start_time && request.end_time">time</span>
+                        <span v-if="request.start_time && request.end_time">Time</span>
                         <span v-else>{{ request.half_day_type }}</span>
                       </td>
-                      <!-- Display attachment -->
                       <td class="py-4 px-6 text-sm text-center text-black">
                         <div class="flex gap-2">
                           <img :src="request.attachment" class="max-h-5 max-w-full object-cover mb-2 cursor-pointer"/>
-                          <a href="#" @click.prevent="viewFile(leaveRequest)">See More</a>
+                          <a href="#" @click.prevent="viewFile(request)">See More</a>
                         </div>
                       </td>
                       <td class="py-4 px-6 text-sm d-flex justify-center">
@@ -219,8 +222,7 @@
                           <button
                             class="bg-red-500 text-white px-2 py-1 rounded-md shadow-md hover:bg-red-400 transition-all duration-300 ease-in-out font-semibold border-none"
                             :disabled=" request.status === 'approved' || request.status === 'rejected' "
-                            :class="{ 'opacity-50 cursor-not-allowed':
-                                request.status === 'approved' || request.status === 'rejected' }"
+                            :class="{ 'opacity-50 cursor-not-allowed': request.status === 'approved' || request.status === 'rejected' }"
                             @click="rejectRequest(request.id, 'Not enough leave balance')">Reject
                           </button>
                         </div>
@@ -245,6 +247,16 @@ import { useLeaveTypeStore } from '@/stores/leave-type' // Import the store
 defineProps({ components: { SupervisorSidebar, WebHeaderMenu } })
 const leaveRequestStore = useLeaveRequestStore()
 const leaveTypeStore = useLeaveTypeStore()
+const searchQuery = ref('');
+const filteredLeaveRequests = computed(() => {
+  const query = searchQuery.value.trim().toLowerCase();
+  return leaveRequestStore.leaveRequests.filter(request => {
+    return (
+      request.staff_id.toString().includes(query) ||
+      request.employee_name.toLowerCase().includes(query)
+    );
+  });
+});
 const leaveRequest = ref({
   leaveType_id: '',
   half_day_type: 'full_day', // Default to full day
@@ -328,5 +340,13 @@ const rejectRequest = async (id) => {
   } catch (error) {
     console.error('Error rejecting leave request:', error)
   }
+  return {
+    leaveRequestStore,
+    searchQuery,
+    filteredLeaveRequests,
+    approveRequest,
+    rejectRequest,
+    viewFile
+  };
 }
 </script>

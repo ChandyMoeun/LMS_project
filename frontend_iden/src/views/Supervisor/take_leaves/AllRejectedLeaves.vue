@@ -40,8 +40,7 @@
                       <th class="py-3 px-2 text-center text-xs text-white uppercase tracking-wider">Rejecter </th>
                     </tr>
                   </thead>
-                  <tbody v-for="leaveRequest in leaveRequestStore.leaveRequests"
-                    :key="leaveRequest.id" >
+                  <tbody v-for="leaveRequest in filteredLeaveRequests" :key="leaveRequest.id">
                     <tr v-if="leaveRequest.status === 'rejected'" class="hover:bg-gray-50">
                       <td class="py-4 px-2 text-sm text-center text-black">{{ leaveRequest.staff_id }} </td>
                       <td class="py-4 px-2 text-sm text-center text-black">{{ leaveRequest.employee_name }} </td>
@@ -52,7 +51,7 @@
                       <!-- Display attachment -->
                       <td class="py-4 px-6 text-sm text-center text-black">
                         <div class="flex gap-2">
-                          <img :src="leaveRequest.file_url"  href="#" @click.prevent="viewFile(leaveRequest)"> See More </a>
+                          <img :src="leaveRequest.file_url"  href="#" @click.prevent="viewFile(leaveRequest)">
                         </div>
                       </td>
                       <td class="py-4 px-6 text-sm d-flex justify-center">
@@ -89,36 +88,38 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue'
-import SupervisorSidebar from '@/Components/SupervisorSidebar.vue'
-import WebHeaderMenu from '@/Components/WebHeaderMenu.vue'
-import { useLeaveRequestStore } from '@/stores/request-leave'
+import { ref, computed, onMounted } from 'vue';
+import SupervisorSidebar from '@/Components/SupervisorSidebar.vue';
+import WebHeaderMenu from '@/Components/WebHeaderMenu.vue';
+import { useLeaveRequestStore } from '@/stores/request-leave';
 
 // Search query for filtering leave requests
-const searchQuery = ref('')
-const leaveRequestStore = useLeaveRequestStore()
-// Function to fetch leave requests (example for leaveRequestStore)
+const searchQuery = ref('');
+const leaveRequestStore = useLeaveRequestStore();
+
+// Function to fetch leave requests
 const fetchTeamLeaveRequests = async () => {
   try {
-    await leaveRequestStore.fetchTeamLeaveRequests()
-    console.log('Fetched leave requests:', leaveRequestStore.leaveRequests)
+    await leaveRequestStore.fetchTeamLeaveRequests();
+    console.log('Fetched leave requests:', leaveRequestStore.leaveRequests);
   } catch (error) {
-    console.error('Error fetching leave requests:', error)
+    console.error('Error fetching leave requests:', error);
   }
-}
+};
+
 // Fetch leave requests on component mount
 onMounted(() => {
-  fetchTeamLeaveRequests()
-})
+  fetchTeamLeaveRequests();
+});
 
 // Computed property for filtered leave requests
 const filteredLeaveRequests = computed(() => {
-  const query = searchQuery.value.toLowerCase()
-  return leaveRequests.value.filter(
+  const query = searchQuery.value.toLowerCase();
+  return leaveRequestStore.leaveRequests.filter(
     (leave) =>
-      leave.full_name.toLowerCase().includes(query) ||
+      leave.employee_name.toLowerCase().includes(query) ||
       leave.staff_id.includes(query) ||
-      leave.from_date.includes(query) // Filter by from_date
-  )
-})
+      leave.from_date.includes(query)
+  );
+});
 </script>

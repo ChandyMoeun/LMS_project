@@ -95,7 +95,6 @@
                           leaveRequests.half_day_type === 'afternoon' 
                           " > half_day
                       </span>
-                      <!-- Fallback: Display from and to dates -->
                       <span v-else>
                         {{ leaveRequests.from_date }} | {{ leaveRequests.to_date }}
                       </span>
@@ -121,7 +120,8 @@
                     <td class="py-2 px-2 text-center border-b text-xs">
                       <router-link
                         :to="{ name: 'viewLeaveDetail', params: { id: leaveRequests.id } }"
-                        class="text-blue-700 no-underline hover:text-blue-300" > View </router-link>
+                        class="text-blue-700 no-underline hover:text-blue-300" > View 
+                      </router-link>
                     </td>
                     <td class="text-sm px-2 font-medium text-center">
                       <div class="flex justify-center mt-2 space-x-2">
@@ -173,7 +173,6 @@ import { useTeamStore } from '@/stores/get-member'
 
 const teamStore = useTeamStore()
 const leaveRequestStore = useLeaveRequestStore()
-
 // Declare reactive state variables with proper types
 const leaveRequestCountThisWeek = ref(0) // leaveRequestCountThisWeek is a number
 const requestStatus = ref<'success' | 'error' | null>(null) // requestStatus can be 'success', 'error', or null
@@ -199,7 +198,6 @@ const fetchTeamLeaveRequests = async () => {
 onMounted(() => {
   fetchTeamLeaveRequests()
 })
-
 const approveRequest = async (id: any) => {
   try {
     await leaveRequestStore.approveLeaveRequest(id) // Call the approve action from Pinia store
@@ -208,7 +206,6 @@ const approveRequest = async (id: any) => {
     console.error('Error approving leave request:', error)
   }
 }
-
 const rejectRequest = async (id: any) => {
   try {
     await leaveRequestStore.rejectLeaveRequest(id) // Call the reject action from Pinia store
@@ -297,7 +294,6 @@ const showToast = () => {
 onMounted(() => {
   showToast()
 })
-
 onMounted(async () => {
   await teamStore.fetchTeamMembers() // Fetch employee data as well
 })

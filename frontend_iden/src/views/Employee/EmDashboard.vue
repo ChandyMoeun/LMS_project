@@ -9,7 +9,7 @@
         <main class="p-[50px] pt-[50px] pb-0 h-auto w-full bg-[#EEEDED] mb-[50px]">
           <div class="px-10 container pb-30">
                 <!-- Header -->
-            <div class="mt-5 mb-5 text-black" style="border-bottom: solid 1px gray">
+            <div class="mt-5  text-black" style="border-bottom: solid 1px gray">
               <h1 class="font-bold text-3xl px-8 hover:text-yellow-400 w-4/12">Employee Dashboard</h1>
             </div>
             <!----------- alert code -------------------->
@@ -24,12 +24,9 @@
             <!-- Chart Container -->
             <h1 class="text-4xl text-black p-10 text-center">My Leave Balance</h1>
             <div
-              class="chart-container flex justify-center mb-10 rounded-2xl bg-white shadow-[0_35px_60px_-15px_rgba(0,0,0,0.3)]"
+              class="chart-container flex justify-center mb-10 rounded-2xl py-3 bg-white shadow-[0_35px_60px_-15px_rgba(0,0,0,0.3)]"
             >
-              <canvas
-                id="myLeaveBalance"
-                style="width: 100%; max-width: 800px; height: 100vh; max-height: 70vh"
-              ></canvas>
+              <canvas id="myLeaveBalance" style="width: 100%; max-width: 800px; height: 100vh; max-height: 70vh" ></canvas>
             </div>
             <!--............................list of my requesting leaves ..............................  -->
             <div class="px-8 overflow-x-auto">
@@ -57,10 +54,8 @@
                         :src="
                           request.profile && request.profile
                             ? `http://127.0.0.1:8000/images/${request.profile}`
-                            : '/images/default-profile.jpg'
-                        "
-                        class="w-12 h-12 rounded-full object-cover"
-                      />
+                            : '/images/default-profile.jpg' "
+                        class="w-12 h-12 rounded-full object-cover"/>
                     </td>
                     <td class="py-2 px-2 text-center border-b">{{ request.employee_name }}</td>
                     <td class="py-2 px-2 text-center border-b">{{ request.leave_type }}</td>
@@ -70,17 +65,13 @@
                       <span v-if="request.start_time && request.end_time">
                         {{ request.start_time }} | {{ request.end_time }}
                       </span>
-
                       <!-- Display half day type if it's either 'morning' or 'afternoon' -->
                       <span
                         v-else-if="
                           request.half_day_type === 'morning' ||
                           request.half_day_type === 'afternoon'
-                        "
-                      >
-                        half_day
+                        "> half_day
                       </span>
-
                       <!-- Fallback: Display from and to dates -->
                       <span v-else> {{ request.from_date }} | {{ request.to_date }} </span>
                     </td>
@@ -98,8 +89,7 @@
                             'bg-green-500 text-white': request.status === 'approved',
                             'bg-red-500 text-white': request.status === 'rejected'
                           }"
-                          class="text-center px-2 py-1 rounded-full text-xs font-semibold"
-                        >
+                          class="text-center px-2 py-1 rounded-full text-xs font-semibold">
                           {{ request.status }}
                         </span>
                       </div>
@@ -108,8 +98,7 @@
                       <router-link
                         :to="{ name: 'leaveDetail', params: { id: request.id } }"
                         class="text-blue-700 no-underline hover:text-blue-300"
-                      >
-                        View
+                      > View
                       </router-link>
                     </td>
                   </tr>
@@ -136,11 +125,8 @@ import Chart from 'chart.js/auto'
 const authStore = userAuthStore()
 const user = authStore.user
 console.log(user)
-
 const leaveRequestStore = useLeaveRequestStore()
-
 const leaveTypeStore = useLeaveTypeStore()
-
 // Function to fetch leave requests (example for leaveRequestStore)
 const fetchTeamLeaveRequests = async () => {
   try {
@@ -212,44 +198,6 @@ const showToast = () => {
 onMounted(() => {
   showToast()
 })
-
-// Sample data for leave requests
-const leaveRequests = ref([
-  {
-    id: 1,
-    name: 'John Doe',
-    type: 'Sick Leave',
-    position: 'Developer',
-    date: '12.02.2024 | 12.03.2024',
-    approver: 'Approver1',
-    subApprover: 'Sub1',
-    status: 'Pending'
-  },
-  {
-    id: 2,
-    name: 'Jane Doe',
-    type: 'Annual Leave',
-    position: 'Designer',
-    date: '01.01.2024 | 01.02.2024',
-    approver: 'Approver2',
-    subApprover: 'Sub2',
-    status: 'Approved'
-  }
-])
-
-const dropdownVisible = ref(null)
-
-// Method to toggle the visibility of the dropdown
-const toggleDropdown = (index) => {
-  dropdownVisible.value = dropdownVisible.value === index ? null : index
-}
-
-// Method to handle status update
-const updateStatus = (index) => {
-  const updatedStatus = leaveRequests.value[index].status
-  // Do something with the updated status, like sending it to a server or storing it
-  console.log(`Leave request ${leaveRequests.value[index].id} updated to: ${updatedStatus}`)
-}
 
 // Method to dynamically assign classes based on status
 const statusClass = (status) => {
