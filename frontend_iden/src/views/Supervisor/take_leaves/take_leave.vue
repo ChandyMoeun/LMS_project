@@ -83,7 +83,7 @@
                     <!-- select half day show from_date -->
                     <div v-if="duration === 'half_day'" class="mt-3">
                       <label for="from_date" class="block text-sm font-medium text-gray-700"> From Date </label>
-                      <input type="date" id="from_date" v-model="leaveRequest.from_date" lass="mt-1 block w-full rounded-md border-gray-300 py-2 shadow-sm" />
+                      <input type="date" id="from_date" v-model="leaveRequest.from_date" class="mt-1 block w-full rounded-md border-gray-300 py-2 shadow-sm" />
                     </div>
                     <!-- select half day show to_date -->
                     <div v-if="duration === 'half_day'" class="mt-3">
@@ -95,6 +95,10 @@
                 </div>
                 <div class="w-6/12">
                   <div>
+                    <label for="duration">Duration:</label>
+                    <input type=" number" id="duration" v-model="leaveRequest.total_requested_days" placeholder="Duration for leave" required class="mt-1 block w-full rounded-md border-gray-300 py-2 shadow-sm">
+                  </div>
+                  <div class="mt-3">
                     <label for="reason">Reason:</label>
                     <textarea id="reason" v-model="leaveRequest.reason" placeholder="Reason for leave" required
                       class="mt-1 block w-full rounded-md border-gray-300 py-2 shadow-sm"></textarea>

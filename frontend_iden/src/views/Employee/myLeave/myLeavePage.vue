@@ -111,6 +111,10 @@
                 </div>
                 <div class="w-6/12">
                   <div>
+                    <label for="duration">Duration:</label>
+                    <input type=" number" id="duration" v-model="leaveRequest.total_requested_days" placeholder="Duration for leave" required class="mt-1 block w-full rounded-md border-gray-300 py-2 shadow-sm">
+                  </div>
+                  <div class="mt-3">
                     <label for="reason">Reason:</label>
                     <textarea id="reason" v-model="leaveRequest.reason" placeholder="Reason for leave" required
                       class="mt-1 block w-full rounded-md border-gray-300 py-2 shadow-sm"></textarea>
