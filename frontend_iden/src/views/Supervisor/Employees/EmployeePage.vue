@@ -28,7 +28,7 @@
                   </svg>
                   <a href="/supervisor/employee/create" class="no-underline text-white">Add</a>
                 </button>
-              </div>
+            </div>
             </div>
 
             <!-- Employee Table -->
@@ -45,11 +45,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr
-                    v-for="member in teamStore.teamMembers"
-                    :key="member.id"
-                    class="bg-gray-100 border-b border-gray-200"
-                  >
+                  <tr v-for="member in teamStore.teamMembers" :key="member.id" class="bg-gray-100 border-b border-gray-200" >
                     <td class="p-3">{{ member.staff_id }}</td>
                     <td class="p-3">
                       <img :src=" member.profile && member.profile   ? `http://127.0.0.1:8000/images/${member.profile}` : '/images/default-profile.jpg' "
@@ -60,7 +56,7 @@
                     <td class="p-3 text-center">{{ member.position.name }}</td>
                     <td class="text-center w-3/12">
                       <router-link :to="{ name: 'EmployeeProfile', params: { id: member.id } }"
-                        class="inline-block px-4 py-2 text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition duration-200 shadow-sm no-underline">
+                        class="inline-block px-2 py-2 text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition duration-200 shadow-sm no-underline">
                         More
                       </router-link>
                     </td>
@@ -84,14 +80,8 @@ import WebHeaderMenu from '@/Components/WebHeaderMenu.vue'
 
 // Initialize the team store
 const teamStore = useTeamStore()
-
-// Reactive reference for the search query
 const searchQuery = ref('')
-
-// Fetch employee data from the API
 const employeesList = ref([])
-
-// Fetch employees from the backend
 const fetchEmployee = async () => {
   try {
     const response = await axiosInstance.get('/employee')
