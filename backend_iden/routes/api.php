@@ -1,15 +1,15 @@
 <?php
 
-use App\Http\Controllers\Admin\DepartmentController;
+// use App\Http\Controllers\Admin\DepartmentController;
 use App\Http\Controllers\API\{
     PostController,
     LeaveRequestController, // Use PascalCase for controller names
-    CalendarGroupController,
+    CalendarHolidayController,
     CalendarWorkDayController,
     AttendanceController,
     NotificationController,
     LeaveBalanceController,
-    DempartmentController,
+    DepartmentController,
     PositionController,
     LeaveTypeController,
     EmployeeController,
@@ -54,10 +54,10 @@ Route::middleware('auth:sanctum')->group(function () {
     // =====>CRUD operations for leave requests<====
     // Route::apiResource('leave_requests', LeaveRequestController::class);
     Route::get('leave_requests', [LeaveRequestController::class, 'index']);
-    Route::post('/leave_requests', [LeaveRequestController::class, 'store']);
+    Route::post('/leave_requests', [LeaveRequestController::class, 'leaveRequests']);
     Route::get('/leave_requests/team', [LeaveRequestController::class, 'getTeamLeaveRequests']);
     Route::get('/leave_requests/team/{id}', [LeaveRequestController::class, 'getTeamLeaveRequestsById']);
-    // Route::get('/my_leave', [LeaveRequestController::class, 'getMyLeaves']);
+    Route::get('/leave_balances', [LeaveBalanceController::class, 'index']);
 
 
 
@@ -69,8 +69,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/leave_requests/{id}/reject_request', [LeaveRequestController::class, 'reject']);
 
     //=======>Calendar_groups<=========
-    Route::get('/calendar_holiday', [CalendarGroupController::class, 'calendarGroup']);
-    Route::get('/calendar_work', [CalendarWorkDayController::class, 'index']);
+    Route::get('/calendar_holiday', [CalendarHolidayController::class, 'calendarHoliday']);
+    Route::get('/calendar_work', [CalendarWorkDayController::class, 'CalendarWorkday']);
 });
 
 Route::middleware('auth:sanctum')->group(function () {});
@@ -86,13 +86,9 @@ Route::middleware('auth:sanctum')->group(function () {
 
 // ======>List Department <=====
 Route::middleware('auth:sanctum')->group(function () {
-    Route::get('departments', [DempartmentController::class, 'index']);
-    Route::get('/departments/{departmentId}', [DempartmentController::class, 'show']);
+    Route::get('departments', [DepartmentController::class, 'index']);
+    Route::get('/departments/{departmentId}', [DepartmentController::class, 'show']);
     Route::get('/employees/department/{department_id}', [EmployeeController::class, 'getEmployeesByDepartment']);
-
-    // Route::apiResource('departments', DempartmentController::class);
-    // Route::get('departments', [DempartmentController::class, 'showChart']);
-
 });
 
 // ======>List  Position<=====

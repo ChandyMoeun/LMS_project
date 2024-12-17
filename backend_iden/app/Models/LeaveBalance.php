@@ -15,6 +15,7 @@ class LeaveBalance extends Model
         'leave_type_id',
         'used',
         'available',
+        'entitlement'
     ];
 
     // Define relationships if needed

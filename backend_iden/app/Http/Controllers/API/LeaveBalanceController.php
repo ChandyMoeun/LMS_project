@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\LeaveBalance;
 use App\Models\LeaveType;
+use Illuminate\Support\Facades\Auth;
 
 class LeaveBalanceController extends Controller
 {
@@ -14,9 +15,13 @@ class LeaveBalanceController extends Controller
      */
     public function index()
     {
-        // Retrieve all leave balances
-        // return LeaveBalance::with('leaveType')->get();
-        return LeaveBalance::get();
+        $user=Auth::user();
+        $leaveBalances = LeaveBalance::with('leaveType')->where(['employee_id'=>$user->id])->get();
+
+        return response()->json([
+            'success' => true,
+            'data' => $leaveBalances,
+        ]);
     }
 
     /**
@@ -29,6 +34,7 @@ class LeaveBalanceController extends Controller
             'leave_type_id' => 'required|exists:leave_types,id',
             'used' => 'required|integer|min:0',
             'available' => 'required|integer|min:0',
+            'entitlement' => 'required|integer|min:0',
         ]);
 
         return LeaveBalance::create($request->all());
@@ -52,10 +58,12 @@ class LeaveBalanceController extends Controller
         $request->validate([
             'used' => 'integer|min:0',
             'available' => 'integer|min:0',
+            'entitlement'=>0
+            
         ]);
 
         // Update used and available values
-        $leaveBalance->update($request->only(['used', 'available']));
+        $leaveBalance->update($request->only(['used', 'available','entitlement']));
 
         return $leaveBalance;
     }
@@ -75,7 +83,7 @@ class LeaveBalanceController extends Controller
             // Find the leave balance for the employee and leave type
             $leaveBalance = LeaveBalance::firstOrCreate(
                 ['employee_id' => $employeeId, 'leave_type_id' => $leaveType->id],
-                ['used' => 0, 'available' => 0] // Default values if not exists
+                ['used' => 0, 'available' => 0,'entitlement'=>0] // Default values if not exists
             );
 
             // Update the available balance

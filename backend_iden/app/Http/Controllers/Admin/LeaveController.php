@@ -21,13 +21,13 @@ class LeaveController extends Controller
     /**
      * LeaveController constructor with role-based permissions.
      */
-    // public function __construct()
-    // {
-    //     $this->middleware('role_or_permission:Leave access|Leave create|Leave edit|Leave delete', ['only' => ['index', 'show']]);
-    //     $this->middleware('role_or_permission:Leave create', ['only' => ['create', 'store']]);
-    //     $this->middleware('role_or_permission:Leave edit', ['only' => ['edit', 'update']]);
-    //     $this->middleware('role_or_permission:Leave delete', ['only' => ['destroy']]);
-    // }
+    public function __construct()
+    {
+        $this->middleware('role_or_permission:Leave access|Leave create|Leave edit|Leave delete', ['only' => ['index', 'show']]);
+        $this->middleware('role_or_permission:Leave create', ['only' => ['create', 'store']]);
+        $this->middleware('role_or_permission:Leave edit', ['only' => ['edit', 'update']]);
+        $this->middleware('role_or_permission:Leave delete', ['only' => ['destroy']]);
+    }
 
     /**
      * Display a listing of leave requests.
@@ -35,21 +35,18 @@ class LeaveController extends Controller
     public function index()
     {
         // Paginate leave requests and load the associated employee data
-        $leaveRequests = LeaveRequest::with('employee', 'leaveType', 'approver', 'rejector')->paginate(10);
+        $leaveRequests = LeaveRequest::with('employee', 'leaveType', 'approver', 'rejector')
+            ->orderBy('created_at', 'desc') // Orders by the latest created records first
+            ->paginate(10);
+
         return view('leave.index', compact('leaveRequests'));
     }
 
     // ====>dashboard <===
     public function LeaveRequestDashboard()
     {
-
         $department = Department::all();
-        // Paginate leave requests and load the associated employee data
-        // $leaveRequests = LeaveRequest::with('employee', 'leaveType', 'approver', 'rejector')->paginate(10);
-        // return view('dashboard', compact('leaveRequests'));
-        
         // Count total leave requests
-
         $totalEmployees = Employee::count();
         $TotalLeave = LeaveRequest::count();
 
@@ -63,10 +60,13 @@ class LeaveController extends Controller
             ->count();
 
         // Paginate leave requests and load associated employee data
-        $leaveRequests = LeaveRequest::with('employee', 'leaveType', 'approver', 'rejector')->paginate(10);
+        $leaveRequests = LeaveRequest::with('employee', 'leaveType', 'approver', 'rejector')
+            ->orderBy('created_at', 'desc') // Change 'desc' to 'asc' for ascending order
+            ->paginate(10);
+
 
         // Pass the counts and leave requests to the view
-        return view('dashboard', compact('leaveRequests', 'TotalLeave', 'leaveRequestsCountThisWeek','totalEmployees','department'));
+        return view('dashboard', compact('leaveRequests', 'TotalLeave', 'leaveRequestsCountThisWeek', 'totalEmployees', 'department'));
     }
 
 
@@ -84,17 +84,6 @@ class LeaveController extends Controller
      */
     public function create()
     {
-        // $positions = Position::all(); // Get all available positions
-        // $employees = Employee::with('roles', 'position')->get(); // Get all employees with roles and positions
-        // $leaveTypes = LeaveType::all(); // Get all leave types (leave employees relationship out since it's not needed for leave types)
-
-        // return view('leave.request', compact('leaveTypes', 'positions', 'employees'));
-
-
-
-        // ======>test<======
-
-
         // Fetch all available positions
         $positions = Position::all();
 
@@ -231,50 +220,21 @@ class LeaveController extends Controller
     // =====>approve request<======
     public function approve(LeaveRequest $leaveRequest)
     {
-        // Ensure the leave request hasn't already been approved
-        if ($leaveRequest->status === 'approved') {
-            return redirect()->route('admin.dashboard')->with('error', 'Leave request is already approved.');
-        }
-
         // Mark the leave request as approved
         $leaveRequest->status = 'approved';
         $leaveRequest->approved_by = auth()->user()->id; // Store the ID of the user who approved the request
-
-        // Get the associated leave type (assuming there's a relationship between LeaveRequest and LeaveType)
-        $leaveType = $leaveRequest->leaveType; // Assuming LeaveRequest has a leaveType relationship
-
-        // Fetch the employee's leave balance for this leave type
-        $leaveBalance = LeaveBalance::where('employee_id', $leaveRequest->employee_id)
-            ->where('leave_type_id', $leaveType->id)
-            ->first();
-
-        // Ensure the leave balance exists
-        if (!$leaveBalance) {
-            return redirect()->route('admin.dashboard')->with('error', 'Leave balance not found for this employee.');
+        $leaveBalance = LeaveBalance::where(['leave_type_id' => $leaveRequest->leaveType_id, 'employee_id' => $leaveRequest->employee_id])->first();
+        // Ensure there's an increase_rate to subtract
+        if ($leaveBalance->used < $leaveBalance->available) {
+            echo ($leaveBalance);
+            $leaveBalance->used = $leaveBalance->used + 1;
+            $leaveBalance->available = $leaveBalance->available - $leaveBalance->used;
+            $leaveRequest->save();
+            $leaveBalance->save();
         }
-
-        // Calculate the number of days requested
-        $totalRequestedDays = $this->calculateLeaveDays($leaveRequest);
-
-        // Ensure there's enough available leave balance
-        if ($leaveBalance->available < $totalRequestedDays) {
-            return redirect()->route('admin.dashboard')->with('error', 'Insufficient leave balance.');
-        }
-
-        // Subtract the requested days from available balance and add to used balance
-        $leaveBalance->available -= $totalRequestedDays;
-        $leaveBalance->used += $totalRequestedDays;
-
-        // Save the updated leave balance
-        $leaveBalance->save();
-
-        // Save the leave request status
-        $leaveRequest->save();
-
         // Redirect to the admin dashboard with a success message
-        return redirect()->route('admin.dashboard')->with('success', 'Leave request approved successfully, and the leave balance was updated.');
+        return redirect()->route('admin.dashboard')->with('success', 'Leave request approved successfully and 1 day was subtracted from the increase rate.');
     }
-
 
 
     // =====>reject request<======

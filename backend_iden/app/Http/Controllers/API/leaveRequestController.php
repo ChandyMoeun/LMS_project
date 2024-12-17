@@ -16,12 +16,10 @@ use Illuminate\Support\Facades\Log; // Make sure to import the Log facade
 
 class leaveRequestController extends Controller
 {
-
     public function __construct()
     {
         $this->middleware('auth'); // Ensures only authenticated users can access these methods
     }
-
     /**
      * Display a listing of leave requests.
      */
@@ -29,19 +27,11 @@ class leaveRequestController extends Controller
     {
         $leaveRequests = LeaveRequest::with(['employee', 'LeaveType'])->get(); // Eager load both relationships
         return response()->json($leaveRequests);
-
-        // Paginate leave requests and load associated employee, leaveType, approver, and rejector data
-        // $leaveRequests = LeaveRequest::with('employee', 'leaveType', 'approver', 'rejector')->paginate(10);
-
-        // return response()->json([
-        //     'message' => 'Leave requests retrieved successfully',
-        //     'data' => $leaveRequests
-        // ]);
     }
 
     public function getTeamLeaveRequests()
     {
-        // Get the currently authenticated manager's ID
+        //===> Get the currently authenticated manager's ID<===
         $managerId = Auth::id();
 
         // Get the department ID of the authenticated manager
@@ -56,11 +46,11 @@ class leaveRequestController extends Controller
 
         $departmentId = $manager->department_id;
 
-        // Get the current week range
+        // ===>Get the current week range<===
         $startOfWeek = \Carbon\Carbon::now()->startOfWeek(); // Start of the current week
         $endOfWeek = \Carbon\Carbon::now()->endOfWeek(); // End of the current week
 
-        // Fetch leave requests for employees in the manager's department
+        // ===>Fetch leave requests for employees in the manager's department<===
         $leaveRequests = LeaveRequest::whereHas('employee', function ($query) use ($departmentId) {
             $query->where('department_id', $departmentId); // Filter by department ID
         })
@@ -68,14 +58,14 @@ class leaveRequestController extends Controller
             ->latest() // Sort by 'created_at' descending
             ->get();
 
-        // Count leave requests for the current week
+        // ===>Count leave requests for the current week<===
         $leaveRequestCountThisWeek = LeaveRequest::whereHas('employee', function ($query) use ($departmentId) {
             $query->where('department_id', $departmentId); // Filter by department ID
         })
             ->whereBetween('from_date', [$startOfWeek, $endOfWeek]) // Filter by current week
             ->count();
 
-        // Format the leave requests for a cleaner response
+        // ===>Format the leave requests for a cleaner response<===
         $formattedLeaveRequests = $leaveRequests->map(function ($leaveRequest) {
             return [
                 'id' => $leaveRequest->id,
@@ -127,8 +117,7 @@ class leaveRequestController extends Controller
                 'message' => 'Leave request not found',
             ], 404);
         }
-
-        // Format the leave request to include only specific fields
+        // ===>Format the leave request to include only specific fields<===
         $formattedLeaveRequest = [
             'id' => $leaveRequest->id,
             'employee_name' => $leaveRequest->employee->full_name,
@@ -156,38 +145,30 @@ class leaveRequestController extends Controller
         ]);
     }
 
+    // =====leaveRequest=====
 
-
-
-
-
-    /**
-     * Store a newly created leave request in the database.
-     */
-    public function store(Request $request)
+    public function leaveRequests(Request $request)
     {
         Log::info('Request Data:', ['request' => $request->all()]);
-
-        // Handle file upload if there are any
+        // Handle file upload
         $attachmentPaths = [];
         if ($request->hasFile('attachment')) {
-            foreach ($request->file('attachment') as $file) {
+            // Check if it's a single file or multiple files
+            $files = $request->file('attachment');
+
+            // Ensure $files is always an array
+            $files = is_array($files) ? $files : [$files];
+
+            foreach ($files as $file) {
                 if ($file->isValid()) {
                     // Store each file and add the path to the array
-                    $attachmentPaths[] = $file->store('attachment', 'public');
+                    $attachmentPaths[] = $file->store('attachments', 'public');
                 } else {
                     Log::warning('Invalid file uploaded', ['file' => $file]);
                 }
             }
         }
-
-        // Log the file paths
-        Log::info('File Attachments:', ['attachment' => $attachmentPaths]);
-
-        // Convert attachment paths to JSON
         $attachmentsJson = !empty($attachmentPaths) ? json_encode($attachmentPaths) : null;
-
-        // Create a new leave request without validation
         $leaveRequest = LeaveRequest::create([
 
             'employee_id' => Auth::id(), // Assuming the employee ID is always required (we assume logged-in user)
@@ -204,117 +185,39 @@ class leaveRequestController extends Controller
                 ? $this->calculateLeaveDays($request)
                 : null, // Calculate leave days only if both dates are provided
         ]);
-
-
         // Send notification
         $notificationController = new NotificationController();
         $notificationController->notifyAfterLeaveRequest($leaveRequest->id);
-
         return response()->json([
             'message' => 'Leave request submitted successfully.',
             'data' => $leaveRequest
         ], 201);
     }
 
-    /**
-     * Update the specified leave request.
-     */
-    public function update(Request $request, $id)
+    // ======>Approve the specified leave request<========
+    public function approveLeaveRequest($id)
     {
         $leaveRequest = LeaveRequest::findOrFail($id);
-
-        // Validate the request
-        $validated = $request->validate([
-            'leave_type_id' => 'required|exists:leave_types,id',
-            'half_day_type' => 'required|in:AM,PM',  // Only allow "AM" or "PM" if these are valid options
-            'start_time' => 'required|date_format:H:i:s',  // Enforce format
-            'end_time' => 'required|date_format:H:i:s',  // Enforce format
-            'from_date' => 'required|date',
-            'to_date' => 'required|date|after_or_equal:from_date',  // Enforce `to_date` after or equal to `from_date`
-            'reason' => 'nullable|string|max:255',
-            'attachment' => 'nullable|file|mimes:jpg,png,pdf|max:2048',
-        ]);
-
-
-        // Handle file upload if there is any
-        if ($request->hasFile('attachment')) {
-            $attachmentPath = $request->file('attachment')->store('attachments', 'public');
-        }
-
-        // Update leave request details
-        $leaveRequest->update([
-            'leave_type_id' => $validated['leave_type_id'],
-            'half_day_type' => $validated['half_day_type'],
-            'start_time' => $validated['start_time'] ?? null,
-            'end_time' => $validated['end_time'] ?? null,
-            'from_date' => $validated['from_date'],
-            'to_date' => $validated['to_date'],
-            'reason' => $validated['reason'],
-            'attachment' => $attachmentPath ?? $leaveRequest->attachment,
-            'total_requested_days' => $this->calculateLeaveDays($validated),
-        ]);
-
-        return response()->json([
-            'message' => 'Leave request updated successfully.',
-            'data' => $leaveRequest
-        ]);
-    }
-
-
-    // ===>get My leave<===
-
-
-
-    // ======>Approve the specified leave request<========
-    public function approve(LeaveRequest $leaveRequest)
-    {
-        // Ensure the leave request hasn't already been approved
-        if ($leaveRequest->status === 'approved') {
-            return response()->json(['error' => 'Leave request is already approved.'], 400);
-        }
-
-        // Mark the leave request as approved
+        $leaveBalance = LeaveBalance::where(['leave_type_id' => $leaveRequest->leaveType_id, 'employee_id' => $leaveRequest->employee_id])->first();
+        $approver = Auth::user()->id;
         $leaveRequest->status = 'approved';
-        $leaveRequest->approved_by = auth()->user()->id; // Store the ID of the user who approved the request
-
-        // Get the associated leave type
-        $leaveType = LeaveType::findOrFail($leaveRequest->leave_type_id); // Fetch the leave type directly
-
-        // Fetch the employee's leave balance for this leave type
-        $leaveBalance = LeaveBalance::where('employee_id', $leaveRequest->employee_id)
-            ->where('leave_type_id', $leaveType->id)
-            ->first();
-
-        // Ensure the leave balance exists
+        $leaveRequest->approved_by = $approver;
         if (!$leaveBalance) {
-            return response()->json(['error' => 'Leave balance not found for this employee.'], 404);
+            return response()->json(['message' => 'The own to the request does not have leave balance', 'data' => $leaveRequest]); //
         }
-
-        // Calculate the number of days requested
-        $totalRequestedDays = $this->calculateLeaveDays($leaveRequest); // Implement this method based on your logic
-
-        // Ensure there's enough available leave balance
-        if ($leaveBalance->available < $totalRequestedDays) {
-            return response()->json(['error' => 'Insufficient leave balance.'], 400);
+        $totalRequestDay = $leaveRequest->total_requested_days;
+        if ($leaveBalance->used < $leaveBalance->available) {
+            $leaveBalance->used = $leaveBalance->used + $totalRequestDay;
+            $leaveBalance->available = $leaveBalance->available - $totalRequestDay;
+            $leaveRequest->save();
+            $leaveBalance->save();
         }
-
-        // Subtract the requested days from available balance and add to used balance
-        $leaveBalance->available -= $totalRequestedDays;
-        $leaveBalance->used += $totalRequestedDays;
-
-        // Save the updated leave balance
-        $leaveBalance->save();
-
-        // Save the leave request status
-        $leaveRequest->save();
-
-        // Return a success response
-        return response()->json(['message' => 'Leave request approved successfully, and the leave balance was updated.'], 200);
+        return response()->json([
+            'message' => 'Leave request approved successfully',
+            'approver' => Auth::user()->full_name,  // Return the approver's name in the response
+            'data' => $leaveBalance->available
+        ]);
     }
-
-
-
-
     // ========>Reject the specified leave request<========
     public function reject($id, Request $request)
     {
@@ -345,7 +248,7 @@ class leaveRequestController extends Controller
 
         return $fromDate->diffInDays($toDate); // Full-day leave
     }
-    
+
 
     /**
      * Delete the specified leave request.

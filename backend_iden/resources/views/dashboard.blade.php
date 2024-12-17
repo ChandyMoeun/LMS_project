@@ -30,12 +30,14 @@
             </div>
             <script>
                 let taostBox = document.getElementById('taostBox');
+
                 function ShowAlert() {
                     taostBox.style.display = 'block';
                     setTimeout(() => {
                         taostBox.style.display = 'none'
                     }, 4000);
                 }
+
                 function HideAlert() {
                     taostBox.style.display = 'none';
                 }
@@ -59,7 +61,7 @@
                             <h4 class="font-bold mt-6 ml-3 "><b>Leaveds</b></h4>
                             <p class="ml-1"><em>Total leave : {{$TotalLeave}}</em></p>
                             <p class="ml-1"><em>This week : {{$leaveRequestsCountThisWeek}}</em></p>
-                            
+
                         </div>
                     </div>
                 </div>
@@ -76,6 +78,7 @@
                     align-items: center;
                     margin-bottom: 90px;
                 }
+
                 canvas {
                     background: #ECECEC;
                     width: 100%;
@@ -90,7 +93,7 @@
             </div>
             <!-- Bar Chart Container -->
             <div class="chart-container m-10">
-                <canvas id="leaveChart" width="300" ></canvas>
+                <canvas id="leaveChart" width="300"></canvas>
             </div>
             <!-- Chart Script -->
             <script>
@@ -322,19 +325,17 @@
                             <td class="py-2 px-2 text-center border-b text-xs">
                                 <a href="{{ route('admin.leave.show', $leaveRequest->id) }}" class="text-blue-500 hover:text-blue-400">More</a>
                             </td>
-                            <td class="action text-center align-middle">
-                                <!-- View button to toggle the visibility -->
-                                <button type="button" class="text-blue-500 hover:text-blue-400 font-semibold px-2 py-1 rounded-md" onclick="toggleButtons({{ $leaveRequest->id }})">
-                                    Views
-                                </button>
+                            <td class="text-sm px-2 font-medium text-center">
+                                <!-- Hidden buttons (Edit, Approve, Reject) -->
+                                <div id="action-buttons-{{ $leaveRequest->id }}" class="flex justify-center mt-2 m-2 space-x-2">
 
-                                <!-- Hidden buttons (Approve, Reject) -->
-                                <div id="action-buttons-{{ $leaveRequest->id }}" class="mt-2 hidden">
+                                    @if($leaveRequest->status === 'pending') <!-- Only show Approve/Reject if status is 'pending' -->
                                     @can('Leave edit')
                                     <form action="{{ route('admin.leave.approve', $leaveRequest) }}" method="POST" class="inline" onsubmit="disableButtons({{ $leaveRequest->id }})">
                                         @csrf
                                         @method('post')
-                                        <button type="submit" class="bg-blue-500 text-white px-1 py-2 rounded-md shadow-md hover:bg-blue-600 transition-all duration-300 ease-in-out font-semibold text-xs">
+                                        <button type="submit" class="bg-black text-white px-2 py-2 rounded-md shadow-md hover:bg-yellow-400 transition-all duration-300 ease-in-out font-semibold"
+                                            @if($leaveRequest->status !== 'pending') disabled @endif>
                                             Approve
                                         </button>
                                     </form>
@@ -344,11 +345,18 @@
                                     <form action="{{ route('admin.leave.reject', $leaveRequest) }}" method="POST" class="inline" onsubmit="disableButtons({{ $leaveRequest->id }})">
                                         @csrf
                                         @method('post')
-                                        <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded-md shadow-md hover:bg-red-600 transition-all duration-300 ease-in-out font-semibold text-xs">
+                                        <button type="submit" class="bg-red-500 text-white px-2 py-2 rounded-md shadow-md hover:bg-red-400 transition-all duration-300 ease-in-out font-semibold"
+                                            @if($leaveRequest->status !== 'pending') disabled @endif>
                                             Reject
                                         </button>
                                     </form>
                                     @endcan
+                                    @else
+                                    <!-- If leave request is already approved or rejected, show a message instead of buttons -->
+                                    <span class="text-gray-500">
+                                        {{ $leaveRequest->status === 'approved' ? 'Approved' : 'Rejected' }}
+                                    </span>
+                                    @endif
                                 </div>
                             </td>
                         </tr>
