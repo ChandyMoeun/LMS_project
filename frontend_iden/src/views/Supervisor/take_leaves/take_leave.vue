@@ -247,8 +247,14 @@ import WebHeaderMenu from '@/Components/WebHeaderMenu.vue'
 import { useLeaveRequestStore } from '@/stores/request-leave'
 import { useLeaveTypeStore } from '@/stores/leave-type' // Import the store
 defineProps({ components: { SupervisorSidebar, WebHeaderMenu } })
+
 const leaveRequestStore = useLeaveRequestStore()
 const leaveTypeStore = useLeaveTypeStore()
+
+const selectedFiles = ref([])
+const duration = ref('full_day') // Selected leave type (default: Full Day)
+const requestStatus = ref(null) // Status of the leave request
+
 const leaveRequest = ref({
   leaveType_id: '',
   half_day_type: 'full_day', // Default to full day
@@ -261,13 +267,14 @@ const leaveRequest = ref({
   reason: '',
   attachment: null // Placeholder for future attachment handling if needed
 })
-const duration = ref('full_day') // Selected leave type (default: Full Day)
-const requestStatus = ref(null) // Status of the leave request
+
 const addSeconds = (time) => (time ? `${time}:00` : '')
-const handleSubmit = async () => {
+const handleSubmit = async (event) => {
+  event.preventDefault()
   // Format start_time and end_time with seconds
   leaveRequest.value.start_time = addSeconds(leaveRequest.value.start_time)
   leaveRequest.value.end_time = addSeconds(leaveRequest.value.end_time)
+  leaveRequest.value.attachment = selectedFiles.value
   // Validate date range
   if (new Date(leaveRequest.value.to_date) < new Date(leaveRequest.value.from_date)) {
     alert("The 'To Date' must be after or equal to the 'From Date'.")
@@ -277,7 +284,7 @@ const handleSubmit = async () => {
   try {
     await leaveRequestStore.submitLeaveRequest(leaveRequest.value)
     requestStatus.value = leaveRequestStore.requestStatus // Update local status
-    window.location.reload()
+    // window.location.reload()
   } catch (error) {
     requestStatus.value = 'error' // Handle error
     console.error('Error submitting leave request:', error)
@@ -303,11 +310,9 @@ onMounted(async () => {
   await leaveTypeStore.fetchLeaveTypes()
 })
 // Reactive array to hold selected files
-const selectedFiles = ref([])
 // Handle file input change event
 function handleFileUpload(event) {
-  const files = Array.from(event.target.files)
-  selectedFiles.value = files
+  selectedFiles.value = event.target.files[0]
 }
 // Format file size to a readable format
 function formatFileSize(size) {

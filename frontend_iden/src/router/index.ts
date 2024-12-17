@@ -276,7 +276,7 @@ const router = createRouter({
 
 router.beforeEach(async (to, from, next) => {
   const publicPages = ['/','/login']
-  const authRequired = !publicPages.includes(to.path)
+  const authRequired = publicPages.includes(to.path)
   const store = useAuthStore()
 
   try {
@@ -321,8 +321,12 @@ router.beforeEach(async (to, from, next) => {
   }
 
   // Redirect to login if the page requires authentication and the user isn't authenticated
-  if (authRequired && !store.isAuthenticated) {
-    return next('/login')
+  if (!store.user) {
+    console.log(to.path);
+    if( to.path==='/'){
+      return next('/login')
+    }
+
   }
 
   // Check if the user's role matches the route's required role

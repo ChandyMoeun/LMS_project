@@ -19,8 +19,7 @@
                 >My History</a>
             </div>
             <div class="container mt-2 px-6 py-4 bg-white shadow-md rounded-lg">
-              <form @submit.prevent="handleSubmit"
-                enctype="multipart/form-data" class="flex flex-row justify-between p-3 gap-5">
+              <form @submit.prevent="handleSubmit" enctype="multipart/form-data" class="flex flex-row justify-between p-3 gap-5">
                 <div class="w-6/12">
                   <div class="mt-3">
                     <label for="leaveType_id" class="block text-sm font-medium text-gray-700">Leave Type:</label>
@@ -140,13 +139,11 @@
 
                     <!-- Display Selected Files -->
                     <ul class="mt-4 w-full space-y-2">
-                      <li v-for="(file, index) in selectedFiles" :key="index"
-                        class="p-2 text-sm text-gray-700 bg-gray-100 rounded-lg dark:bg-gray-700 dark:text-gray-300">
+                      <li v-for="(file, index) in selectedFiles" :key="index" class="p-2 text-sm text-gray-700 bg-gray-100 rounded-lg dark:bg-gray-700 dark:text-gray-300">
                         {{ file.name }} - {{ formatFileSize(file.size) }}
                       </li>
                     </ul>
                   </div>
-
                   <button type="submit"
                     class="mt-6 bg-gray-900 text-white font-semibold px-2 py-1 mr-3 rounded-lg shadow-md hover:bg-yellow-400 transition-colors border-none">
                     Request Leave
@@ -184,15 +181,12 @@
                       </span>
                       <!-- Display half day type if it's either 'morning' or 'afternoon' -->
                       <span
-                        v-else-if="
-                          requests.half_day_type === 'morning' ||
-                          requests.half_day_type === 'afternoon' " >
+                        v-else-if="requests.half_day_type === 'morning' || requests.half_day_type === 'afternoon' " >
                         half_day
                       </span>
                       <!-- Fallback: Display from and to dates -->
                       <span v-else> {{ requests.from_date }} | {{ requests.to_date }} </span>
                     </td>
-
                     <td class="py-4 px-2 text-sm text-center text-black">
                       <span v-if="requests.start_time && requests.end_time">time</span>
                       <span v-else>{{ requests.half_day_type }}</span>
@@ -248,10 +242,10 @@ const leaveRequestStore = useLeaveRequestStore()
 const leaveTypeStore = useLeaveTypeStore()
 const duration = ref('full_day') // Selected leave type (default: Full Day)
 const requestStatus = ref(null) // Status of the leave request
+const selectedFiles = ref([])// Reactive array to hold selected files
 const addSeconds = (time) => (time ? `${time}:00` : '')
 
 const leaveRequest = ref({
-  // employee_id: null,
   leaveType_id: '',
   half_day_type: 'full_day', // Default to full day
   start_time: '',
@@ -264,13 +258,14 @@ const leaveRequest = ref({
   attachment: null // Placeholder for future attachment handling if needed
 })
 
-// Handle form submission
+// ===>Handle form submission<====
 const handleSubmit = async () => {
   // Format start_time and end_time with seconds
   leaveRequest.value.start_time = addSeconds(leaveRequest.value.start_time)
   leaveRequest.value.end_time = addSeconds(leaveRequest.value.end_time)
+  leaveRequest.value.attachment = selectedFiles.value
 
-  // Validate date range
+  // ===>Validate date range<===
   if (new Date(leaveRequest.value.to_date) < new Date(leaveRequest.value.from_date)) {
     alert("The 'To Date' must be after or equal to the 'From Date'.")
     requestStatus.value = 'error'
@@ -287,7 +282,7 @@ const handleSubmit = async () => {
   }
 }
 
-// Function to fetch leave requests (example for leaveRequestStore)
+// ===>Function to fetch leave requests (example for leaveRequestStore)<===
 const fetchTeamLeaveRequests = async () => {
   try {
     await leaveRequestStore.fetchTeamLeaveRequests()
@@ -297,28 +292,26 @@ const fetchTeamLeaveRequests = async () => {
   }
 }
 
-// Fetch leave requests on component mount
+// ===>Fetch leave requests on component mount<===
 onMounted(() => {
   fetchTeamLeaveRequests()
   leaveTypeStore.fetchLeaveTypes()
   console.log('Fetched leave requests:', leaveTypeStore.leaveRequests)
 })
 
-// Fetch leave types on mount
+// ==>Fetch leave types on mount<==
 onMounted(async () => {
   await leaveTypeStore.fetchLeaveTypes()
 })
 
-// Reactive array to hold selected files
-const selectedFiles = ref([])
 
-// Handle file input change event
+
+// ===>Handle file input change event<===
 function handleFileUpload(event) {
-  const files = Array.from(event.target.files)
-  selectedFiles.value = files
+  selectedFiles.value = event.target.files[0]
 }
 
-// Format file size to a readable format
+// ===>Format file size to a readable format<===
 function formatFileSize(size) {
   if (size < 1024) return `${size} B`
   if (size < 1024 * 1024) return `${(size / 1024).toFixed(2)} KB`
