@@ -175,17 +175,16 @@
                                     @endif
                                 </td>
                                 <td class="text-sm px-2 font-medium text-center">
-                                    <!-- View button to toggle the visibility -->
-                                    <button type="button" class="text-blue-700 hover:text-blue-300 font-semibold" onclick="toggleButtons({{ $leaveRequest->id }})">
-                                        View Options
-                                    </button>
                                     <!-- Hidden buttons (Edit, Approve, Reject) -->
-                                    <div id="action-buttons-{{ $leaveRequest->id }}" class=" flex justify-center mt-2 m-2 flex space-x-2">
+                                    <div id="action-buttons-{{ $leaveRequest->id }}" class="flex justify-center mt-2 m-2 space-x-2">
+
+                                        @if($leaveRequest->status === 'pending') <!-- Only show Approve/Reject if status is 'pending' -->
                                         @can('Leave edit')
                                         <form action="{{ route('admin.leave.approve', $leaveRequest) }}" method="POST" class="inline" onsubmit="disableButtons({{ $leaveRequest->id }})">
                                             @csrf
                                             @method('post')
-                                            <button type="submit" class="bg-black text-white px-2 py-2 rounded-md shadow-md hover:bg-yellow-400 transition-all duration-300 ease-in-out font-semibold">
+                                            <button type="submit" class="bg-black text-white px-2 py-2 rounded-md shadow-md hover:bg-yellow-400 transition-all duration-300 ease-in-out font-semibold"
+                                                @if($leaveRequest->status !== 'pending') disabled @endif>
                                                 Approve
                                             </button>
                                         </form>
@@ -195,13 +194,21 @@
                                         <form action="{{ route('admin.leave.reject', $leaveRequest) }}" method="POST" class="inline" onsubmit="disableButtons({{ $leaveRequest->id }})">
                                             @csrf
                                             @method('post')
-                                            <button type="submit" class="bg-red-500 text-white px-2 py-2 rounded-md shadow-md hover:bg-red-400 transition-all duration-300 ease-in-out font-semibold">
+                                            <button type="submit" class="bg-red-500 text-white px-2 py-2 rounded-md shadow-md hover:bg-red-400 transition-all duration-300 ease-in-out font-semibold"
+                                                @if($leaveRequest->status !== 'pending') disabled @endif>
                                                 Reject
                                             </button>
                                         </form>
                                         @endcan
+                                        @else
+                                        <!-- If leave request is already approved or rejected, show a message instead of buttons -->
+                                        <span class="text-gray-500">
+                                            {{ $leaveRequest->status === 'approved' ? 'Approved' : 'Rejected' }}
+                                        </span>
+                                        @endif
                                     </div>
                                 </td>
+
                                 @endforeach
                                 @endcan
                             </tr>

@@ -128,5 +128,9 @@ class Employee extends Authenticatable
         return false; // If no join date, the employee is not eligible
     }
 
+    public function leaveBalances()
+{
+    return $this->hasMany(LeaveBalance::class, 'employee_id');
+}
     
 }
