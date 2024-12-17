@@ -35,17 +35,17 @@
                       Work Day
                     </th>
                     <th
-                      class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
+                      class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                     >
                       Start Time
                     </th>
                     <th
-                      class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
+                      class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                     >
                       End Time
                     </th>
                     <th
-                      class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
+                      class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                     >
                       Day Type
                     </th>
@@ -57,14 +57,14 @@
                   class="bg-white divide-y divide-gray-200"
                 >
                   <tr class="hover:bg-gray-100">
-                    <td class="py-4 px-6 border-b text-center border-gray-200">
+                    <td class="py-4 px-6 border-b border-gray-200">
                       {{ work_day.work_day }}
                     </td>
                     <td class="py-4 px-6 border-b border-gray-200">{{ work_day.start_time }}</td>
-                    <td class="py-4 px-6 border-b text-center border-gray-200">
+                    <td class="py-4 px-6 border-b border-gray-200">
                       {{ work_day.end_time }}
                     </td>
-                    <td class="py-4 px-6 border-b text-center border-gray-200">
+                    <td class="py-4 px-6 border-b border-gray-200">
                       {{ work_day.day_type }}
                     </td>
                   </tr>

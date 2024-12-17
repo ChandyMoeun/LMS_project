@@ -50,7 +50,8 @@ export const useLeaveRequestStore = defineStore('leaveRequest', {
       try {
         const response = await axiosInstance.post('leave_requests', leaveRequestData, {
           headers: {
-            Authorization: `Bearer ${localStorage.getItem('access_token')}`
+            Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+            'Content-Type': "multipart/form-data"
           }
         })
 

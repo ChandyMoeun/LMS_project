@@ -56,12 +56,12 @@
                   </tr>
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-200">
-                  <tr class="hover:bg-gray-100">
-                    <td class="py-4 px-6 border-b border-gray-200">New Year</td>
-                    <td class="py-4 px-6 border-b text-center border-gray-200">12.04.2024</td>
-                    <td class="py-4 px-6 border-b text-center border-gray-200">15.04.2024</td>
-                    <td class="py-4 px-6 border-b border-gray-200">National</td>
-                    <td class="py-4 px-6 border-b border-gray-200">Enjoy your days guys</td>
+                  <tr v-for="holidays in holiday_days" :key="holidays.id" class="hover:bg-gray-100">
+                    <td class="py-4 px-6 border-b border-gray-200">{{ holidays.holiday_name }}</td>
+                    <td class="py-4 px-6 border-b text-center border-gray-200">{{ holidays.from_date }}</td>
+                    <td class="py-4 px-6 border-b text-center border-gray-200">{{ holidays.to_date }}</td>
+                    <td class="py-4 px-6 border-b border-gray-200">{{ holidays.holiday }}</td>
+                    <td class="py-4 px-6 border-b border-gray-200">{{ holidays.description }}</td>
                   </tr>
                 </tbody>
               </table>
@@ -95,10 +95,12 @@ export default {
         },
       ],
       work_days: [],
+      holiday_days: [],
     };
   },
   mounted() {
     this.fetchWorkDays();
+    this.fetchHoliday();
   },
 
   methods: {
@@ -106,15 +108,25 @@ export default {
       try {
         const response = await axiosInstance.get("/calendar_work");
         this.work_days = response.data;
+        console.log("Work days fetched successfully", this.work_days);
+      } catch (error) {
+        console.error(error);
+      }
+    },
+    async fetchHoliday() {
+      try {
+        const response = await axiosInstance.get("/calendar_holiday");
+        this.holiday_days = response.data;
+        console.log("Holiday days fetched successfully", this.holiday_days);
       } catch (error) {
         console.error(error);
       }
     },
   },
-
   setup() {
     onMounted(() => {
       const calendarEl = document.getElementById("calendar");
+      
       const calendar = new Calendar(calendarEl, {
         plugins: [dayGridPlugin],
         initialView: "dayGridMonth",

@@ -87,7 +87,12 @@
                       <td class="py-4 px-2 text-sm text-center text-black">{{ leaveRequest.updated_at }}</td>
                       <td class="py-4 px-2 text-sm text-center text-black">{{ leaveRequest.total_requested_days }}</td>
                       <td class="py-4 px-2 text-sm text-center">
-                        <a href="/supervisor/takeleave/view/leavedetail" class="text-blue-600 no-underline hover:text-blue-400">View</a>
+                        <router-link
+                          :to="{ name: 'leavehistorydetail', params: { id: leaveRequest.id } }"
+                          class="text-blue-700 no-underline hover:text-blue-300"
+                        >
+                          View
+                        </router-link>
                       </td>
                       <td class="py-4 px-2 text-sm text-center">
                         <span v-if="leaveRequest.approved_by">{{ leaveRequest.approved_by }}</span>
