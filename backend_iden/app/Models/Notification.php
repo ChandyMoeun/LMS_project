@@ -24,4 +24,10 @@ class Notification extends Model
     {
         return $this->belongsTo(LeaveRequest::class);
     }
+
+    // Scope to get unsent notifications
+    public function scopeUnsent($query)
+    {
+        return $query->whereNull('sent_at');
+    }
 }

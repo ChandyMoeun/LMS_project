@@ -232,6 +232,8 @@ class LeaveController extends Controller
             $leaveRequest->save();
             $leaveBalance->save();
         }
+        $notificationController = new NotificationController();
+        $notificationController->approveLeaveRequest($leaveRequest->id);
         // Redirect to the admin dashboard with a success message
         return redirect()->route('admin.dashboard')->with('success', 'Leave request approved successfully and 1 day was subtracted from the increase rate.');
     }
@@ -243,20 +245,11 @@ class LeaveController extends Controller
         $leaveRequest->status = 'rejected';
         $leaveRequest->rejected_by = auth()->user()->id; // Store the ID of the user who rejected the request
         $leaveRequest->save();
+        //  ====Notifications<===
+        $notificationController = new NotificationController();
+        $notificationController->rejectLeaveRequest($leaveRequest->id);
 
         return redirect()->route('admin.dashboard')->with('success', 'Leave request rejected successfully.');
-    }
-
-
-    /**
-     * Remove the specified leave request.
-     */
-    public function destroy($id)
-    {
-        $leaveRequest = LeaveRequest::findOrFail($id);
-        $leaveRequest->delete();
-
-        return redirect()->route('admin.leave.index')->with('success', 'Leave request deleted successfully.');
     }
 
     /**
@@ -273,5 +266,28 @@ class LeaveController extends Controller
         }
 
         return $fromDate->diffInDays($toDate); // Full-day leave
+    }
+
+    /**
+     * Remove the specified leave request.
+     */
+    public function clearLeaveRequests(Request $request)
+    {
+        // Optionally, you can add a check for the user role to ensure only admins can delete all leave requests
+        if (!auth()->user()->hasRole('admin')) {
+            return response()->json(['message' => 'Unauthorized'], 403);
+        }
+
+        // Delete all leave requests (this will clear all leave records from the database)
+        LeaveRequest::truncate(); // Deletes all leave requests from the database
+
+        // Get the updated leave request count (which should be 0 now)
+        $leaveRequestCount = LeaveRequest::count();
+
+        // Return a response with a success message and the updated count
+        return response()->json([
+            'message' => 'All leave requests cleared successfully',
+            'leaveRequestCount' => $leaveRequestCount
+        ]);
     }
 }

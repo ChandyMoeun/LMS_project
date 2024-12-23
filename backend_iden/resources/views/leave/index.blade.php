@@ -10,6 +10,9 @@
                 <div class="flex justify-between mb-4">
                     <input type="text" id="searchInput" onkeyup="filterTable()" placeholder="Search employee..." title="Type in an ID or Name" class="w-2/6 py-2 px-2 h-9 border rounded">
                     @can('Leave create')
+                    <a href="{{ route('admin.leave.create') }}" class="bg-red-600 text-white font-semibold px-5 py-2 rounded-lg shadow-md hover:bg-yellow-400 transition-colors">Clear</a>
+                    @endcan
+                    @can('Leave create')
                     <a href="{{ route('admin.leave.create') }}" class="bg-black text-white font-semibold px-5 py-2 rounded-lg shadow-md hover:bg-yellow-400 transition-colors">Request Leave</a>
                     @endcan
                 </div>

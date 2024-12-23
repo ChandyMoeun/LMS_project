@@ -1,4 +1,5 @@
 <?php
+
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\{
     ProfileController,
@@ -51,7 +52,7 @@ Route::get('/test-mail', function () {
     dd('sent');
 });
 
-Route::get('send-mail',[EmailController::class,'sendWelcomeEmail']);
+Route::get('send-mail', [EmailController::class, 'sendWelcomeEmail']);
 
 
 Route::get('/dashboard', function () {
@@ -136,4 +137,11 @@ Route::namespace('App\Http\Controllers\Admin')->name('admin.')->prefix('admin')
 
         // Example route to trigger notification after a leave request (for demonstration purposes)
         Route::get('/notify-leave/{id}', [NotificationController::class, 'notifyAfterLeaveRequest'])->name('notifications.leave');
+
+        // Route to reset/delete notifications
+        // In routes/web.php
+
+        Route::delete('/clear-notifications', [NotificationController::class, 'resetNotifications'])->name('clear.notifications');
+        // Route for clearing all leave requests
+        Route::delete('/admin/clear-leave-requests', [LeaveController::class, 'clearLeaveRequests'])->name('admin.clear.leave.requests');
     });

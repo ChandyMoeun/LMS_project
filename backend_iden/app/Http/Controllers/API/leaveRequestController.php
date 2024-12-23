@@ -212,6 +212,8 @@ class leaveRequestController extends Controller
             $leaveRequest->save();
             $leaveBalance->save();
         }
+        $notificationController = new NotificationController();
+        $notificationController->approveLeaveRequest($leaveRequest->id);
         return response()->json([
             'message' => 'Leave request approved successfully',
             'approver' => Auth::user()->full_name,  // Return the approver's name in the response
@@ -227,6 +229,9 @@ class leaveRequestController extends Controller
         // $leaveRequest->rejection_reason = $request->input('reason');
         $leaveRequest->rejected_by = $rejector;
         $leaveRequest->save();
+
+        $notificationController = new NotificationController();
+        $notificationController->rejectLeaveRequest($leaveRequest->id);
 
         return response()->json([
             'message' => 'Leave request rejected successfully',

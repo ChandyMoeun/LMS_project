@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http; // Import for Telegram API requests
+use Carbon\Carbon;
+
 
 class NotificationController extends Controller
 {
@@ -17,22 +19,12 @@ class NotificationController extends Controller
     {
         $employeeId = auth()->id(); // Get the authenticated employee ID
 
-        // Fetch notifications
-        $notifications = Notification::where('employee_id', $employeeId)->get();
-
-        // Count leave requests
-        $pendingLeaveCount = LeaveRequest::where('employee_id', $employeeId)
-            ->where('status', 'pending')
-            ->count();
-        $approvedLeaveCount = LeaveRequest::where('employee_id', $employeeId)
-            ->where('status', 'approved')
-            ->count();
+        // Count the notifications for the employee
+        $notificationsCount = Notification::where('employee_id', $employeeId)->count();
 
         // Prepare response data
         $response = [
-            'notifications' => $notifications,
-            'pendingLeaveCount' => $pendingLeaveCount,
-            'approvedLeaveCount' => $approvedLeaveCount,
+            'notificationsCount' => $notificationsCount,
         ];
 
         return response()->json($response);
@@ -172,5 +164,17 @@ class NotificationController extends Controller
         $this->sendTelegramNotification($message, Auth::user()->full_name); // Send the name of the approver or any relevant name
 
         return response()->json(['message' => 'Leave request rejected successfully'], 200);
+    }
+
+    public function clearNotifications(Request $request)
+    {
+        // Get the authenticated employee ID
+        $employeeId = auth()->id();
+
+        // Clear notifications for the employee
+        Notification::where('employee_id', $employeeId)->delete();
+
+        // Return a success response
+        return response()->json(['message' => 'Notifications cleared successfully.']);
     }
 }

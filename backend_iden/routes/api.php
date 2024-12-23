@@ -100,7 +100,7 @@ Route::middleware('auth:sanctum')->group(function () {
 //========>Notification<========
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('notification', [NotificationController::class, 'index']);
-    Route::post('notification/{id}/read', [NotificationController::class, 'read']);
+    Route::delete('notification/clear', [NotificationController::class, 'clearNotifications']);
 });
 
 

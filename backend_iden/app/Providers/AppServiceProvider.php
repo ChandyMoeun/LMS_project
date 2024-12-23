@@ -8,6 +8,7 @@ use App\Models\LeaveRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\View;
+use App\Models\Notification;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -48,35 +49,12 @@ class AppServiceProvider extends ServiceProvider
             }
         }
 
-        // View composer for notifications
         View::composer('layouts.app', function ($view) {
-            if (Auth::check()) {
-                $employeeId = Auth::id();
-
-                // =====>Check if the logged-in employee is roles an admin<=======
-                $isAdmin = Auth::user()->hasRole('admin'); 
-
-                if ($isAdmin) {
-                    // ======>Count all leave requests for all employees<=======
-                    $totalLeaveCount = LeaveRequest::count();
-                    // ======>Count all pending leave requests<========
-                    $pendingLeaveCount = LeaveRequest::where('status', 'pending')->count();
-                    // ======>Count all approved leave requests<========
-                    $approvedLeaveCount = LeaveRequest::where('status', 'approved')->count();
-                } else {
-                    // =====>For regular employees, count their own leave requests<======
-                    $totalLeaveCount = LeaveRequest::where('employee_id', $employeeId)->count();
-                    // ======>Count pending leave requests<========
-                    $pendingLeaveCount = LeaveRequest::where('employee_id', $employeeId)
-                        ->where('status', 'pending')
-                        ->count();
-                    // ====>Count approved leave requests<======
-                    $approvedLeaveCount = LeaveRequest::where('employee_id', $employeeId)
-                        ->where('status', 'approved')
-                        ->count();
-                }
-                // =====>Pass all counts to the view<========
-                $view->with(compact('totalLeaveCount', 'pendingLeaveCount', 'approvedLeaveCount'));
+            if (auth()->check()) {
+                // Count all notifications in the database
+                $notificationsCount = Notification::count();
+                // Pass the notification count to the view (layouts.app)
+                $view->with('notificationsCount', $notificationsCount);
             }
         });
     }
