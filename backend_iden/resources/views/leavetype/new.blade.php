@@ -16,16 +16,6 @@
                         <label for="leave_name" class="block text-sm font-medium text-gray-700">Leave Name</label>
                         <input type="text" name="leave_name" id="leave_name" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm">
                     </div>
-
-                    <div class="mb-4">
-                        <label for="employee_id" class="block text-sm font-medium text-gray-700">Select Employee</label>
-                        <select name="employee_id" id="employee_id" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm">
-                            @foreach($employees as $employee)
-                            <option value="{{ $employee->id}}">{{ $employee->full_name }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-
                     <div class="mb-4">
                         <label for="requires_attachment" class="block text-sm font-medium text-gray-700">Requires Attachment</label>
                         <input type="checkbox" name="requires_attachment" id="requires_attachment" value="1" class="mt-1">

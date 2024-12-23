@@ -24,7 +24,7 @@
                 <table class="min-w-full divide-y mb-5 divide-gray-200" style=" box-shadow:rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;">
                     <thead class="bg-black">
                         <tr>
-                            <th class="px-3 py-3 text-center text-xs font-medium text-white uppercase tracking-wider">Employee</th>
+                            <!-- <th class="px-3 py-3 text-center text-xs font-medium text-white uppercase tracking-wider">Employee</th> -->
                             <th class="px-3 py-3 text-center text-xs font-medium text-white uppercase tracking-wider">Leave Type</th>
                             <th class="px-3 py-3 text-center text-xs font-medium text-white uppercase tracking-wider">Requires Attachment</th>
                             <th class="px-3 py-3 text-center text-xs font-medium text-white uppercase tracking-wider">Auto Increase Entitlement</th>
@@ -35,17 +35,6 @@
                     <tbody class="bg-white divide-y divide-gray-200">
                         @foreach($leaveTypes as $leaveType)
                         <tr class="hover:bg-gray-100">
-                            <td class="py-1 px-6 border-b border-gray-200">
-                                {{ $leaveType->employee->name }}
-                                <br>
-                                <p><span><strong class="text-blue-500">{{ $leaveType->employee->staff_id}}</strong></span> | <span> <strong class="text-blue-500">{{ $leaveType->employee->full_name}}</strong></span> | <span><strong class="text-blue-500">{{ $leaveType->employee->gender}}</strong></span></p>
-                                @foreach($leaveType->employee->roles as $role)
-                                <!-- {{ $role->name }} -->
-                                <p class="text-xs">joined date:{{ $leaveType->employee->joined_date}}</p>
-                                <p class="text-xs">{{ $leaveType->employee->department->name ?? 'No department'}} | {{ $leaveType->employee->position->name ?? 'No position'}}</p>
-                                @if(!$loop->last), @endif
-                                @endforeach
-                            </td>
                             <td class="py-1 px-6 border-b border-gray-200">{{ $leaveType->leave_name }}</td>
                             <td class="py-1 px-6 text-center border-b border-gray-200">{{ $leaveType->requires_attachment ? 'Yes' : 'No' }}</td>
                             <td class="py-1 px-6 text-center border-b border-gray-200">{{ $leaveType->auto_increase_entitlement ? 'Yes' : 'No' }}</td>
