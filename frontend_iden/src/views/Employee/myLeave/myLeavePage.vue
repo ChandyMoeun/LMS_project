@@ -259,8 +259,9 @@ const leaveRequest = ref({
 })
 
 // ===>Handle form submission<====
-const handleSubmit = async () => {
+const handleSubmit = async (event) => {
   // Format start_time and end_time with seconds
+  event.preventDefault();
   leaveRequest.value.start_time = addSeconds(leaveRequest.value.start_time)
   leaveRequest.value.end_time = addSeconds(leaveRequest.value.end_time)
   leaveRequest.value.attachment = selectedFiles.value
