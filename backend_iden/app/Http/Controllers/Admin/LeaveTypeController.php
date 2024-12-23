@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Employee;
 use App\Models\LeaveType;
+use App\Models\LeaveBalance;
 use App\Models\User; // Assuming you have a User model
 use Auth;
 
@@ -47,23 +48,35 @@ class LeaveTypeController extends Controller
         // Validate the request
         $request->validate([
             'leave_name' => 'required|string|max:255',
-            'employee_id' => 'required|exists:employees,id',
+            // 'employee_id' => 'required|array|min:1', // Array of employee IDs
             'requires_attachment' => 'sometimes|boolean',
             'auto_increase_entitlement' => 'sometimes|boolean',
             'increase_rate' => 'required|integer',
         ]);
 
-        // Create the new LeaveType
-        LeaveType::create([
+        // Store the new LeaveType in the $leaveType variable
+
+        $leaveType = LeaveType::create([
             'leave_name' => $request->leave_name,
-            'employee_id' => $request->employee_id,
             'requires_attachment' => $request->has('requires_attachment') ? 1 : 0,
             'auto_increase_entitlement' => $request->has('auto_increase_entitlement') ? 1 : 0,
             'increase_rate' => $request->increase_rate,
         ]);
 
-        // Redirect back to the leave type index
-        return redirect()->route('admin.leavetype.index')->with('success', 'Leave type created successfully.');
+        // Create the LeaveBalance associated with the new LeaveType
+        $allUser = Employee::all();
+        foreach ($allUser as $user) {
+            LeaveBalance::create([
+                'employee_id' => $user->id,
+                'leave_type_id' => $leaveType->id, // Use the ID of the newly created LeaveType
+                'used' => 0, // Initially, no leave is used
+                'available' => $leaveType->increase_rate, // Initialize available with the increase_rate
+                'entitlement' => $leaveType->increase_rate, // Initialize entitlement with the increase_rate
+            ]);
+        }
+
+        // Redirect back to the leave type index with a success message
+        return redirect()->route('admin.leavetype.index')->with('success', 'Leave type and balance created successfully.');
     }
 
     /**

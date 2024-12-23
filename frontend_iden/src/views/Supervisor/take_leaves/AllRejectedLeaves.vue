@@ -51,7 +51,7 @@
                       <!-- Display attachment -->
                       <td class="py-4 px-6 text-sm text-center text-black">
                         <div class="flex gap-2">
-                          <img :src="leaveRequest.file_url"  href="#" @click.prevent="viewFile(leaveRequest)">
+                          <img :src="leaveRequest.file_url"  href="#" @click.prevent="viewFile(leaveRequest)"> See More <img>
                         </div>
                       </td>
                       <td class="py-4 px-6 text-sm d-flex justify-center">

@@ -7,6 +7,7 @@ use App\Models\Employee;
 use Illuminate\Http\Request;
 use App\Models\LeaveRequest;
 use App\Models\LeaveType;
+use App\Models\LeaveBalance;
 use App\Models\Position;
 use App\Models\Department;
 use Illuminate\Support\Facades\Auth;
@@ -34,21 +35,18 @@ class LeaveController extends Controller
     public function index()
     {
         // Paginate leave requests and load the associated employee data
-        $leaveRequests = LeaveRequest::with('employee', 'leaveType', 'approver', 'rejector')->paginate(10);
+        $leaveRequests = LeaveRequest::with('employee', 'leaveType', 'approver', 'rejector')
+            ->orderBy('created_at', 'desc') // Orders by the latest created records first
+            ->paginate(10);
+
         return view('leave.index', compact('leaveRequests'));
     }
 
     // ====>dashboard <===
     public function LeaveRequestDashboard()
     {
-
         $department = Department::all();
-        // Paginate leave requests and load the associated employee data
-        // $leaveRequests = LeaveRequest::with('employee', 'leaveType', 'approver', 'rejector')->paginate(10);
-        // return view('dashboard', compact('leaveRequests'));
-        
         // Count total leave requests
-
         $totalEmployees = Employee::count();
         $TotalLeave = LeaveRequest::count();
 
@@ -62,10 +60,13 @@ class LeaveController extends Controller
             ->count();
 
         // Paginate leave requests and load associated employee data
-        $leaveRequests = LeaveRequest::with('employee', 'leaveType', 'approver', 'rejector')->paginate(10);
+        $leaveRequests = LeaveRequest::with('employee', 'leaveType', 'approver', 'rejector')
+            ->orderBy('created_at', 'desc') // Change 'desc' to 'asc' for ascending order
+            ->paginate(10);
+
 
         // Pass the counts and leave requests to the view
-        return view('dashboard', compact('leaveRequests', 'TotalLeave', 'leaveRequestsCountThisWeek','totalEmployees','department'));
+        return view('dashboard', compact('leaveRequests', 'TotalLeave', 'leaveRequestsCountThisWeek', 'totalEmployees', 'department'));
     }
 
 
@@ -83,17 +84,6 @@ class LeaveController extends Controller
      */
     public function create()
     {
-        // $positions = Position::all(); // Get all available positions
-        // $employees = Employee::with('roles', 'position')->get(); // Get all employees with roles and positions
-        // $leaveTypes = LeaveType::all(); // Get all leave types (leave employees relationship out since it's not needed for leave types)
-
-        // return view('leave.request', compact('leaveTypes', 'positions', 'employees'));
-
-
-
-        // ======>test<======
-
-
         // Fetch all available positions
         $positions = Position::all();
 
@@ -233,20 +223,19 @@ class LeaveController extends Controller
         // Mark the leave request as approved
         $leaveRequest->status = 'approved';
         $leaveRequest->approved_by = auth()->user()->id; // Store the ID of the user who approved the request
-
-        // Get the associated leave type (assuming there's a relationship between LeaveRequest and LeaveType)
-        $leaveType = $leaveRequest->leaveType; // Assuming LeaveRequest has a leaveType relationship
-
+        $leaveBalance = LeaveBalance::where(['leave_type_id' => $leaveRequest->leaveType_id, 'employee_id' => $leaveRequest->employee_id])->first();
         // Ensure there's an increase_rate to subtract
-        if ($leaveType->increase_rate > 0) {
-            // Subtract 1 from the increase_rate
-            $leaveType->increase_rate -= 1;
-            $leaveType->save();
+        if ($leaveBalance->used < $leaveBalance->available) {
+            echo ($leaveBalance);
+            $leaveBalance->used = $leaveBalance->used + 1;
+            $leaveBalance->available = $leaveBalance->available - $leaveBalance->used;
+            $leaveRequest->save();
+            $leaveBalance->save();
         }
-        $leaveRequest->save();
         // Redirect to the admin dashboard with a success message
         return redirect()->route('admin.dashboard')->with('success', 'Leave request approved successfully and 1 day was subtracted from the increase rate.');
     }
+
 
     // =====>reject request<======
     public function reject(LeaveRequest $leaveRequest)
@@ -283,6 +272,6 @@ class LeaveController extends Controller
             return 0.5; // Half-day leave counts as 0.5 day
         }
 
-        return $fromDate->diffInDays($toDate) + 1; // Full-day leave
+        return $fromDate->diffInDays($toDate); // Full-day leave
     }
 }

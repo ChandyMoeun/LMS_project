@@ -83,7 +83,7 @@
                     <!-- select half day show from_date -->
                     <div v-if="duration === 'half_day'" class="mt-3">
                       <label for="from_date" class="block text-sm font-medium text-gray-700"> From Date </label>
-                      <input type="date" id="from_date" v-model="leaveRequest.from_date" lass="mt-1 block w-full rounded-md border-gray-300 py-2 shadow-sm" />
+                      <input type="date" id="from_date" v-model="leaveRequest.from_date" class="mt-1 block w-full rounded-md border-gray-300 py-2 shadow-sm" />
                     </div>
                     <!-- select half day show to_date -->
                     <div v-if="duration === 'half_day'" class="mt-3">
@@ -95,6 +95,10 @@
                 </div>
                 <div class="w-6/12">
                   <div>
+                    <label for="duration">Duration:</label>
+                    <input type=" number" id="duration" v-model="leaveRequest.total_requested_days" placeholder="Duration for leave" required class="mt-1 block w-full rounded-md border-gray-300 py-2 shadow-sm">
+                  </div>
+                  <div class="mt-3">
                     <label for="reason">Reason:</label>
                     <textarea id="reason" v-model="leaveRequest.reason" placeholder="Reason for leave" required
                       class="mt-1 block w-full rounded-md border-gray-300 py-2 shadow-sm"></textarea>
@@ -245,6 +249,7 @@ import WebHeaderMenu from '@/Components/WebHeaderMenu.vue'
 import { useLeaveRequestStore } from '@/stores/request-leave'
 import { useLeaveTypeStore } from '@/stores/leave-type' // Import the store
 defineProps({ components: { SupervisorSidebar, WebHeaderMenu } })
+
 const leaveRequestStore = useLeaveRequestStore()
 const leaveTypeStore = useLeaveTypeStore()
 const searchQuery = ref('');
@@ -257,6 +262,11 @@ const filteredLeaveRequests = computed(() => {
     );
   });
 });
+
+const selectedFiles = ref([])
+const duration = ref('full_day') // Selected leave type (default: Full Day)
+const requestStatus = ref(null) // Status of the leave request
+
 const leaveRequest = ref({
   leaveType_id: '',
   half_day_type: 'full_day', // Default to full day
@@ -269,13 +279,14 @@ const leaveRequest = ref({
   reason: '',
   attachment: null // Placeholder for future attachment handling if needed
 })
-const duration = ref('full_day') // Selected leave type (default: Full Day)
-const requestStatus = ref(null) // Status of the leave request
+
 const addSeconds = (time) => (time ? `${time}:00` : '')
-const handleSubmit = async () => {
+const handleSubmit = async (event) => {
+  event.preventDefault()
   // Format start_time and end_time with seconds
   leaveRequest.value.start_time = addSeconds(leaveRequest.value.start_time)
   leaveRequest.value.end_time = addSeconds(leaveRequest.value.end_time)
+  leaveRequest.value.attachment = selectedFiles.value
   // Validate date range
   if (new Date(leaveRequest.value.to_date) < new Date(leaveRequest.value.from_date)) {
     alert("The 'To Date' must be after or equal to the 'From Date'.")
@@ -311,11 +322,9 @@ onMounted(async () => {
   await leaveTypeStore.fetchLeaveTypes()
 })
 // Reactive array to hold selected files
-const selectedFiles = ref([])
 // Handle file input change event
 function handleFileUpload(event) {
-  const files = Array.from(event.target.files)
-  selectedFiles.value = files
+  selectedFiles.value = event.target.files[0]
 }
 // Format file size to a readable format
 function formatFileSize(size) {

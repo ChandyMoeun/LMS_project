@@ -11,7 +11,6 @@ class LeaveType extends Model
     protected $table = 'leave_types';
     protected $fillable = [
         'leave_name',
-        'employee_id',
         'requires_attachment',
         'auto_increase_entitlement',
         'increase_rate'
