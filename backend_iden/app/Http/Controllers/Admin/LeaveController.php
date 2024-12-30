@@ -49,27 +49,20 @@ class LeaveController extends Controller
         // Count total leave requests
         $totalEmployees = Employee::count();
         $TotalLeave = LeaveRequest::count();
-
         // Get the start and end of the current week
         $startOfWeek = Carbon::now()->startOfWeek();
         $endOfWeek = Carbon::now()->endOfWeek();
-
         // Count leave requests for the current week
         $leaveRequestsCountThisWeek = LeaveRequest::whereBetween('from_date', [$startOfWeek, $endOfWeek])
             ->orWhereBetween('to_date', [$startOfWeek, $endOfWeek])
             ->count();
-
         // Paginate leave requests and load associated employee data
         $leaveRequests = LeaveRequest::with('employee', 'leaveType', 'approver', 'rejector')
             ->orderBy('created_at', 'desc') // Change 'desc' to 'asc' for ascending order
             ->paginate(10);
-
-
         // Pass the counts and leave requests to the view
         return view('dashboard', compact('leaveRequests', 'TotalLeave', 'leaveRequestsCountThisWeek', 'totalEmployees', 'department'));
     }
-
-
     public function show($id)
     {
         // Find the leave request by ID or fail if not found
@@ -165,7 +158,6 @@ class LeaveController extends Controller
 
         return redirect()->route('admin.leave.index')->with('success', 'Leave request submitted successfully.');
     }
-
     /**
      * Show the form for editing a leave request.
      */
@@ -175,7 +167,6 @@ class LeaveController extends Controller
         $leaveTypes = LeaveType::all();
         return view('leave.edit', compact('leaveRequest', 'leaveTypes'));
     }
-
     /**
      * Update the specified leave request.
      */
@@ -194,12 +185,10 @@ class LeaveController extends Controller
             'reason' => 'nullable|string|max:255',
             'attachment' => 'nullable|file|mimes:jpg,png,pdf|max:2048',
         ]);
-
         // Handle file upload if there is any
         if ($request->hasFile('attachment')) {
             $attachmentPath = $request->file('attachment')->store('attachments', 'public');
         }
-
         // Update leave request details
         $leaveRequest->update([
             'leave_type_id' => $request->leave_type_id,
@@ -215,8 +204,6 @@ class LeaveController extends Controller
 
         return redirect()->route('leave.index')->with('success', 'Leave request updated successfully.');
     }
-
-
     // =====>approve request<======
     public function approve(LeaveRequest $leaveRequest)
     {
@@ -237,8 +224,6 @@ class LeaveController extends Controller
         // Redirect to the admin dashboard with a success message
         return redirect()->route('admin.dashboard')->with('success', 'Leave request approved successfully and 1 day was subtracted from the increase rate.');
     }
-
-
     // =====>reject request<======
     public function reject(LeaveRequest $leaveRequest)
     {
@@ -259,7 +244,6 @@ class LeaveController extends Controller
     {
         $fromDate = \Carbon\Carbon::parse($request->from_date);
         $toDate = $request->to_date ? \Carbon\Carbon::parse($request->to_date) : $fromDate;
-
         // Handle half-day types
         if ($request->half_day_type == 'time' || $request->half_day_type == 'morning' || $request->half_day_type == 'afternoon') {
             return 0.5; // Half-day leave counts as 0.5 day
@@ -268,26 +252,11 @@ class LeaveController extends Controller
         return $fromDate->diffInDays($toDate); // Full-day leave
     }
 
-    /**
-     * Remove the specified leave request.
-     */
-    public function clearLeaveRequests(Request $request)
+    public function clear()
     {
-        // Optionally, you can add a check for the user role to ensure only admins can delete all leave requests
-        if (!auth()->user()->hasRole('admin')) {
-            return response()->json(['message' => 'Unauthorized'], 403);
-        }
+        // Use delete() to ensure model events and relationships are handled correctly
+        LeaveRequest::query()->delete();
 
-        // Delete all leave requests (this will clear all leave records from the database)
-        LeaveRequest::truncate(); // Deletes all leave requests from the database
-
-        // Get the updated leave request count (which should be 0 now)
-        $leaveRequestCount = LeaveRequest::count();
-
-        // Return a response with a success message and the updated count
-        return response()->json([
-            'message' => 'All leave requests cleared successfully',
-            'leaveRequestCount' => $leaveRequestCount
-        ]);
+        return redirect()->route('admin.leave.index')->with('success', 'All leave requests have been cleared.');
     }
 }

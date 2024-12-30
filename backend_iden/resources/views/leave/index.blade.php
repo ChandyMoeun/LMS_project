@@ -5,18 +5,30 @@
             <div class="d-flex border-b-2 border-gray-300 m-5 px-8 items-center mb-10">
                 <h1 class="font-bold text-3xl mt-5 w-1/3 hover:text-yellow-400"><b>Admin leave</b></h1>
             </div>
-
             <div class="container mx-auto px-6 py-4">
-                <div class="flex justify-between mb-4">
+                <div class="flex justify-between items-center mb-4">
+                    <!-- Search Input -->
                     <input type="text" id="searchInput" onkeyup="filterTable()" placeholder="Search employee..." title="Type in an ID or Name" class="w-2/6 py-2 px-2 h-9 border rounded">
-                    @can('Leave create')
-                    <a href="{{ route('admin.leave.create') }}" class="bg-red-600 text-white font-semibold px-5 py-2 rounded-lg shadow-md hover:bg-yellow-400 transition-colors">Clear</a>
-                    @endcan
-                    @can('Leave create')
-                    <a href="{{ route('admin.leave.create') }}" class="bg-black text-white font-semibold px-5 py-2 rounded-lg shadow-md hover:bg-yellow-400 transition-colors">Request Leave</a>
-                    @endcan
-                </div>
+                    <!-- Buttons -->
+                    <div class="flex space-x-4">
+                        @can('Leave create')
+                        <!-- Clear Button -->
+                        <form action="{{ route('admin.leave.clear') }}" method="POST" onsubmit="return confirm('Are you sure you want to clear all leave requests?');" style="display: inline;">
+                            @csrf
+                            <button type="submit" class="bg-red-600 text-white font-semibold px-5 py-2 rounded-lg shadow-md hover:bg-yellow-400 transition-colors">
+                                Clear
+                            </button>
+                        </form>
+                        @endcan
 
+                        @can('Leave create')
+                        <!-- Request Leave Button -->
+                        <a href="{{ route('admin.leave.create') }}" class="bg-black text-white font-semibold px-5 py-2 rounded-lg shadow-md hover:bg-yellow-400 transition-colors">
+                            Request Leave
+                        </a>
+                        @endcan
+                    </div>
+                </div>
                 <div class="bg-white shadow-lg rounded-lg overflow-x-auto">
                     <table id="myTable" class=" w-full divide-y divide-gray-200">
                         <thead class="bg-black">
@@ -118,35 +130,7 @@
                                         <button id="close-fullscreen-{{ $leaveRequest->id }}" class="absolute top-4 right-4 px-4 py-2 bg-white text-black rounded">Close</button>
                                     </div>
 
-                                    <!-- JavaScript to handle full-screen image viewing -->
-                                    <script>
-                                        document.addEventListener('DOMContentLoaded', function() {
-                                            const previewImages = document.querySelectorAll('.preview-image-{{ $leaveRequest->id }}');
-                                            const fullscreenModal = document.getElementById('fullscreen-modal-{{ $leaveRequest->id }}');
-                                            const fullscreenImage = document.getElementById('fullscreen-image-{{ $leaveRequest->id }}');
-                                            const closeFullscreenBtn = document.getElementById('close-fullscreen-{{ $leaveRequest->id }}');
 
-                                            // Add click event to all preview images
-                                            previewImages.forEach(image => {
-                                                image.addEventListener('click', function() {
-                                                    fullscreenImage.src = this.src; // Set the full-screen image source
-                                                    fullscreenModal.classList.remove('hidden'); // Show full-screen modal
-                                                });
-                                            });
-
-                                            // Close full-screen modal when clicking close button
-                                            closeFullscreenBtn.addEventListener('click', function() {
-                                                fullscreenModal.classList.add('hidden');
-                                            });
-
-                                            // Close full-screen modal when clicking anywhere outside the image
-                                            fullscreenModal.addEventListener('click', function(event) {
-                                                if (event.target === fullscreenModal) {
-                                                    fullscreenModal.classList.add('hidden');
-                                                }
-                                            });
-                                        });
-                                    </script>
                                 </div>
                                 @endif
                                 <!-- Actions column -->
@@ -309,4 +293,31 @@
             }
         }
     }
+    // !--JavaScript to handle full - screen image viewing-- >
+    document.addEventListener('DOMContentLoaded', function() {
+        const previewImages = document.querySelectorAll('.preview-image-{{ $leaveRequest->id }}');
+        const fullscreenModal = document.getElementById('fullscreen-modal-{{ $leaveRequest->id }}');
+        const fullscreenImage = document.getElementById('fullscreen-image-{{ $leaveRequest->id }}');
+        const closeFullscreenBtn = document.getElementById('close-fullscreen-{{ $leaveRequest->id }}');
+
+        // Add click event to all preview images
+        previewImages.forEach(image => {
+            image.addEventListener('click', function() {
+                fullscreenImage.src = this.src; // Set the full-screen image source
+                fullscreenModal.classList.remove('hidden'); // Show full-screen modal
+            });
+        });
+
+        // Close full-screen modal when clicking close button
+        closeFullscreenBtn.addEventListener('click', function() {
+            fullscreenModal.classList.add('hidden');
+        });
+
+        // Close full-screen modal when clicking anywhere outside the image
+        fullscreenModal.addEventListener('click', function(event) {
+            if (event.target === fullscreenModal) {
+                fullscreenModal.classList.add('hidden');
+            }
+        });
+    });
 </script>

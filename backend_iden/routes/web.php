@@ -143,5 +143,6 @@ Route::namespace('App\Http\Controllers\Admin')->name('admin.')->prefix('admin')
 
         Route::delete('/clear-notifications', [NotificationController::class, 'resetNotifications'])->name('clear.notifications');
         // Route for clearing all leave requests
-        Route::delete('/admin/clear-leave-requests', [LeaveController::class, 'clearLeaveRequests'])->name('admin.clear.leave.requests');
+        // Route::delete('/admin/clear-leave-requests', [LeaveController::class, 'clearLeaveRequests'])->name('admin.clear.leave.requests');
+        Route::post('/leave/clear', [LeaveController::class, 'clear'])->name('leave.clear');
     });
