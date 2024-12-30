@@ -2,18 +2,23 @@
 
 namespace App\Models;
 
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
+use Illuminate\Support\Carbon;
+
 
 class Employee extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable, HasRoles;
-    use HasRoles;
 
-    protected $guard_name = 'web';
+
+    protected $guard_name = 'web';  // Specify the guard
+
+    protected $table = 'employees';
 
     /**
      * The attributes that are mass assignable.
@@ -22,17 +27,18 @@ class Employee extends Authenticatable
      */
     protected $fillable = [
         'staff_id',
-        'full_name',
         'gender',
+        'full_name',
         'email',
+        'profile',
         'password',
         'dob',
         'joined_date',
-        'entitled_calendar',
+        'entitled_date',
         'reporting_line',
-        'profile_image',
         'position_id',
         'department_id',
+
     ];
 
     /**
@@ -51,12 +57,8 @@ class Employee extends Authenticatable
      * @var array
      */
     protected $casts = [
-        'dob' => 'date',
-        'joined_date' => 'date',
+        'email_verified_at' => 'datetime',
     ];
-
-    
-
     /**
      * Define the relationship with the Position model.
      */
@@ -74,6 +76,12 @@ class Employee extends Authenticatable
     }
 
     /**
+     * Define the relationship with another Employee as the reporting line.
+     */
+
+
+
+    /**
      * Define the relationship with the CalendarGroup model.
      */
     public function calendarGroup()
@@ -82,10 +90,47 @@ class Employee extends Authenticatable
     }
 
     /**
-     * Define the relationship with another Employee as the reporting line.
+     * Define the relationship with the Employee model.
      */
-    public function reportingLine()
+    public function leaveTypes()
     {
-        return $this->belongsTo(Employee::class, 'reporting_line');
+        return $this->hasMany(LeaveType::class, 'employee_id'); // Adjust the foreign key if necessary
     }
+
+    public function leaveRequests()
+    {
+        return $this->hasMany(LeaveRequest::class, 'employee_id'); // Adjust the foreign key if necessary
+    }
+
+    public function attendances()
+    {
+        return $this->hasMany(Attendance::class, 'employee_id'); // Assuming the foreign key is 'employee_id'
+    }
+
+    public function manager()
+    {
+        return $this->belongsTo(Employee::class, 'manager_id');
+    }
+
+    public function subordinates()
+    {
+        return $this->hasMany(Employee::class, 'manager_id');
+    }
+
+    public function getEligibleForAnnualLeaveAttribute()
+    {
+        // Use the joined_date to calculate if the employee is eligible for Annual Leave
+        if ($this->joined_date) {
+            $joinDate = Carbon::parse($this->joined_date);
+            return $joinDate->addMonths(3)->lte(Carbon::now());
+        }
+
+        return false; // If no join date, the employee is not eligible
+    }
+
+    public function leaveBalances()
+{
+    return $this->hasMany(LeaveBalance::class, 'employee_id');
+}
+    
 }

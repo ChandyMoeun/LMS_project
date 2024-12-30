@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import EmployeeNavbar from '@/Components/EmployeeNavbar.vue';
+import EmployeeSidebar from '@/Components/EmployeeSidebar.vue';
 </script>
 <template>
-  <EmployeeNavbar />
+  <EmployeeSidebar />
   <div class="h-full">
     <div class="h-full">
       <slot />

@@ -87,7 +87,7 @@ class CalendarHolidayController extends Controller
     public function edit($id)
     {
         $calendarHoliday = Calendar_holiday::findOrFail($id);
-        return view('calendar_holiday.edit', compact('calendarHoliday'));
+        return view('calendar.edit_holiday', compact('calendarHoliday'));
     }
 
     /**
@@ -100,8 +100,11 @@ class CalendarHolidayController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'holiday_name' => 'required|string|max:255',
-            'holiday_date' => 'required|date',
+            'holiday_name' => 'required',
+            'from_date' => 'required',
+            'to_date' => 'required',
+            'holiday' => 'required',
+            'description' => 'required',
         ]);
 
         $calendarHoliday = Calendar_holiday::findOrFail($id);
@@ -121,6 +124,6 @@ class CalendarHolidayController extends Controller
         $calendarHoliday = Calendar_holiday::findOrFail($id);
         $calendarHoliday->delete();
 
-        return redirect()->route('admin.calendar_holiday.index')->withSuccess('Calendar holiday deleted successfully!');
+        return redirect()->route('admin.calendar_workday.index')->withSuccess('Calendar holiday deleted successfully!');
     }
 }

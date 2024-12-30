@@ -1,5 +1,5 @@
 <x-app-layout>
-   <div>
+   <div class="mt-20">
         <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-200">
             <div class="container mx-auto px-6 py-1 pb-16">
               <div class="bg-white shadow-md rounded my-6 p-5">
@@ -8,7 +8,7 @@
                   @method('put')
                   <div class="flex flex-col space-y-2">
                     <label for="name" class="text-gray-700 select-none font-medium">User Name</label>
-                    <input id="name" type="text" name="name" value="{{ old('name',$user->name) }}"
+                    <input id="name" type="text" name="name" value="{{ old('name',$user->full_name) }}"
                       placeholder="Enter name" class="px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-200"
                     />
                 </div>

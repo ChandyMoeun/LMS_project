@@ -9,6 +9,9 @@ use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 use App\Models\Position;
 use App\Models\Department;
+use App\Models\LeaveRequest;
+use Illuminate\Support\Facades\Auth;
+
 
 class EmployeeController extends Controller
 {
@@ -19,9 +22,9 @@ class EmployeeController extends Controller
      */
     function __construct()
     {
-        $this->middleware('role_or_permission:Employee access|Employee create|Employee edit|Employee delete', ['only' => ['index','show']]);
-        $this->middleware('role_or_permission:Employee create', ['only' => ['create','store']]);
-        $this->middleware('role_or_permission:Employee edit', ['only' => ['edit','update']]);
+        $this->middleware('role_or_permission:Employee access|Employee create|Employee edit|Employee delete', ['only' => ['index', 'show']]);
+        $this->middleware('role_or_permission:Employee create', ['only' => ['create', 'store']]);
+        $this->middleware('role_or_permission:Employee edit', ['only' => ['edit', 'update']]);
         $this->middleware('role_or_permission:Employee delete', ['only' => ['destroy']]);
     }
 
@@ -32,12 +35,24 @@ class EmployeeController extends Controller
      */
     public function index()
     {
-        // $employees = Employee::latest()->get();
-        // return view('employee.index', ['employees' => $employees]);
-
-        $employees = Employee::with(['position', 'department'])->get();
-        return view('employee.index', compact('employees'));
+        //======> Displays the resource listing form for the current user <=====
+        $employees = Employee::with(['position', 'department', 'manager'])->get();
+        $totalEmployees = $employees->count();  // Get the total number of employees
+        $positions = Position::all(); // Get the positions
+        return view('employee.index', compact('employees', 'totalEmployees', 'positions'));
     }
+
+    // public function EmployeeDashboard()
+    // {
+    //     // Fetch the total number of employees
+    //     $totalEmployees = Employee::count();
+
+    //     // Optionally, fetch all employees if needed for the view
+    //     $employees = Employee::all();
+
+    //     // Pass data to the view
+    //     return view('dashboard', compact('employees', 'totalEmployees'));
+    // }
 
     /**
      * Show the form for creating a new resource.
@@ -50,10 +65,41 @@ class EmployeeController extends Controller
         $positions = Position::all(); // Fetch all positions
         $departments = Department::all(); // Fetch all departments
         $roles = Role::all(); // Assuming you have a Role model
-        
+
         // return view('employee.new', ['roles' => $roles]);
         return view('employee.new', compact('positions', 'departments', 'roles'));
     }
+
+
+    // Fetch the employee with the given ID
+    public function show(Employee $employee)
+    {
+        // Get the current manager's ID
+        $managerId = Auth::id(); // Or any specific manager ID
+
+        // Fetch employees under the current manager
+        $employees = Employee::where('manager_id', $managerId)
+            ->with('position', 'department') // Include positions and departments
+            ->get();
+
+        // Fetch all positions
+        $positions = Position::all();
+        // Fetch all departments
+        $departments = Department::all();
+        // Fetch all roles
+        $roles = Role::all();
+
+        return view('employee.profile.index', [
+            'employee' => $employee,
+            'roles' => $roles,
+            'positions' => $positions,
+            'departments' => $departments,
+        ]);
+
+
+        // return view('employee.profile.index', ['employee' => $employee, 'roles' => $roles, 'positions' => $positions, 'departments' => $departments, 'manager' => $manger]);
+    }
+
 
     /**
      * Store a newly created resource in storage.
@@ -63,42 +109,51 @@ class EmployeeController extends Controller
      */
     public function store(Request $request)
     {
-        // $request->validate([
-        //     'staff_id' => 'required|unique:employees',
-        //     'full_name' => 'required',
-        //     'email' => 'required|email|unique:employees',
-        //     'password' => 'required|confirmed',
-        //     'dob' => 'required|date',
-        //     'position_id' => 'required|integer',
-        //     'department_id' => 'required|integer',
-        // ]);
+        $request->validate([
+            'profile_image' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+            'staff_id' => 'required|string|max:255',
+            'full_name' => 'required|string|max:255',
+            'gender' => 'required|string',
+            'email' => 'required|email|unique:employees,email',
+            'password' => 'required|string|min:8|confirmed',
+            'dob' => 'required|date',
+            'joined_date' => 'required|date',
+            'entitled_date' => 'required|date|after_or_equal:joined_date',
+            'position_id' => 'nullable|exists:positions,id',
+            'department_id' => 'nullable|exists:departments,id',
 
-        $employee = Employee::create([
-            'staff_id' => $request->staff_id,
-            'full_name' => $request->full_name,
-            'gender' => $request->gender,
-            'email' => $request->email,
-            'password' => bcrypt($request->password),
-            'dob' => $request->dob,
-            'joined_date' => $request->joined_date,
-            'entitled_calendar' => $request->entitled_calendar,
-            'reporting_line' => $request->reporting_line,
-            'profile_image' => $request->profile_image,
-            'position_id' => $request->position_id,
-            'department_id' => $request->department_id,
         ]);
 
-        $employee->syncRoles($request->roles);
+        $employee = new Employee();
+        $employee->staff_id = $request->staff_id;
+        $employee->full_name = $request->full_name;
+        $employee->gender = $request->gender;
+        $employee->email = $request->email;
+        $employee->password = bcrypt($request->password);
+        $employee->dob = $request->dob;
+        $employee->joined_date = $request->joined_date;
+        $employee->entitled_date = $request->entitled_date;
+        $employee->position_id = $request->position_id;
+        $employee->department_id = $request->department_id;
 
-        return redirect()->route('admin.employee.index')->withSuccess('Employee created successfully!');
+        // Handle profile image upload
+        if ($request->hasFile('profile')) {
+            $file = $request->file('profile');
+            $filename = time() . '.' . $file->getClientOriginalExtension();
+            $file->move(public_path('images'), $filename);
+            $employee->profile = $filename;
+        }
 
-        // return redirect()->back()->withSuccess('Employee created successfully!');
+        $employee->save();
+        $employee->roles()->sync($request->roles);
+
+        return redirect()->route('admin.employee.index')->with('success', 'Employee created successfully.');
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Employee  $employee
+     * @param  \App\Models\User  $employee
      * @return \Illuminate\Http\Response
      */
     public function edit(Employee $employee)
@@ -107,7 +162,7 @@ class EmployeeController extends Controller
         $departments = Department::all(); // Fetch all departments
         $roles = Role::get();
         $employee->roles;
-        
+
         return view('employee.edit', ['employee' => $employee, 'roles' => $roles, 'positions' => $positions, 'departments' => $departments]);
     }
 
@@ -115,49 +170,70 @@ class EmployeeController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Employee  $employee
+     * @param  \App\Models\User  $employee
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Employee $employee)
     {
-        // $validated = $request->validate([
-        //     'staff_id' => 'required',
-        //     'full_name' => 'required',
-        //     'email' => 'required',
-        //     'dob' => 'required',
-        //     'position_id' => 'required',
-        //     'department_id' => 'required',
-        // ]);
+        $request->validate([
+            'staff_id' => 'required|string|max:255',
+            'full_name' => 'required|string|max:255',
+            'gender' => 'required|string',
+            'email' => 'required|email|unique:employees,email,' . $employee->id,
+            'password' => 'nullable|confirmed|min:6',
+            'dob' => 'required|date',
+            'joined_date' => 'required|date',
+            'position_id' => 'nullable|exists:positions,id',
+            'department_id' => 'nullable|exists:departments,id',
+            'roles' => 'array'
+        ]);
 
-        // if ($request->password != null) {
-        //     $request->validate([
-        //         'password' => 'required|confirmed'
-        //     ]);
-        //     $validated['password'] = bcrypt($request->password);
-        // }
+        $employee->staff_id = $request->staff_id;
+        $employee->full_name = $request->full_name;
+        $employee->gender = $request->gender;
+        $employee->email = $request->email;
 
-        // $employee->update($validated);
+        if ($request->filled('password')) {
+            $employee->password = bcrypt($request->password);
+        }
 
+        $employee->dob = $request->dob;
+        $employee->joined_date = $request->joined_date;
+        $employee->position_id = $request->position_id;
+        $employee->department_id = $request->department_id;
 
-        // $employee->syncRoles($request->roles);
-        $Em = Employee::where('id', $employee->id)->first();
-        $Em->update($request->all());
-        
-        return redirect()->back()->withSuccess($Em);
+        // Handle profile image upload
+        if ($request->hasFile('profile')) {
+            $file = $request->file('profile');
+            $filename = time() . '.' . $file->getClientOriginalExtension();
+            $file->move(public_path('images'), $filename);
+            $employee->profile = $filename;
+        }
+
+        $employee->save();
+        $employee->roles()->sync($request->roles);
+
+        return redirect()->route('admin.employee.index')->with('success', 'Employee updated successfully.');
     }
+
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Employee  $employee
+     * @param  \App\Models\User  $employee
      * @return \Illuminate\Http\Response
      */
     public function destroy(Employee $employee)
     {
         $employee->delete();
 
-        // return redirect()->back()->withSuccess('Employee deleted successfully!');
         return redirect()->route('admin.employee.index')->withSuccess('Employee deleted successfully!');
+    }
+    public function search(Request $request)
+    {
+        $query = $request->input('query');
+        $employees = Employee::where('name', 'LIKE', "%{$query}%")->get();
 
+        return view('employees.index', compact('employees'));
     }
 }

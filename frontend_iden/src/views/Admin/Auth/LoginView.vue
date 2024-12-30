@@ -1,27 +1,30 @@
-<!-- src/components/Login.vue -->
 <template>
-  <div class="flex items-center justify-center min-h-screen bg-gray-100">
-    <el-card class="w-full max-w-md shadow-lg">
-      <h2 class="text-2xl font-bold mb-6 text-center">Login</h2>
-      <el-form @submit="onSubmit">
-        <el-form-item :error="emailError">
-          <el-input placeholder="Email Address" v-model="email" size="large" />
-        </el-form-item>
-
-        <el-form-item :error="nameError" class="mt-8">
-          <el-input placeholder="Password" v-model="password" size="large" type="password" />
-        </el-form-item>
-        <div>
-          <el-button
-            size="large"
-            class="mt-3 w-full"
-            :disabled="isSubmitting"
-            type="primary"
-            native-type="submit"
-            >Submit</el-button
-          >
+  <div class="flex justify-center">
+    <el-card class="w-5/6 mt-20">
+      <div class="flex">
+        <!-- Left section with image -->
+        <div class=" flex flex-col justify-center" style="width: 50%; ">
+          <img src="../../../assets/image/login.png" alt="Login Illustration" class="object-cover">
+          <p class=" flex mb-5 justify-center text-sm" style="color: #B7B7B7;">Sign in here to join iDEN leave management system.</p>
         </div>
-      </el-form>
+
+        <div class=" flex flex-col w-3/6 px-5">
+          <h4 class="font-bold text-4xl w-2/6 hover:text-yellow-300 mt-5 mb-3 text-center">SIGN IN</h4>
+          <el-form @submit="onSubmit">
+            <el-form-item :error="emailError">
+              <el-input placeholder="Email Address" v-model="email" size="large" />
+            </el-form-item>
+
+            <el-form-item :error="nameError" class="mt-8">
+              <el-input placeholder="Password" v-model="password" size="large" type="password" />
+            </el-form-item>
+              <div class="flex justify-end items-center mb-4 mr-7">
+                <a href="#" class="text-blue-500 text-sm">Forgot password?</a>
+              </div>
+              <el-button size="large" class="mt-3 w-1/6 " :disabled="isSubmitting" type="primary" native-type="submit">Submit</el-button>
+          </el-form>
+        </div>
+      </div>
     </el-card>
   </div>
 </template>

@@ -1,0 +1,186 @@
+<x-app-layout>
+    <main class="mt-10 p-10">
+        <div class="d-flex border-b-2 border-gray-300 px-8 h-20 items-center">
+            <a href="/admin/leave">
+                <svg class="mb-5 w-6 h-6 text-gray-800 dark:text-white hover:text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5H1m0 0 4 4M1 5l4-4" />
+                </svg>
+            </a>
+            <h1 class="font-bold mr-20 text-3xl w-2/6 mt-3 hover:text-yellow-400"><b>Reques Leave </b></h1>
+        </div>
+        <div class="container mt-16 px-6 py-4 bg-white shadow-md rounded-lg mt-5 ">
+            <!-- Leave Request Form -->
+            <form method="POST" action="{{ route('admin.leave.store') }}" enctype="multipart/form-data" class="flex flex-row justify-between px-5 py-5 gap-5">
+                @csrf <!-- CSRF token for security -->
+
+                <div class="w-6/12">
+                    <!-- Select Employee -->
+                    <div>
+                        <label for="employee_id" class="block text-sm font-medium text-gray-700">Select Employee</label>
+                        <select name="employee_id" id="employee_id" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm">
+                            <option value="">Select an Employee</option>
+                            @foreach($employees as $employee)
+                            <option value="{{ $employee->id }}">
+                                {{ $employee->full_name }} | Role: {{ $employee->roles->pluck('name')->join(', ') }}
+                            </option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <!-- Select Leave Type -->
+                    <div class="mt-4">
+                        <label for="leave_type_id" class="block text-sm font-medium text-gray-700">Leave Type</label>
+                        <select name="leave_type_id" id="leave_type_id" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm" required>
+                            <option value="" disabled selected>Select Leave Type</option>
+                            @foreach($leaveTypes as $leaveType)
+                            <option
+                                value="{{ $leaveType->id }}"
+                                {{ old('leaveType_id') == $leaveType->id ? 'selected' : '' }}
+                                {{-- Disable Annual leave if the employee is not eligible --}}
+                                @if($leaveType->leave_name == 'Annual leave' && !$employees->first()->eligible_for_annual_leave)
+                                disabled
+                                @endif
+                                >
+                                {{ $leaveType->leave_name }}({{ $leaveType->id }})
+                            </option>
+                            @endforeach
+                        </select>
+                        @error('leave_type_id')
+                        <span class="text-red-500 text-sm">{{ $message }}</span>
+                        @enderror
+                    </div>
+
+                    <!-- Display Increase Rate as Total Leave -->
+                    <div id="leaveTypeDetails" class="mt-4 hidden">
+                        <p>Total Leave:<span id="totalLeave"></span></p>
+                    </div>
+
+                    <!-- From Date/Time -->
+                    <div class="mt-4">
+                        <label for="from_date" id="from_date_label" class="block text-sm font-medium text-gray-700">From Date/Time</label>
+                        <input type="datetime-local" name="from_date" id="from_date" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm" value="{{ old('from_date') }}" required>
+                    </div>
+
+                    <!-- To Date/Time -->
+                    <div class="mt-4">
+                        <label for="to_date" id="to_date_label" class="block text-sm font-medium text-gray-700">To Date/Time</label>
+                        <input type="datetime-local" name="to_date" id="to_date" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm" value="{{ old('to_date') }}" required>
+                    </div>
+
+                    <!-- Leave Duration (Full Day, Half Day, Custom Time) -->
+                    <div class="mt-4">
+                        <label for="leave_type" class="block text-sm font-medium text-gray-700">Leave Duration</label>
+                        <select name="leave_type" id="leave_type" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm">
+                            <option value="full_day">Full Day</option>
+                            <option value="half_day">Half Day</option>
+                            <option value="time">Specific Time</option>
+                        </select>
+                    </div>
+                    <!-- Half Day Type (Morning, Afternoon) -->
+                    <div id="halfDayType" class="mt-4" style="display: none;">
+                        <label class="block text-sm font-medium text-gray-700">Select Half Day Type</label>
+                        <div class="mt-2">
+                            <label class="inline-flex items-center">
+                                <input type="radio" name="half_day_type" value="morning" class="form-radio text-blue-600">
+                                <span class="ml-2">Morning</span>
+                            </label>
+                            <label class="inline-flex items-center ml-6">
+                                <input type="radio" name="half_day_type" value="afternoon" class="form-radio text-blue-600">
+                                <span class="ml-2">Afternoon</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="w-6/12">
+                    <!-- Reason -->
+                    <div>
+                        <label for="reason" class="block text-sm font-medium text-gray-700">Reason</label>
+                        <textarea name="reason" id="reason" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm" rows="4" placeholder="Enter the reason for your leave">{{ old('reason') }}</textarea>
+                    </div>
+
+                    <!-- Duration -->
+                    <div class="mt-4">
+                        <label for="duration" class="block text-sm font-medium text-gray-700">Duration (in days)</label>
+                        <input type="number" name="duration" id="duration" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm" value="{{ old('duration') }}" min="1" step="0.5" placeholder="Enter duration in days">
+                    </div>
+
+                    <!-- Attachment -->
+                    <div class="mt-4">
+                        <label for="attachment" class="block text-sm font-medium text-gray-700">Attachment</label>
+                        @csrf
+                        <input type="file" name="attachment[]" multiple accept=".jpg,.jpeg,.png,.gif,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.pdf">
+                        <!-- Accepts images (jpg, jpeg, png, gif) and Microsoft Office files (doc, docx, xls, xlsx, ppt, pptx), and PDFs -->
+                    </div>
+
+                    <!-- Submit Button -->
+                    <div class="mt-6">
+                        <button type="submit" class="bg-black text-white font-semibold px-2 py-1 rounded-lg shadow-md hover:bg-yellow-400 transition-colors">
+                            Take Leave
+                        </button>
+                        <a href="/admin/leave" class="bg-red-600 text-white font-semibold px-2 py-1 rounded-lg shadow-md hover:bg-red-400 transition-colors">Back</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </main>
+</x-app-layout>
+
+<script>
+    const leaveType = document.getElementById('leave_type');
+    const halfDayType = document.getElementById('halfDayType');
+
+    const fromDateLabel = document.getElementById('from_date_label');
+    const toDateLabel = document.getElementById('to_date_label');
+    const fromDateInput = document.getElementById('from_date');
+    const toDateInput = document.getElementById('to_date');
+
+    // Event listener to show or hide fields based on leave duration type
+    leaveType.addEventListener('change', function() {
+        if (this.value === 'time') {
+            fromDateLabel.textContent = 'From Time';
+            fromDateInput.type = 'time';
+            toDateLabel.textContent = 'To Time';
+            toDateInput.type = 'time';
+            halfDayType.style.display = 'none';
+        } else if (this.value === 'half_day') {
+            fromDateLabel.textContent = 'From Date';
+            fromDateInput.type = 'date';
+            toDateLabel.textContent = 'To Date';
+            toDateInput.type = 'date';
+            halfDayType.style.display = 'block';
+        } else {
+            fromDateLabel.textContent = 'From Date/Time';
+            fromDateInput.type = 'datetime-local';
+            toDateLabel.textContent = 'To Date/Time';
+            toDateInput.type = 'datetime-local';
+            halfDayType.style.display = 'none';
+        }
+    });
+
+    // Trigger change event on page load to ensure correct input types are set
+    leaveType.dispatchEvent(new Event('change'));
+
+
+    // =====>javascript show total leave<=====
+
+    document.getElementById('leave_type_id').addEventListener('change', function() {
+        // Get the selected option
+        const selectedOption = this.options[this.selectedIndex];
+
+        // Get the increase rate from the selected option's data attribute
+        const increaseRate = selectedOption.getAttribute('data-increase-rate');
+
+        // Get the element to display total leave
+        const totalLeaveElement = document.getElementById('totalLeave');
+
+        if (increaseRate) {
+            // Set increase rate as total leave
+            totalLeaveElement.textContent = increaseRate;
+
+            // Show the leave type details section
+            document.getElementById('leaveTypeDetails').classList.remove('hidden');
+        } else {
+            // If no leave type is selected, hide the leave type details section
+            document.getElementById('leaveTypeDetails').classList.add('hidden');
+        }
+    });
+</script>

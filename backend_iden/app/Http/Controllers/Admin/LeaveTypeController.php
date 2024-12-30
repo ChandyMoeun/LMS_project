@@ -1,9 +1,13 @@
 <?php
 
 namespace App\Http\Controllers\Admin;
+
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Employee;
+use App\Models\LeaveType;
+use App\Models\LeaveBalance;
+use App\Models\User; // Assuming you have a User model
 use Auth;
 
 class LeaveTypeController extends Controller
@@ -13,17 +17,27 @@ class LeaveTypeController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-     function __construct()
-     {
-         $this->middleware('role_or_permission:LeaveType access|LeaveType create|LeaveType edit|LeaveType delete', ['only' => ['index','show']]);
-         $this->middleware('role_or_permission:LeaveType create', ['only' => ['create','store']]);
-         $this->middleware('role_or_permission:LeaveType edit', ['only' => ['edit','update']]);
-         $this->middleware('role_or_permission:LeaveType delete', ['only' => ['destroy']]);
-     }
+    function __construct()
+    {
+        $this->middleware('role_or_permission:LeaveType access|LeaveType create|LeaveType edit|LeaveType delete', ['only' => ['index', 'show']]);
+        $this->middleware('role_or_permission:LeaveType create', ['only' => ['create', 'store']]);
+        $this->middleware('role_or_permission:LeaveType edit', ['only' => ['edit', 'update']]);
+        $this->middleware('role_or_permission:LeaveType delete', ['only' => ['destroy']]);
+    }
 
     public function index()
     {
-        return view('leavetype.index');
+
+
+        $leaveTypes = LeaveType::with(['employee.roles', 'employee.department', 'employee.position'])->get();
+        return view('leavetype.index', compact('leaveTypes'));
+    }
+
+    public function create()
+    {
+        // Fetch all employees to display in the dropdown
+        $employees = Employee::all();
+        return view('leavetype.new', compact('employees'));
     }
 
     /**
@@ -31,7 +45,38 @@ class LeaveTypeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // Validate the request
+        $request->validate([
+            'leave_name' => 'required|string|max:255',
+            // 'employee_id' => 'required|array|min:1', // Array of employee IDs
+            'requires_attachment' => 'sometimes|boolean',
+            'auto_increase_entitlement' => 'sometimes|boolean',
+            'increase_rate' => 'required|integer',
+        ]);
+
+        // Store the new LeaveType in the $leaveType variable
+
+        $leaveType = LeaveType::create([
+            'leave_name' => $request->leave_name,
+            'requires_attachment' => $request->has('requires_attachment') ? 1 : 0,
+            'auto_increase_entitlement' => $request->has('auto_increase_entitlement') ? 1 : 0,
+            'increase_rate' => $request->increase_rate,
+        ]);
+
+        // Create the LeaveBalance associated with the new LeaveType
+        $allUser = Employee::all();
+        foreach ($allUser as $user) {
+            LeaveBalance::create([
+                'employee_id' => $user->id,
+                'leave_type_id' => $leaveType->id, // Use the ID of the newly created LeaveType
+                'used' => 0, // Initially, no leave is used
+                'available' => $leaveType->increase_rate, // Initialize available with the increase_rate
+                'entitlement' => $leaveType->increase_rate, // Initialize entitlement with the increase_rate
+            ]);
+        }
+
+        // Redirect back to the leave type index with a success message
+        return redirect()->route('admin.leavetype.index')->with('success', 'Leave type and balance created successfully.');
     }
 
     /**
@@ -42,12 +87,42 @@ class LeaveTypeController extends Controller
         //
     }
 
+    public function edit($id)
+    {
+        $leaveTypes = LeaveType::findOrFail($id);
+        $employees = Employee::all();
+        return view('leavetype.edit', compact('leaveTypes', 'employees'));
+    }
+
+
     /**
      * Update the specified resource in storage.
      */
     public function update(Request $request, string $id)
     {
-        //
+        // Validate the request
+        $request->validate([
+            'leave_name' => 'required|string|max:255',
+            'employee_id' => 'required|exists:employees,id',
+            'requires_attachment' => 'sometimes|boolean',
+            'auto_increase_entitlement' => 'sometimes|boolean',
+            'increase_rate' => 'required|integer',
+        ]);
+
+        // Find the LeaveType by ID or fail
+        $leaveType = LeaveType::findOrFail($id);
+
+        // Update the LeaveType with new data
+        $leaveType->update([
+            'leave_name' => $request->leave_name,
+            'employee_id' => $request->employee_id,
+            'requires_attachment' => $request->has('requires_attachment') ? 1 : 0,
+            'auto_increase_entitlement' => $request->has('auto_increase_entitlement') ? 1 : 0,
+            'increase_rate' => $request->increase_rate,
+        ]);
+
+        // Redirect back to the leave type index with a success message
+        return redirect()->route('admin.leavetype.index')->with('success', 'Leave type updated successfully.');
     }
 
     /**
@@ -55,6 +130,11 @@ class LeaveTypeController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        // Find the LeaveType by ID or fail
+        $leaveType = LeaveType::findOrFail($id);
+        // Delete the LeaveType
+        $leaveType->delete();
+        // Redirect back to the leave type index with a success message
+        return redirect()->route('admin.leavetype.index')->with('success', 'Leave type deleted successfully.');
     }
 }

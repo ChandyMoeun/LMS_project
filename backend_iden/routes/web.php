@@ -14,8 +14,17 @@ use App\Http\Controllers\Admin\{
     AttendanceController,
     LeaveController,
     LeaveTypeController,
-    LeavePfDetailController
+    LeavePfDetailController,
+    DashboardController,
+    ResetPasswordController,
+    NotificationController,
+    ForgotPasswordController,
 };
+use App\Http\Controllers\EmailController;
+use App\Http\Controllers\LeaveRequestController;
+use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
+use Illuminate\Support\Facades\Mail;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -32,46 +41,43 @@ Route::get('/', function () {
     return view('auth.login');
 });
 
-
 Route::get('/test-mail', function () {
 
     $message = "Testing mail";
 
-    \Mail::raw('Hi, welcome!', function ($message) {
-        $message->to('ajayydavex@gmail.com')
+    Mail::raw('Hi, welcome!', function ($message) {
+        $message->to('emcha7231@gmail.com')
             ->subject('Testing mail');
     });
-
     dd('sent');
 });
+
+Route::get('send-mail', [EmailController::class, 'sendWelcomeEmail']);
 
 
 Route::get('/dashboard', function () {
     return view('front.dashboard');
 })->middleware(['front'])->name('dashboard');
 
-
 require __DIR__ . '/front_auth.php';
 
-// Admin routes
+//Admin routes
 Route::get('/admin/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('admin.dashboard');
 
+Route::get('/admin/dashboard', [DashboardController::class, 'index'])
+    ->middleware(['auth'])
+    ->name('admin.dashboard');
 require __DIR__ . '/auth.php';
-
-
-
-
 
 Route::namespace('App\Http\Controllers\Admin')->name('admin.')->prefix('admin')
     ->group(function () {
         Route::resource('roles', 'RoleController');
         Route::resource('permissions', 'PermissionController');
         Route::resource('users', 'UserController');
-        Route::resource('posts', 'PostController');
         Route::resource('employee', 'EmployeeController');
-        
+
         //=====>Calendar Group<=====
         Route::resource('calendar_group', 'CalendarGroupController');
         //=====>Calendar workday/time<=====
@@ -85,28 +91,58 @@ Route::namespace('App\Http\Controllers\Admin')->name('admin.')->prefix('admin')
         Route::resource('department', 'DepartmentController');
         Route::resource('attendance', 'AttendanceController');
         Route::resource('leave', 'LeaveController');
+        //=====>LeaveType<=====
         Route::resource('leavetype', 'LeaveTypeController');
+
+        //=====>Reset password Employee<======
+        // Fetch all employees to display in the dropdown
+        Route::get('employee/resetpassword/index', [ResetPasswordController::class, 'index'])->name('employee.resetpassword.index');
+        // Show reset form for a specific employee
+        Route::get('employee/resetpassword/{id}', [ResetPasswordController::class, 'resetForm'])->name('employee.resetpassword.form');
+        // Handle password reset form submission
+        Route::post('employee/resetpassword/{id}', [ResetPasswordController::class, 'reset'])->name('employee.resetpassword.update');
+
+        //=====>approver or reject route<====
+        Route::post('admin/leave/{leaveRequest}/approve', [LeaveController::class, 'approve'])->name('leave.approve');
+        Route::post('admin/leave/{leaveRequest}/reject', [LeaveController::class, 'reject'])->name('leave.reject');
+
+        // ======dashboard<=====
+        Route::post('dashboard/{leaveRequest}/approve', [DashboardController::class, 'approve'])->name('dashboard.approve');
+        Route::post('dashboard/{leaveRequest}/reject', [DashboardController::class, 'reject'])->name('dashboard.reject');
+        Route::get('dashboard', [LeaveController::class, 'LeaveRequestDashboard'])->name('dashboard');
+        // Route::get('/dashboard', [EmployeeController::class, 'EmployeeDashboard'])->name('dashboard');
+
+
 
         Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
         Route::put('/profile-update', [ProfileController::class, 'update'])->name('profile.update');
         Route::get('/mail', [MailSettingController::class, 'index'])->name('mail.index');
         Route::put('/mail-update/{mailsetting}', [MailSettingController::class, 'update'])->name('mail.update');
 
-        // Route::get('/employee', [EmployeeController::class, 'index'])->name('employee.index');
-        // Route::get('/calendar', [CalendarController::class, 'index'])->name('calendar.index');
-
-
-        //=====>Calendar workday/time<=====
-        // Route::get('/calendar', [CalendarWorkDayController::class, 'index'])->name('admin.calendar_workday.index');
-
-        Route::get('/position', [PositionController::class, 'index'])->name('position.index');
-        Route::get('/attendance', [AttendanceController::class, 'index'])->name('attendance.index');
-        Route::get('/leave', [LeaveController::class, 'index'])->name('leave.index');
-        Route::get('/leavetype', [LeaveTypeController::class, 'index'])->name('leavetype.index');
+        Route::get('/admin/leave/{id}', [LeaveController::class, 'show'])->name('admin.leave.show');
 
         //more//
         Route::get('/more', [LeavePfDetailController::class, 'index'])->name('more.index');
-        Route::get('/employee/profile/{id}', [LeavePfDetailController::class, 'employeeProfile']);
-      
+        // Route::get('/more', [LeavePfDetailController::class, 'index'])->name('more.index');
+        Route::get('/admin/leave/{id}', [LeaveController::class, 'show'])->name('admin.leave.show');
+
+        //====>details department<=======
+        Route::get('admin/department/more/{id}', [DepartmentController::class, 'detail'])->name('department.more.index');
+
+        //search//
+        // Route::get('/search', [EmployeeController::class, 'search'])->name('search');
+        Route::get('/employees/search', [EmployeeController::class, 'search'])->name('employee.search');
+        //====>Notification<=======
+        Route::get('/notifications', [NotificationController::class, 'index'])->name('notifications.index');
+
+        // Example route to trigger notification after a leave request (for demonstration purposes)
+        Route::get('/notify-leave/{id}', [NotificationController::class, 'notifyAfterLeaveRequest'])->name('notifications.leave');
+
+        // Route to reset/delete notifications
+        // In routes/web.php
+
+        Route::delete('/clear-notifications', [NotificationController::class, 'resetNotifications'])->name('clear.notifications');
+        // Route for clearing all leave requests
+        // Route::delete('/admin/clear-leave-requests', [LeaveController::class, 'clearLeaveRequests'])->name('admin.clear.leave.requests');
+        Route::post('/leave/clear', [LeaveController::class, 'clear'])->name('leave.clear');
     });
-    

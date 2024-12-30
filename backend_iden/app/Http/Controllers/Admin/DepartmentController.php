@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Department;
+use App\Models\Employee;
 use Auth;
 
 class DepartmentController extends Controller
@@ -29,9 +30,11 @@ class DepartmentController extends Controller
      */
     public function index()
     {
-        $departments = Department::paginate(4);
+       // ====>Eager load the positions for each department<=======
+       $departments = Department::with('positions', 'manager')->paginate(4);
+       return view('department.index', ['departments' => $departments]);
+        // Eager load the positions for each department
 
-        return view('department.index', ['departments' => $departments]);
     }
 
     /**
@@ -41,7 +44,8 @@ class DepartmentController extends Controller
      */
     public function create()
     {
-        return view('department.new'); // View for creating a new department
+        $employees = Employee::all();
+        return view('department.new', compact('employees')); // View for creating a new department
     }
 
     /**
@@ -54,9 +58,10 @@ class DepartmentController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
+            'manager_id' => 'nullable|exists:employees,id',
         ]);
 
-        $data = $request->only(['name']);
+        $data = $request->only(['name','manager_id']);
         $data['user_id'] = Auth::user()->id; // Optional: Set the user_id if needed
         Department::create($data);
 
@@ -114,4 +119,17 @@ class DepartmentController extends Controller
         $department->delete();
         return redirect()->route('admin.department.index')->withSuccess('Department deleted successfully!');
     }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+   
+      public function detail(string $id) {
+        $department = Department::find($id);
+        return view('department.more.index', ['department'=> $department]);
+      }
+      
+      
 }
