@@ -14,9 +14,6 @@ export const useDepartmentStore = defineStore('department', {
           }
         })
         this.departments = response.data.data
-
-        // Log the data to the console
-        console.log('Fetched departments:', this.departments)
       } catch (error) {
         console.error('Error fetching departments:', error)
       }
@@ -28,12 +25,7 @@ export const useDepartmentStore = defineStore('department', {
             Authorization: `Bearer ${localStorage.getItem('access_token')}`
           }
         })
-
-        // Assuming the response contains a single department object
-        this.departments = [response.data] // Wrap in an array if you're treating it as an array
-
-        // Log the data to the console
-        console.log('Fetched department:', this.departments)
+        this.departments = [response.data]
       } catch (error) {
         console.error('Error fetching department:', error)
       }

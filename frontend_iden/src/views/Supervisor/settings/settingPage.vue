@@ -105,12 +105,5 @@ import WebHeaderMenu from '@/Components/WebHeaderMenu.vue'
 export default {
   components: { SupervisorSidebar, WebHeaderMenu },
   name: 'SettingsPage',
-  data() {
-    return {
-      // Your data here
-      // Example:
-      // items: []
-    }
-  }
 }
 </script>

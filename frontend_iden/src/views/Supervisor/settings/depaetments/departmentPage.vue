@@ -57,7 +57,6 @@
                       </tr>
                     </tbody>
               </table>
-
               <!-- Pagination -->
               <div class="text-right p-4 py-10">
                 <pagination-component :total-pages="totalPages" :current-page="currentPage" @page-changed="loadDepartments" />
@@ -84,19 +83,14 @@ export default {
     const currentPage = ref(1)
     const totalPages = ref(3)
 
-    // Fetch data on component mount
     onMounted(() => {
       departmentStore.fetchDepartments()
     })
-
-    // Computed property for filtered departments
     const filteredDepartments = computed(() => {
       return departmentStore.departments.filter((department) =>
         department.name.toLowerCase().includes(searchTerm.value.toLowerCase())
       )
     })
-
-    // Method to handle pagination (if needed)
     const loadDepartments = (page) => {
       currentPage.value = page
       departmentStore.fetchDepartments(page)

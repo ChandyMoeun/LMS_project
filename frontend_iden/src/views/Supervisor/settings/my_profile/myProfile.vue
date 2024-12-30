@@ -53,6 +53,7 @@
   import axiosInstance from '@/plugins/axios';
   import SupervisorSidebar from '@/Components/SupervisorSidebar.vue';
   import WebHeaderMenu from '@/Components/WebHeaderMenu.vue';
+
   export default {
     components: { SupervisorSidebar, WebHeaderMenu },
     data() {
@@ -61,13 +62,14 @@
           full_name: '',
           email: '',
         },
-        profileUrl: '', // URL for the profile image
-        previewUrl: '', // For image preview
-        selectedFile: null, // Holds the uploaded image file
+        profileUrl: '', 
+        previewUrl: '', 
+        selectedFile: null, 
       };
     },
+    // ====>Fetch user data when the component is mounted<====
     async mounted() {
-      await this.fetchUserData(); // Fetch user data when the component is mounted
+      await this.fetchUserData(); 
     },
     methods: {
       async fetchUserData() {
@@ -76,14 +78,9 @@
           const userData = response.data.data;
           this.form.full_name = userData.full_name;
           this.form.email = userData.email;
-          // Construct the profile image URL
           if (userData.profile) {
             this.profileUrl = `http://127.0.0.1:8000/images/${userData.profile}`;
             }
-
-        //   if (userData.profile) {
-        //     this.profileUrl = `http://127.0.0.1:8000/images/${user.profile}`;
-        //   }
         } catch (error) {
           console.error("Error fetching user data:", error);
         }

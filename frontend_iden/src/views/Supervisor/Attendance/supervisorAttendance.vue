@@ -79,17 +79,18 @@ import SupervisorSidebar from '@/Components/SupervisorSidebar.vue';
 import WebHeaderMenu from '@/Components/WebHeaderMenu.vue';
 import html2pdf from 'html2pdf.js';
 import axiosInstance from '@/plugins/axios';
+
 export default {
   components: { SupervisorSidebar, WebHeaderMenu },
   name: "AttendanceRecords",
   data() {
     return {
-      searchQuery: '', // Holds the search input
-      attendances: [], // Array of attendance records
+      searchQuery: '',
+      attendances: [], 
     };
   },
   mounted() {
-    this.fetchAttendanceRecords(); // Fetch data on mount
+    this.fetchAttendanceRecords(); 
   },
   computed: {
     filteredAttendances() {

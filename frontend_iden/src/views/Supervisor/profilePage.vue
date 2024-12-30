@@ -47,13 +47,14 @@
 <script>
  import SupervisorSidebar from '@/Components/SupervisorSidebar.vue';
  import WebHeaderMenu from '@/Components/WebHeaderMenu.vue';
+ 
   export default {
     components: { SupervisorSidebar, WebHeaderMenu },
   data() {
     return {
       form: {
-        full_name: '', // Assuming full name is preloaded
-        email: '' // Assuming email is preloaded
+        full_name: '', 
+        email: '' 
       },
     };
   },
@@ -61,7 +62,7 @@
     clearPreview() {
       this.previewUrl = '';
       this.imgurl = '';
-      document.getElementById('thumbnailprev').value = null; // Clear file input
+      document.getElementById('thumbnailprev').value = null; 
     },
   }
 };

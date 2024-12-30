@@ -16,7 +16,6 @@ export const useAttendanceStore = defineStore('attendance', {
   }),
 
   actions: {
-    // Fetch attendance records
     async fetchAttendance() {
       try {
         const response = await axiosInstance.get('/attendance/history', {
@@ -24,10 +23,7 @@ export const useAttendanceStore = defineStore('attendance', {
             Authorization: `Bearer ${localStorage.getItem('access_token')}`,
           },
         })
-
-        // Store the attendance records from the API response
         this.attendance = response.data.attendance_records
-        // console.log('Fetched attendance records:', this.attendance)
       } catch (error) {
         console.error('Error fetching attendance:', error)
       }

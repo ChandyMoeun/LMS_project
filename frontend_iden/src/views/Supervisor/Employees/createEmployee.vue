@@ -116,6 +116,7 @@
 <script>
 import SupervisorSidebar from '@/Components/SupervisorSidebar.vue';
 import WebHeaderMenu from '@/Components/WebHeaderMenu.vue';
+
 export default {
   components: {SupervisorSidebar, WebHeaderMenu},
     data() {
@@ -133,10 +134,10 @@ export default {
           department_id: '',
           roles: [],
         },
-        positions: [], // Assume fetched from API or props
-        departments: [], // Assume fetched from API or props
-        roles: [], // Assume fetched from API or props
-        profileImage: '', // Profile image path
+        positions: [], 
+        departments: [], 
+        roles: [], 
+        profileImage: '', 
       };
     },
     methods: {
@@ -156,19 +157,12 @@ export default {
       },
   
       submitForm() {
-        // API call to update employee data
-        // e.g., axios.post or fetch logic here
         this.$router.push('/Supervisor/Employee')
       },
       cancel() {
         this.$router.push('/Supervisor/Employee');
       },
     },
-    mounted() {
-      // Example of fetching employee data to populate form (assumed API call)
-      // axios.get('/api/employee/{id}').then(response => {
-      //   this.form = response.data;
-      // });
-    },
+    
   };
 </script>

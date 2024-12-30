@@ -124,10 +124,10 @@ import Chart from 'chart.js/auto'
 // ===get user to compar Auth
 const authStore = userAuthStore()
 const user = authStore.user
-console.log(user)
 const leaveRequestStore = useLeaveRequestStore()
 const leaveTypeStore = useLeaveTypeStore()
-// Function to fetch leave requests (example for leaveRequestStore)
+
+// ===>Function to fetch leave requests (example for leaveRequestStore)<===
 const fetchTeamLeaveRequests = async () => {
   try {
     await leaveRequestStore.fetchTeamLeaveRequests()
@@ -137,19 +137,18 @@ const fetchTeamLeaveRequests = async () => {
   }
 }
 
-// Fetch leave requests on component mount
+// ====>Fetch leave requests on component mount<====
 onMounted(() => {
   fetchTeamLeaveRequests()
   leaveTypeStore.fetchLeaveTypes()
-  console.log('Fetched leave requests:', leaveTypeStore.leaveRequests)
 })
 
-// Fetch leave types on mount
+// ====>Fetch leave types on mount<====
 onMounted(async () => {
   await leaveTypeStore.fetchLeaveTypes()
 })
 
-// Function to create Employee Chart
+// ===>Function to create Employee Chart<====
 const employeeLeaveBalance = () => {
   var xValues = ['AL', 'Special', 'ML', 'Sick Leave', 'UPL']
   var yValues = [18, 7, 7, 30, 30]
@@ -177,16 +176,16 @@ const employeeLeaveBalance = () => {
   })
 }
 
-// Mount the charts once the component is mounted
+// ===>Mount the charts once the component is mounted<====
 onMounted(() => {
   employeeLeaveBalance()
 })
 
-// Reactive state for toast visibility and message
+// ===>Reactive state for toast visibility and message<===
 const isToastVisible = ref(false)
 const alertMessage = ref('Welcome To Dashboard! How are you?')
 
-// Function to show the alert
+// ===>Function to show the alert<====
 const showToast = () => {
   isToastVisible.value = true
   setTimeout(() => {
@@ -194,7 +193,7 @@ const showToast = () => {
   }, 4000) // Hide after 4 seconds
 }
 
-// Automatically show the alert on component mount
+// ====>Automatically show the alert on component mount<===
 onMounted(() => {
   showToast()
 })

@@ -4,8 +4,8 @@ import axiosInstance from '@/plugins/axios'
 
 export const useTeamStore = defineStore('team', {
   state: () => ({
-    teamMembers: [], // Store team members
-    teamCount: 0 // Store the count of team members
+    teamMembers: [], 
+    teamCount: 0 
   }),
   actions: {
     async fetchTeamMembers() {
@@ -23,7 +23,7 @@ export const useTeamStore = defineStore('team', {
         console.error('Error fetching team members:', error)
       }
     },
-    // Fetch a specific team member by ID
+    // ===>Fetch a specific team member by ID<===
     async fetchTeamMemberById(id: number) {
       try {
         const response = await axiosInstance.get(`/team/${id}`, {

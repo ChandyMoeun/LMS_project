@@ -9,7 +9,6 @@ export const useAuthStore = defineStore('auth', () => {
   const member = ref()
   const teamCount = ref(0);
   
-
   return {
     user,
     roles,

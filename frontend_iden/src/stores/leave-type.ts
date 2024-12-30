@@ -13,7 +13,7 @@ export const  useLeaveTypeStore = defineStore('leaveType', {
     }>
   }),
   actions: {
-    // Fetch all leave types
+    // =====>Fetch all leave types<====
     async fetchLeaveTypes() {
       try {
         const response = await axiosInstance.get('/leave_types', {
@@ -22,15 +22,12 @@ export const  useLeaveTypeStore = defineStore('leaveType', {
           }
         });
         this.leaveTypes = response.data.data;
-
-        // Log the fetched leave types
-        console.log('Fetched leave types:', this.leaveTypes);
       } catch (error) {
         console.error('Error fetching leave types:', error);
       }
     },
 
-    // Fetch leave type by ID
+    // ====>Fetch leave type by ID<=====
     async fetchLeaveTypeById(id: number) {
       try {
         const response = await axiosInstance.get(`/leave_types/${id}`, {
@@ -39,17 +36,12 @@ export const  useLeaveTypeStore = defineStore('leaveType', {
           }
         });
         const leaveType = response.data.data;
-
-        // Update the state if needed (e.g., add or replace in the array)
         const index = this.leaveTypes.findIndex((type) => type.id === id);
         if (index !== -1) {
           this.leaveTypes[index] = leaveType;
         } else {
           this.leaveTypes.push(leaveType);
         }
-
-        // Log the fetched leave type
-        console.log(`Fetched leave type with ID ${id}:`, leaveType);
       } catch (error) {
         console.error(`Error fetching leave type with ID ${id}:`, error);
       }

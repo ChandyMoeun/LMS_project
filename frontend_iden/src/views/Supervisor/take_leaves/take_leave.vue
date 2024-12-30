@@ -130,8 +130,6 @@
                   </button>
                 </div>
               </form>
-              <div v-if="requestStatus === 'success'" class="text-green"> Leave request submitted successfully! </div>
-              <div v-if="requestStatus === 'error'" class="text-danger"> Error submitting leave request. </div>
             </div>
             <div class="container mx-auto mt-10 px-6 py-4">
               <div class="d-flex justify-center text-black mb-10">

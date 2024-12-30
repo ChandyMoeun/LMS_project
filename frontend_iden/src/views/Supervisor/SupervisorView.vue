@@ -173,18 +173,16 @@ import { useTeamStore } from '@/stores/get-member'
 
 const teamStore = useTeamStore()
 const leaveRequestStore = useLeaveRequestStore()
-// Declare reactive state variables with proper types
-const leaveRequestCountThisWeek = ref(0) // leaveRequestCountThisWeek is a number
-const requestStatus = ref<'success' | 'error' | null>(null) // requestStatus can be 'success', 'error', or null
-// Fetch team leave requests when the component is mounted
+const leaveRequestCountThisWeek = ref(0) 
+const requestStatus = ref<'success' | 'error' | null>(null)
+ 
 onMounted(async () => {
   await leaveRequestStore.fetchTeamLeaveRequests()
-  // After fetching, sync the count and status to the reactive variables
   leaveRequestCountThisWeek.value = leaveRequestStore.leaveRequestCountThisWeek
   requestStatus.value = leaveRequestStore.requestStatus
 })
 
-// Function to fetch leave requests (example for leaveRequestStore)
+// ===>Function to fetch leave requests (example for leaveRequestStore)<===
 const fetchTeamLeaveRequests = async () => {
   try {
     await leaveRequestStore.fetchTeamLeaveRequests()
@@ -194,13 +192,13 @@ const fetchTeamLeaveRequests = async () => {
   }
 }
 
-// Fetch leave requests on component mount
+// ===>Fetch leave requests on component mount<====
 onMounted(() => {
   fetchTeamLeaveRequests()
 })
 const approveRequest = async (id: any) => {
   try {
-    await leaveRequestStore.approveLeaveRequest(id) // Call the approve action from Pinia store
+    await leaveRequestStore.approveLeaveRequest(id) 
     window.location.reload()
   } catch (error) {
     console.error('Error approving leave request:', error)
@@ -208,14 +206,14 @@ const approveRequest = async (id: any) => {
 }
 const rejectRequest = async (id: any) => {
   try {
-    await leaveRequestStore.rejectLeaveRequest(id) // Call the reject action from Pinia store
+    await leaveRequestStore.rejectLeaveRequest(id) 
     window.location.reload()
   } catch (error) {
     console.error('Error rejecting leave request:', error)
   }
 }
 
-// Function to create Employee Chart
+// ===>Function to create Employee Chart<===
 const createEmployeeChart = () => {
   const ctx = document.getElementById('employeeChart').getContext('2d')
   new Chart(ctx, {
@@ -235,14 +233,14 @@ const createEmployeeChart = () => {
           display: true,
           text: 'Employees by Section',
           font: {
-            size: 25 // Set the font size for the title
+            size: 25 
           }
         }
       }
     }
   })
 }
-// Function to create Leave Chart
+// ===>Function to create Leave Chart<===
 const createLeaveChart = () => {
   const ctx = document.getElementById('leaveChart').getContext('2d')
   new Chart(ctx, {
@@ -263,7 +261,7 @@ const createLeaveChart = () => {
         y: {
           beginAtZero: true,
           ticks: {
-            stepSize: 1 // Step size placed inside ticks
+            stepSize: 1 
           }
         }
       },
@@ -272,7 +270,7 @@ const createLeaveChart = () => {
           display: true,
           text: 'Employees Leaving by Department',
           font: {
-            size: 25 // Set the font size for the title
+            size: 25 
           }
         }
       }
@@ -295,6 +293,6 @@ onMounted(() => {
   showToast()
 })
 onMounted(async () => {
-  await teamStore.fetchTeamMembers() // Fetch employee data as well
+  await teamStore.fetchTeamMembers() 
 })
 </script>

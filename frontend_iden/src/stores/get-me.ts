@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import axiosInstance from '@/plugins/axios'// Import your configured Axios instance
+import axiosInstance from '@/plugins/axios'
 import { ref } from 'vue';
 
 export const userAuthStore = defineStore('auth', () => {

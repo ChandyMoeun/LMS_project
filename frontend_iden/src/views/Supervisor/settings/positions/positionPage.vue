@@ -52,6 +52,7 @@ import SupervisorSidebar from '@/Components/SupervisorSidebar.vue'
 import WebHeaderMenu from '@/Components/WebHeaderMenu.vue'
 import { usePositionStore } from '@/stores/all-positions'
 import { onMounted } from 'vue'
+
 export default {
   components: { SupervisorSidebar, WebHeaderMenu },
   setup() {

@@ -125,7 +125,11 @@ import EmployeeNavbar from '@/Components/EmployeeNavbar.vue'
 import { useLeaveRequestStore } from '@/stores/request-leave'
 import html2pdf from 'html2pdf.js'
 
-// Define props
+// ===>Reactive variable for the request<===
+const request = ref(null)
+const authStore = useLeaveRequestStore()
+
+// ===>Define props<====
 const props = defineProps({
   id: {
     type: [String, Number],
@@ -133,34 +137,22 @@ const props = defineProps({
   }
 })
 
-// Reactive variable for the request
-const request = ref(null)
-
-// Access the store
-const authStore = useLeaveRequestStore()
-
 onMounted(async () => {
   await authStore.fetchTeamLeaveRequests()
-
-  // Find the request by ID
   request.value = authStore.leaveRequests.find((m) => m.id === Number(props.id))
-
-  // Log request and found ID
-  console.log('Request Data:', request.value)
-  console.log('Request ID:', props.id)
 })
 
-// Method to handle printing
+// ====>Method to handle printing<====
 const printSection = () => {
   const printContents = document.getElementById('detailleave').innerHTML
   const originalContents = document.body.innerHTML
   document.body.innerHTML = printContents
   window.print()
   document.body.innerHTML = originalContents
-  window.location.reload() // Reload to reset original contents
+  window.location.reload() 
 }
 
-// Method to handle PDF export
+// ===>Method to handle PDF export<===
 const Export = () => {
   const element = document.getElementById('detailleave')
   const options = {

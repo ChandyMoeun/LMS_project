@@ -70,13 +70,11 @@ export default {
   setup(props) {
     const departmentStore = useDepartmentStore()
     const department = ref(null)
-
-    // Fetch department data when the component is mounted
+    // ====>Fetch department data when the component is mounted<====
     onMounted(async () => {
       await departmentStore.fetchDepartmentId(props.departmentId)
-      department.value = departmentStore.departments[0] // Assuming only one department is fetched
+      department.value = departmentStore.departments[0] 
     })
-
     return {
       department
     }

@@ -117,8 +117,9 @@ import WebHeaderMenu from '@/Components/WebHeaderMenu.vue';
 import { useLeaveRequestStore } from '@/stores/request-leave';
 
 const leaveRequestStore = useLeaveRequestStore();
+const searchQuery = ref(''); 
 
-// Fetch leave requests on component mount
+// ====>Fetch leave requests on component mount<====
 const fetchTeamLeaveRequests = async () => {
   try {
     await leaveRequestStore.fetchTeamLeaveRequests();
@@ -132,13 +133,11 @@ onMounted(() => {
   fetchTeamLeaveRequests();
 });
 
-const searchQuery = ref(''); // Search input query
-
-// Computed property to filter leave requests
+// ====>Computed property to filter leave requests<====
 const filteredLeaveRequests = computed(() => {
   return leaveRequestStore.leaveRequests.filter(leaveRequest => {
     return (
-      leaveRequest.status === 'approved' && // Ensure only approved requests are shown
+      leaveRequest.status === 'approved' && 
       (
         leaveRequest.staff_id.toString().includes(searchQuery.value) ||
         leaveRequest.employee_name.toLowerCase().includes(searchQuery.value.toLowerCase())

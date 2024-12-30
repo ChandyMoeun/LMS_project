@@ -112,24 +112,23 @@ export default {
   },
   data() {
     return {
-      searchQuery: '', // Holds the search input
-      attendances: [] // Initialize with an empty array of attendance records
+      searchQuery: '', 
+      attendances: [] 
     }
   },
+  // ===>Fetch attendance records when the component is mounted<===
   mounted() {
-    // Fetch attendance records when the component is mounted
     this.fetchAttendanceRecords()
   },
   computed: {
-    // Filter attendances based on the search query (either date or employee name)
+    // ====>Filter attendances based on the search query (either date or employee name)<====
     filteredAttendances() {
       const query = this.searchQuery.trim().toLowerCase()
       if (!query) {
-        return this.attendances // If no query, return all attendances
+        return this.attendances 
       }
       return this.attendances.filter(
         (attendance) =>
-          // Check if the date matches the query or if the employee's name includes the query
           attendance.date.includes(query) ||
           attendance.employee.full_name.toLowerCase().includes(query)
       )
@@ -148,7 +147,7 @@ export default {
       document.body.innerHTML = printContents
       window.print()
       document.body.innerHTML = originalContents
-      window.location.reload() // Reload to reset original contents
+      window.location.reload()
     },
     Export() {
       const element = document.getElementById('attendance_records')

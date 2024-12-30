@@ -19,7 +19,6 @@
                 </h1>
               </div>
             <!-- Leave Request Details -->
-
             <div
               v-if="request"
               class="max-w-4xl mx-auto mt-20 p-5 bg-gray-100 rounded-lg shadow-md"
@@ -31,12 +30,10 @@
                     <span class="font-semibold">Date:</span>
                     <p class="mt-1">📅 {{ request.from_date }} | {{ request.to_date }}</p>
                   </div>
-
                   <div class="mb-4">
                     <span class="font-semibold">Requested at:</span>
                     <p class="mt-1">📅 {{ request.created_at }}</p>
                   </div>
-
                   <div class="mb-4">
                     <span class="font-semibold">Part of day:</span>
                     <p class="mt-1">
@@ -46,7 +43,6 @@
                       <span v-else>{{ request.half_day_type }}</span>
                     </p>
                   </div>
-
                   <div class="mb-4">
                     <span class="font-semibold">Requested by:</span>
                     <p class="mt-1 flex items-center">
@@ -118,7 +114,11 @@ import { ref, computed, onMounted } from 'vue'
 import EmployeeSidebar from '@/Components/EmployeeSidebar.vue'
 import EmployeeNavbar from '@/Components/EmployeeNavbar.vue'
 import { useLeaveRequestStore } from '@/stores/request-leave'
-// Define props
+
+const request = ref(null)
+const authStore = useLeaveRequestStore()
+
+// ===>Define props<===
 const props = defineProps({
   id: {
     type: [String, Number],
@@ -126,24 +126,10 @@ const props = defineProps({
   }
 })
 
-// Reactive variable for the request
-const request = ref(null)
-
-// Access the store
-const authStore = useLeaveRequestStore()
-
 onMounted(async () => {
   await authStore.fetchTeamLeaveRequests()
-
-  // Find the request by ID
   request.value = authStore.leaveRequests.find((m) => m.id === Number(props.id))
-
-  // Log request and found ID
-  console.log('Request Data:', request.value)
-  console.log('Request ID:', props.id)
 })
-
-// If additional data or logic is needed, you can use `ref`, `reactive`, or other Vue Composition API features.
 </script>
     
       

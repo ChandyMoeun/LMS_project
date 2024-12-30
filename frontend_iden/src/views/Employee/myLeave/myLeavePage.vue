@@ -305,8 +305,6 @@ onMounted(async () => {
   await leaveTypeStore.fetchLeaveTypes()
 })
 
-
-
 // ===>Handle file input change event<===
 function handleFileUpload(event) {
   selectedFiles.value = event.target.files[0]

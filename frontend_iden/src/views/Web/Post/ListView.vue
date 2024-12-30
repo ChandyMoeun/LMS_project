@@ -18,18 +18,13 @@ import { onMounted } from 'vue';
 import { useTeamStore } from '@/stores/get-member';
 
 const teamStore = useTeamStore();
-
-// Fetch all team members on component mount
+// ===>Fetch all team members on component mount<===
 onMounted(() => {
   teamStore.fetchTeamMembers();
 });
-
-// Trigger fetching details of a specific team member
 const viewTeamMember = (id) => {
   teamStore.fetchTeamMemberById(id);
 };
 
-// Destructure the state from the store
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const { teamMembers } = teamStore;
 </script>

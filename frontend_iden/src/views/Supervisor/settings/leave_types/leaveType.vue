@@ -17,7 +17,6 @@
               </router-link>
               <h1 class="font-bold text-3xl mt-2 px-8 hover:text-yellow-400 w-3/12"><b>Leave Types</b></h1>
             </div>
-
             <!-- Leave Types List -->
             <div class="container mt-20 mx-auto px-6">
               <h6 class="text-center text-2xl text-gray-900 font-bold mb-6">All Leave Types</h6>

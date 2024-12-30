@@ -36,7 +36,6 @@
                       <th class="py-3 px-2 text-center text-xs text-white uppercase tracking-wider"> Acceptor </th>
                     </tr>
                   </thead>
-                  <!-- <tbody v-for="leaveRequest in leaveRequestStore.leaveRequests" :key="leaveRequest.id" > -->
                     <tbody v-for="leaveRequest in filteredLeaveRequests" :key="leaveRequest.id">
                     <tr v-if=" (leaveRequest.employee_id === user.id && leaveRequest.status === 'approved') || leaveRequest.status === 'rejected'" class="hover:bg-gray-50" >
                       <td class="py-4 px-2 text-sm text-center text-black">{{ leaveRequest.staff_id }}</td>
@@ -45,7 +44,7 @@
                       <td class="py-4 px-2 text-sm text-center text-black">{{ leaveRequest.from_date }}</td>
                       <td class="py-4 px-2 text-sm text-center text-black">{{ leaveRequest.to_date }}</td>
                       <td class="py-4 px-2 text-sm text-center text-black">{{ leaveRequest.half_day_type }}</td>
-                      <!-- Display attachment -->
+                       <!-- Display attachment -->
                       <td class="py-4 px-6 text-sm text-center text-black">
                         <div class="flex gap-2 justify-center">
                           <img :src="leaveRequest.file_url" class="max-h-5 cursor-pointer" />
@@ -94,15 +93,14 @@ import { ref, computed, onMounted } from 'vue'
 import SupervisorSidebar from '@/Components/SupervisorSidebar.vue'
 import WebHeaderMenu from '@/Components/WebHeaderMenu.vue'
 import { useLeaveRequestStore } from '@/stores/request-leave'
-import { userAuthStore } from '@/stores/get-me' // Import the Auth store
-
+import { userAuthStore } from '@/stores/get-me' 
 const authStore = userAuthStore()
 const user = authStore.user
 console.log(user)
 const searchQuery = ref('')
 const leaveRequestStore = useLeaveRequestStore()
 
-// Function to fetch leave requests (example for leaveRequestStore)
+// ===>Function to fetch leave requests (example for leaveRequestStore)<=====
 const fetchTeamLeaveRequests = async () => {
   try {
     await leaveRequestStore.fetchTeamLeaveRequests()
@@ -111,13 +109,11 @@ const fetchTeamLeaveRequests = async () => {
     console.error('Error fetching leave requests:', error)
   }
 }
-
-// Fetch leave requests on component mount
+// ====>Fetch leave requests on component mount<====
 onMounted(() => {
   fetchTeamLeaveRequests();
 });
-
-// Computed property for filtered leave requests
+// ====>Computed property for filtered leave requests<====
 const filteredLeaveRequests = computed(() => {
   const query = searchQuery.value.toLowerCase();
   return leaveRequestStore.leaveRequests.filter(

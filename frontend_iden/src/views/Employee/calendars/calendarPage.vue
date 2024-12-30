@@ -22,7 +22,6 @@
                 </div>
               </div>
             </div>
-
             <!-- Workdays and Times Table -->
             <div class="bg-white shadow-md rounded-lg p-6 mt-14">
               <h2 class="text-2xl font-bold mb-4">Workdays and Times</h2>
@@ -71,7 +70,6 @@
                 </tbody>
               </table>
             </div>
-
             <!-- Holidays Table -->
             <div class="bg-white shadow-md rounded-lg p-6 mt-14">
               <h2 class="text-2xl font-bold mb-4">Holidays</h2>
@@ -106,9 +104,7 @@
                   </tr>
                 </thead>
                 <tbody
-                  v-for="holiday in calendarHolidays"
-                  :key="holiday.id"
-                  class="bg-white divide-y divide-gray-200"
+                  v-for="holiday in calendarHolidays" :key="holiday.id" class="bg-white divide-y divide-gray-200"
                 >
                   <tr class="hover:bg-gray-100">
                     <td class="py-4 px-6 border-b border-gray-200">{{ holiday.holiday_name }}</td>
@@ -140,55 +136,48 @@ import axiosInstance from '@/plugins/axios'
 import EmployeeSidebar from '@/Components/EmployeeSidebar.vue'
 import EmployeeNavbar from '@/Components/EmployeeNavbar.vue'
 import { onMounted, ref } from 'vue'
-import { Calendar } from '@fullcalendar/core' // Import FullCalendar core
-import dayGridPlugin from '@fullcalendar/daygrid' // Import DayGrid plugin
+import { Calendar } from '@fullcalendar/core' 
+import dayGridPlugin from '@fullcalendar/daygrid' 
 
 export default {
   components: { EmployeeSidebar, EmployeeNavbar },
   setup() {
-    const calendarHolidays = ref([]) // Reactive array for all calendar events
-    const calendarWorkdays = ref([]) // Reactive array for
-
-    // Fetch work days from the API
+    const calendarHolidays = ref([]) 
+    const calendarWorkdays = ref([]) 
+    // ====>Fetch work days from the API<=====
     const fetchWorkDays = async () => {
       try {
         const response = await axiosInstance.get('/calendar_work')
-        // Push work day events into the calendarHolidays array
         calendarWorkdays.value = response.data
         console.log('Work calendar:', calendarWorkdays.value)
       } catch (error) {
         console.error('Error fetching work days:', error)
       }
     }
-
-    // Fetch holidays from the API
+    // ====>Fetch holidays from the API<====
     const fetchHoliday = async () => {
       try {
         const response = await axiosInstance.get('/calendar_holiday')
-        // Push holiday events into the calendarHolidays array
         calendarHolidays.value = response.data
       } catch (error) {
         console.error('Error fetching holidays:', error)
       }
     }
-
-    // Initialize FullCalendar on mount
+    // ===>Initialize FullCalendar on mount<====
     onMounted(async () => {
-      await Promise.all([fetchWorkDays(), fetchHoliday()]) // Fetch data before rendering the calendar
-
+      await Promise.all([fetchWorkDays(), fetchHoliday()]) 
       const calendarEl = document.getElementById('calendar')
-
       const calendar = new Calendar(calendarEl, {
         plugins: [dayGridPlugin],
         initialView: 'dayGridMonth',
         headerToolbar: {
-          start: 'title', // Title in the header
+          start: 'title', 
           center: '',
-          end: 'today prev,next' // Navigation buttons
+          end: 'today prev,next' 
         },
         selectable: true,
         editable: true,
-        events: calendarHolidays.value, // Use the combined calendarHolidays array
+        events: calendarHolidays.value, 
         views: {
           month: {
             titleFormat: {
@@ -223,8 +212,6 @@ export default {
   }
 }
 </script>
-
-  
   <style>
   /* Custom styles for the FullCalendar header */
   .fc-col-header-cell {

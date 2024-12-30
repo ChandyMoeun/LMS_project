@@ -74,21 +74,21 @@
 <script>
 import EmployeeSidebar from '@/Components/EmployeeSidebar.vue'
 import EmployeeNavbar from '@/Components/EmployeeNavbar.vue'
-import axiosInstance from '@/plugins/axios' // Adjust the path if needed
-import { useAuthStore } from '@/stores/get-team' // Pinia store
+import axiosInstance from '@/plugins/axios' 
+import { useAuthStore } from '@/stores/get-team' 
 
 export default {
   components: { EmployeeSidebar, EmployeeNavbar },
   data() {
     return {
-      team: [], // Local state to store team members
-      teamCount: 0, // Local state to store team count
-      searchQuery: '' // For search input
+      team: [], 
+      teamCount: 0, 
+      searchQuery: '' 
     }
   },
   computed: {
     filteredTeam() {
-      // Filter the team members based on the search query
+      // ==>Filter the team members based on the search query<===
       const query = this.searchQuery.toLowerCase()
       return this.team.filter((member) => {
         return (
@@ -101,26 +101,20 @@ export default {
     }
   },
   mounted() {
-    this.fetchTeamMembers() // Call the fetch method when the component is mounted
+    this.fetchTeamMembers() 
   },
   methods: {
     async fetchTeamMembers() {
-      const store = useAuthStore() // Access the store
+      const store = useAuthStore() 
       try {
-        // Fetch team members from the backend
-        const { data } = await axiosInstance.get('/team') // Replace with your API endpoint
-
-        // Update local state and Pinia store
-        this.team = data.teams // Update component's team
-        this.teamCount = data.team_count // Update component's team count
-
-        store.team = data.teams // Optionally, store data in Pinia if needed globally
-        store.teamCount = data.team_count // Store the count in Pinia
-
-        console.log('Fetched team members:', this.team) // Log the fetched data
+        // ====>Fetch team members from the backend<===
+        const { data } = await axiosInstance.get('/team') 
+        this.team = data.teams 
+        this.teamCount = data.team_count 
+        store.team = data.teams 
+        store.teamCount = data.team_count 
       } catch (error) {
         console.error('Error fetching team members:', error)
-        // Reset data on error
         this.team = []
         this.teamCount = 0
       }

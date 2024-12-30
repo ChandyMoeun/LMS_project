@@ -159,18 +159,15 @@
 import { ref, computed, onMounted } from 'vue'
 import EmployeeSidebar from '@/Components/EmployeeSidebar.vue'
 import EmployeeNavbar from '@/Components/EmployeeNavbar.vue'
-
 import { useLeaveRequestStore } from '@/stores/request-leave'
-import { userAuthStore } from '@/stores/get-me' // Import the Auth store
+import { userAuthStore } from '@/stores/get-me' 
 
 const authStore = userAuthStore()
 const user = authStore.user
-console.log(user)
-
 const searchQuery = ref('')
 const leaveRequestStore = useLeaveRequestStore()
 
-// Function to fetch leave requests (example for leaveRequestStore)
+// ===>Function to fetch leave requests (example for leaveRequestStore)<===
 const fetchTeamLeaveRequests = async () => {
   try {
     await leaveRequestStore.fetchTeamLeaveRequests()
@@ -180,12 +177,12 @@ const fetchTeamLeaveRequests = async () => {
   }
 }
 
-// Fetch leave requests on component mount
+// ===>Fetch leave requests on component mount<===
 onMounted(() => {
   fetchTeamLeaveRequests()
 })
 
-// Method for status-based classes
+// ==>Method for status-based classes<===
 const statusClasses = (status) => {
   return {
     'bg-red-500 text-white': status === 'Rejected',

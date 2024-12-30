@@ -93,11 +93,11 @@ import SupervisorSidebar from '@/Components/SupervisorSidebar.vue';
 import WebHeaderMenu from '@/Components/WebHeaderMenu.vue';
 import { useLeaveRequestStore } from '@/stores/request-leave';
 
-// Search query for filtering leave requests
+// ====>Search query for filtering leave requests<====
 const searchQuery = ref('');
 const leaveRequestStore = useLeaveRequestStore();
 
-// Function to fetch leave requests
+// ===>Function to fetch leave requests<===
 const fetchTeamLeaveRequests = async () => {
   try {
     await leaveRequestStore.fetchTeamLeaveRequests();
@@ -107,12 +107,12 @@ const fetchTeamLeaveRequests = async () => {
   }
 };
 
-// Fetch leave requests on component mount
+// ===>Fetch leave requests on component mount<===
 onMounted(() => {
   fetchTeamLeaveRequests();
 });
 
-// Computed property for filtered leave requests
+// ===>Computed property for filtered leave requests<====
 const filteredLeaveRequests = computed(() => {
   const query = searchQuery.value.toLowerCase();
   return leaveRequestStore.leaveRequests.filter(

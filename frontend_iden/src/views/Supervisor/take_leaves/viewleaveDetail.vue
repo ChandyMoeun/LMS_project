@@ -132,20 +132,19 @@ export default {
   },
   async mounted() {
     const authStore = useLeaveRequestStore()
-    await authStore.fetchTeamLeaveRequests() // Fetch all leave requests first
+    await authStore.fetchTeamLeaveRequests() 
 
-    // Find the request by ID after fetching
+    // ===>Find the request by ID after fetching<===
     this.request = authStore.leaveRequests.find((m) => m.id === Number(this.id))
 
-    // If request is not found, handle the case (optional)
+    // ===>If request is not found, handle the case (optional)<=====
     if (!this.request) {
       console.error('Leave request not found!')
     }
   },
   methods: {
-    // Optional method to format date as needed (example using moment.js or day.js)
     formattedDate(dateString) {
-      return new Date(dateString).toLocaleDateString() // Adjust formatting as needed
+      return new Date(dateString).toLocaleDateString() 
     }
   }
 }

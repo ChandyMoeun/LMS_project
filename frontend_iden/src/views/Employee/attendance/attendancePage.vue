@@ -77,7 +77,7 @@ export default {
     const attendanceStore = useAttendanceStore()
     const loading = ref(true)
     const error = ref(null)
-    const searchQuery = ref('') // Holds the search input
+    const searchQuery = ref('') 
 
     const fetchAttendance = async () => {
       try {
@@ -88,7 +88,6 @@ export default {
         loading.value = false
       }
     }
-
     onMounted(() => {
       fetchAttendance()
     })

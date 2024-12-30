@@ -30,7 +30,6 @@
                 </button>
               </div>
             </div>
-
             <!-- Employee Table -->
             <div class="overflow-x-auto">
               <table v-if="teamStore" class="w-full bg-white shadow-md rounded">
@@ -82,16 +81,10 @@ import axiosInstance from '@/plugins/axios'
 import SupervisorSidebar from '@/Components/SupervisorSidebar.vue'
 import WebHeaderMenu from '@/Components/WebHeaderMenu.vue'
 
-// Initialize the team store
 const teamStore = useTeamStore()
-
-// Reactive reference for the search query
 const searchQuery = ref('')
-
-// Fetch employee data from the API
 const employeesList = ref([])
 
-// Fetch employees from the backend
 const fetchEmployee = async () => {
   try {
     const response = await axiosInstance.get('/employee')
@@ -100,14 +93,10 @@ const fetchEmployee = async () => {
     console.error(error)
   }
 }
-
-// Fetch team members when the component is mounted
 onMounted(async () => {
   await teamStore.fetchTeamMembers()
-  await fetchEmployee() // Fetch employee data as well
+  await fetchEmployee() 
 })
-
-// Computed property to filter employees based on the search query
 const filteredEmployees = computed(() => {
   return employeesList.value.filter(
     (employee) =>

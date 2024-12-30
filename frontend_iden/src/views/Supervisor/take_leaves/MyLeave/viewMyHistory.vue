@@ -19,7 +19,6 @@
               </h1>
             </div>
             <!-- Leave Request Details -->
-
             <div class="max-w-4xl mx-auto mt-20 p-5 bg-gray-100 rounded-lg shadow-md">
               <!-- Left Column: Request Details -->
               <div class="grid grid-cols-2 gap-8">
@@ -90,10 +89,5 @@
   import WebHeaderMenu from '@/Components/WebHeaderMenu.vue'
   export default {
     components: { SupervisorSidebar, WebHeaderMenu },
-    data() {
-      return {
-        // Data can be added if needed for dynamic rendering
-      }
-    }
   }
 </script>

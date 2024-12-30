@@ -60,26 +60,26 @@
 </template>
 
 <script>
-import axiosInstance from '@/plugins/axios' // Adjust path if needed
+import axiosInstance from '@/plugins/axios' 
 import EmployeeSidebar from '@/Components/EmployeeSidebar.vue'
 import EmployeeNavbar from '@/Components/EmployeeNavbar.vue'
+
 export default {
   components: { EmployeeSidebar, EmployeeNavbar },
   data() {
     return {
-      member: null // To hold the fetched member details
+      member: null 
     }
   },
   async created() {
-    const memberId = this.$route.params.id // Get the member ID from the route parameters
-    await this.fetchMemberDetails(memberId) // Fetch member details based on the ID
+    const memberId = this.$route.params.id 
+    await this.fetchMemberDetails(memberId) 
   },
   methods: {
     async fetchMemberDetails(id) {
       try {
-        // Fetch the team member details from the backend API using the ID
         const { data } = await axiosInstance.get(`/team/${id}`)
-        this.member = data.team_member // Store the fetched team member's data in the member variable
+        this.member = data.team_member
       } catch (error) {
         console.error('Error fetching team member details:', error)
       }

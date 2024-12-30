@@ -77,15 +77,14 @@ import WebHeaderMenu from '@/Components/WebHeaderMenu.vue'
 import { onMounted, computed } from 'vue'
 import { useLeaveBalanceStore } from '@/stores/leave-balance'
 
-// Use the leave balance store
+// ===>Use the leave balance store<====
 const leaveBalanceStore = useLeaveBalanceStore()
-
 // Fetch leave balances when the component is mounted
 onMounted(() => {
   leaveBalanceStore.fetchLeaveBalances()
 })
 
-// Access the reactive state from the store
+// ====>Access the reactive state from the store<=====
 const leaveBalances = computed(() => leaveBalanceStore.leaveBalances)
 
 // Log leave balances to the console for debugging

@@ -94,17 +94,15 @@
 import { ref, computed, onMounted } from 'vue'
 import EmployeeSidebar from '@/Components/EmployeeSidebar.vue'
 import EmployeeNavbar from '@/Components/EmployeeNavbar.vue'
-
 import { useLeaveRequestStore } from '@/stores/request-leave'
 import { userAuthStore } from '@/stores/get-me' // Import the Auth store
 
 const authStore = userAuthStore()
 const user = authStore.user
-console.log(user)
 const searchQuery = ref('')
 const leaveRequestStore = useLeaveRequestStore()
 
-// Function to fetch leave requests (example for leaveRequestStore)
+// ===>Function to fetch leave requests (example for leaveRequestStore)<===
 const fetchTeamLeaveRequests = async () => {
   try {
     await leaveRequestStore.fetchTeamLeaveRequests()
@@ -114,12 +112,10 @@ const fetchTeamLeaveRequests = async () => {
   }
 }
 
-// Fetch leave requests on component mount
+// ===>Fetch leave requests on component mount<===
 onMounted(() => {
   fetchTeamLeaveRequests()
 })
-
-// Reactive properties
 
 const leaveRequests = ref([
   {
@@ -137,7 +133,7 @@ const leaveRequests = ref([
   }
 ])
 
-// Computed property for filtered leave requests
+// ===>Computed property for filtered leave requests<===
 const filteredLeaveRequests = computed(() =>
   leaveRequests.value.filter(
     (leave) =>
@@ -146,13 +142,13 @@ const filteredLeaveRequests = computed(() =>
   )
 )
 
-// Methods for approving and rejecting leave requests
+// ===>Methods for approving and rejecting leave requests<====
 const approveLeave = (leaveRequest) => {
   leaveRequest.status = 'Approved'
 }
 
 const rejectLeave = (leaveRequest) => {
-  leaveRequest.rejector = 'Your Name' // Change this dynamically based on user
+  leaveRequest.rejector = 'Your Name' 
   leaveRequest.status = 'Rejected'
 }
 </script>

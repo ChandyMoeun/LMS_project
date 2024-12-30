@@ -59,43 +59,37 @@ import { ref } from 'vue';
 import { useLeaveRequestStore } from '@/stores/request-leave';
 
 const leaveRequestStore = useLeaveRequestStore();
+const requestStatus = ref(null);
+const addSeconds = (time) => (time ? `${time}:00` : '');
 
 const leaveRequest = ref({
   employee_id: null,
   leaveType_id: null,
-  half_day_type: 'full_day', // Default to full day
-  start_time: '',
+  half_day_type: 'full_day', 
   end_time: '',
   total_requested_days: '',
-  status: 'pending', // Default to pending
+  status: 'pending', 
   from_date: '',
   to_date: '',
   reason: '',
-  attachment: null, // Placeholder for future attachment handling if needed
+  attachment: null,
 });
 
-const requestStatus = ref(null);
-
-const addSeconds = (time) => (time ? `${time}:00` : '');
-
-// Handle form submission
+// ===>Handle form submission<=====
 const handleSubmit = async () => {
-  // Format start_time and end_time with seconds
+  // ====>Format start_time and end_time with seconds<====
   leaveRequest.value.start_time = addSeconds(leaveRequest.value.start_time);
   leaveRequest.value.end_time = addSeconds(leaveRequest.value.end_time);
-
-  // Validate date range
   if (new Date(leaveRequest.value.to_date) < new Date(leaveRequest.value.from_date)) {
     alert("The 'To Date' must be after or equal to the 'From Date'.");
     requestStatus.value = 'error';
     return;
   }
-
   try {
     await leaveRequestStore.submitLeaveRequest(leaveRequest.value);
-    requestStatus.value = leaveRequestStore.requestStatus; // Update local status
+    requestStatus.value = leaveRequestStore.requestStatus; 
   } catch (error) {
-    requestStatus.value = 'error'; // Handle error
+    requestStatus.value = 'error';
     console.error('Error submitting leave request:', error);
   }
 };

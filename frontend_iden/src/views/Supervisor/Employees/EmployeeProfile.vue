@@ -83,20 +83,13 @@ import { useTeamStore } from '@/stores/get-member'
 import { onMounted, ref } from 'vue'
 import { useRoute } from 'vue-router'
 
-// const reloadPage = () => {
-//   window.location.reload() // Reload the entire page
-// }
-// Import components
 const teamStore = useTeamStore()
-const route = useRoute() // Access the route to get the ID
-
-// Define `teamMember` to hold the fetched data
+const route = useRoute() 
 const teamMember = ref(null)
 
-// Fetch the team member when the component is mounted
 onMounted(async () => {
-  const memberId = route.params.id // Get the ID from the route
-  await teamStore.fetchTeamMemberById(memberId) // Call the store action
-  teamMember.value = teamStore.teamMembers // Assign the fetched member to `teamMember`
+  const memberId = route.params.id 
+  await teamStore.fetchTeamMemberById(memberId) 
+  teamMember.value = teamStore.teamMembers 
 })
 </script>

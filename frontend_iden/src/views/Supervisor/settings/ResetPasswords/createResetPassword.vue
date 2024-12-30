@@ -97,7 +97,7 @@ export default {
     methods: {
       changePassword() {
         if (this.isFormValid) {
-          // Handle the password change logic here, possibly calling an API to update the password
+          // ====Handle the password change logic here, possibly calling an API to update the password<====
           alert('Password changed successfully!');
           this.resetForm();
         }
