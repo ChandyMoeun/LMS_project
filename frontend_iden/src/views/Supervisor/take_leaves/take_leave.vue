@@ -296,7 +296,7 @@ const handleSubmit = async (event) => {
   try {
     await leaveRequestStore.submitLeaveRequest(leaveRequest.value)
     requestStatus.value = leaveRequestStore.requestStatus // Update local status
-    // window.location.reload()
+    window.location.reload()
   } catch (error) {
     requestStatus.value = 'error' // Handle error
     console.error('Error submitting leave request:', error)
